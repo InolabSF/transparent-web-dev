@@ -16,7 +16,7 @@ class Api::TranscriptsController < ApplicationController
       entities_obj = transcript.entities
       entities = []
       for entity in entities_obj
-        enitities.push(entity.attributes)
+        entities.push(entity.attributes)
       end
 
       has_content = transcript.has_content
@@ -66,7 +66,7 @@ class Api::TranscriptsController < ApplicationController
       entities_obj = transcript.entities
       entities = []
       for entity in entities_obj
-        enitities.push(entity.attributes)
+        entities.push(entity.attributes)
       end
 
       has_content = transcript.has_content
