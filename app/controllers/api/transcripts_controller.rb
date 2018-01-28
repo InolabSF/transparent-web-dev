@@ -12,7 +12,7 @@ class Api::TranscriptsController < ApplicationController
       text = transcript.text
       user = transcript.user.attributes
       context = transcript.context.attributes
-      # entities = Entity.where(:transcript_id => transcript.id)
+      # entities_obj = Entity.where(:transcript_id => transcript.id)
       entities_obj = transcript.entities
       entities = []
       for entity in entities_obj
@@ -20,13 +20,15 @@ class Api::TranscriptsController < ApplicationController
       end
 
       has_content = transcript.has_content
-      related_contents_obj = transcript.related_contents
-
       related_contents = []
+
+      related_contents_obj = transcript.related_contents
       for related_content in related_contents_obj
-        condition = related_content.condition.attributes
-        related_content = related_content.attributes
-        related_content.store('condition', condition)
+        condition = related_content.condition
+        if condition then
+          related_content = related_content.attributes
+          related_content.store('condition', condition.attributes)
+        end
         related_contents.push(related_content)
       end
 
@@ -62,7 +64,7 @@ class Api::TranscriptsController < ApplicationController
       text = transcript.text
       user = transcript.user.attributes
       context = transcript.context.attributes
-      # entities = Entity.where(:transcript_id => transcript.id)
+      # entities_obj = Entity.where(:transcript_id => transcript.id)
       entities_obj = transcript.entities
       entities = []
       for entity in entities_obj
@@ -70,13 +72,15 @@ class Api::TranscriptsController < ApplicationController
       end
 
       has_content = transcript.has_content
-      related_contents_obj = transcript.related_contents
-
       related_contents = []
+
+      related_contents_obj = transcript.related_contents
       for related_content in related_contents_obj
-        condition = related_content.condition.attributes
-        related_content = related_content.attributes
-        related_content.store('condition', condition)
+        condition = related_content.condition
+        if condition then
+          related_content = related_content.attributes
+          related_content.store('condition', condition.attributes)
+        end
         related_contents.push(related_content)
       end
 
@@ -122,6 +126,8 @@ class Api::TranscriptsController < ApplicationController
         for related_content_hash in related_contents
           related_content = RelatedContent.new(:title => related_content_hash[:title], :desc => related_content_hash[:desc], :url => related_content_hash[:url], :img_url => related_content_hash[:img_url], :content_type => related_content_hash[:content_type], :source => related_content_hash[:source], :is_visible => [:is_visible], 'transcript_id' => @transcripts.id)
           related_content.save
+          condition = Condition.new(:service => related_content_hash[:condition][:service], :word => related_content_hash[:condition][:word], :related_content_id => related_content.id)
+          condition.save
         end
       end
 

@@ -83,8 +83,10 @@
                   <td>
                     <p> title : {{ transcript.related_contents[i-1].title }} </p>
                     <p> desc : {{ transcript.related_contents[i-1].desc }} </p>
-                    <p> search  service : transcript.related_contents[i-1].condition.service </p>
-                    <p> search text : transcript.related_contents[i-1].condition.text </p>
+                    <div class="columns medium-3" v-if="transcript.related_contents[i-1].condition">
+                    <p> search  service : {{transcript.related_contents[i-1].condition.service }}</p>
+                    <p> search words : {{ transcript.related_contents[i-1].condition.word }}</p>
+                    </div>
                   </td>
                 </tr>
 
@@ -102,7 +104,7 @@
                   <td>
                     <p> Created_at : {{transcript.created_at}} </p>
                     <p> User ID : {{ transcript.user.facebook_id }} </p>
-                    <p> Conversation State :  transcript.context.state  </p>
+                    <p> Conversation State :  {{ transcript.context.state }} </p>
                   </td>
                   <td></td>
                 </tr>
