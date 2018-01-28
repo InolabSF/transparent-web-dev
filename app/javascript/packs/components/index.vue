@@ -1,9 +1,6 @@
 <template>
 
-
-
   <div>
-
         <div v-on:click="updateDOMloop" class="btn-floating waves-effect waves-light red">
           <i class="material-icons">add</i>
         </div>
@@ -23,31 +20,43 @@
 
                 </table>
             </div>
+            <div class="columns medium-3" v-if="transcript.has_content">
+
             <div class="card" >
               <table >
-                <font color='#607780'>
                 <tr>
                   <td></td>
                   <td>
-                    <font>
-                      <h5>Related Contents</h5>
-                    </font>
+                  <div class="columns medium-3" v-for="related_content in transcript.related_contents">
+
+                  <a :href="related_content.url" target="_blank"><img :src="related_content.img_url"></a>
+
+                  </div>
+
                   </td>
+                  <td></td>
                 </tr>
-                </font>
               </table>
+              </div>
             </div>
+
             <div class="card" >
               <table >
                 <font color='#607780'>
                 <tr>
                   <td></td>
                   <td>
-                    <p> userid : {{ transcript.user_id }} </p>
+                    <p> userid : {{ transcript.user.facebook_id }} </p>
                     <p> transcript : {{ transcript.text }} </p>
-                    <p> conversation state : state </p>
-                    <p> source type : source </p>
-                    <p> link url : link </p>
+                    <p> conversation state : {{ transcript.context.state }} </p>
+                    <div class="columns medium-3" v-for="i in transcript.entities.length">
+                      <p> entity {{i}} : { name : {{ transcript.entities[i-1].name }} , type : {{ transcript.entities[i-1].category }} }</p>
+                    </div>
+                    <div class="columns medium-3" v-for="i in transcript.related_contents.length">
+                      <p> related content {{i}} : { title : {{ transcript.related_contents[i-1].title }} , desc : {{ transcript.related_contents[i-1].desc }} }</p>
+                    </div>
+                    <p> source type : transcript.source </p>
+                    <p> created_at : transcript.created_at </p>
                   </td>
                 </tr>
                 </font>
