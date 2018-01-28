@@ -32,7 +32,6 @@
                   <a :href="related_content.url" target="_blank"><img :src="related_content.img_url"></a>
 
                   </div>
-
                   </td>
                   <td></td>
                 </tr>
@@ -40,26 +39,74 @@
               </div>
             </div>
 
+
+            <div class="columns medium-3" v-for="i in transcript.entities.length">
+
             <div class="card" >
-              <table >
-                <font color='#607780'>
+              <table>
+              <font color='black'>
                 <tr>
                   <td></td>
                   <td>
-                    <p> userid : {{ transcript.user.facebook_id }} </p>
-                    <p> transcript : {{ transcript.text }} </p>
-                    <p> conversation state : {{ transcript.context.state }} </p>
-                    <div class="columns medium-3" v-for="i in transcript.entities.length">
-                      <p> entity {{i}} : { name : {{ transcript.entities[i-1].name }} , type : {{ transcript.entities[i-1].category }} }</p>
-                    </div>
-                    <div class="columns medium-3" v-for="i in transcript.related_contents.length">
-                      <p> related content {{i}} : { title : {{ transcript.related_contents[i-1].title }} , desc : {{ transcript.related_contents[i-1].desc }} }</p>
-                      <p> source type : {{transcript.related_contents[i-1].source}} </p>
-                    </div>
-                    <p> created_at : {{transcript.created_at}} </p>
+                    <h5> Extracted Entity Information {{i}} </h5>
                   </td>
                 </tr>
-                </font>
+                <tr>
+                  <td></td>
+                  <td>
+                    <p> name : {{ transcript.entities[i-1].name }} </p>
+                    <p> category : {{ transcript.entities[i-1].category }} </p>
+                  </td>
+                </tr>
+
+              </font>
+              </table>
+            </div>
+
+            </div>
+
+            <div class="columns medium-3" v-for="i in transcript.related_contents.length">
+
+            <div class="card" >
+              <table>
+              <font color='black'>
+                <tr>
+                  <td></td>
+                  <td>
+                    <h5> Related Content Information {{i}} </h5>
+                  </td>
+                  <td></td>
+                </tr>
+
+                <tr>
+                  <td></td>
+                  <td>
+                    <p> title : {{ transcript.related_contents[i-1].title }} </p>
+                    <p> desc : {{ transcript.related_contents[i-1].desc }} </p>
+                    <p> serach  service : {{ transcript.related_contents[i-1].condition.service }}</p>
+                    <p> serach text : {{ transcript.related_contents[i-1].condition.text }}</p>
+                  </td>
+                </tr>
+
+              </font>
+              </table>
+            </div>
+
+            </div>
+
+            <div class="card" >
+              <table>
+              <font color='black'>
+                <tr>
+                  <td></td>
+                  <td>
+                    <p> Created_at : {{transcript.created_at}} </p>
+                    <p> User ID : {{ transcript.user.facebook_id }} </p>
+                    <p> Conversation State : {{ transcript.context.state }} </p>
+                  </td>
+                  <td></td>
+                </tr>
+              </font>
               </table>
             </div>
         </div>
@@ -98,7 +145,7 @@
   }
 
   function updateDOMfunction(page, transcripts) {
-    axios.get('/api/entities/'+page).then((response) => {
+    axios.get('/api/transcripts/'+page).then((response) => {
       for(var i = 0; i < response.data.transcripts.length; i++) {
         var transcript = response.data.transcripts[i];
         transcripts.unshift(transcript);
