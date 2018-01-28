@@ -39,7 +39,38 @@ class Api::TranscriptsController < ApplicationController
 
   def show
     # sleep(0.5)
-    @transcripts = Transcript.offset(params[:id].to_i)
+    transcripts = Transcript.offset(params[:id].to_i)
+    data_list = []
+
+    for transcript in transcripts do
+      data = {}
+
+      id = transcript.id
+      text = transcript.text
+      user = transcript.user
+      context = transcript.context
+      # entities = Entity.where(:transcript_id => transcript.id)
+      entities = transcript.entities
+      has_content = transcript.has_content
+      related_contents = transcript.related_contents
+
+      created_at = transcript.created_at
+      updated_at = transcript.updated_at
+
+      data.store('id', id)
+      data.store('text', text)
+      data.store('user', user)
+      data.store('context', context)
+      data.store('entities', entities)
+      data.store('has_content', has_content)
+      data.store('related_contents', related_contents)
+      data.store('created_at', created_at)
+      data.store('updated_at', updated_at)
+
+      data_list.push(data)
+    end
+
+    render json: {'transcripts' => data_list }
   end
 
   # POST /tasks

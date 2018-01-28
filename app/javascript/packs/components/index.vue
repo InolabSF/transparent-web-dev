@@ -54,9 +54,9 @@
                     </div>
                     <div class="columns medium-3" v-for="i in transcript.related_contents.length">
                       <p> related content {{i}} : { title : {{ transcript.related_contents[i-1].title }} , desc : {{ transcript.related_contents[i-1].desc }} }</p>
+                      <p> source type : {{transcript.related_contents[i-1].source}} </p>
                     </div>
-                    <p> source type : transcript.source </p>
-                    <p> created_at : transcript.created_at </p>
+                    <p> created_at : {{transcript.created_at}} </p>
                   </td>
                 </tr>
                 </font>
@@ -113,9 +113,6 @@
     );
   }
 </script>
-
-
-
 
 
 <style scoped>
