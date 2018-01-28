@@ -10,12 +10,25 @@ class Api::TranscriptsController < ApplicationController
 
       id = transcript.id
       text = transcript.text
-      user = transcript.user
-      context = transcript.context
+      user = transcript.user.attributes
+      context = transcript.context.attributes
       # entities = Entity.where(:transcript_id => transcript.id)
-      entities = transcript.entities
+      entities_obj = transcript.entities
+      entities = []
+      for entity in entities_obj
+        enitities.push(entity.attributes)
+      end
+
       has_content = transcript.has_content
-      related_contents = transcript.related_contents
+      related_contents_obj = transcript.related_contents
+
+      related_contents = []
+      for related_content in related_contents_obj
+        condition = related_content.condition.attributes
+        related_content = related_content.attributes
+        related_content.store('condition', condition)
+        related_contents.push(related_content)
+      end
 
       created_at = transcript.created_at
       updated_at = transcript.updated_at
@@ -47,12 +60,25 @@ class Api::TranscriptsController < ApplicationController
 
       id = transcript.id
       text = transcript.text
-      user = transcript.user
-      context = transcript.context
+      user = transcript.user.attributes
+      context = transcript.context.attributes
       # entities = Entity.where(:transcript_id => transcript.id)
-      entities = transcript.entities
+      entities_obj = transcript.entities
+      entities = []
+      for entity in entities_obj
+        enitities.push(entity.attributes)
+      end
+
       has_content = transcript.has_content
-      related_contents = transcript.related_contents
+      related_contents_obj = transcript.related_contents
+
+      related_contents = []
+      for related_content in related_contents_obj
+        condition = related_content.condition.attributes
+        related_content = related_content.attributes
+        related_content.store('condition', condition)
+        related_contents.push(related_content)
+      end
 
       created_at = transcript.created_at
       updated_at = transcript.updated_at
