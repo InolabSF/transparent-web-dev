@@ -30,11 +30,13 @@
                             <table bgcolor='#607780' >
                                 <tr bgcolor='#B7414B'>
                                     <td></td>
-                                    <td >
-                                        <div class="columns medium-3" v-for="related_content in transcript.related_contents">
+
+                                    <div class="columns medium-3" v-for="related_content in transcript.related_contents">
+                                        <td>
                                             <a :href="related_content.url" target="_blank"><img :src="related_content.img_url"></a>
-                                        </div>
-                                    </td>
+                                        </td>
+                                    </div>
+
                                     <td></td>
                                 </tr>
                             </table>
@@ -43,11 +45,13 @@
                             <table bgcolor='#607780' >
                                 <tr>
                                     <td></td>
-                                    <td>
-                                        <div class="columns medium-3" v-for="related_content in transcript.related_contents">
+
+                                    <div class="columns medium-3" v-for="related_content in transcript.related_contents">
+                                        <td>
                                             <a :href="related_content.url" target="_blank"><img :src="related_content.img_url"></a>
-                                        </div>
-                                    </td>
+                                        </td>
+                                    </div>
+
                                     <td></td>
                                 </tr>
                             </table>
@@ -58,11 +62,11 @@
                         <table bgcolor='#607780' >
                             <tr>
                                 <td></td>
-                                <td>
-                                    <div class="columns medium-3" v-for="related_content in transcript.related_contents">
+                                <div class="columns medium-3" v-for="related_content in transcript.related_contents">
+                                    <td>
                                         <a :href="related_content.url" target="_blank"><img :src="related_content.img_url"></a>
-                                    </div>
-                                </td>
+                                    </td>
+                                </div>
                                 <td></td>
                             </tr>
                         </table>
@@ -148,7 +152,7 @@
       fetchTranscripts: function () {
         axios.get('/api/transcripts').then((response) => {
           for(var i = 0; i < response.data.transcripts.length; i++) {
-            this.transcripts.push(response.data.transcripts[i]);
+              this.transcripts.push(response.data.transcripts[i]);
           }
           this.index = response.data.index;
         }, (error) => {
@@ -160,11 +164,20 @@
 
   function updateDOM(index, transcripts) {
     axios.get('/api/transcripts/'+index).then((response) => {
-      for(var i = 0; i < response.data.transcripts.length; i++) {
-        var transcript = response.data.transcripts[i];
-        transcripts.unshift(transcript);
-      }
-      index += response.data.transcripts.length;
+        for(var i = 0; i < response.data.transcripts.length; i++) {
+          var transcript = response.data.transcripts[i];
+          if(transcript.context.reaction){
+            if(transcript.context.reaction == 'AWESOME'){
+                if(transcripts[0].has_content){
+                    for(var i = 0; i < transcripts[0].related_contents.length; i++) {
+                        transcripts[0].related_contents[i].awesome += 1;
+                    }
+                }
+            }
+          }
+          transcripts.unshift(transcript);
+        }
+        index += response.data.transcripts.length;
     }, (error) => {
       console.log(error);
       updateDOM(index, transcripts);

@@ -2,7 +2,7 @@ class Api::TranscriptsController < ApplicationController
 
   # GET /tasks
   def index
-    transcripts = Transcript.order('updated_at DESC')[0...20]
+    transcripts = Transcript.order('updated_at DESC')[0...25]
     transcripts_index = Transcript.all.length
 
     data_list = []
@@ -55,7 +55,6 @@ class Api::TranscriptsController < ApplicationController
   end
 
   def show
-    # sleep(0.5)
     transcripts = Transcript.offset(params[:id].to_i)
     data_list = []
 
