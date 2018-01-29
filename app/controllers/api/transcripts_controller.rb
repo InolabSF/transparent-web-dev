@@ -33,6 +33,7 @@ class Api::TranscriptsController < ApplicationController
         related_contents.push(related_content)
       end
 
+      awesome = transcript.awesome
       created_at = transcript.created_at
       updated_at = transcript.updated_at
 
@@ -43,6 +44,7 @@ class Api::TranscriptsController < ApplicationController
       data.store('entities', entities)
       data.store('has_content', has_content)
       data.store('related_contents', related_contents)
+      data.store('awesome', awesome)
       data.store('created_at', created_at)
       data.store('updated_at', updated_at)
 
@@ -84,6 +86,7 @@ class Api::TranscriptsController < ApplicationController
         related_contents.push(related_content)
       end
 
+      awesome = transcript.awesome
       created_at = transcript.created_at
       updated_at = transcript.updated_at
 
@@ -94,6 +97,7 @@ class Api::TranscriptsController < ApplicationController
       data.store('entities', entities)
       data.store('has_content', has_content)
       data.store('related_contents', related_contents)
+      data.store('awesome', awesome)
       data.store('created_at', created_at)
       data.store('updated_at', updated_at)
 
@@ -112,8 +116,16 @@ class Api::TranscriptsController < ApplicationController
     @transcripts = Transcript.new(:text => transcript_hash[:text], :wall_id => 1, :user_id => user_id, :has_content => has_content, :is_visible => true)
 
     if @transcripts.save
-      context = Context.new(:state => transcript_hash[:context][:state], :transcript_id => @transcripts.id)
+      context = Context.new(:state => transcript_hash[:context][:state], :transcript_id => @transcripts.id, :reaction => transcript_hash[:context][:reaction], :feedback => transcript_hash[:context][:feedback])
       context.save
+
+      if transcript_hash[:context][:reaction] == 'AWESOME'
+        awesome_contents = Transcript.find(@transcripts.id-1).related_contents
+        for awesome_content in awesome_contents
+          awesome_content.awesome += 1
+          awesome_content.save
+        end
+      end
 
       entities = transcript_hash[:entities]
       for entity_hash in entities

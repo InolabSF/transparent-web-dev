@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180126011235) do
+ActiveRecord::Schema.define(version: 20180129080349) do
 
   create_table "conditions", force: :cascade do |t|
     t.integer "related_content_id", null: false
@@ -25,6 +25,8 @@ ActiveRecord::Schema.define(version: 20180126011235) do
     t.string "state", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "feedback", default: false
+    t.string "reaction"
   end
 
   create_table "entities", force: :cascade do |t|
@@ -46,6 +48,7 @@ ActiveRecord::Schema.define(version: 20180126011235) do
     t.boolean "is_visible", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "awesome", default: 0
   end
 
   create_table "transcripts", force: :cascade do |t|
@@ -56,6 +59,8 @@ ActiveRecord::Schema.define(version: 20180126011235) do
     t.boolean "is_visible", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "sentiment"
+    t.integer "awesome", default: 0
   end
 
   create_table "users", force: :cascade do |t|

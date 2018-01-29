@@ -26,3 +26,17 @@ rails g migration AddNameToWalls name:string
 rails g migration AddCategoryToEntities category:string
 
 rails generate migration RemoveTypeFromEntities type:string
+
+rails g migration AddSentimentToTranscript sentiment:string
+
+rails g migration AddIsawesomeToTranscript is_awesome:boolean
+
+rails g migration AddFeedbackToContext feedback:boolean
+
+rails g migration AddReactionToContext reaction:string
+
+rails g migration ChangeAwesomeToTranscript
+
+rails g migration ChangeColumnToContext
+
+rails g migration ChangeColumnToRelatedContent
