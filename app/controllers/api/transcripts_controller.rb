@@ -107,7 +107,6 @@ class Api::TranscriptsController < ApplicationController
     render json: {'transcripts' => data_list }
   end
 
-  # POST /tasks
   def create
     transcript_hash = params
 
