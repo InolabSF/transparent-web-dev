@@ -2,9 +2,10 @@ class Api::TranscriptsController < ApplicationController
 
   # GET /tasks
   def index
-    transcripts = Transcript.order('updated_at DESC')
-    data_list = []
+    transcripts = Transcript.order('updated_at DESC')[0...20]
+    transcripts_index = Transcript.all.length
 
+    data_list = []
     for transcript in transcripts do
       data = {}
 
@@ -48,8 +49,7 @@ class Api::TranscriptsController < ApplicationController
       data_list.push(data)
     end
 
-    length = transcripts.length
-    render json: {'transcripts' => data_list, 'length' => length }
+    render json: {'transcripts' => data_list, 'index' => transcripts_index }
   end
 
   def show

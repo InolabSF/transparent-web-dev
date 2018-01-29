@@ -1,7 +1,7 @@
 <template>
 
   <div>
-        <div v-on:click="updateDOMloop" class="btn-floating waves-effect waves-light red">
+        <div v-on:click="stream" class="btn-floating waves-effect waves-light red">
           <i class="material-icons">add</i>
         </div>
 
@@ -123,22 +123,22 @@
     data: function () {
       return {
         transcripts: [],
-        page: 0
+        index: 0
       }
     },
     mounted: function () {
       this.fetchTranscripts();
     },
     methods: {
-      updateDOMloop: function() {
-          updateDOMfunction(this.page, this.transcripts);
+      stream: function() {
+          updateDOM(this.index, this.transcripts);
       },
       fetchTranscripts: function () {
         axios.get('/api/transcripts').then((response) => {
           for(var i = 0; i < response.data.transcripts.length; i++) {
             this.transcripts.push(response.data.transcripts[i]);
           }
-          this.page = response.data.length;
+          this.index = response.data.index;
         }, (error) => {
           console.log(error);
         });
@@ -146,18 +146,18 @@
     }
   }
 
-  function updateDOMfunction(page, transcripts) {
-    axios.get('/api/transcripts/'+page).then((response) => {
+  function updateDOM(index, transcripts) {
+    axios.get('/api/transcripts/'+index).then((response) => {
       for(var i = 0; i < response.data.transcripts.length; i++) {
         var transcript = response.data.transcripts[i];
         transcripts.unshift(transcript);
       }
-      page += response.data.entities.length;
+      index += response.data.transcripts.length;
     }, (error) => {
       console.log(error);
-      updateDOMfunction(page, transcripts);
+      updateDOM(index, transcripts);
     }).then((response) => {
-      updateDOMfunction(page, transcripts);
+      updateDOM(index, transcripts);
     },
     );
   }
