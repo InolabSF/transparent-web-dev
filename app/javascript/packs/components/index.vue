@@ -23,24 +23,55 @@
             <div class="columns medium-3" v-if="transcript.has_content">
 
             <div class="card" >
-              <table bgcolor='#607780' >
-                <tr>
-                  <td></td>
-                  <td>
-                  <div class="columns medium-3" v-for="related_content in transcript.related_contents">
+                <div class="columns medium-3" v-for="related_content in transcript.related_contents">
+                    <div v-if="related_content.awesome">
 
-                  <a :href="related_content.url" target="_blank"><img :src="related_content.img_url"></a>
+                        <div v-if="related_content.awesome != 0">
+                            <table bgcolor='#B7414B' >
+                                <tr>
+                                    <td></td>
+                                    <td>
 
-                  </div>
-                  </td>
-                  <td></td>
-                </tr>
-              </table>
+                                        <a :href="related_content.url" target="_blank"><img :src="related_content.img_url"></a>
+
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div v-else>
+                            <table bgcolor='#607780' >
+                                <tr>
+                                    <td></td>
+                                    <td>
+
+                                        <a :href="related_content.url" target="_blank"><img :src="related_content.img_url"></a>
+
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </div>
+
+                    </div>
+                    <div v-else>
+                        <table bgcolor='#607780' >
+                            <tr>
+                                <td></td>
+                                <td>
+
+                                    <a :href="related_content.url" target="_blank"><img :src="related_content.img_url"></a>
+
+                                </td>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </div>
+
+
               </div>
             </div>
-
-
-
+            </div>
 
             <div class="columns medium-3" v-for="i in transcript.related_contents.length">
 
