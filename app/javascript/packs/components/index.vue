@@ -23,17 +23,17 @@
             <div class="columns medium-3" v-if="transcript.has_content">
 
             <div class="card" >
-                <div class="columns medium-3" v-for="related_content in transcript.related_contents">
-                    <div v-if="related_content.awesome">
 
-                        <div v-if="related_content.awesome != 0">
-                            <table bgcolor='#B7414B' >
-                                <tr>
+                    <div v-if="transcript.related_contents[0].awesome">
+
+                        <div v-if="transcript.related_contents[0].awesome != 0">
+                            <table bgcolor='#607780' >
+                                <tr bgcolor='#B7414B'>
                                     <td></td>
-                                    <td>
-
-                                        <a :href="related_content.url" target="_blank"><img :src="related_content.img_url"></a>
-
+                                    <td >
+                                        <div class="columns medium-3" v-for="related_content in transcript.related_contents">
+                                            <a :href="related_content.url" target="_blank"><img :src="related_content.img_url"></a>
+                                        </div>
                                     </td>
                                     <td></td>
                                 </tr>
@@ -44,9 +44,9 @@
                                 <tr>
                                     <td></td>
                                     <td>
-
-                                        <a :href="related_content.url" target="_blank"><img :src="related_content.img_url"></a>
-
+                                        <div class="columns medium-3" v-for="related_content in transcript.related_contents">
+                                            <a :href="related_content.url" target="_blank"><img :src="related_content.img_url"></a>
+                                        </div>
                                     </td>
                                     <td></td>
                                 </tr>
@@ -59,9 +59,9 @@
                             <tr>
                                 <td></td>
                                 <td>
-
-                                    <a :href="related_content.url" target="_blank"><img :src="related_content.img_url"></a>
-
+                                    <div class="columns medium-3" v-for="related_content in transcript.related_contents">
+                                        <a :href="related_content.url" target="_blank"><img :src="related_content.img_url"></a>
+                                    </div>
                                 </td>
                                 <td></td>
                             </tr>
@@ -70,7 +70,7 @@
 
 
               </div>
-            </div>
+
             </div>
 
             <div class="columns medium-3" v-for="i in transcript.related_contents.length">
