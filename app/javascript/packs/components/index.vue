@@ -95,6 +95,7 @@
                   <td>
                     <p> Title : {{ transcript.related_contents[i-1].title }} </p>
                     <p> Desc : {{ transcript.related_contents[i-1].desc }} </p>
+                    <p> Source : {{ transcript.related_contents[i-1].source }} </p>
                     <div class="columns medium-3" v-if="transcript.related_contents[i-1].condition">
                     <p> Search  Service : {{transcript.related_contents[i-1].condition.service }}</p>
                     <p> Search Words : {{ transcript.related_contents[i-1].condition.word }}</p>
