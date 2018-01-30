@@ -164,6 +164,7 @@
 
   function updateDOM(index, transcripts) {
     axios.get('/api/transcripts/'+index).then((response) => {
+        index += response.data.transcripts.length;
         for(var i = 0; i < response.data.transcripts.length; i++) {
           var transcript = response.data.transcripts[i];
           if(transcript.context.reaction){
@@ -177,7 +178,6 @@
           }
           transcripts.unshift(transcript);
         }
-        index += response.data.transcripts.length;
     }, (error) => {
       console.log(error);
       updateDOM(index, transcripts);
