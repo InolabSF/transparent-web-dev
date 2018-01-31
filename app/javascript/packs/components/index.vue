@@ -1,9 +1,10 @@
 <template>
 
   <div>
-        <div v-on:click="stream" class="btn-floating waves-effect waves-light red">
-          <i class="material-icons">add</i>
-        </div>
+
+        <p>  </p>
+        <button v-on:click="start">Stream</button>
+        <button v-on:click="pause">Pause</button>
 
         <div class="columns medium-3" v-for="transcript in transcripts">
             <div class="card" >
@@ -140,15 +141,20 @@
     data: function () {
       return {
         transcripts: [],
-        index: 0
+        index: 0,
+        stream: false
       }
     },
     mounted: function () {
       this.fetchTranscripts();
     },
     methods: {
-      stream: function() {
-          updateDOM(this.index, this.transcripts);
+      start: function() {
+          this.stream = true
+          updateDOM(this.index, this.transcripts, this.stream);
+      },
+      pause: function() {
+          location.reload();
       },
       fetchTranscripts: function () {
         axios.get('/api/transcripts').then((response) => {
@@ -163,7 +169,7 @@
     }
   }
 
-  function updateDOM(index, transcripts) {
+  function updateDOM(index, transcripts, stream) {
     axios.get('/api/transcripts/'+index).then((response) => {
         index += response.data.transcripts.length;
         for(var i = 0; i < response.data.transcripts.length; i++) {
@@ -181,9 +187,15 @@
         }
     }, (error) => {
       console.log(error);
-      updateDOM(index, transcripts);
+      if (stream) {
+          updateDOM(index, transcripts, stream);
+      }
     }).then((response) => {
-      updateDOM(index, transcripts);
+      if (stream) {
+          updateDOM(index, transcripts, stream);
+      } else {
+          console.log('straeming stopped');
+      }
     },
     );
   }
