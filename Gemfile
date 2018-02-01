@@ -64,6 +64,5 @@ gem 'jquery-turbolinks'
 gem 'materialize-sass'
 gem 'material_icons'
 
-
-# gem 'rails_admin'                                               # admin
-# gem 'devise'                                                    # authentication
+gem 'devise'                                                    # authentication
+gem 'rails_admin'                                               # admin
