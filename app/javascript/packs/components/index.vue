@@ -21,7 +21,7 @@
 
                 </table>
             </div>
-            <div class="columns medium-3" v-if="transcript.has_content">
+            <div class="columns medium-3" v-if="transcript.related_contents">
 
             <div class="card" >
 
@@ -176,7 +176,7 @@
           var transcript = response.data.transcripts[i];
           if(transcript.context.reaction){
             if(transcript.context.reaction == 'AWESOME'){
-                if(transcripts[0].has_content){
+                if(transcripts[0].related_contents){
                     for(var i = 0; i < transcripts[0].related_contents.length; i++) {
                         transcripts[0].related_contents[i].awesome += 1;
                     }
