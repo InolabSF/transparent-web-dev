@@ -2,7 +2,7 @@ class Api::TranscriptsController < ApplicationController
 
   # GET /tasks
   def index
-    transcripts = Transcript.order('updated_at DESC')[0...25]
+    transcripts = Transcript.where(:wall_id => params[:wall_id]).order('updated_at DESC')[0...25]
     transcripts_index = Transcript.all.length
 
     data_list = []
@@ -55,7 +55,7 @@ class Api::TranscriptsController < ApplicationController
   end
 
   def show
-    transcripts = Transcript.offset(params[:id].to_i)
+    transcripts = Transcript.where(:wall_id => params[:wall_id]).offset(params[:index].to_i)
     data_list = []
 
     for transcript in transcripts do
@@ -111,7 +111,8 @@ class Api::TranscriptsController < ApplicationController
 
     user_id = User.find_by(facebook_id: transcript_hash[:user][:user_id]).id
     has_content = transcript_hash[:has_content]
-    @transcripts = Transcript.new(:text => transcript_hash[:text], :wall_id => 1, :user_id => user_id, :has_content => has_content, :is_visible => true)
+    wall_id = transcript_hash[:wall_id]
+    @transcripts = Transcript.new(:text => transcript_hash[:text], :wall_id => wall_id, :user_id => user_id, :has_content => has_content, :is_visible => true)
 
     if @transcripts.save
       context = Context.new(:state => transcript_hash[:context][:state], :transcript_id => @transcripts.id, :reaction => transcript_hash[:context][:reaction], :feedback => transcript_hash[:context][:feedback])

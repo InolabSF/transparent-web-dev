@@ -8,7 +8,7 @@
 
         <div class="columns medium-3" v-for="transcript in transcripts">
             <div class="card" >
-                <table bgcolor='#607780' style="padding:30;">
+                <table bgcolor='#09506B' style="padding:30;">
                   <tr>
                     <td></td>
                     <td>
@@ -46,7 +46,7 @@
                               </table>
                           </div>
                           <div v-else>
-                              <table bgcolor='#607780' >
+                              <table bgcolor='#09506B' >
                                   <tr>
                                       <td></td>
 
@@ -63,7 +63,7 @@
 
                     </div>
                     <div v-else>
-                          <table bgcolor='#607780' >
+                          <table bgcolor='#09506B' >
                               <tr>
                                   <td></td>
                                   <div class="columns medium-3" v-for="related_content in transcript.related_contents">
@@ -144,7 +144,7 @@
     data: function () {
       return {
         transcripts: [],
-        wall_id: 1,
+        wall_id: 2,
         index: 0,
         stream: false
       }
