@@ -3,7 +3,7 @@ class Api::TranscriptsController < ApplicationController
   # GET /tasks
   def index
     transcripts = Transcript.where(:wall_id => params[:wall_id]).order('updated_at DESC')[0...25]
-    transcripts_index = Transcript.all.length
+    transcripts_index = Transcript.where(:wall_id => params[:wall_id]).length
 
     data_list = []
     for transcript in transcripts do

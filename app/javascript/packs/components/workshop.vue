@@ -3,7 +3,7 @@
   <div>
 
         <p>  </p>
-        <button v-on:click="start">Stream</button>
+        <button v-on:click="start_w">Stream</button>
         <button v-on:click="pause">Pause</button>
 
         <div class="columns medium-3" v-for="transcript in transcripts">
@@ -153,7 +153,7 @@
       this.fetchTranscripts();
     },
     methods: {
-      start: function() {
+      start_w: function() {
           this.stream = true
           updateDOM(this.wall_id, this.index, this.transcripts, this.stream);
       },
