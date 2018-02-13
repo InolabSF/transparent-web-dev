@@ -41,6 +41,8 @@ rails g migration ChangeColumnToContext
 
 rails g migration ChangeColumnToRelatedContent
 
+rails g migration AddLangcodeToTranscript langcode:string
+
 User.create(:facebook_id => "guest_x", :name => "Guest X")
 
 Wall.create(:state => "WORKSHOP", :name => "Workshop")

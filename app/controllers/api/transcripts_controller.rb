@@ -112,7 +112,7 @@ class Api::TranscriptsController < ApplicationController
     user_id = User.find_by(facebook_id: transcript_hash[:user][:user_id]).id
     has_content = transcript_hash[:has_content]
     wall_id = transcript_hash[:wall_id]
-    @transcripts = Transcript.new(:text => transcript_hash[:text], :wall_id => wall_id, :user_id => user_id, :has_content => has_content, :is_visible => true)
+    @transcripts = Transcript.new(:text => transcript_hash[:text], :wall_id => wall_id, :user_id => user_id, :has_content => has_content, :is_visible => true, :langcode => transcript_hash[:langcode])
 
     if @transcripts.save
       context = Context.new(:state => transcript_hash[:context][:state], :transcript_id => @transcripts.id, :reaction => transcript_hash[:context][:reaction], :feedback => transcript_hash[:context][:feedback])
