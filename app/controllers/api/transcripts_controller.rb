@@ -56,6 +56,7 @@ class Api::TranscriptsController < ApplicationController
 
   def show
     transcripts = Transcript.where(:wall_id => params[:wall_id]).offset(params[:index].to_i)
+    index = params[:index].to_i + transcripts.length
     data_list = []
 
     for transcript in transcripts do
@@ -103,7 +104,7 @@ class Api::TranscriptsController < ApplicationController
       data_list.push(data)
     end
 
-    render json: {'transcripts' => data_list }
+    render json: {'transcripts' => data_list, 'index' => index }
   end
 
   def create
