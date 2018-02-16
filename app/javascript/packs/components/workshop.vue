@@ -140,6 +140,9 @@
 <script>
   import axios from 'axios';
 
+
+
+
   export default {
     data: function () {
       return {
@@ -147,6 +150,7 @@
         wall_id: 2,
         index: 0,
         stream: false
+
       }
     },
     mounted: function () {
@@ -155,6 +159,8 @@
     methods: {
       start: function() {
           this.stream = true
+
+
           updateDOM(this.wall_id, this.index, this.transcripts, this.stream);
       },
       pause: function() {
@@ -177,7 +183,7 @@
     axios.get('/api/transcripts/'+wall_id+'/'+index).then((response) => {
 
       if(response.data.index != index){
-
+      if(response.data.transcripts[0].text != transparents[0].text ){
         index += response.data.transcripts.length;
         for(var i = 0; i < response.data.transcripts.length; i++) {
           var transcript = response.data.transcripts[i];
@@ -193,7 +199,7 @@
           transcripts.unshift(transcript);
           transcript = null;
         }
-        }
+        }}
     }, (error) => {
       console.log(error);
       if (stream) {
