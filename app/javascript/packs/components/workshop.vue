@@ -183,7 +183,7 @@
     axios.get('/api/transcripts/'+wall_id+'/'+index).then((response) => {
 
       if(response.data.index != index){
-      if(response.data.transcripts[0].text != transparents[0].text ){
+      if(response.data.transcripts[0].text != transcripts[0].text ){
         index += response.data.transcripts.length;
         for(var i = 0; i < response.data.transcripts.length; i++) {
           var transcript = response.data.transcripts[i];
