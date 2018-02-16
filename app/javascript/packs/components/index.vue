@@ -177,21 +177,23 @@
     axios.get('/api/transcripts/'+wall_id+'/'+index).then((response) => {
 
       if(response.data.index != index){
-        index += response.data.transcripts.length;
-        for(var i = 0; i < response.data.transcripts.length; i++) {
-          var transcript = response.data.transcripts[i];
-          if(transcript.context.reaction){
-            if(transcript.context.reaction == 'AWESOME'){
-                if(transcripts[0].has_content){
-                    for(var i = 0; i < transcripts[0].related_contents.length; i++) {
-                        transcripts[0].related_contents[i].awesome += 1;
-                    }
-                }
+        if(response.data.transcripts[0].text != transcripts[0].text ){
+          index += response.data.transcripts.length;
+          for(var i = 0; i < response.data.transcripts.length; i++) {
+            var transcript = response.data.transcripts[i];
+            if(transcript.context.reaction){
+              if(transcript.context.reaction == 'AWESOME'){
+                  if(transcripts[0].has_content){
+                      for(var i = 0; i < transcripts[0].related_contents.length; i++) {
+                          transcripts[0].related_contents[i].awesome += 1;
+                      }
+                  }
+              }
+            }
+            transcripts.unshift(transcript);
+            transcript = null;
             }
           }
-          transcripts.unshift(transcript);
-          transcript = null;
-        }
         }
     }, (error) => {
       console.log(error);
