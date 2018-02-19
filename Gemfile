@@ -66,3 +66,5 @@ gem 'material_icons'
 
 gem 'devise'                                                    # authentication
 gem 'rails_admin'                                               # admin
+
+gem 'rack-cors'
