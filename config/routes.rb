@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   post '/api/transcripts', to: 'api/transcripts#create'
   get '/api/transcripts/:wall_id/:index', to: 'api/transcripts#show'
 
+  get '/demo',   to: 'home#demo'
+
   # namespace :api, format: 'json' do
   #   resources :transcripts, only: [:index, :show, :create, :update]
   # end

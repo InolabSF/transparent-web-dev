@@ -1,0 +1,98 @@
+
+.transparent-container {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+
+    .post {
+        position: relative;
+        padding: 200px 0;
+
+        .comment {
+            position: relative;
+            left: 50%;
+            z-index: 10;
+
+            width: #{500 / $retina}px;
+            padding: #{60 / $retina}px;
+
+            background-color: rgba(#668694, 0.9);
+            box-shadow: 7px 7px 45px 5px rgba(0,0,0,.5);
+
+            .comment-user-icon {
+                width: #{80 / $retina}px;
+                height: #{80 / $retina}px;
+
+                margin: 0 0 #{35 / $retina}px;
+                border-radius: 50%;
+
+                background-image: url(../img/top/img_user_default01.png);
+                background-size: 50% auto;
+                background-position: 50% 50%;
+                background-color: rgba(#7e0043, 0.3);
+            }
+
+            .comment-text {
+                color: #fff;
+            }
+        }
+
+        .media-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+
+            .media-photo {
+                position: absolute;
+                top: 0;
+                left: 0;
+
+                width: 100%;
+                height: auto !important;
+
+                box-shadow: 7px 7px 45px 5px rgba(0,0,0,.5);
+
+                background-color: #000;
+
+                img {
+                    width: 100%;
+                    height: auto !important;
+                }
+            }
+        }
+    }
+
+    .bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url(../img/top/bg01.jpg);
+        background-position: 50% 50%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-color: #000;
+
+        &.black {
+            background-image: none;
+        }
+    }
+
+    .btn-bg-toggle {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        padding: 10px 20px;
+        border-radius: 30px;
+        background: #fff;
+        z-index: 100;
+        color: #000;
+
+        opacity: 0.8;
+    }
+}
