@@ -52,8 +52,7 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
-  config.assets.precompile += ['javascripts/*.js']
-  config.assets.precompile += ['javascripts/*.png']
-  config.assets.precompile += ['javascripts/*.css']
-  config.assets.precompile += ['javascripts/*.scss']
+  # config.assets.precompile += ['javascripts/*.js']
+  # config.assets.precompile += ['javascripts/*.png']
+  # config.assets.precompile += ['javascripts/*.css']
 end
