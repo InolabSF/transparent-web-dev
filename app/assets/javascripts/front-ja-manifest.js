@@ -10,9 +10,9 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-// = require jquery
-//= require jquery.turbolinks
-//= require materialize
 //= require rails-ujs
 //= require turbolinks
-//= require_tree .
+//= require front/dest/assets/js/jquery.js
+//= require front/dest/assets/js/jquery.randomElements.js
+//= require front/dest/assets/js/fetch-transcripts-ja.js
+//= require front/dest/assets/js/bundle.js

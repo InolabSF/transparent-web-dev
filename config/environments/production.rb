@@ -90,5 +90,6 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
   # config.assets.precompile += ['javascripts/*.js']
   # config.assets.precompile += ['javascripts/*.png']
+  # config.assets.precompile += ['javascripts/*.jpg']
   # config.assets.precompile += ['javascripts/*.css']
 end

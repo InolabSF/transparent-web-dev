@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get '/api/transcripts/:wall_id/:index', to: 'api/transcripts#show'
 
   get '/demo',   to: 'home#demo'
+  get '/demo-ja',   to: 'home#demo_ja'
 
   # namespace :api, format: 'json' do
   #   resources :transcripts, only: [:index, :show, :create, :update]

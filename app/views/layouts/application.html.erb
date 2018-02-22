@@ -1,18 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja" class="no-js">
   <head>
-    <title>TransparentWebDev</title>
+    <title>Transparent</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta property="og:title" content="">
+    <meta property="og:site_name" content="">
+    <meta property="og:description" content="">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="/assets/img/config/og.jpg">
+    <meta property="og:type" content="website">
+    <link rel="shortcut icon" href="/assets/img/config/favicon.png" type="image/x-icon">
+    <link rel="apple-touch-icon" href="/assets/img/config/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="57x57" href="/assets/img/config/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/img/config/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/config/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/img/config/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/assets/img/config/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/assets/img/config/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/assets/img/config/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/config/apple-touch-icon-180x180.png">
+    <link rel="canonical" href="">
+    <!-- <link rel="stylesheet" href="./app/assets/stylesheets/front/dest/assets/css/app.css"> -->
+
   </head>
 
-  <body>
+  <body class="page-top">
 
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
 
     <%= yield %>
+
   </body>
+
+
+
 </html>
