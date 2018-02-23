@@ -823,7 +823,7 @@ input
     color: #fff;
     border-radius: 70px;
     background-color: #5b8288;
-    background-image: url(../img/common/ico_blank01.png);
+    background-image: url('http://res.cloudinary.com/negic/image/upload/v1519298779/ico_blank01.png');
     background-repeat: no-repeat;
     background-position: 10% 50%;
     background-size: 22.66667px auto;
@@ -838,7 +838,7 @@ input
 
     color: transparent;
     background-color: transparent;
-    background-image: url(../img/common/btn_close01.png);
+    background-image: url('http://res.cloudinary.com/negic/image/upload/v1519298641/btn_close01.png');
     background-repeat: no-repeat;
     background-size: 39.33333px auto;
 }
@@ -1163,7 +1163,11 @@ input
 {
     position: relative;
 
-    padding: 200px 0;
+    padding: 240px 0;
+}
+.transparent-container .post.no-content
+{
+    padding: 40px 0;
 }
 .transparent-container .post .comment
 {
@@ -1173,6 +1177,8 @@ input
 
     width: 333.33333px;
     padding: 40px;
+
+    pointer-events: none;
 
     background-color: rgba(102, 134, 148, .9);
     box-shadow: 7px 7px 45px 5px rgba(0, 0, 0, .5);
@@ -1185,7 +1191,7 @@ input
 
     border-radius: 50%;
     background-color: rgba(126, 0, 67, .3);
-    background-image: url(../img/top/img_user_default01.png);
+    background-image: url('http://res.cloudinary.com/negic/image/upload/v1519298789/img_user_default01.png');
     background-position: 50% 50%;
     background-size: 50% auto;
 }
@@ -1215,10 +1221,19 @@ input
     background-color: #000;
     box-shadow: 7px 7px 45px 5px rgba(0, 0, 0, .5);
 }
-.transparent-container .post .media-container .media-photo img
+.transparent-container .post .media-container .media-photo .img
 {
     width: 100%;
     height: auto !important;
+}
+.transparent-container .post .media-container .media-photo .favicon
+{
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+
+    width: auto;
+    height: 30px;
 }
 .transparent-container .bg
 {
@@ -1231,7 +1246,7 @@ input
     height: 100%;
 
     background-color: #000;
-    background-image: url(../img/top/bg01.jpg);
+    background-image: url('http://res.cloudinary.com/negic/image/upload/v1519298785/bg01.jpg');
     background-repeat: no-repeat;
     background-position: 50% 50%;
     background-size: cover;

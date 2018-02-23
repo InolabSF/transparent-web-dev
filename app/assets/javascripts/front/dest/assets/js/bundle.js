@@ -19347,9 +19347,7 @@
 	// var {hasClass, getDOM, addClass, removeClass} = require('../utils/BaseUtils').utils
 	var data = __webpack_require__(9);
 
-	var COMMENT_BOX_SIZE = 500 / 1.5;
-	var RANGE = 200;
-	var MEDIA_SIZE = 400;
+	var Transcripts = __webpack_require__(11);
 
 	var TopScene = function (_BaseApp) {
 	    _inherits(TopScene, _BaseApp);
@@ -19359,23 +19357,152 @@
 
 	        var _this = _possibleConstructorReturn(this, (TopScene.__proto__ || Object.getPrototypeOf(TopScene)).call(this));
 
-	        _this.init();
+	        new Transcripts();
 
 	        $('#wrapper').on('click', '.media-photo', _this.showModal.bind(_this)).on('click', '.modal-layer .btn-close01', _this.hideModal.bind(_this)).on('click', '.btn-bg-toggle', _this.toggleBackgroundStyle.bind(_this));
 
-	        $(window).on('keyup', _this.keyUp.bind(_this));
-
+	        $(window).on('keydown', _this.keyDown.bind(_this)).on('keyup', _this.keyUp.bind(_this));
 	        return _this;
 	    }
 
 	    _createClass(TopScene, [{
+	        key: 'showModal',
+	        value: function showModal(event) {
+	            event.preventDefault();
+
+	            var modal = $('.modal-inner');
+	            var el = $(event.currentTarget);
+
+	            var src = el.find('img').attr('src');
+	            var title = el.data('title');
+	            var desc = el.data('desc');
+	            var url = el.attr('href');
+
+	            if (src) {
+	                $('<img />', { src: src }).appendTo(modal);
+	            }
+	            if (title) {
+	                $('<p />', { class: 'title' }).text(title).appendTo(modal);
+	            }
+	            if (desc) {
+	                $('<p />', { class: 'desc' }).text(desc).appendTo(modal);
+	            }
+	            if (url) {
+	                $('<a />', { class: 'btn-style01', href: url, target: '_blank' }).text('Link').appendTo(modal);
+	            }
+
+	            $('.modal-layer').addClass('is-show');
+	        }
+	    }, {
+	        key: 'hideModal',
+	        value: function hideModal(event) {
+	            event.preventDefault();
+
+	            // モーダルの中身削除
+	            $('.modal-inner').empty();
+
+	            $('.modal-layer').removeClass('is-show');
+	        }
+	    }, {
+	        key: 'toggleBackgroundStyle',
+	        value: function toggleBackgroundStyle(event) {
+	            event.preventDefault();
+
+	            if ($('.bg').hasClass('black')) {
+	                $('.bg').removeClass('black');
+	            } else {
+	                $('.bg').addClass('black');
+	            }
+	        }
+	    }, {
+	        key: 'keyUp',
+	        value: function keyUp(event) {
+
+	            // キーボードのスペースが押されたら
+	            if (event.keyCode === 32) {
+	                this.toggleBackgroundStyle(event);
+	            }
+	        }
+	    }, {
+	        key: 'keyDown',
+	        value: function keyDown(event) {
+
+	            // キーボードのスペースが押されたら
+	            // スクロールするのを無効
+	            if (event.keyCode === 32) {
+	                event.preventDefault();
+	            }
+	        }
+	    }]);
+
+	    return TopScene;
+	}(BaseApp);
+
+	module.exports = TopScene;
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _ = __webpack_require__(2);
+	var BaseApp = __webpack_require__(4);
+	// var {hasClass, getDOM, addClass, removeClass} = require('../utils/BaseUtils').utils
+	var data = __webpack_require__(9);
+
+	var COMMENT_BOX_SIZE = 500 / 1.5;
+	var RANGE = 200; // .commentボックスのズレ具合
+	var MEDIA_MAX_SIZE = 400; // ランダム配置される画像の最大サイズ
+	var MEDIA_MIN_SIZE = MEDIA_MAX_SIZE / 3; // ランダム配置される画像の最小サイズ
+
+
+	var Transcripts = function (_BaseApp) {
+	    _inherits(Transcripts, _BaseApp);
+
+	    function Transcripts() {
+	        _classCallCheck(this, Transcripts);
+
+	        var _this = _possibleConstructorReturn(this, (Transcripts.__proto__ || Object.getPrototypeOf(Transcripts)).call(this));
+
+	        setTimeout(function () {
+	            _this.add(additional_transcripts);
+	        }, 8000);
+
+	        _this.init();
+	        return _this;
+	    }
+
+	    /**
+	     * 最初のトランスクリプト追加
+	     */
+
+
+	    _createClass(Transcripts, [{
 	        key: 'init',
 	        value: function init() {
 	            var _this2 = this;
 
 	            // ポストの数だけループ
 	            _.each(initial_transcripts, function (data) {
-	                var post = $('<div />', { class: 'post' });
+	                var klass = '';
+
+	                if (data.has_content) {
+	                    klass = '';
+	                } else {
+	                    klass = ' no-content';
+	                }
+
+	                var post = $('<div />', { class: 'post' + klass });
+
 	                var comment = $('<div />', { class: 'comment' }).appendTo(post);
 	                var container = $('<div />', { class: 'media-container' }).appendTo(post);
 
@@ -19386,7 +19513,47 @@
 	                $('.transparent-container').append(post);
 
 	                _this2.postPosition(post);
-	                _this2.mediaRandomPosition(post, data);
+
+	                if (data.has_content) {
+	                    _this2.mediaRandomPosition(post, data);
+	                }
+	            });
+	        }
+
+	        /**
+	         * トランスクリプト追加
+	         * @param [array] data: 追加用オブジェクト配列
+	         */
+
+	    }, {
+	        key: 'add',
+	        value: function add(addData) {
+	            var _this3 = this;
+
+	            console.log('add');
+
+	            // ポストの数だけループ
+	            _.each(addData, function (data) {
+	                var klass = '';
+
+	                if (data.has_content) {
+	                    klass = '';
+	                } else {
+	                    klass = ' no-content';
+	                }
+
+	                var post = $('<div />', { class: 'post' + klass });
+	                var comment = $('<div />', { class: 'comment' }).appendTo(post);
+	                var container = $('<div />', { class: 'media-container' }).appendTo(post);
+
+	                $('<div />', { class: 'comment-user-icon' }).appendTo(comment);
+	                $('<div />', { class: 'comment-text' }).text(data.text).appendTo(comment);
+
+	                // ポストのDOMを追加
+	                $('.transparent-container').prepend(post);
+
+	                _this3.postPosition(post);
+	                _this3.mediaRandomPosition(post, data);
 	            });
 	        }
 
@@ -19421,6 +19588,7 @@
 	            _.each(data.related_contents, function (d) {
 	                var h = {};
 
+	                // webpageだったらリンクを貼る
 	                if (d.content_type === 'webpage') {
 	                    var h = $('<a />', {
 	                        href: d.url,
@@ -19428,9 +19596,10 @@
 	                        'data-desc': d.desc,
 	                        target: '_blank'
 	                    });
-	                    $('<img />', { src: d.img_url }).appendTo(h);
+	                    $('<img />', { src: d.img_url, class: 'img' }).appendTo(h);
+	                    $('<img />', { src: 'http://www.google.com/s2/favicons?domain=' + d.source, class: 'favicon' }).appendTo(h);
 	                } else {
-	                    h = $('<img />', { src: d.img_url });
+	                    h = $('<img />', { src: d.img_url, class: 'img' });
 	                }
 
 	                array.push(h);
@@ -19438,75 +19607,20 @@
 
 	            // arrayに入れたDOM配列をランダム配置
 	            $(el).find('.media-container').randomElements(array, {
-	                width: MEDIA_SIZE,
-	                // stageHeight: MEDIA_SIZE / 2,
-	                min: MEDIA_SIZE / 3,
+	                width: MEDIA_MAX_SIZE,
+	                // stageHeight: MEDIA_MAX_SIZE / 2,
+	                min: MEDIA_MIN_SIZE,
 	                className: 'media-photo',
-	                adjustment: MEDIA_SIZE / 6,
+	                adjustment: MEDIA_MAX_SIZE / 6,
 	                tryCount: 999
 	            });
 	        }
-	    }, {
-	        key: 'showModal',
-	        value: function showModal(event) {
-	            event.preventDefault();
-
-	            var modal = $('.modal-inner');
-	            var el = $(event.currentTarget);
-
-	            var src = el.find('img').attr('src');
-	            var title = el.data('title');
-	            var desc = el.data('desc');
-	            var url = el.attr('href');
-
-	            if (src) {
-	                $('<img />', { src: src }).appendTo(modal);
-	            }
-	            if (title) {
-	                $('<p />', { class: 'title' }).text(title).appendTo(modal);
-	            }
-	            if (desc) {
-	                $('<p />', { class: 'desc' }).text(desc).appendTo(modal);
-	            }
-	            if (url) {
-	                $('<a />', { class: 'btn-style01', href: url, target: '_blank' }).text('Link').appendTo(modal);
-	            }
-
-	            $('.modal-layer').addClass('is-show');
-	        }
-	    }, {
-	        key: 'hideModal',
-	        value: function hideModal(event) {
-	            event.preventDefault();
-	            $('.modal-inner').empty();
-	            $('.modal-layer').removeClass('is-show');
-	        }
-	    }, {
-	        key: 'toggleBackgroundStyle',
-	        value: function toggleBackgroundStyle(event) {
-	            event.preventDefault();
-
-	            if ($('.bg').hasClass('black')) {
-	                $('.bg').removeClass('black');
-	            } else {
-	                $('.bg').addClass('black');
-	            }
-	        }
-	    }, {
-	        key: 'keyUp',
-	        value: function keyUp(event) {
-
-	            // キーボードのスペースが押されたら
-	            if (event.keyCode === 32) {
-	                this.toggleBackgroundStyle(event);
-	            }
-	        }
 	    }]);
 
-	    return TopScene;
+	    return Transcripts;
 	}(BaseApp);
 
-	module.exports = TopScene;
+	module.exports = Transcripts;
 
 /***/ })
 /******/ ]);

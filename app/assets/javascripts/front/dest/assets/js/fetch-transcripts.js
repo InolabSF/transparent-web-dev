@@ -18,6 +18,7 @@
     }
 
     fetchTranscripts(initial_transcripts, index);
+    fetchTranscripts(additional_transcripts, index);
 
     // 追加のTranscriptsを取得
 
