@@ -4,10 +4,12 @@ class HomeController < ApplicationController
   end
 
   def demo
+    @wall_id = 1
     render :file => "home/front/dest/index"
   end
 
   def demo_ja
-    render :file => "home/front/dest/index-ja"
+    @wall_id = 2
+    render :file => "home/front/dest/index"
   end
 end

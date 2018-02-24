@@ -14,5 +14,4 @@
 //= require turbolinks
 //= require front/dest/assets/js/jquery.js
 //= require front/dest/assets/js/jquery.randomElements.js
-//= require front/dest/assets/js/fetch-transcripts.js
 //= require front/dest/assets/js/bundle.js
