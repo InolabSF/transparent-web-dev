@@ -1162,6 +1162,7 @@ input
 .transparent-container .post
 {
     position: relative;
+    z-index: 1;
 
     padding: 240px 0;
 }
@@ -1255,17 +1256,29 @@ input
 {
     background-image: none;
 }
+.transparent-container .btn-add,
 .transparent-container .btn-bg-toggle
 {
     position: fixed;
     z-index: 100;
-    top: 10px;
-    right: 10px;
 
+    width: 200px;
     padding: 10px 20px;
+
+    text-align: center;
 
     opacity: .8;
     color: #000;
     border-radius: 30px;
     background: #fff;
+}
+.transparent-container .btn-add
+{
+    top: 80px;
+    right: 10px;
+}
+.transparent-container .btn-bg-toggle
+{
+    top: 10px;
+    right: 10px;
 }

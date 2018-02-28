@@ -19357,15 +19357,19 @@
 
 	        var _this = _possibleConstructorReturn(this, (TopScene.__proto__ || Object.getPrototypeOf(TopScene)).call(this));
 
-	        new Transcripts();
+	        _this.transcripts = new Transcripts();
+	        transcripts_add = _this.transcripts.add.bind(_this.transcripts);
 
-	        $('#wrapper').on('click', '.media-photo', _this.showModal.bind(_this)).on('click', '.modal-layer .btn-close01', _this.hideModal.bind(_this)).on('click', '.btn-bg-toggle', _this.toggleBackgroundStyle.bind(_this));
+	        $('#wrapper').on('click', '.media-photo', _this.showModal.bind(_this)).on('click', '.modal-layer .btn-close01', _this.hideModal.bind(_this)).on('click', '.btn-bg-toggle', _this.toggleBackgroundStyle.bind(_this)).on('click', '.btn-add', _this.add.bind(_this));
 
 	        $(window).on('keydown', _this.keyDown.bind(_this)).on('keyup', _this.keyUp.bind(_this));
 	        return _this;
 	    }
 
 	    _createClass(TopScene, [{
+	        key: 'add',
+	        value: function add() {}
+	    }, {
 	        key: 'showModal',
 	        value: function showModal(event) {
 	            event.preventDefault();
@@ -19463,7 +19467,7 @@
 	var RANGE = 200; // .commentボックスのズレ具合
 	var MEDIA_MAX_SIZE = 400; // ランダム配置される画像の最大サイズ
 	var MEDIA_MIN_SIZE = MEDIA_MAX_SIZE / 3; // ランダム配置される画像の最小サイズ
-
+	var TRY_COUNT = 999; // 配置が重なっていた時に再度ランダムをやり直す回数
 
 	var Transcripts = function (_BaseApp) {
 	    _inherits(Transcripts, _BaseApp);
@@ -19472,10 +19476,6 @@
 	        _classCallCheck(this, Transcripts);
 
 	        var _this = _possibleConstructorReturn(this, (Transcripts.__proto__ || Object.getPrototypeOf(Transcripts)).call(this));
-
-	        setTimeout(function () {
-	            _this.add(additional_transcripts);
-	        }, 8000);
 
 	        _this.init();
 	        return _this;
@@ -19552,6 +19552,8 @@
 	                // ポストのDOMを追加
 	                $('.transparent-container').prepend(post);
 
+	                console.log('this', _this3);
+
 	                _this3.postPosition(post);
 	                _this3.mediaRandomPosition(post, data);
 	            });
@@ -19612,7 +19614,7 @@
 	                min: MEDIA_MIN_SIZE,
 	                className: 'media-photo',
 	                adjustment: MEDIA_MAX_SIZE / 6,
-	                tryCount: 999
+	                tryCount: TRY_COUNT
 	            });
 	        }
 	    }]);
