@@ -31,12 +31,15 @@
       }
       index = data.index
       console.log(index)
-      return index
+      return initial_transcripts, index
     }
 
-    index = fetchTranscripts(initial_transcripts, index);
+    initial_transcripts, index = fetchTranscripts(initial_transcripts, index);
 
-    function loadTranscripts(index){
+    var total_transcripts = [];
+    total_transcripts = initial_transcripts
+
+    function loadTranscripts(total_transcripts, index){
       console.log('start');
       console.log(index);
 
@@ -53,22 +56,30 @@
       instance.get('/transcripts/' + <%= @wall_id %> + '/' + index).then(function (response){
       // instance.get('/transcripts/' + <%= @wall_id %> + '/' + String(index)).then(function (response){
       // instance.get('/transcripts/' + <%= @wall_id %> + '/51').then(function (response){
-        console.log('response');
-        console.log(response);
         console.log(response.data);
+
         for(var i = 0; i < response.data.transcripts.length; i++) {
-            transcripts_add([response.data.transcripts[i]]);
-            index += 1;
+            if(i == 0){
+              transcripts_add([response.data.transcripts[i]]);
+              total_transcripts.unshift(response.data.transcripts[i])
+              index += 1;
+            } else {
+                if(response.data.transcripts[i].text != total_transcripts[0].text){
+                  transcripts_add([response.data.transcripts[i]]);
+                  total_transcripts.unshift(response.data.transcripts[i])
+                  index += 1;
+                }
+            }
         }
       }, function (error) {
         console.log(error);
       }).then(function (response){
-        loadTranscripts(index);
+        loadTranscripts(total_transcripts, index);
       });
     }
     // window.addEventListener('load', loadTranscripts(index))
     document.getElementById('add').addEventListener('click', function() {
-        loadTranscripts(index);
+        loadTranscripts(total_transcripts, index);
     }, false);
 
     </script>
