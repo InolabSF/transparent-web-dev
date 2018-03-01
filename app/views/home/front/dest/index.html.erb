@@ -54,16 +54,16 @@
       });
 
       instance.get('/transcripts/' + <%= @wall_id %> + '/' + index).then(function (response){
-      // instance.get('/transcripts/' + <%= @wall_id %> + '/' + String(index)).then(function (response){
-      // instance.get('/transcripts/' + <%= @wall_id %> + '/51').then(function (response){
         console.log(response.data);
+        transcripts = response.data.transcripts
+        index += transcripts.length;
 
-        for(var i = 0; i < response.data.transcripts.length; i++) {
+        for(var i = 0; i < transcripts.length; i++) {
 
-              if(response.data.transcripts[i].text != total_transcripts[0].text){
-                transcripts_add([response.data.transcripts[i]]);
-                total_transcripts.unshift(response.data.transcripts[i])
-                index += 1;
+              if(transcripts[i].text != total_transcripts[0].text){
+                total_transcripts.unshift(transcripts[i])
+                transcripts_add([transcripts[i]]);
+                // index += 1;
             }
         }
       }, function (error) {
@@ -72,6 +72,8 @@
         loadTranscripts(total_transcripts, index);
       });
     }
+
+
     // window.addEventListener('load', loadTranscripts(index))
     document.getElementById('add').addEventListener('click', function() {
         loadTranscripts(total_transcripts, index);
