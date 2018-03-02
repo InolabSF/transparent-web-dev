@@ -9,10 +9,11 @@ class Api::TranscriptsController < ApplicationController
   end
 
   def show
-    transcripts = Transcript.where(:wall_id => params[:wall_id]).offset(params[:index].to_i)
-    index = params[:index].to_i + transcripts.length
-    data_list = format_transcripts(transcripts)
-    render json: {'transcripts' => data_list, 'index' => index }
+    new_transcripts = Transcript.where(:wall_id => params[:wall_id]).offset(params[:index].to_i)
+    index = params[:index].to_i + new_transcripts.length
+    new_data_list = format_transcripts(new_transcripts)
+    new_transcripts = nil
+    render json: {'transcripts' => new_data_list, 'index' => index }
   end
 
   def create
@@ -57,9 +58,9 @@ class Api::TranscriptsController < ApplicationController
     end
   end
 
-  def format_transcripts(transcripts)
+  def format_transcripts(transcripts_list)
     data_list = []
-    for transcript in transcripts do
+    for transcript in transcripts_list do
       data = {}
 
       id = transcript.id
