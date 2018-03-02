@@ -51,7 +51,7 @@
         },
         responseType: 'json'
       });
-
+      console.log('send req with index :' index);
       instance.get('/transcripts/' + <%= @wall_id %> + '/' + index).then(function (response){
         console.log(response.data);
         transcripts = response.data.transcripts
