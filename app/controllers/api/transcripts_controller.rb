@@ -25,22 +25,6 @@ class Api::TranscriptsController < ApplicationController
     @transcripts = Transcript.new(:text => transcript_hash[:text], :wall_id => wall_id, :user_id => user_id, :has_content => has_content, :is_visible => true, :langcode => transcript_hash[:langcode], :sentiment => transcript_hash[:sentiment])
 
     if @transcripts.save
-      context = Context.new(:state => transcript_hash[:context][:state], :transcript_id => @transcripts.id, :reaction => transcript_hash[:context][:reaction], :feedback => transcript_hash[:context][:feedback])
-      context.save
-
-      if transcript_hash[:context][:reaction] == 'AWESOME'
-        awesome_contents = Transcript.find(@transcripts.id-1).related_contents
-        for awesome_content in awesome_contents
-          awesome_content.awesome += 1
-          awesome_content.save
-        end
-      end
-
-      entities = transcript_hash[:entities]
-      for entity_hash in entities
-        entity = Entity.new(:category => entity_hash[:category], :name => entity_hash[:name], 'transcript_id' => @transcripts.id)
-        entity.save
-      end
 
       if has_content
         related_contents = transcript_hash[:related_contents]
@@ -49,6 +33,23 @@ class Api::TranscriptsController < ApplicationController
           related_content.save
           condition = Condition.new(:service => related_content_hash[:condition][:service], :word => related_content_hash[:condition][:word], :related_content_id => related_content.id)
           condition.save
+        end
+      end
+      
+      context = Context.new(:state => transcript_hash[:context][:state], :transcript_id => @transcripts.id, :reaction => transcript_hash[:context][:reaction], :feedback => transcript_hash[:context][:feedback])
+      context.save
+
+      entities = transcript_hash[:entities]
+      for entity_hash in entities
+        entity = Entity.new(:category => entity_hash[:category], :name => entity_hash[:name], 'transcript_id' => @transcripts.id)
+        entity.save
+      end
+
+      if transcript_hash[:context][:reaction] == 'AWESOME'
+        awesome_contents = Transcript.find(@transcripts.id-1).related_contents
+        for awesome_content in awesome_contents
+          awesome_content.awesome += 1
+          awesome_content.save
         end
       end
 
