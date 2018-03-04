@@ -5,4 +5,6 @@ class Transcript < ApplicationRecord
   has_one :context
   has_many :entities
   has_many :related_contents
+  accepts_nested_attributes_for :related_contents
+  accepts_nested_attributes_for :entities
 end

@@ -22,40 +22,36 @@ class Api::TranscriptsController < ApplicationController
     user_id = User.find_by(facebook_id: transcript_hash[:user][:user_id]).id
     has_content = transcript_hash[:has_content]
     wall_id = transcript_hash[:wall_id]
-    @transcripts = Transcript.new(:text => transcript_hash[:text], :wall_id => wall_id, :user_id => user_id, :has_content => has_content, :is_visible => true, :langcode => transcript_hash[:langcode], :sentiment => transcript_hash[:sentiment])
+    @transcript = Transcript.new(:text => transcript_hash[:text], :wall_id => wall_id, :user_id => user_id, :has_content => has_content, :is_visible => true, :langcode => transcript_hash[:langcode], :sentiment => transcript_hash[:sentiment])
 
-    if @transcripts.save
-
-      if has_content
-        related_contents = transcript_hash[:related_contents]
-        for related_content_hash in related_contents
-          related_content = RelatedContent.new(:title => related_content_hash[:title], :desc => related_content_hash[:desc], :url => related_content_hash[:url], :img_url => related_content_hash[:img_url], :content_type => related_content_hash[:content_type], :source => related_content_hash[:source], :is_visible => [:is_visible], 'transcript_id' => @transcripts.id)
-          related_content.save
-          condition = Condition.new(:service => related_content_hash[:condition][:service], :word => related_content_hash[:condition][:word], :related_content_id => related_content.id)
-          condition.save
-        end
+    if has_content
+      related_contents_hash = transcript_hash[:related_contents]
+      for related_content_hash in related_contents_hash
+        related_content = @transcript.related_contents.build(:title => related_content_hash[:title], :desc => related_content_hash[:desc], :url => related_content_hash[:url], :img_url => related_content_hash[:img_url], :content_type => related_content_hash[:content_type], :source => related_content_hash[:source], :is_visible => [:is_visible])
+        condition = related_content.build_condition(:service => related_content_hash[:condition][:service], :word => related_content_hash[:condition][:word])
       end
-      
-      context = Context.new(:state => transcript_hash[:context][:state], :transcript_id => @transcripts.id, :reaction => transcript_hash[:context][:reaction], :feedback => transcript_hash[:context][:feedback])
-      context.save
+    end
 
-      entities = transcript_hash[:entities]
-      for entity_hash in entities
-        entity = Entity.new(:category => entity_hash[:category], :name => entity_hash[:name], 'transcript_id' => @transcripts.id)
-        entity.save
-      end
+    context = @transcript.build_context(:state => transcript_hash[:context][:state], :reaction => transcript_hash[:context][:reaction], :feedback => transcript_hash[:context][:feedback])
+
+    entities = transcript_hash[:entities]
+    for entity_hash in entities
+      entity = @transcript.entities.build(:category => entity_hash[:category], :name => entity_hash[:name])
+    end
+
+    if @transcript.save
 
       if transcript_hash[:context][:reaction] == 'AWESOME'
-        awesome_contents = Transcript.find(@transcripts.id-1).related_contents
+        awesome_contents = Transcript.find(@transcript.id-1).related_contents
         for awesome_content in awesome_contents
           awesome_content.awesome += 1
           awesome_content.save
         end
       end
 
-      render :json => @transcripts
+      render :json => @transcript
     else
-      render json: @transcripts.errors, status: :unprocessable_entity
+      render json: @transcript.errors, status: :unprocessable_entity
     end
   end
 
