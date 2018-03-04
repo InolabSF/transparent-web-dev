@@ -19465,7 +19465,7 @@
 
 	var COMMENT_BOX_SIZE = 500 / 1.5;
 	var RANGE = 200; // .commentボックスのズレ具合
-	var MEDIA_MAX_SIZE = 400; // ランダム配置される画像の最大サイズ
+	var MEDIA_MAX_SIZE = 350; // ランダム配置される画像の最大サイズ
 	var MEDIA_MIN_SIZE = MEDIA_MAX_SIZE / 3; // ランダム配置される画像の最小サイズ
 	var TRY_COUNT = 999; // 配置が重なっていた時に再度ランダムをやり直す回数
 
@@ -19482,7 +19482,7 @@
 	    }
 
 	    /**
-	     * 最初のトランスクリプト追加
+	     * 最初のトランスクリプト生成
 	     */
 
 
@@ -19491,23 +19491,13 @@
 	        value: function init() {
 	            var _this2 = this;
 
+	            var length = initial_transcripts.length - 1;
+	            var index = 0;
+
 	            // ポストの数だけループ
-	            _.each(initial_transcripts, function (data) {
-	                var klass = '';
-
-	                if (data.has_content) {
-	                    klass = '';
-	                } else {
-	                    klass = ' no-content';
-	                }
-
-	                var post = $('<div />', { class: 'post' + klass });
-
-	                var comment = $('<div />', { class: 'comment' }).appendTo(post);
-	                var container = $('<div />', { class: 'media-container' }).appendTo(post);
-
-	                $('<div />', { class: 'comment-user-icon' }).appendTo(comment);
-	                $('<div />', { class: 'comment-text' }).text(data.text).appendTo(comment);
+	            var loop = function loop() {
+	                var data = initial_transcripts[index];
+	                var post = _this2.createPost(data);
 
 	                // ポストのDOMを追加
 	                $('.transparent-container').append(post);
@@ -19517,7 +19507,18 @@
 	                if (data.has_content) {
 	                    _this2.mediaRandomPosition(post, data);
 	                }
-	            });
+
+	                setTimeout(function () {
+	                    _this2.transit(post);
+	                }, 100);
+
+	                if (index < length) {
+	                    index++;
+	                    setTimeout(loop, 200);
+	                }
+	            };
+
+	            setTimeout(loop, 1000);
 	        }
 
 	        /**
@@ -19530,33 +19531,54 @@
 	        value: function add(addData) {
 	            var _this3 = this;
 
-	            console.log('add');
+	            var length = addData.length - 1;
+	            var index = 0;
 
 	            // ポストの数だけループ
-	            _.each(addData, function (data) {
-	                var klass = '';
-
-	                if (data.has_content) {
-	                    klass = '';
-	                } else {
-	                    klass = ' no-content';
-	                }
-
-	                var post = $('<div />', { class: 'post' + klass });
-	                var comment = $('<div />', { class: 'comment' }).appendTo(post);
-	                var container = $('<div />', { class: 'media-container' }).appendTo(post);
-
-	                $('<div />', { class: 'comment-user-icon' }).appendTo(comment);
-	                $('<div />', { class: 'comment-text' }).text(data.text).appendTo(comment);
+	            var loop = function loop() {
+	                var data = initial_transcripts[index];
+	                var post = _this3.createPost(data);
 
 	                // ポストのDOMを追加
 	                $('.transparent-container').prepend(post);
 
-	                console.log('this', _this3);
-
 	                _this3.postPosition(post);
-	                _this3.mediaRandomPosition(post, data);
-	            });
+
+	                if (data.has_content) {
+	                    _this3.mediaRandomPosition(post, data);
+	                }
+
+	                setTimeout(function () {
+	                    _this3.transit(post);
+	                }, 100);
+
+	                if (index < length) {
+	                    index++;
+	                    setTimeout(loop, 200);
+	                }
+	            };
+
+	            setTimeout(loop, 1000);
+	        }
+	    }, {
+	        key: 'createPost',
+	        value: function createPost(data) {
+	            var klass = '';
+
+	            if (data.has_content) {
+	                klass = '';
+	            } else {
+	                klass = ' no-content';
+	            }
+
+	            var post = $('<div />', { class: 'post' + klass });
+	            var comment = $('<div />', { class: 'comment' }).appendTo(post);
+	            var container = $('<div />', { class: 'media-container' }).appendTo(post);
+
+	            $('<div />', { class: 'comment-user-icon' }).appendTo(comment);
+	            $('<div />', { class: 'comment-text' }).text(data.text).appendTo(comment);
+
+	            return post;
 	        }
 
 	        /**
@@ -19566,7 +19588,7 @@
 
 	    }, {
 	        key: 'postPosition',
-	        value: function postPosition(el) {
+	        value: function postPosition(post) {
 	            var x = 0;
 	            var y = 0;
 	            var range = _.random(-RANGE, RANGE);
@@ -19574,7 +19596,7 @@
 	            x = -COMMENT_BOX_SIZE / 2 + range;
 	            y = 0; //_.random(30, 40) - 20 + 'vh';
 
-	            $(el).find('.comment').css({ marginTop: y, marginLeft: x });
+	            $(post).find('.comment').css({ marginTop: y, marginLeft: x });
 	        }
 
 	        /**
@@ -19584,7 +19606,7 @@
 
 	    }, {
 	        key: 'mediaRandomPosition',
-	        value: function mediaRandomPosition(el, data) {
+	        value: function mediaRandomPosition(post, data) {
 	            var array = [];
 
 	            _.each(data.related_contents, function (d) {
@@ -19608,7 +19630,7 @@
 	            });
 
 	            // arrayに入れたDOM配列をランダム配置
-	            $(el).find('.media-container').randomElements(array, {
+	            $(post).find('.media-container').randomElements(array, {
 	                width: MEDIA_MAX_SIZE,
 	                // stageHeight: MEDIA_MAX_SIZE / 2,
 	                min: MEDIA_MIN_SIZE,
@@ -19616,6 +19638,11 @@
 	                adjustment: MEDIA_MAX_SIZE / 6,
 	                tryCount: TRY_COUNT
 	            });
+	        }
+	    }, {
+	        key: 'transit',
+	        value: function transit(post) {
+	            $(post).addClass('transit');
 	        }
 	    }]);
 

@@ -822,25 +822,45 @@ input
 
     color: #fff;
     border-radius: 70px;
-    background-color: #5b8288;
+    background-color: #ea5350;
     background-image: url('http://res.cloudinary.com/negic/image/upload/v1519298779/ico_blank01.png');
     background-repeat: no-repeat;
     background-position: 10% 50%;
     background-size: 22.66667px auto;
+}
+@media only screen and (min-width: 1280px)
+{
+    .btn-style01
+    {
+        font-size: 14px;
+
+        width: 200px;
+        padding: 12px;
+    }
 }
 
 .btn-close01
 {
     display: block;
 
-    width: 39.33333px;
-    height: 39.33333px;
+    width: 38.66667px;
+    height: 38.66667px;
 
     color: transparent;
     background-color: transparent;
     background-image: url('http://res.cloudinary.com/negic/image/upload/v1519298641/btn_close01.png');
     background-repeat: no-repeat;
-    background-size: 39.33333px auto;
+    background-size: 38.66667px auto;
+}
+@media only screen and (min-width: 1280px)
+{
+    .btn-close01
+    {
+        width: 29px;
+        height: 29px;
+
+        background-size: 29px auto;
+    }
 }
 
 .ico-twitter01,
@@ -1079,7 +1099,15 @@ input
 
     width: 48%;
     margin: auto;
-    padding: 20% 0 0;
+    padding: 15% 0 0;
+}
+@media only screen and (min-width: 1280px)
+{
+    .modal-layer .modal-inner
+    {
+        width: 400px;
+        padding: 3% 0 0;
+    }
 }
 .modal-layer .modal-inner img
 {
@@ -1096,6 +1124,15 @@ input
 
     color: #fff;
 }
+@media only screen and (min-width: 1280px)
+{
+    .modal-layer .modal-inner .title
+    {
+        font-size: 24px;
+
+        margin: 0 0 .5em;
+    }
+}
 .modal-layer .modal-inner .desc
 {
     font-size: 16px;
@@ -1103,6 +1140,15 @@ input
     margin: 0 0 2em;
 
     color: #fff;
+}
+@media only screen and (min-width: 1280px)
+{
+    .modal-layer .modal-inner .desc
+    {
+        font-size: 12px;
+
+        margin: 0 0 1em;
+    }
 }
 .modal-layer .btn-close01
 {
@@ -1156,8 +1202,10 @@ input
 {
     position: relative;
 
-    width: 100%;
-    min-height: 100vh;
+    width: 98%;
+    min-height: 96vh;
+    margin: 0 auto;
+    padding: 2% 0;
 }
 .transparent-container .post
 {
@@ -1165,6 +1213,13 @@ input
     z-index: 1;
 
     padding: 240px 0;
+}
+@media only screen and (min-width: 1280px)
+{
+    .transparent-container .post
+    {
+        padding: 180px 0;
+    }
 }
 .transparent-container .post.no-content
 {
@@ -1179,10 +1234,23 @@ input
     width: 333.33333px;
     padding: 40px;
 
+    transition: all 200ms ease;
+    transform: translate(0, 50px);
     pointer-events: none;
 
-    background-color: rgba(102, 134, 148, .9);
+    opacity: 0;
+    background-color: rgba(234, 83, 80, .9);
     box-shadow: 7px 7px 45px 5px rgba(0, 0, 0, .5);
+}
+@media only screen and (min-width: 1280px)
+{
+    .transparent-container .post .comment
+    {
+        font-size: 12px;
+
+        width: 250px;
+        padding: 30px;
+    }
 }
 .transparent-container .post .comment .comment-user-icon
 {
@@ -1191,10 +1259,19 @@ input
     margin: 0 0 23.33333px;
 
     border-radius: 50%;
-    background-color: rgba(126, 0, 67, .3);
-    background-image: url('http://res.cloudinary.com/negic/image/upload/v1519298789/img_user_default01.png');
+    background-color: rgba(0, 61, 193, .3);
+    background-image: url('http://res.cloudinary.com/negic/image/upload/v1519805067/img_user_default01.png');
     background-position: 50% 50%;
     background-size: 50% auto;
+}
+@media only screen and (min-width: 1280px)
+{
+    .transparent-container .post .comment .comment-user-icon
+    {
+        width: 40px;
+        height: 40px;
+        margin: 0 0 16px;
+    }
 }
 .transparent-container .post .comment .comment-text
 {
@@ -1219,8 +1296,52 @@ input
     width: 100%;
     height: auto !important;
 
+    transition: all 200ms ease;
+    transform: translate(0, 50px);
+
+    opacity: 0;
     background-color: #000;
     box-shadow: 7px 7px 45px 5px rgba(0, 0, 0, .5);
+}
+.transparent-container .post .media-container .media-photo:nth-child(1)
+{
+    transition-delay: 80ms;
+}
+.transparent-container .post .media-container .media-photo:nth-child(2)
+{
+    transition-delay: 160ms;
+}
+.transparent-container .post .media-container .media-photo:nth-child(3)
+{
+    transition-delay: 240ms;
+}
+.transparent-container .post .media-container .media-photo:nth-child(4)
+{
+    transition-delay: 320ms;
+}
+.transparent-container .post .media-container .media-photo:nth-child(5)
+{
+    transition-delay: 400ms;
+}
+.transparent-container .post .media-container .media-photo:nth-child(6)
+{
+    transition-delay: 480ms;
+}
+.transparent-container .post .media-container .media-photo:nth-child(7)
+{
+    transition-delay: 560ms;
+}
+.transparent-container .post .media-container .media-photo:nth-child(8)
+{
+    transition-delay: 640ms;
+}
+.transparent-container .post .media-container .media-photo:nth-child(9)
+{
+    transition-delay: 720ms;
+}
+.transparent-container .post .media-container .media-photo:nth-child(10)
+{
+    transition-delay: 800ms;
 }
 .transparent-container .post .media-container .media-photo .img
 {
@@ -1236,6 +1357,18 @@ input
     width: auto;
     height: 30px;
 }
+.transparent-container .post.transit .comment
+{
+    transform: translate(0, 0);
+
+    opacity: 1;
+}
+.transparent-container .post.transit .media-container .media-photo
+{
+    transform: translate(0, 0);
+
+    opacity: 1;
+}
 .transparent-container .bg
 {
     position: fixed;
@@ -1247,7 +1380,7 @@ input
     height: 100%;
 
     background-color: #000;
-    background-image: url('http://res.cloudinary.com/negic/image/upload/v1519298785/bg01.jpg');
+    background-image: url('http://res.cloudinary.com/negic/image/upload/v1519806520/bg01.jpg');
     background-repeat: no-repeat;
     background-position: 50% 50%;
     background-size: cover;
