@@ -8,7 +8,8 @@ Vue.use(VueRouter)
 export default new VueRouter({
   mode: 'history',
   routes: [
-    { path: '/', component: Index },
-    { path: '/workshop', component: Workshop },
+    { path: '/dev', component: Index },
+    { path: '/dev/en', component: Index },
+    { path: '/dev/ja', component: Workshop },
   ],
 })
