@@ -56,7 +56,7 @@ class Api::TranscriptsController < ApplicationController
   end
 
   def format_transcripts(transcripts_list)
-    data_list = []
+    data_list_temp = []
     for transcript in transcripts_list do
       data = {}
 
@@ -99,9 +99,9 @@ class Api::TranscriptsController < ApplicationController
       data.store('created_at', created_at)
       data.store('updated_at', updated_at)
 
-      data_list.push(data)
+      data_list_temp.push(data)
     end
-    return data_list
+    return data_list_temp
   end
 
   # # PATCH/PUT /tasks/1
