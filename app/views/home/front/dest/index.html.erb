@@ -1,8 +1,8 @@
     <div id="wrapper">
       <div class="transparent-container">
         <div class="bg"></div>
-        <button class="btn-bg-toggle">Switch</button>
-        <button id="add" class="btn-add">Stream</button>
+        <!-- <button class="btn-bg-toggle">Switch</button> -->
+        <!-- <button id="add" class="btn-add">Stream</button> -->
         <div class="modal-layer">
           <div class="modal-back"></div>
           <div class="modal-inner"></div>
@@ -72,10 +72,10 @@
     }
 
 
-    // window.addEventListener('load', loadTranscripts(index))
-    document.getElementById('add').addEventListener('click', function() {
-        loadTranscripts(total_transcripts, index);
-    }, false);
+    window.addEventListener('load', loadTranscripts(total_transcripts, index))
+    // document.getElementById('add').addEventListener('click', function() {
+    //     loadTranscripts(total_transcripts, index);
+    // }, false);
 
     </script>
 
