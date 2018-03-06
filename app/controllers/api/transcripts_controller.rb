@@ -9,7 +9,7 @@ class Api::TranscriptsController < ApplicationController
   end
 
   def show
-    debug_transcripts = Transcript.where(:wall_id => params[:wall_id]).order(:id).offset(params[:index].to_i-10)
+    debug_transcripts = Transcript.where(:wall_id => params[:wall_id]).offset(params[:index].to_i-10)
     debug_data_list = format_transcripts(debug_transcripts)
 
     # new_transcripts = Transcript.where(:wall_id => params[:wall_id]).order(:id).offset(params[:index].to_i)
