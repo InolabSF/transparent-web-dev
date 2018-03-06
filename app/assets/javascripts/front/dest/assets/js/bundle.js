@@ -19465,8 +19465,8 @@
 
 	var COMMENT_BOX_SIZE = 500 / 1.5;
 	var RANGE = 200; // .commentボックスのズレ具合
-	var MEDIA_MAX_SIZE = 350; // ランダム配置される画像の最大サイズ
-	var MEDIA_MIN_SIZE = MEDIA_MAX_SIZE / 3; // ランダム配置される画像の最小サイズ
+	// const MEDIA_MAX_SIZE = 350; // ランダム配置される画像の最大サイズ
+	// const MEDIA_MIN_SIZE = MEDIA_MAX_SIZE / 3; // ランダム配置される画像の最小サイズ
 	var TRY_COUNT = 999; // 配置が重なっていた時に再度ランダムをやり直す回数
 
 	var Transcripts = function (_BaseApp) {

@@ -1239,7 +1239,7 @@ input
     pointer-events: none;
 
     opacity: 0;
-    background-color: rgba(234, 83, 80, .9);
+    /* background-color: rgba(#ea5350, 0.9); */
     box-shadow: 7px 7px 45px 5px rgba(0, 0, 0, .5);
 }
 @media only screen and (min-width: 1280px)
@@ -1380,7 +1380,6 @@ input
     height: 100%;
 
     background-color: #000;
-    background-image: url('http://res.cloudinary.com/negic/image/upload/v1519806520/bg01.jpg');
     background-repeat: no-repeat;
     background-position: 50% 50%;
     background-size: cover;
