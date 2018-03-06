@@ -10,10 +10,41 @@ class Api::TranscriptsController < ApplicationController
 
   def show
     new_transcripts = Transcript.where(:wall_id => params[:wall_id]).offset(params[:index].to_i)
+
+    puts 'params[:index]'
+    puts params[:index].class
+    puts params[:index]
+    puts params[:index].to_i
+    json_params = {'params[:index]'=> {'value' => params[:index],'class' => params[:index].class.name, 'to_i' => params[:index].to_i, 'to_i class' => params[:index].to_i.class.name } }
+
+    puts 'new_transcripts.class'
+    puts new_transcripts.class
+    puts new_transcripts
+    puts 'new_transcripts.length class'
+    puts new_transcripts.length.class
+    puts new_transcripts.length
+    puts 'new_transcripts.count class'
+    puts new_transcripts.count.class
+    puts new_transcripts.count
+    puts 'new_transcripts.size class'
+    puts new_transcripts.size.class
+    puts new_transcripts.size
+    json_new_transcripts = {'new_transcripts'=> {'value' => new_transcripts, 'class' => new_transcripts.class.name, 'length_class' => new_transcripts.length.class.name, 'count_class' => new_transcripts.count.class.name, 'size_class' => new_transcripts.size.class.name  } }
+
     index = params[:index].to_i + new_transcripts.length
+    puts 'index'
+    puts index.class
+    puts index
+    json_index = {'index'=> {'valie' => index, 'class' => index.class.name} }
+
     new_data_list = format_transcripts(new_transcripts)
+    puts new_data_list
+    json_new_data_list  = {'new_data_list'=> {'value' => new_data_list, 'class' => new_data_list.class.name} }
+    debug_json = [json_params, json_new_transcripts, json_index, json_new_data_list]
+
     new_transcripts = nil
-    render json: {'transcripts' => new_data_list, 'index' => index }
+    # render json: {'transcripts' => new_data_list, 'index' => index }
+    render json: {'transcripts' => new_data_list, 'index' => index, 'log' => debug_json }
   end
 
   def create
