@@ -48,8 +48,8 @@ class Api::TranscriptsController < ApplicationController
     # debug_json = [json_params, json_new_transcripts, json_index, json_new_data_list]
 
     new_transcripts = nil
-    render json: {'transcripts' => new_data_list, 'index' => index }
-    render json: {'transcripts' => new_data_list, 'index' => index, 'debug_transcripts' : debug_data_list }
+    # render json: {'transcripts' => new_data_list, 'index' => index }
+    render json: {'transcripts' => new_data_list, 'index' => index, 'debug_transcripts' => debug_data_list }
     # render json: {'transcripts' => new_data_list, 'index' => index, 'log' => debug_json }
   end
 
