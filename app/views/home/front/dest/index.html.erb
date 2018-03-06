@@ -1,82 +1,75 @@
-    <div id="wrapper">
-      <div class="transparent-container">
-        <div class="bg"></div>
-        <!-- <button class="btn-bg-toggle">Switch</button> -->
-        <!-- <button id="add" class="btn-add">Stream</button> -->
-        <div class="modal-layer">
-          <div class="modal-back"></div>
-          <div class="modal-inner"></div>
-          <button class="btn-close01"></button>
-        </div>
-      </div>
+<div id="wrapper">
+  <div class="transparent-container">
+    <div class="bg"></div>
+    <!-- <button class="btn-bg-toggle">Switch</button> -->
+    <!-- <button id="add" class="btn-add">Stream</button> -->
+    <div class="modal-layer">
+      <div class="modal-back"></div>
+      <div class="modal-inner"></div>
+      <button class="btn-close01"></button>
     </div>
+  </div>
+</div>
 
-    <script>
-      var transcripts_add;
-    </script>
+<script>
+  var transcripts_add;
+</script>
 
 
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script>
-    var initial_transcripts = [];
-    var index;
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+var initial_transcripts = [];
+var index;
 
-    function fetchTranscripts(initial_transcripts, index){
-      var xmlHttp = new XMLHttpRequest();
-      xmlHttp.open("GET", "/api/transcripts/" + <%= @wall_id %>, false);
-      xmlHttp.send();
-      data = JSON.parse(xmlHttp.response)
-      for(var i = 0; i < data.transcripts.length; i++) {
-          initial_transcripts.push(data.transcripts[i]);
-      }
-      index = data.index
-      console.log(index)
-      return initial_transcripts, index
+function fetchTranscripts(initial_transcripts, index){
+  var xmlHttp = new XMLHttpRequest();
+  xmlHttp.open("GET", "/api/transcripts/" + <%= @wall_id %>, false);
+  xmlHttp.send();
+  data = JSON.parse(xmlHttp.response)
+  for(var i = 0; i < data.transcripts.length; i++) {
+      initial_transcripts.push(data.transcripts[i]);
+  }
+  index = data.index
+  console.log(index)
+  return initial_transcripts, index
+}
+
+initial_transcripts, index = fetchTranscripts(initial_transcripts, index);
+
+function loadTranscripts(initial_transcripts, index){
+  console.log(index);
+  // const axiosBase = require('axios');
+  var instance = axios.create({
+    baseURL: '/api',
+    headers: {
+      'ContentType': 'application/json'
+      // 'origin' : 'https://transparent-sxsw-dev.herokuapp.com'
+    },
+    responseType: 'json'
+  });
+  console.log('send req with index : ' + index);
+  instance.get('/transcripts/' + <%= @wall_id %> + '/' + index).then(function (response){
+    console.log(response.data);
+    transcripts = response.data.transcripts
+    index += transcripts.length;
+
+    for(var i = 0; i < transcripts.length; i++) {
+        initial_transcripts.unshift(transcripts[i]);
+        transcripts_add([transcripts[i]]);
     }
-
-    initial_transcripts, index = fetchTranscripts(initial_transcripts, index);
-
-    function loadTranscripts(index){
-      console.log(index);
-      // const axiosBase = require('axios');
-      var instance = axios.create({
-        baseURL: '/api',
-        headers: {
-          'ContentType': 'application/json'
-          // 'origin' : 'https://transparent-sxsw-dev.herokuapp.com'
-        },
-        responseType: 'json'
-      });
-      console.log('send req with index : ' + index);
-      instance.get('/transcripts/' + <%= @wall_id %> + '/' + index).then(function (response){
-        console.log(response.data);
-        transcripts = response.data.transcripts
-        index += transcripts.length;
-
-        for(var i = 0; i < transcripts.length; i++) {
-            transcripts_add([transcripts[i]]);
-        }
-      }, function (error) {
-        console.log(error);
-      }).then(function (response){
-        loadTranscripts(index);
-      });
-    }
+  }, function (error) {
+    console.log(error);
+  }).then(function (response){
+    loadTranscripts(initial_transcripts, index);
+  });
+}
 
 
-    window.addEventListener('load', loadTranscripts(index))
-    // document.getElementById('add').addEventListener('click', function() {
-    //     loadTranscripts(index);
-    // }, false);
+window.addEventListener('load', loadTranscripts(initial_transcripts, index))
+// document.getElementById('add').addEventListener('click', function() {
+//     loadTranscripts(initial_transcripts, index);
+// }, false);
 
-    </script>
+</script>
 
-    <%= javascript_include_tag 'front-manifest', 'data-turbolinks-track': 'reload'  %>
-
-
-    <!-- <script>
-      temp_transcripts = [initial_transcripts[0],initial_transcripts[1]];
-      document.getElementById('add').addEventListener('click', function() {
-          transcripts_add(temp_transcripts);
-      }, false);
-    </script> -->
+<%= javascript_include_tag 'front-manifest', 'data-turbolinks-track': 'reload'  %>
