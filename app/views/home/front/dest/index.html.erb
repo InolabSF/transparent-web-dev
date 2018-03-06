@@ -36,12 +36,8 @@
 
     initial_transcripts, index = fetchTranscripts(initial_transcripts, index);
 
-    var total_transcripts = [];
-    total_transcripts = initial_transcripts
-
-    function loadTranscripts(total_transcripts, index){
+    function loadTranscripts(index){
       console.log(index);
-
       // const axiosBase = require('axios');
       var instance = axios.create({
         baseURL: '/api',
@@ -58,23 +54,19 @@
         index += transcripts.length;
 
         for(var i = 0; i < transcripts.length; i++) {
-
-              if(transcripts[i].id > total_transcripts[0].id){
-                total_transcripts.unshift(transcripts[i])
-                transcripts_add([transcripts[i]]);
-            }
+            transcripts_add([transcripts[i]]);
         }
       }, function (error) {
         console.log(error);
       }).then(function (response){
-        loadTranscripts(total_transcripts, index);
+        loadTranscripts(index);
       });
     }
 
 
-    window.addEventListener('load', loadTranscripts(total_transcripts, index))
+    window.addEventListener('load', loadTranscripts(index))
     // document.getElementById('add').addEventListener('click', function() {
-    //     loadTranscripts(total_transcripts, index);
+    //     loadTranscripts(index);
     // }, false);
 
     </script>
