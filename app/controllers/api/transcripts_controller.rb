@@ -9,11 +9,10 @@ class Api::TranscriptsController < ApplicationController
   end
 
   def show
-    debug_transcripts = Transcript.where(:wall_id => params[:wall_id]).offset(params[:index].to_i-10)
-    debug_data_list = format_transcripts(debug_transcripts)
+    # debug_transcripts = Transcript.where(:wall_id => params[:wall_id]).offset(params[:index].to_i-10)
+    # debug_data_list = format_transcripts(debug_transcripts)
 
-    # new_transcripts = Transcript.where(:wall_id => params[:wall_id]).order(:id).offset(params[:index].to_i)
-    new_transcripts = Transcript.where(:wall_id => params[:wall_id]).offset(params[:index].to_i)
+    new_transcripts = Transcript.where(:wall_id => params[:wall_id]).order(:id).offset(params[:index].to_i)
 
     # puts 'params[:index]'
     # puts params[:index].class
@@ -48,8 +47,8 @@ class Api::TranscriptsController < ApplicationController
     # debug_json = [json_params, json_new_transcripts, json_index, json_new_data_list]
 
     new_transcripts = nil
-    # render json: {'transcripts' => new_data_list, 'index' => index }
-    render json: {'transcripts' => new_data_list, 'index' => index, 'debug_transcripts' => debug_data_list }
+    render json: {'transcripts' => new_data_list, 'index' => index }
+    # render json: {'transcripts' => new_data_list, 'index' => index, 'debug_transcripts' => debug_data_list }
     # render json: {'transcripts' => new_data_list, 'index' => index, 'log' => debug_json }
   end
 
