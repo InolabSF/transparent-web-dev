@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   devise_for :admin_users
-  root to: 'home#demo'
+  root to: 'home#top'
   get '/dev',   to: 'home#index'
 
   get '/api/transcripts/:wall_id', to: 'api/transcripts#index'

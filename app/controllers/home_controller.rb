@@ -3,6 +3,10 @@ class HomeController < ApplicationController
     # render :file => "home/front/dest/index"
   end
 
+  def top
+    render :file => "home/web/dest/index"
+  end
+
   def demo
     @wall_id = 1
     render :file => "home/front/dest/index"

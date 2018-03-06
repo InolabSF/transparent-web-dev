@@ -1,10 +1,38 @@
-<%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+<head>
+  <title>Transparent</title>
+  <%= csrf_meta_tags %>
 
-<div id="app">
-  <navbar></navbar>
-  <div class="container">
-    <router-view></router-view>
+  <meta charset="utf-8">
+  <title>Transparent</title>
+  <meta name="description" content="Transparent">
+  <meta name="keywords" content="Transparent">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta property="og:title" content="Transparent">
+  <meta property="og:site_name" content="Transparent">
+  <meta property="og:description" content="Transparent">
+  <meta property="og:url" content="">
+  <meta property="og:image" content="/assets/img/config/og.png">
+  <meta property="og:type" content="website">
+  <link rel="shortcut icon" href="/assets/img/config/favicon.ico" type="image/x-icon">
+  <link rel="canonical" href="">
+  <!-- <link rel="stylesheet" href="./assets/css/app.css"> -->
+
+</head>
+
+<body class="page-top">
+
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+  <div id="app">
+    <navbar></navbar>
+    <div class="container">
+      <router-view></router-view>
+    </div>
   </div>
-</div>
 
-<%= javascript_pack_tag 'todo' %>
+  <%= javascript_pack_tag 'todo' %>
+
+</body>
