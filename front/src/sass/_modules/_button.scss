@@ -1,0 +1,30 @@
+.btn-style01 {
+    display: block;
+
+    background-image: url(../img/common/ico_blank01.png);
+    background-repeat: no-repeat;
+    background-size: #{34 / $retina}px auto;
+    background-position: 10% 50%;
+    background-color: #5b8288;
+
+    width: #{400 / $retina}px;
+
+    padding: #{23 / $retina}px 0;
+    border-radius: 70px;
+
+    color: #fff;
+    font-size: 28px;
+    line-height: 1;
+    text-align: center;
+}
+
+.btn-close01 {
+    background-image: url(../img/common/btn_close01.png);
+    background-repeat: no-repeat;
+    background-color: transparent;
+    width: #{59 / $retina}px;
+    height: #{59 / $retina}px;
+    background-size: #{59 / $retina}px auto;
+    display: block;
+    color: transparent;
+}

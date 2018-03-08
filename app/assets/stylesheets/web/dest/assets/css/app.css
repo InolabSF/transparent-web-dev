@@ -877,7 +877,7 @@ input
 
     color: transparent;
     background-color: transparent;
-    background-image: url(../img/common/btn_play01.png);
+    background-image: url('http://res.cloudinary.com/negic/image/upload/v1520400576/btn_play01.png');
     background-repeat: no-repeat;
     background-size: 82px auto;
 }
@@ -901,17 +901,17 @@ input
 
 .ico-twitter01
 {
-    background-image: url(../img/common/ico_twitter01.png);
+    background-image: url('http://res.cloudinary.com/negic/image/upload/v1520400576/ico_twitter01.png');
 }
 
 .ico-facebook01
 {
-    background-image: url(../img/common/ico_facebook01.png);
+    background-image: url('http://res.cloudinary.com/negic/image/upload/v1520400576/ico_facebook01.png');
 }
 
 .ico-instagram01
 {
-    background-image: url(../img/common/ico_instagram01.png);
+    background-image: url('http://res.cloudinary.com/negic/image/upload/v1520400576/ico_instagram01.png');
 }
 
 .logo01
@@ -925,7 +925,7 @@ input
     white-space: nowrap;
     text-indent: 100%;
 
-    background-image: url(../img/common/logo01.png);
+    background-image: url('http://res.cloudinary.com/negic/image/upload/v1520400576/logo01.png');
     background-repeat: no-repeat;
     background-size: 200px 59px;
 }
@@ -941,7 +941,7 @@ input
     white-space: nowrap;
     text-indent: 100%;
 
-    background-image: url(../img/common/txt_mailto.png);
+    background-image: url('http://res.cloudinary.com/negic/image/upload/v1520400576/txt_mailto.png');
     background-repeat: no-repeat;
     background-size: 126px 11px;
 }
@@ -1034,7 +1034,7 @@ input
 {
     padding: 50px 0;
 
-    background-image: url(../img/common/bg01.png);
+    background-image: url('http://res.cloudinary.com/negic/image/upload/v1520401031/bg02.png');
 }
 
 .global-footer .inner .tit
@@ -1068,7 +1068,7 @@ input
 
     padding-top: 100%;
 
-    background-image: url(../img/top/img01.jpg);
+    background-image: url('http://res.cloudinary.com/negic/image/upload/v1520401129/img01.jpg');
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -1153,7 +1153,7 @@ input
     height: 315px;
     margin-left: -160px;
 
-    background-image: url(../img/common/logo02.png);
+    background-image: url('http://res.cloudinary.com/negic/image/upload/v1520400576/logo02.png');
     background-repeat: no-repeat;
     background-size: cover;
 }
