@@ -16,4 +16,8 @@ class HomeController < ApplicationController
     @wall_id = 2
     render :file => "home/front/dest/wall"
   end
+
+  def media
+    render :file => "home/media"
+  end
 end

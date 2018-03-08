@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   get '/demo/en',   to: 'home#demo'
   get '/demo/ja',   to: 'home#demo_ja'
 
+  get '/media',   to: 'home#media'
+
   # namespace :api, format: 'json' do
   #   resources :transcripts, only: [:index, :show, :create, :update]
   # end

@@ -18,3 +18,4 @@ Rails.application.config.assets.precompile += %w( web-manifest.js )
 
 Rails.application.config.assets.precompile += %w( front.scss )
 Rails.application.config.assets.precompile += %w( web.scss )
+Rails.application.config.assets.precompile += %w( media.scss )

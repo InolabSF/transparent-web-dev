@@ -1,0 +1,75 @@
+@charset "utf-8";
+
+/*
+ *
+ *  Usage:  Base layout
+ *
+ *  Name:   style.css
+ *  
+ */
+
+/*---------------------------------------------------------------------
+Base layout
+---------------------------------------------------------------------*/
+
+/*@import url(http://fonts.googleapis.com/earlyaccess/notosansjapanese.css); */
+
+html,body   {
+    /*height:100%;*/
+    font-family: "游ゴシック体", "Yu Gothic", YuGothic, "ヒラギノ角ゴ Pro", "Hiragino Kaku Gothic Pro", "メイリオ", "Meiryo", sans-serif;
+    font-size: 18px;
+    color: #000;
+    /*background-image: url("../images/bg.jpg");*/
+    -webkit-text-size-adjust: none;
+    background-color: #ea5350;
+}
+a{
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+/*---------------------------------------------------------------------
+Container layout
+---------------------------------------------------------------------*/
+#container  {
+    min-width:750px; 
+    padding: 0 40px;
+    margin-top: 80px;
+    margin-bottom: 100px;
+}
+h1{
+    margin-bottom: 80px;
+    font-size: 80px;
+}
+
+h2{
+    margin-bottom: 10px;
+    font-size: 24px;
+    margin-top: 50px;
+}
+
+
+#links{
+    margin-top: 50px;
+}
+#box{
+    margin-top: 50px;
+}
+h3{
+    margin-top: 50px;
+    margin-bottom: 15px;
+    font-size: 28px;
+    /*font-weight: 600;*/
+}
+#cap{
+    word-wrap: break-word;
+    font-size: 18px;
+    line-height: 30px;
+}
+p{
+    word-wrap: break-word;
+    font-size: 18px;
+    line-height: 40px;
+}
+
+
