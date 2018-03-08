@@ -1356,6 +1356,11 @@ input
 
     width: auto;
     height: 30px;
+
+    transition: all 200ms ease;
+    transition-delay: 500ms;
+
+    opacity: 0;
 }
 @media only screen and (min-width: 1280px)
 {
@@ -1383,6 +1388,10 @@ input
 {
     transform: translate(0, 0);
 
+    opacity: 1;
+}
+.transparent-container .post.transit .media-container .media-photo .favicon
+{
     opacity: 1;
 }
 .transparent-container .bg

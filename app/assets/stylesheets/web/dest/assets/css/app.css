@@ -932,18 +932,18 @@ input
 
 .txt-mailto
 {
+    font-size: 12px;
+
     display: block;
-    overflow: hidden;
 
-    width: 126px;
-    height: 11px;
+    width: 151px;
+    padding: 20px 0 20px 37px;
 
-    white-space: nowrap;
-    text-indent: 100%;
-
-    background-image: url('http://res.cloudinary.com/negic/image/upload/v1520400576/txt_mailto.png');
+    color: #000;
+    background-image: url('http://res.cloudinary.com/negic/image/upload/v1520487899/ico_mailto.png');
     background-repeat: no-repeat;
-    background-size: 126px 11px;
+    background-position: 10px 50%;
+    background-size: 18px 11px;
 }
 
 .modal-layer
@@ -1070,6 +1070,7 @@ input
 
     background-image: url('http://res.cloudinary.com/negic/image/upload/v1520401129/img01.jpg');
     background-repeat: no-repeat;
+    background-position: 50% 50%;
     background-size: cover;
 }
 
@@ -1295,10 +1296,12 @@ input
 
     .txt-mailto
     {
-        width: 252px;
-        height: 22px;
+        font-size: 24px;
 
-        background-size: 252px 22px;
+        width: 302px;
+        padding: 20px 0 20px 67px;
+
+        background-size: 36px 22px;
     }
 
     .modal-layer .modal-inner
@@ -1422,6 +1425,8 @@ input
     {
         width: 32%;
         padding-top: 32%;
+
+        transition: opacity ease 80ms;
     }
 
     .instagram-photos .item:nth-child(2n)
@@ -1432,6 +1437,11 @@ input
     .instagram-photos .item:nth-child(3n)
     {
         margin-right: 0;
+    }
+
+    .instagram-photos .item:hover
+    {
+        opacity: .9;
     }
 
     .sns-list
