@@ -22,19 +22,34 @@
   <%= stylesheet_link_tag    'front', media: 'all', 'data-turbolinks-track': 'reload' %>
 
   <style rel="stylesheet">
-    /* 背景画像 */
-    .transparent-container .bg {
-        background-image: url('https://res.cloudinary.com/dkzchvgct/image/upload/v1520365053/BG02.png');
-        /* background-image: url('https://res.cloudinary.com/dkzchvgct/image/upload/v1520382687/green-screen-picture.jpg'); */
-    }
-    /* コメントボックスの背景色 */
-    .transparent-container .post .comment {
-        background-color: rgba(234, 83, 80, 0.9);
-    }
-    /* ユーザアイコンの背景色 */
-    .transparent-container .post .comment .comment-user-icon {
-        background-color: rgba(0, 61, 193, 0.3);
-    }
+
+          /* ここからiPad proのサイズ */
+
+          /* 背景画像 */
+          .transparent-container .bg {
+              background-image: url('http://res.cloudinary.com/negic/image/upload/v1519806520/bg01.jpg');
+          }
+
+          /* コメントボックスの背景色、文字色、フォントサイズ */
+          .transparent-container .post .comment {
+              background-color: rgba(234, 83, 80, 0.9);
+              color: #fff;
+              font-size: 16px;
+          }
+
+          /* ユーザアイコンの背景色 */
+          .transparent-container .post .comment .comment-user-icon {
+              background-color: rgba(0, 61, 193, 0.3);
+          }
+
+          /* ここからパソコンサイズ */
+          @media only screen and (min-width: 1280px) {
+
+              /* コメントボックスの背景色、文字色、フォントサイズ */
+              .transparent-container .post .comment {
+                  font-size: 12px;
+              }
+          }
   </style>
 
 </head>
