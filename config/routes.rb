@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get '/demo',   to: 'home#demo'
   get '/demo/en',   to: 'home#demo'
   get '/demo/ja',   to: 'home#demo_ja'
+  get '/demo/try',   to: 'home#demo_try'
 
   get '/media',   to: 'home#media'
 

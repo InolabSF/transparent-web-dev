@@ -45,4 +45,4 @@ rails g migration AddLangcodeToTranscript langcode:string
 
 User.create(:facebook_id => "guest_x", :name => "Guest X")
 
-Wall.create(:state => "WORKSHOP", :name => "Workshop")
+Wall.create(:state => "MAIN", :name => "Try")
