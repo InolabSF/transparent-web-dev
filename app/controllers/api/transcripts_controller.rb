@@ -2,7 +2,7 @@ class Api::TranscriptsController < ApplicationController
 
   # GET /tasks
   def index
-    transcripts = Transcript.where(:wall_id => params[:wall_id]).order('updated_at DESC')[0...5]
+    transcripts = Transcript.where(:wall_id => params[:wall_id]).order('updated_at DESC')[0...15]
     transcripts_index = Transcript.where(:wall_id => params[:wall_id]).length
     data_list = format_transcripts(transcripts)
     render json: {'transcripts' => data_list, 'index' => transcripts_index }
