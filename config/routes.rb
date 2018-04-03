@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   get '/demo/ja',   to: 'home#demo_ja'
   get '/demo/try',   to: 'home#demo_try'
 
+  get '/demo/ms',   to: 'home#demo_ms'
+
   get '/media',   to: 'home#media'
 
   # namespace :api, format: 'json' do

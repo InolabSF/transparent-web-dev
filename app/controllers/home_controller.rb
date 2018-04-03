@@ -22,6 +22,11 @@ class HomeController < ApplicationController
     render :file => "home/front/dest/wall"
   end
 
+  def demo_ms
+    # @wall_id = 3
+    render :file => "home/sample-ms"
+  end
+
   def media
     render :file => "home/media"
   end
