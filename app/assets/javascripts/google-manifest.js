@@ -12,8 +12,4 @@
 //
 //= require rails-ujs
 //= require turbolinks
-//= require front/dest/assets/js/jquery.js
-//= require front/dest/assets/js/jquery.randomElements.js
-//= require front/dest/assets/js/bundle.js
-//= require ms/speech.sdk.bundle.js
-//= require ms/sdk-usage.js
+//= require google-speech/recognize.js

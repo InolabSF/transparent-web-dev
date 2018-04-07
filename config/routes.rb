@@ -12,10 +12,14 @@ Rails.application.routes.draw do
   get '/demo/en',   to: 'home#demo'
   get '/demo/ja',   to: 'home#demo_ja'
   get '/demo/try',   to: 'home#demo_try'
+  get '/demo/mic',   to: 'home#demo_mic'
 
   get '/demo/ms',   to: 'home#demo_ms'
+  get '/demo/google',   to: 'home#demo_google'
 
   get '/media',   to: 'home#media'
+
+  # post '/post-text',   to: 'home#post_text'
 
   # namespace :api, format: 'json' do
   #   resources :transcripts, only: [:index, :show, :create, :update]
