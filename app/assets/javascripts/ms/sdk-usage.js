@@ -74,6 +74,7 @@
              Alternative syntax for typescript devs.
              if (event instanceof SDK.RecognitionTriggeredEvent)
             */
+            console.log(event)
             switch (event.Name) {
                 case "RecognitionTriggeredEvent" :
                     UpdateStatus("Initializing");
@@ -120,6 +121,7 @@
             // The request succeeded. Nothing to do here.
         },
         (error) => {
+            errorHandler();
             console.error(error);
         });
     }

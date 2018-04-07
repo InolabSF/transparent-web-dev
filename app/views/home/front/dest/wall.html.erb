@@ -80,10 +80,17 @@
 
       <div class="bg"></div>
       <!-- <button class="btn-bg-toggle">Switch</button> -->
-
-      <td>
-        <button id="startBtn" class="btn-add"></button>
-      </td>
+      <table>
+          <tr>
+              <td align="right">Status:</td>
+              <td align="left"><span id="statusDiv"></span></td>
+          </tr>
+          <tr>
+              <td>
+                <button id="startBtn" class="btn-add"></button>
+              </td>
+          </tr>
+      </table>
 
 
       <div class="modal-layer">
@@ -164,6 +171,8 @@
       var previousSubscriptionKey;
       var isActive = false;
       var result;
+      var timeout_counter = 0;
+      var recognize_counter = 0;
 
       var API_KEY = 'P2ysni7WOO8DcPtvIa2sY7gRvyN6QfRz7vDkELYC';
       var language_code = '<%= @language_code %>';
@@ -197,21 +206,21 @@
           startBtn.addEventListener("click", function () {
 
             if (isActive){
-                startBtn.innerHTML = offMicPhrase;
-                RecognizerStop(SDK, recognizer);
-                isActive = false;
-                console.log(isActive)
-                console.log('stop btn')
+
+              killMic();
+                // startBtn.innerHTML = offMicPhrase;
+                // RecognizerStop(SDK, recognizer);
+                // isActive = false;
             } else {
 
-              if (!recognizer) {
-                  Setup();
-              }
-
-              startBtn.innerHTML = onMicPhrase;
-              isActive = true;
-              RecognizerStart(SDK, recognizer);
-              console.log(isActive)
+              activateMic();
+              // if (!recognizer) {
+              //     Setup();
+              // }
+              //
+              // startBtn.innerHTML = onMicPhrase;
+              // isActive = true;
+              // RecognizerStart(SDK, recognizer);
 
             }
 
@@ -286,7 +295,7 @@
       }
 
       function UpdateStatus(status) {
-          // statusDiv.innerHTML = status;
+          statusDiv.innerHTML = status;
       }
 
       // function UpdateRecognizedHypothesis(text, append) {
@@ -309,22 +318,72 @@
         console.log('UpdateRecognizedPhrase');
         console.log(json)
 
-          if(json.RecognitionStatus != "Success"){
-            console.log('No transcript');
-            console.log(JSON.stringify(json));
-
-          } else {
+          if(json.RecognitionStatus == "Success"){
 
             result = json.DisplayText;
             startBtn.innerHTML = onMicPhrase + '<br> <i>' + result + '</i>';
             postTranscript(json.DisplayText)
             console.log(JSON.stringify(json));
+            timeout_counter = 0;
+            recognize_counter += 1;
+            if (recognize_counter == 120){
+
+              errorHandler();
+              killMic();
+
+            }
+
+          } else if(json.RecognitionStatus == "InitialSilenceTimeout"){
+
+            timeout_counter += 1;
+            recognize_counter += 1;
+            console.log('15 seconds silense Timeout');
+            console.log('Timeout Counter : '+timeout_counter);
+            console.log('Timeout Counter : '+recognize_counter);
+
+            if (timeout_counter == 12){
+
+              errorHandler();
+
+            } else {
+              activateMic();
+            }
+
+          } else {
+
+            console.log('No transcript');
+            console.log(JSON.stringify(json));
+
           }
       }
 
       function OnComplete() {
           // startBtn.disabled = false;
           // stopBtn.disabled = true;
+      }
+
+      function activateMic() {
+        console.log('activate Mic')
+        if (!recognizer) {
+            Setup();
+        }
+        startBtn.innerHTML = onMicPhrase;
+        isActive = true;
+        RecognizerStart(SDK, recognizer);
+      }
+
+      function killMic() {
+        console.log('kill Mic')
+
+        startBtn.innerHTML = offMicPhrase;
+        RecognizerStop(SDK, recognizer);
+        isActive = false;
+
+      }
+
+      function errorHandler() {
+        alert("Session Timeout. Please Restart.");
+        startBtn.innerHTML = offMicPhrase;
       }
   </script>
 
