@@ -1758,6 +1758,9 @@ var WebsocketMessageAdapter = /** @class */ (function () {
             _this.sendMessageQueue.DrainAndDispose(function (pendingSendItem) {
                 pendingSendItem.SendStatusDeferral.Reject(closeReason);
             }, closeReason);
+
+            alert("Session Closed. Please Restart.");
+            killMic();
         };
         this.ProcessSendQueue = function () {
             _this.sendMessageQueue

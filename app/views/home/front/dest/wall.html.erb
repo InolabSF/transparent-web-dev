@@ -148,7 +148,7 @@
       for(var i = 0; i < transcripts.length; i++) {
           initial_transcripts.unshift(transcripts[i]);
           transcripts_add([transcripts[i]]);
-          startBtn.innerHTML = 'Recording...';
+          startBtn.innerHTML = onMicPhrase + '<br> <i>' + 'Recording...' + '</i>';
       }
     }, function (error) {
       console.log(error);
@@ -384,7 +384,7 @@
 
       function errorHandler() {
         alert("Session Timeout. Please Restart.");
-        startBtn.innerHTML = offMicPhrase;
+        killMic();
       }
   </script>
 
