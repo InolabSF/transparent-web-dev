@@ -61,6 +61,12 @@
 
 <body class="page-top">
 
+  <!-- <script>
+    var offMicPhrase = '<b>Start</b> to press here';
+    var onMicPhrase = '<b>Stop</b> to press here';
+  </script> -->
+
+
   <div id="warning">
       <h1 style="font-weight:500;">Speech Recognition SDK not found.</h1>
       <h2 style="font-weight:500;">Please execute <code>npm run bundle</code> and reload.</h2>
@@ -74,19 +80,10 @@
 
       <div class="bg"></div>
       <!-- <button class="btn-bg-toggle">Switch</button> -->
-      <table width="100%">
-        <tr>
-            <td>
-              <button id="resultConsole" class="btn-bg-toggle"></button>
-            </td>
-        </tr>
-        <tr>
-              <td>
-                <button id="startBtn" class="btn-add">Record</button>
-              </td>
-          </tr>
 
-      </table>
+      <td>
+        <button id="startBtn" class="btn-add"></button>
+      </td>
 
 
       <div class="modal-layer">
@@ -144,7 +141,7 @@
       for(var i = 0; i < transcripts.length; i++) {
           initial_transcripts.unshift(transcripts[i]);
           transcripts_add([transcripts[i]]);
-          resultConsole.innerHTML = ' ';
+          startBtn.innerHTML = 'Recording...';
       }
     }, function (error) {
       console.log(error);
@@ -152,7 +149,7 @@
       loadTranscripts(initial_transcripts, index);
     });
   }
-  window.addEventListener('load', loadTranscripts(initial_transcripts, index))
+  // window.addEventListener('load', loadTranscripts(initial_transcripts, index))
 
   </script>
 
@@ -160,12 +157,13 @@
 
   <!-- Browser Hooks -->
   <script>
-      var startBtn, stopBtn, hypothesisDiv, phraseDiv, statusDiv, resultConsole;
+      var startBtn, stopBtn, hypothesisDiv, phraseDiv, statusDiv;
       var key, languageOptions, formatOptions, recognitionMode, inputSource, filePicker;
       var SDK;
       var recognizer;
       var previousSubscriptionKey;
-      var isActive;
+      var isActive = false;
+      var result;
 
       var API_KEY = 'P2ysni7WOO8DcPtvIa2sY7gRvyN6QfRz7vDkELYC';
       var language_code = '<%= @language_code %>';
@@ -173,11 +171,13 @@
       var FacebookID = 'guest_x';
       var post_url = "https://i496f4jiu1.execute-api.us-east-1.amazonaws.com/api/streaming";
 
+      var offMicPhrase = '<b>Start</b> to press here';
+      var onMicPhrase = '<b>Stop</b> to press here';
+
 
       document.addEventListener("DOMContentLoaded", function () {
           startBtn = document.getElementById("startBtn");
-          resultConsole = document.getElementById("resultConsole");
-          stopBtn = document.getElementById("stopBtn");
+          startBtn.innerHTML = offMicPhrase
 
           phraseDiv = document.getElementById("phraseDiv");
           hypothesisDiv = document.getElementById("hypothesisDiv");
@@ -197,18 +197,21 @@
           startBtn.addEventListener("click", function () {
 
             if (isActive){
+                startBtn.innerHTML = offMicPhrase;
                 RecognizerStop(SDK, recognizer);
-                startBtn.innerHTML = "Record";
                 isActive = false;
+                console.log(isActive)
+                console.log('stop btn')
             } else {
 
               if (!recognizer) {
                   Setup();
               }
 
-              startBtn.innerHTML = "Stop";
-              RecognizerStart(SDK, recognizer);
+              startBtn.innerHTML = onMicPhrase;
               isActive = true;
+              RecognizerStart(SDK, recognizer);
+              console.log(isActive)
 
             }
 
@@ -264,26 +267,12 @@
 
         var xmlHttp = new XMLHttpRequest();
 
-        // var xmlHttp = new XDomainRequest();
         xmlHttp.open("POST", post_url);
-
         // var xmlHttp = createCORSRequest('POST', post_url);
-        // var xmlHttp = createCORSRequest('OPTIONS', post_url);
-
-        if (!xmlHttp) {
-          alert('CORS not supported');
-          return;
-        }
-
-        // xmlHttp.createCORSRequest("POST", post_url);
 
         xmlHttp.setRequestHeader( 'Content-Type', 'application/json' )
         xmlHttp.setRequestHeader( 'x-api-key', API_KEY )
-        // xmlHttp.setRequestHeader( 'X-Api-Key', API_KEY )
 
-        // xhr.onerror = function() {
-        //     console.log('There was an error!');
-        // };
         xmlHttp.send(JSON.stringify(body));
         console.log(xmlHttp.response)
 
@@ -317,9 +306,20 @@
       }
 
       function UpdateRecognizedPhrase(json) {
-          resultConsole.innerHTML = json.DisplayText;
-          postTranscript(json.DisplayText)
-          console.log(JSON.stringify(json));
+        console.log('UpdateRecognizedPhrase');
+        console.log(json)
+
+          if(json.RecognitionStatus != "Success"){
+            console.log('No transcript');
+            console.log(JSON.stringify(json));
+
+          } else {
+
+            result = json.DisplayText;
+            startBtn.innerHTML = onMicPhrase + '<br> <i>' + result + '</i>';
+            postTranscript(json.DisplayText)
+            console.log(JSON.stringify(json));
+          }
       }
 
       function OnComplete() {
