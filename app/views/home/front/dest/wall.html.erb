@@ -148,7 +148,7 @@
       for(var i = 0; i < transcripts.length; i++) {
           initial_transcripts.unshift(transcripts[i]);
           transcripts_add([transcripts[i]]);
-          startBtn.innerHTML = onMicPhrase + '<br> <i>' + 'Recording...' + '</i>';
+          startBtn.innerHTML = onMicPhrase + '<br> Status : <i>' + 'Recording...' + '</i>';
       }
     }, function (error) {
       console.log(error);
@@ -180,7 +180,7 @@
       var FacebookID = 'guest_x';
       var post_url = "https://i496f4jiu1.execute-api.us-east-1.amazonaws.com/api/streaming";
 
-      var offMicPhrase = '<b>Start</b> to press here';
+      var offMicPhrase = '<b>Start</b> to press here' + '<br> Status : <i>' + 'Idle' + '</i>';
       var onMicPhrase = '<b>Stop</b> to press here';
 
 
@@ -368,7 +368,7 @@
         if (!recognizer) {
             Setup();
         }
-        startBtn.innerHTML = onMicPhrase;
+        startBtn.innerHTML = onMicPhrase + '<br> Status : <i>' + 'Recording...' + '</i>';
         isActive = true;
         RecognizerStart(SDK, recognizer);
       }
