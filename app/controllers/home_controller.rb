@@ -11,21 +11,25 @@ class HomeController < ApplicationController
 
   def demo
     @wall_id = 1
+    @language_code = 'en-US'
     render :file => "home/front/dest/wall"
   end
 
   def demo_ja
     @wall_id = 2
+    @language_code = 'ja-JP'
     render :file => "home/front/dest/wall"
   end
 
   def demo_try
     @wall_id = 3
+    @language_code = 'en-US'
     render :file => "home/front/dest/wall"
   end
 
   def demo_mic
     @wall_id = 1
+    @language_code = 'en-US'
     render :file => "home/front/dest/wall-mic"
   end
 

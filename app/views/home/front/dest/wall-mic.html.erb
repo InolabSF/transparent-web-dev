@@ -168,7 +168,7 @@
       var isActive;
 
       var API_KEY = 'P2ysni7WOO8DcPtvIa2sY7gRvyN6QfRz7vDkELYC';
-      var language_code = "ja-JP";
+      var language_code = '<%= @language_code %>';
       var wallId = <%= @wall_id %>;
       var FacebookID = 'guest_x';
       var post_url = "https://i496f4jiu1.execute-api.us-east-1.amazonaws.com/api/streaming";
@@ -247,29 +247,20 @@
 
       function postTranscript(text) {
         var API_KEY = 'P2ysni7WOO8DcPtvIa2sY7gRvyN6QfRz7vDkELYC';
-        var language_code = 'en-US';
-        var wallId = <%= @wall_id %>;
+        var language_code = '<%= @language_code %>';
+        var wallID = <%= @wall_id %>;
         var FacebookID = 'guest_x';
         var post_url = "https://i496f4jiu1.execute-api.us-east-1.amazonaws.com/api/streaming";
 
         var body = {
-                'transcript' : text ,
-                'FacebookID' :  'guest_x' ,
-                'langcode' : "en-US" ,
-                'wallID' : 1 ,
-                'clientID' : 'guest_x'
+                'transcript' : text,
+                'FacebookID' :  FacebookID,
+                'langcode' : language_code,
+                'wallID' : wallID,
+                'clientID' : FacebookID
             };
 
-        // var body = {
-        //         'transcript' : text ,
-        //         'FacebookID' : FacebookID ,
-        //         'langcode' : language_code ,
-        //         'wallID' : wallID ,
-        //         'clientID' : FacebookID
-        //     };
-
         console.log(body)
-        console.log(body.wallID)
 
         var xmlHttp = new XMLHttpRequest();
 
