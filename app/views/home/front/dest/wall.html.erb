@@ -156,7 +156,7 @@
       loadTranscripts(initial_transcripts, index);
     });
   }
-  window.addEventListener('load', loadTranscripts(initial_transcripts, index))
+  // window.addEventListener('load', loadTranscripts(initial_transcripts, index))
 
   </script>
 
@@ -174,12 +174,6 @@
       var timeout_counter = 0;
       var recognize_counter = 0;
 
-      var API_KEY = 'P2ysni7WOO8DcPtvIa2sY7gRvyN6QfRz7vDkELYC';
-      var language_code = '<%= @language_code %>';
-      var wallId = <%= @wall_id %>;
-      var FacebookID = 'guest_x';
-      var post_url = "https://i496f4jiu1.execute-api.us-east-1.amazonaws.com/api/streaming";
-
       var offMicPhrase = '<b>Start</b> to press here' + '<br> Status : <i>' + 'Idle' + '</i>';
       var onMicPhrase = '<b>Stop</b> to press here';
 
@@ -192,15 +186,10 @@
           hypothesisDiv = document.getElementById("hypothesisDiv");
           statusDiv = document.getElementById("statusDiv");
 
-          // key = document.getElementById("key");
           key = "ebdf6b84bf604091ad354a65c49775c0";
-          // languageOptions = document.getElementById("languageOptions");
           languageOptions = '<%= @language_code %>';
-          // formatOptions = document.getElementById("formatOptions");
           formatOptions = "Simple";
-          // inputSource = document.getElementById("inputSource");
           inputSource = "Mic";
-          // recognitionMode = document.getElementById("recognitionMode");
           recognitionMode = "Conversation";
 
           startBtn.addEventListener("click", function () {
