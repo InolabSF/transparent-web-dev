@@ -8,11 +8,8 @@ Rails.application.routes.draw do
   post '/api/transcripts', to: 'api/transcripts#create'
   get '/api/transcripts/:wall_id/:index', to: 'api/transcripts#show'
 
-  get '/demo',   to: 'home#demo'
-  get '/demo/en',   to: 'home#demo'
-  get '/demo/ja',   to: 'home#demo_ja'
-  get '/demo/try',   to: 'home#demo_try'
-  # get '/demo/mic',   to: 'home#demo_mic'
+  get '/wall/:wall_id/en',   to: 'home#demo_en'
+  get '/wall/:wall_id/ja',   to: 'home#demo_ja'
 
   get '/demo/ms',   to: 'home#demo_ms'
   get '/demo/google',   to: 'home#demo_google'

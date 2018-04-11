@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180213061025) do
+ActiveRecord::Schema.define(version: 20180411081938) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -30,6 +30,23 @@ ActiveRecord::Schema.define(version: 20180213061025) do
     t.integer "related_content_id", null: false
     t.string "service", null: false
     t.string "word", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "config_groups", force: :cascade do |t|
+    t.integer "config_id"
+    t.integer "wall_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["config_id"], name: "index_config_groups_on_config_id"
+    t.index ["wall_id"], name: "index_config_groups_on_wall_id"
+  end
+
+  create_table "configs", force: :cascade do |t|
+    t.string "name"
+    t.string "cse_id"
+    t.integer "number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -83,6 +100,8 @@ ActiveRecord::Schema.define(version: 20180213061025) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "ms_key", default: "ebdf6b84bf604091ad354a65c49775c0"
+    t.string "google_key", default: "ebdf6b84bf604091ad354a65c49775c0"
   end
 
   create_table "walls", force: :cascade do |t|
@@ -90,6 +109,7 @@ ActiveRecord::Schema.define(version: 20180213061025) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name"
+    t.integer "manager_id"
   end
 
 end

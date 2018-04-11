@@ -9,29 +9,17 @@ class HomeController < ApplicationController
     render :file => "home/web/dest/top"
   end
 
-  def demo
-    @wall_id = 1
+  def demo_en
+    @wall_id = params[:wall_id]
     @language_code = 'en-US'
     render :file => "home/front/dest/wall"
   end
 
   def demo_ja
-    @wall_id = 2
+    @wall_id = params[:wall_id]
     @language_code = 'ja-JP'
     render :file => "home/front/dest/wall"
   end
-
-  def demo_try
-    @wall_id = 3
-    @language_code = 'en-US'
-    render :file => "home/front/dest/wall"
-  end
-
-  # def demo_mic
-  #   @wall_id = 1
-  #   @language_code = 'en-US'
-  #   render :file => "home/front/dest/wall-mic"
-  # end
 
   def demo_ms
     render :file => "home/sample-ms"

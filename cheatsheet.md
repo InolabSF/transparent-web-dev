@@ -46,3 +46,15 @@ rails g migration AddLangcodeToTranscript langcode:string
 User.create(:facebook_id => "guest_x", :name => "Guest X")
 
 Wall.create(:state => "MAIN", :name => "Try")
+
+rails generate model Config name:string cse_id:string number:integer
+
+rails generate model config_group config:references wall:references
+
+rails g migration AddManageridToWall manager_id:integer
+
+rails g migration AddKeysToUser ms_key:string google_key:string
+
+Config.create(:cse_id => "014983619042086533707:sf88exwzxmu", :name => "general media Tech Ja", :number => 5)
+
+Config.create(:cse_id => "014983619042086533707:yowg6mvvpf8", :name => "general media Finantial Ja", :number => 5)
