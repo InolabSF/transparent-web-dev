@@ -12,4 +12,4 @@
 //
 //= require rails-ujs
 //= require turbolinks
-//= require ms/speech.sdk.bundle.js
+//= require ms-test/speech.sdk.bundle.js
