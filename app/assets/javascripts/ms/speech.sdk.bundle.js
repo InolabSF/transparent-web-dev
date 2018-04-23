@@ -1760,7 +1760,7 @@ var WebsocketMessageAdapter = /** @class */ (function () {
             }, closeReason);
 
             // edited
-            alert("Session Closed. Please Restart.");
+            alert("Sorry, Session Closed. Please Restart.");
             killMic();
         };
         this.ProcessSendQueue = function () {
