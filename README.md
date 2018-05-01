@@ -1,4 +1,8 @@
 
+## Transparent　API構造　(5/1/2018)
+
+α版フロント作成に使用するAPI群をまとめてみました。
+
 ## Transparent　データオブジェクト構造　(5/1/2018)
 
 主にユーザーに提供するのはユーザー発言（Transcript）が持つテキスト情報（Transcript.text）とそれに付随した関連情報（Transcript.related_contents）になります。
@@ -19,7 +23,7 @@
 
       has_content : BOOLEAN, // if has related_contents
 
-      related_contents : List[ Obeject( RelatedContent ) ] // related contents list extracted from transcript
+      is_visible : BOOLEAN, // if is visible
 
       created_at : DATETIME // time when created
 
@@ -52,7 +56,9 @@
 
       name : STRING, // entity name
 
-      category : STRING  // entity category
+      category : STRING,  // entity category
+
+      is_visible : BOOLEAN  // entity category
 
     }
 
@@ -62,7 +68,7 @@
 
       id : NUM,
 
-      transcript_id : NUM, // related transcript id
+      entity_id : NUM, // related entity id
 
       title : STRING, // content title
 
