@@ -1,11 +1,52 @@
 
 ## Transparent　API構造　(5/1/2018)
 
-α版フロント作成に使用するAPI群をまとめてみました。
+α版Transparentに必要なAPI群をまとめています。
 
-### Transparent　API構造　(5/1/2018)
+## 初期コンテンツロード（キーワード・関連コンテンツ・&検索ワード）の取得
 
-α版フロント作成に使用するAPI群をまとめてみました。
+"GET", "/api/transcripts/" + wall_id
+
+responseBody = {
+
+  entities : List[ object( Entity ) ],
+  related_contents : List[ object( RelatedContent ) ],
+  search_words : List[ STRING ]  
+
+}
+
+## 更新情報ロード（キーワード・関連コンテンツ・&検索ワード）の取得
+
+"GET", "/api/transcripts/" + wall_id / index
+
+responseBody = {
+
+  entities : List[ object( Entity ) ],
+  related_contents : List[ object( RelatedContent ) ],
+  search_words : List[ STRING ]  
+
+}
+
+## コメントカードの削除
+
+"GET", "/update/entity/" + entity_id
+
+## 画像の削除
+
+"GET", "/update/realtedcontent/" + related_content_id
+
+## &検索ワードの設定
+
+"GET", "/set/context/" + wall_id
+
+params['query'] = &検索ワード
+
+## &検索ワードの削除
+
+"GET", "/delete/context/" + wall_id
+
+params['query'] = &検索ワード
+
 
 ## Transparent　データオブジェクト構造　(5/1/2018)
 
