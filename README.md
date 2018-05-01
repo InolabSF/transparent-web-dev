@@ -10,7 +10,9 @@
 responseBody = {
 
   entities : List[ object( Entity ) ],
+
   related_contents : List[ object( RelatedContent ) ],
+  
   search_words : List[ STRING ]  
 
 }
