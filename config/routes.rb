@@ -19,7 +19,7 @@ Rails.application.routes.draw do
 
   get '/media',   to: 'home#media'
 
-  # post '/post-text',   to: 'home#post_text'
+  post '/test',   to: 'home#post_transcript'
 
   # namespace :api, format: 'json' do
   #   resources :transcripts, only: [:index, :show, :create, :update]

@@ -1,4 +1,5 @@
-require 'net/https'
+require './lib/assets/nlp/nlp_handler'
+require './lib/assets/search/entity_handler'
 
 class HomeController < ApplicationController
   def index
@@ -45,20 +46,54 @@ class HomeController < ApplicationController
     render :file => "home/media"
   end
 
-  # def post_text
-  #
-  #   uri = URI.parse("https://i496f4jiu1.execute-api.us-east-1.amazonaws.com/api/streaming")
-  #   # uri = URI.parse(res['location'])
-  #
-  #   http = Net::HTTP.new(uri.host)
-  #   req = Net::HTTP::Post.new(uri.path)
-  #   req.set_form_data({'transcript' => 'テストです', 'FacebookID' => 'guest_x', "langcode" => "ja-JP", "wallID" =>2, "clientID" =>"guest_x"})
-  #   # req.set_form_data({'transcript' => 'hello', 'FacebookID' => 'guest_x', "langcode" => "en-US", "wallID" =>1, "clientID" =>"guest_x"})
-  #   req['Content-type'] = 'application/json'
-  #   req['x-api-key'] = 'P2ysni7WOO8DcPtvIa2sY7gRvyN6QfRz7vDkELYC'
-  #   # req['X-Api-Key'] = 'P2ysni7WOO8DcPtvIa2sY7gRvyN6QfRz7vDkELYC'
-  #   res = http.request(req)
-  #
-  #   render json: { :message => 'post succeeded' }, status: 200
-  # end
+  def post_transcript
+    api_req = params
+
+    default_nlp = 'MS'
+    is_test_mode = true
+    is_word_only = true
+    is_image_search = true
+
+    text = api_req[:transcript]
+    user_id = User.find_by(facebook_id: api_req[:FacebookID]).id
+    wall_id = api_req[:wallID]
+    langcode = api_req[:langcode]
+
+    has_content = false
+
+    entities_list, sentiment = nlp_handler(default_nlp, text, langcode, is_test_mode)
+    puts(entities_list)
+
+    @transcript = Transcript.new(:text => text, :wall_id => wall_id, :user_id => user_id, :has_content => has_content, :is_visible => true, :langcode => langcode, :sentiment => sentiment)
+
+    # contents_list = []
+    for entity_hash in entities_list
+      entity = @transcript.entities.build(:category => entity_hash['category'], :name => entity_hash['name'])
+    end
+
+    for entity in @transcript.entities
+      contents_list  =  entity_handler(entity, langcode, is_word_only, is_image_search, is_test_mode)
+      if contents_list.length == 0
+        @transcript.has_content = false
+      else
+        @transcript.has_content = true
+        for content in contents_list
+          related_content = @transcript.related_contents.build(:title => content['title'], :desc => content['desc'], :url => content['url'], :img_url => content['img_url'], :content_type => content['content_type'], :source => content['source'], :is_visible => true)
+          condition = related_content.build_condition(:service => content['condition']['service'], :word => content['condition']['word'])
+        end
+      end
+    end
+
+    if @transcript.save
+      render :json => @transcript
+    else
+      render json: @transcript.errors, status: :unprocessable_entity
+    end
+
+
+
+
+  end
+
+
 end

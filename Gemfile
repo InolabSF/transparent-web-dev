@@ -68,3 +68,5 @@ gem 'devise'                                                    # authentication
 gem 'rails_admin'                                               # admin
 
 gem 'rack-cors'
+
+gem 'faraday'                                                   # http client
