@@ -41,6 +41,14 @@ responseBody = {
 
 requestBody = {
 
+    transcript　: STRING,
+
+    langcode: "en-US" or "ja-JP",
+
+    wallID : NUM,
+
+    FacebookID : STRING
+  }
 
 
 }
