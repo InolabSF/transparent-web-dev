@@ -1,82 +1,8 @@
-
-## Transparent　API構造　(5/1/2018)
-
-α版Transparentに必要なAPI群をまとめています。
-
-## 初期コンテンツロード（検索キーワード・関連コンテンツ）の取得
-
-"GET", "/api/transcripts/" + wall_id
-
-responseBody = {
-
-  searchs : List[ object( Search ) ],
-
-  entity_index : NUM,
-
-  related_contents : List[ object( RelatedContent ) ],
-
-  related_content_index : NUM
-
-}
-
-## 更新情報ロード（検索キーワード・関連コンテンツ）の取得
-
-"GET", "/api/transcripts/" + wall_id / index
-
-responseBody = {
-
-  searchs : List[ object( Search ) ],
-
-  entity_index : NUM,
-
-  related_contents : List[ object( RelatedContent ) ],
-
-  related_content_index : NUM
-
-}
-
-## 認識テキストのPOST（テキスト・&検索ワード・wallID・langcode
-
-"POST", "/api/transcripts/"
-
-requestBody = {
-
-    transcript　: STRING,
-
-    langcode: "en-US" or "ja-JP",
-
-    wallID : NUM,
-
-    FacebookID : STRING
-  }
-
-
-}
-
-## コメントカードの削除
-
-"GET", "/update/entity/" + search_word_id
-
-## 画像の削除
-
-"GET", "/update/realtedcontent/" + related_content_id
-
-<!-- ## &検索ワードの設定
-
-"GET", "/set/context/" + wall_id
-
-params['query'] = &検索ワード -->
-
-<!-- ## &検索ワードの削除
-
-"GET", "/delete/context/" + wall_id
-
-params['query'] = &検索ワード -->
-
-
 ## Transparent　データオブジェクト構造　(5/1/2018)
 
-主にユーザーに提供するのはユーザー発言（Transcript）が持つテキスト情報（Transcript.text）とそれに付随した関連情報（Transcript.related_contents）になります。
+<!-- 主にユーザーに提供するのはユーザー発言（Transcript）が持つテキスト情報（Transcript.text）とそれに付随した関連情報（Transcript.related_contents）になります。 -->
+
+主にウェブアプリに表示するのは検索に使用したワード（Searchオブジェクト）とそれに付随した関連コンテンツ（RelatedContentオブジェクト）になります。
 
 <!-- #### Transcript オブジェクト ： ユーザーの声から取得した発言情報
 
@@ -133,7 +59,7 @@ params['query'] = &検索ワード -->
 
     } -->
 
-#### Searchオブジェクト ： ユーザー発言に関連するコンテンツ
+#### Searchオブジェクト ： 検索に使用した情報（ワード）
 
     Search = {
 
@@ -163,11 +89,11 @@ params['query'] = &検索ワード -->
 
       img_url : STRING, // content image url
 
-      content_type : STRING, // content type ( webpage or image )
+      content_type : STRING, // content type ( webpage, image, video )
 
-      source : STRING, // source type information (Youtube, Linkedin, SXSW official, etc.)
+      source : STRING, // information source
 
-      condition : Object( Condition ),  // search condition
+      <!-- condition : Object( Condition ),  // search condition -->
 
       is_visible : BOOLEAN, // if is visible
 
@@ -184,3 +110,77 @@ params['query'] = &検索ワード -->
       word : String // word for search
 
     } -->
+
+
+## Transparent　API　(5/1/2018)
+
+α版Transparentに必要なAPI群をまとめています。
+
+## 初期コンテンツロード（検索キーワード・関連コンテンツ）の取得
+
+"GET", "/api/transcripts/" + wall_id
+
+responseBody = {
+
+  searchs : List[ object( Search ) ],
+
+  entity_index : NUM,
+
+  related_contents : List[ object( RelatedContent ) ],
+
+  related_content_index : NUM
+
+}
+
+## 更新情報ロード（検索キーワード・関連コンテンツ）の取得
+
+"GET", "/api/transcripts/" + wall_id / index
+
+responseBody = {
+
+  searchs : List[ object( Search ) ],
+
+  entity_index : NUM,
+
+  related_contents : List[ object( RelatedContent ) ],
+
+  related_content_index : NUM
+
+}
+
+## 認識テキストのPOST（テキスト・&検索ワード・wallID・langcode
+
+"POST", "/api/transcripts/"
+
+requestBody = {
+
+    transcript　: STRING,
+
+    langcode: "en-US" or "ja-JP",
+
+    wallID : NUM,
+
+    FacebookID : STRING
+
+
+}
+
+## コメントカードの削除
+
+"GET", "/update/entity/" + search_word_id
+
+## 画像の削除
+
+"GET", "/update/realtedcontent/" + related_content_id
+
+<!-- ## &検索ワードの設定
+
+"GET", "/set/context/" + wall_id
+
+params['query'] = &検索ワード -->
+
+<!-- ## &検索ワードの削除
+
+"GET", "/delete/context/" + wall_id
+
+params['query'] = &検索ワード -->
