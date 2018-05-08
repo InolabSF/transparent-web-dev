@@ -120,54 +120,54 @@
 
 "GET", "/api/transcripts/" + wall_id
 
-responseBody = {
+    responseBody = {
 
-  searchs : List[ object( Search ) ],
+        searchs : List[ object( Search ) ],
 
-  entity_index : NUM,
+        entity_index : NUM,
 
-  related_contents : List[ object( RelatedContent ) ],
+        related_contents : List[ object( RelatedContent ) ],
 
-  related_content_index : NUM
+        related_content_index : NUM
 
-}
+    }
 
 ## 更新情報ロード（検索キーワード・関連コンテンツ）の取得
 
 "GET", "/api/transcripts/" + wall_id / index
 
-responseBody = {
+    responseBody = {
 
-  searchs : List[ object( Search ) ],
+        searchs : List[ object( Search ) ],
 
-  entity_index : NUM,
+        entity_index : NUM,
 
-  related_contents : List[ object( RelatedContent ) ],
+        related_contents : List[ object( RelatedContent ) ],
 
-  related_content_index : NUM
+        related_content_index : NUM
 
-}
+    }
 
 ## 認識テキストのPOST（テキスト・&検索ワード・wallID・langcode
 
 "POST", "/api/transcripts/"
 
-requestBody = {
+    requestBody = {
 
-    transcript　: STRING,
+        transcript　: STRING,
 
-    langcode: "en-US" or "ja-JP",
+        langcode: "en-US" or "ja-JP",
 
-    wallID : NUM,
+        wallID : NUM,
 
-    FacebookID : STRING
+        FacebookID : STRING
 
 
-}
+    }
 
 ## コメントカードの削除
 
-"GET", "/update/entity/" + search_word_id
+"GET", "/update/search/" + search_word_id
 
 ## 画像の削除
 
