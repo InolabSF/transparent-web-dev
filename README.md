@@ -3,58 +3,74 @@
 
 α版Transparentに必要なAPI群をまとめています。
 
-## 初期コンテンツロード（キーワード・関連コンテンツ・&検索ワード）の取得
+## 初期コンテンツロード（検索キーワード・関連コンテンツ）の取得
 
 "GET", "/api/transcripts/" + wall_id
 
 responseBody = {
 
-  entities : List[ object( Entity ) ],
+  searchs : List[ object( Search ) ],
+
+  entity_index : NUM,
 
   related_contents : List[ object( RelatedContent ) ],
-  
-  search_words : List[ STRING ]  
+
+  related_content_index : NUM
 
 }
 
-## 更新情報ロード（キーワード・関連コンテンツ・&検索ワード）の取得
+## 更新情報ロード（検索キーワード・関連コンテンツ）の取得
 
 "GET", "/api/transcripts/" + wall_id / index
 
 responseBody = {
 
-  entities : List[ object( Entity ) ],
+  searchs : List[ object( Search ) ],
+
+  entity_index : NUM,
+
   related_contents : List[ object( RelatedContent ) ],
-  search_words : List[ STRING ]  
+
+  related_content_index : NUM
+
+}
+
+## 認識テキストのPOST（テキスト・&検索ワード・wallID・langcode
+
+"POST", "/api/transcripts/"
+
+requestBody = {
+
+
 
 }
 
 ## コメントカードの削除
 
-"GET", "/update/entity/" + entity_id
+"GET", "/update/entity/" + search_word_id
 
 ## 画像の削除
 
 "GET", "/update/realtedcontent/" + related_content_id
 
-## &検索ワードの設定
+<!-- ## &検索ワードの設定
 
 "GET", "/set/context/" + wall_id
 
-params['query'] = &検索ワード
+params['query'] = &検索ワード -->
 
-## &検索ワードの削除
+<!-- ## &検索ワードの削除
 
 "GET", "/delete/context/" + wall_id
 
-params['query'] = &検索ワード
+params['query'] = &検索ワード -->
 
 
 ## Transparent　データオブジェクト構造　(5/1/2018)
 
 主にユーザーに提供するのはユーザー発言（Transcript）が持つテキスト情報（Transcript.text）とそれに付随した関連情報（Transcript.related_contents）になります。
 
-#### Transcript オブジェクト ： ユーザーの声から取得した発言情報
+<!-- #### Transcript オブジェクト ： ユーザーの声から取得した発言情報
 
     Transcript = {
 
@@ -66,7 +82,7 @@ params['query'] = &検索ワード
 
       context : Object(Context), // conversation cotext information
 
-      entities : List[ object( Entity ) ], // information extracted from transcript
+      entities : List[ object( Entity ) ], // entity extracted from transcript
 
       has_content : BOOLEAN, // if has related_contents
 
@@ -76,9 +92,9 @@ params['query'] = &検索ワード
 
       updated_at : DATETIME // time when updated
 
-    }
+    } -->
 
-
+<!--
 #### User オブジェクト ： ユーザー情報
 
     User = {
@@ -105,7 +121,21 @@ params['query'] = &検索ワード
 
       category : STRING,  // entity category
 
-      is_visible : BOOLEAN  // entity category
+      is_visible : BOOLEAN, // if is visible
+
+    } -->
+
+#### Searchオブジェクト ： ユーザー発言に関連するコンテンツ
+
+    Search = {
+
+      id : NUM,
+
+      transcript_id : NUM, // related transcript id
+
+      words : list ( STRING ), // words used for serach
+
+      is_visible : BOOLEAN, // if is visible
 
     }
 
@@ -115,7 +145,7 @@ params['query'] = &検索ワード
 
       id : NUM,
 
-      entity_id : NUM, // related entity id
+      search_id : NUM, // search id  
 
       title : STRING, // content title
 
@@ -129,11 +159,13 @@ params['query'] = &検索ワード
 
       source : STRING, // source type information (Youtube, Linkedin, SXSW official, etc.)
 
-      condition : Object( Condition )  // search condition
+      condition : Object( Condition ),  // search condition
+
+      is_visible : BOOLEAN, // if is visible
 
     }
 
-#### Conditionオブジェクト ： 関連コンテンツを検索するための条件
+<!-- #### Conditionオブジェクト ： 関連コンテンツを検索するための条件
 
     Condition = {
 
@@ -143,4 +175,4 @@ params['query'] = &検索ワード
 
       word : String // word for search
 
-    }
+    } -->
