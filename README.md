@@ -124,7 +124,7 @@
 
         searchs : List[ object( Search ) ],
 
-        entity_index : NUM,
+        search_index : NUM,
 
         related_contents : List[ object( RelatedContent ) ],
 
@@ -167,7 +167,7 @@
 
 ## コメントカードの削除
 
-"GET", "/update/search/" + search_word_id
+"GET", "/update/search/" + search_id
 
 ## 画像の削除
 
