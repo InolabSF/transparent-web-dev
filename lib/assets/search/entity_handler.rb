@@ -13,9 +13,11 @@ end
 def test_alpha(entity, langcode)
   contents = []
 
-  unsplash(entity['name'], langcode, 3, contents)
-  getty_images(entity['name'], langcode, 3, contents)
-  flickr(entity['name'], langcode, 3, contents)
+  ms_bing_search(entity['name'], langcode, 3, contents)
+  unsplash(entity['name'], langcode, 2, contents)
+  getty_images(entity['name'], langcode, 2, contents)
+  flickr(entity['name'], langcode, 2, contents)
+
   # google_custom_search(entity['name'], langcode, 3, contents)
 
   return contents
@@ -24,9 +26,9 @@ end
 def production_alpha(entity, langcode)
   contents = []
 
-  ms_bing_search(entity['name'], langcode, 2, contents)
-  unsplash(entity['name'], langcode, 3, contents)
-  getty_images(entity['name'], langcode, 3, contents)
+  ms_bing_search(entity['name'], langcode, 3, contents)
+  unsplash(entity['name'], langcode, 2, contents)
+  getty_images(entity['name'], langcode, 2, contents)
   flickr(entity['name'], langcode, 2, contents)
 
   return contents
@@ -34,7 +36,7 @@ end
 
 def ms_bing_search(text, langcode, num, contents_list)
 
-    ms_search_key = '3ae4873e178642819682634164b61aed'
+    ms_search_key = ENV['MS_SEARCH_KEY']
 
     apiUrl = 'api.cognitive.microsoft.com'
     uri = "https://" + apiUrl
@@ -103,7 +105,7 @@ def unsplash(text, langcode, num, contents_list)
 
   begin
 
-    unsplash_key = '255fd8ded83ae33ec37e217af159f6bd64d23e55efe52a84ce4d66c1c8f887c7'
+    unsplash_key = ENV['UNSPLASH_KEY']
 
     if langcode == 'en-US'
           puts('dont need to translate')
@@ -127,7 +129,7 @@ def unsplash(text, langcode, num, contents_list)
     res = conn.get do |req|
        req.url requrl
        req.headers['Content-Type'] = 'application/json'
-       req.headers['client_id'] = unsplash_key
+       req.params['client_id'] = unsplash_key
        req.params['query'] = text
        req.params['per_page'] = num
     end
@@ -175,7 +177,8 @@ end
 
 def getty_images(text, langcode, num, contents_list)
 
-    getty_images_key = 'ugsgaqp6masnxjc4mhhwwnus'
+    getty_images_key = ENV['GETTY_IMAGES_KEY']
+
     if langcode == 'en-US'
           puts('dont need to translate')
 
@@ -244,7 +247,7 @@ end
 
 def flickr(text, langcode, num, contents_list)
 
-    flickr_key = '3a1beefbe8e8644ebc097d166d5eab49'
+    flickr_key = ENV['FLICKR_KEY']
 
     apiUrl = 'api.flickr.com'
     uri = "https://" + apiUrl
@@ -311,7 +314,7 @@ end
 
 def google_custom_search(text, langcode, num, contents_list)
 
-    google_api_key = 'AIzaSyDQVzBPCDbkf7sMECj8viRCZ7DnGVrJeT0'
+    google_api_key = ENV['GCP_API_KEY']
 
     if langcode == 'en-US'
           contextID = '009975893690043505409:cv7hwnfkxqe'
@@ -380,7 +383,7 @@ end
 
 def google_translate(langcode, targetcode, text)
 
-    google_api_key = 'AIzaSyDQVzBPCDbkf7sMECj8viRCZ7DnGVrJeT0'
+    google_api_key = ENV['GCP_API_KEY']
 
     if langcode == 'en-US'
           langcode = 'en'

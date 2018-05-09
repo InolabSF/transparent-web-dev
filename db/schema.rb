@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180411081938) do
+ActiveRecord::Schema.define(version: 20180509172110) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -66,6 +66,14 @@ ActiveRecord::Schema.define(version: 20180411081938) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "category"
+  end
+
+  create_table "no_good_words", force: :cascade do |t|
+    t.string "word"
+    t.string "langcode", default: "ja-JP"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["word"], name: "index_no_good_words_on_word", unique: true
   end
 
   create_table "related_contents", force: :cascade do |t|

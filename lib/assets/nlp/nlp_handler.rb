@@ -6,12 +6,18 @@ def nlp_handler(nlp_type, text, langcode, is_test_mode)
     entities, sentiment = analyze_text_ms(text, langcode)
   end
 
-  ## 開発後回し
+  entities_list = []
+
   for entity in entities
-    puts(moderate(entity))
+    if NoGoodWord.exists?(word: entity['name'])
+      puts('No Good Entity')
+      puts(entity['name'])
+    else
+      entities_list.push(entity)
+    end
   end
 
-  return entities, sentiment
+  return entities_list, sentiment
 end
 
 def analyze_text_ms(text, langcode)
@@ -38,10 +44,10 @@ def analyze_text_ms(text, langcode)
        }
 
     res = conn.post do |req|
-       req.url requrl
-       req.headers['Content-Type'] = 'application/json'
-       req.headers['Ocp-Apim-Subscription-Key'] = 'cb7538f46f864e5a988f5bd9cf1076b9'
-       req.body = req_body.to_json
+      req.url requrl
+      req.headers['Content-Type'] = 'application/json'
+      req.headers['Ocp-Apim-Subscription-Key'] = ENV['MS_TEXT_KEY']
+      req.body = req_body.to_json
     end
 
     body = JSON.parse(res.body)
@@ -64,8 +70,4 @@ def analyze_text_ms(text, langcode)
 
     return entities_hash, sentiment
 
-end
-
-def moderate(text)
-  return true
 end

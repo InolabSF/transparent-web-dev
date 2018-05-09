@@ -62,3 +62,11 @@ Config.create(:cse_id => "014983619042086533707:yowg6mvvpf8", :name => "general 
 ConfigGroup.create(:config_id => 1, :wall_id => 2)
 
 ConfigGroup.create(:config_id => 2, :wall_id => 2)
+
+rails generate model NoGoodWord word:string:unique langcode:string
+
+ rails g migration AddIndexToNoGoodWord
+
+ rails g migration ChangeLangcodeToNoGoodWord
+
+ export UNSPLASH_KEY=""

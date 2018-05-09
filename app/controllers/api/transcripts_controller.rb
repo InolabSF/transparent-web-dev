@@ -96,7 +96,7 @@ class Api::TranscriptsController < ApplicationController
       id = transcript.id
       text = transcript.text
       user = transcript.user.attributes
-      context = transcript.context.attributes
+      # context = transcript.context.attributes
       # entities_obj = Entity.where(:transcript_id => transcript.id)
       entities_obj = transcript.entities
       entities = []
@@ -124,7 +124,7 @@ class Api::TranscriptsController < ApplicationController
       data.store('id', id)
       data.store('text', text)
       data.store('user', user)
-      data.store('context', context)
+      # data.store('context', context)
       data.store('entities', entities)
       data.store('has_content', has_content)
       data.store('related_contents', related_contents)
