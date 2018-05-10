@@ -166,7 +166,7 @@
 
         FacebookID : STRING,
 
-        search_type : NUM, (1:Image, 2:webpage, 3:Video)
+        search_type : NUM, (1:Image, 2:Webpage, 3:Video)
 
         with_words : List[ STRING ]
 
