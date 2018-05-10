@@ -1,22 +1,22 @@
-def entity_handler(entity, langcode, is_word_only, search_mode, is_test_mode)
+def entity_handler(entity, langcode, is_word_only, search_type, is_test_mode)
 
   if is_test_mode
-    contents = test_alpha(entity, langcode, search_mode)
+    contents = test_alpha(entity, langcode, search_type)
   else
-    contents = production_alpha(entity, langcode, search_mode)
+    contents = production_alpha(entity, langcode, search_type)
   end
 
   return contents
 end
 
 
-def test_alpha(entity, langcode, search_mode)
+def test_alpha(entity, langcode, search_type)
 
-  if search_mode == 1
+  if search_type == 1
     contents = image_search(entity, langcode)
-  elsif search_mode == 2
+  elsif search_type == 2
     contents = news_search(entity, langcode)
-  elsif search_mode == 3
+  elsif search_type == 3
     contents = video_search(entity, langcode)
   else
     contents = image_search(entity, langcode)
@@ -28,11 +28,11 @@ end
 def production_alpha(entity, langcode)
   contents = []
 
-  if search_mode == 1
+  if search_type == 1
     contents = image_search(entity, langcode)
-  elsif search_mode == 2
+  elsif search_type == 2
     contents = news_search(entity, langcode)
-  elsif search_mode == 3
+  elsif search_type == 3
     contents = video_search(entity, langcode)
   else
     contents = image_search(entity, langcode)

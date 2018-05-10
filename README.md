@@ -67,9 +67,11 @@
 
       transcript_id : NUM, // related transcript id
 
-      words : list ( STRING ), // words used for serach
+      words : list ( STRING ), // words used for search
 
       is_visible : BOOLEAN, // if is visible
+
+      type : NUM
 
     }
 
@@ -92,6 +94,8 @@
       content_type : STRING, // content type ( webpage, image, video )
 
       source : STRING, // information source
+
+      search_service : STRING, // serach API information
 
       <!-- condition : Object( Condition ),  // search condition -->
 
@@ -148,7 +152,7 @@
 
     }
 
-## 認識テキストのPOST（テキスト・&検索ワード・wallID・langcode
+## 認識テキストのPOST（テキスト, langcode, wallID, facebook_id, search_type, &検索ワード）
 
 "POST", "/api/transcripts/"
 
@@ -160,7 +164,11 @@
 
         wallID : NUM,
 
-        FacebookID : STRING
+        FacebookID : STRING,
+
+        search_type : NUM, (1:Image, 2:webpage, 3:Video)
+
+        with_words : List[ STRING ]
 
 
     }

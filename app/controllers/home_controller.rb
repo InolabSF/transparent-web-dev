@@ -53,10 +53,10 @@ class HomeController < ApplicationController
     is_test_mode = true
     is_word_only = true
 
-    if api_req[:search_mode]
-      search_mode = api_req[:search_mode]
+    if api_req[:search_type]
+      search_type = api_req[:search_type]
     else
-      search_mode = 1
+      search_type = 1
     end
 
     text = api_req[:transcript]
@@ -77,7 +77,7 @@ class HomeController < ApplicationController
     end
 
     for entity in @transcript.entities
-      contents_list  =  entity_handler(entity, langcode, is_word_only, search_mode, is_test_mode)
+      contents_list  =  entity_handler(entity, langcode, is_word_only, search_type, is_test_mode)
       if contents_list.length == 0
         @transcript.has_content = false
       else
