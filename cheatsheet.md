@@ -69,4 +69,4 @@ rails generate model NoGoodWord word:string:unique langcode:string
 
  rails g migration ChangeLangcodeToNoGoodWord
 
- export UNSPLASH_KEY=""
+ export MS_IMAGE_SEARCH_KEY="3ae4873e178642819682634164b61aed"

@@ -52,7 +52,12 @@ class HomeController < ApplicationController
     default_nlp = 'MS'
     is_test_mode = true
     is_word_only = true
-    is_image_search = true
+
+    if api_req[:search_mode]
+      search_mode = api_req[:search_mode]
+    else
+      search_mode = 1
+    end
 
     text = api_req[:transcript]
     user_id = User.find_by(facebook_id: api_req[:FacebookID]).id
@@ -72,7 +77,7 @@ class HomeController < ApplicationController
     end
 
     for entity in @transcript.entities
-      contents_list  =  entity_handler(entity, langcode, is_word_only, is_image_search, is_test_mode)
+      contents_list  =  entity_handler(entity, langcode, is_word_only, search_mode, is_test_mode)
       if contents_list.length == 0
         @transcript.has_content = false
       else

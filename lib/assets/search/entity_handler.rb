@@ -1,24 +1,26 @@
-def entity_handler(entity, langcode, is_word_only, is_image_search, is_test_mode)
+def entity_handler(entity, langcode, is_word_only, search_mode, is_test_mode)
 
   if is_test_mode
-    contents = test_alpha(entity, langcode)
+    contents = test_alpha(entity, langcode, search_mode)
   else
-    contents = demo_alpha(entity, langcode)
+    contents = production_alpha(entity, langcode, search_mode)
   end
 
   return contents
 end
 
 
-def test_alpha(entity, langcode)
-  contents = []
+def test_alpha(entity, langcode, search_mode)
 
-  ms_bing_search(entity['name'], langcode, 3, contents)
-  unsplash(entity['name'], langcode, 2, contents)
-  getty_images(entity['name'], langcode, 2, contents)
-  flickr(entity['name'], langcode, 2, contents)
-
-  # google_custom_search(entity['name'], langcode, 3, contents)
+  if search_mode == 1
+    contents = image_search(entity, langcode)
+  elsif search_mode == 2
+    contents = news_search(entity, langcode)
+  elsif search_mode == 3
+    contents = video_search(entity, langcode)
+  else
+    contents = image_search(entity, langcode)
+  end
 
   return contents
 end
@@ -26,17 +28,73 @@ end
 def production_alpha(entity, langcode)
   contents = []
 
-  ms_bing_search(entity['name'], langcode, 3, contents)
-  unsplash(entity['name'], langcode, 2, contents)
-  getty_images(entity['name'], langcode, 2, contents)
-  flickr(entity['name'], langcode, 2, contents)
+  if search_mode == 1
+    contents = image_search(entity, langcode)
+  elsif search_mode == 2
+    contents = news_search(entity, langcode)
+  elsif search_mode == 3
+    contents = video_search(entity, langcode)
+  else
+    contents = image_search(entity, langcode)
+  end
 
   return contents
 end
 
-def ms_bing_search(text, langcode, num, contents_list)
+def image_search(entity, langcode)
+  contents = []
 
-    ms_search_key = ENV['MS_SEARCH_KEY']
+  threads = []
+  threads << Thread.new do
+    ms_image_search(entity['name'], langcode, 3, contents)
+  end
+  threads << Thread.new do
+    unsplash(entity['name'], langcode, 2, contents)
+  end
+  threads << Thread.new do
+    getty_images(entity['name'], langcode, 2, contents)
+  end
+  threads << Thread.new do
+    flickr(entity['name'], langcode, 2, contents)
+  end
+
+  # google_custom_search(entity['name'], langcode, 3, contents)
+
+  threads.each { |t| t.join }
+
+  return contents
+end
+
+def news_search(entity, langcode)
+  contents = []
+
+  threads = []
+  threads << Thread.new do
+    ms_news_search(entity['name'], langcode, 9, contents)
+  end
+
+  threads.each { |t| t.join }
+
+  return contents
+end
+
+def video_search(entity, langcode)
+  contents = []
+
+  threads = []
+  threads << Thread.new do
+    youtube(entity['name'], langcode, 9, contents)
+  end
+
+  threads.each { |t| t.join }
+
+  return contents
+end
+
+
+def ms_image_search(text, langcode, num, contents_list)
+
+    ms_search_key = ENV['MS_IMAGE_SEARCH_KEY']
 
     apiUrl = 'api.cognitive.microsoft.com'
     uri = "https://" + apiUrl
@@ -371,6 +429,135 @@ def google_custom_search(text, langcode, num, contents_list)
       content.store('url', url)
       content.store('img_url', img_url)
       content.store('content_type', 'image')
+      content.store('source', source)
+      content.store('condition', condition)
+
+      contents_list.push(content)
+
+    end
+
+end
+
+def ms_news_search(text, langcode, num, contents_list)
+
+    ms_search_key = ENV['MS_NEWS_SEARCH_KEY']
+
+    apiUrl = 'api.cognitive.microsoft.com'
+    uri = "https://" + apiUrl
+
+    conn = Faraday::Connection.new(:url => uri) do |builder|
+     ## URLをエンコードする
+      builder.use Faraday::Request::UrlEncoded
+     ## ログを標準出力に出したい時(本番はコメントアウトでいいかも)
+      builder.use Faraday::Response::Logger
+     ## アダプター選択（選択肢は他にもあり）
+      builder.use Faraday::Adapter::NetHttp
+
+    end
+
+    requrl = '/bing/v7.0/news/search'
+
+    res = conn.get do |req|
+       req.url requrl
+       req.headers['Content-Type'] = 'application/json'
+       req.headers['Ocp-Apim-Subscription-Key'] = ms_search_key
+       req.params['q'] = text
+       req.params['count'] = num
+       req.params['mkt'] = langcode
+       req.params['license'] = 'All'
+       req.params['safeSearch'] = 'Strict'
+    end
+
+    body = JSON.parse(res.body)
+
+    puts(body)
+
+    service = 'MS Bing News Search API'
+    condition = {}
+    condition.store('service', service)
+    condition.store('word', text)
+
+    # if body.has_key?(:value)
+
+    for value in body['value']
+
+      # try catch 構文にかえたい
+      if value['image']
+        content = {}
+
+        title = value['name']
+        desc = value['description']
+        img_url = value['image']['thumbnail']['contentUrl']
+        url = value['url']
+        # source = value['hostPageDisplayUrl']
+        source = url
+
+        content.store('title', title)
+        content.store('desc', desc)
+        content.store('url', url)
+        content.store('img_url', img_url)
+        content.store('content_type', 'web page')
+        content.store('source', source)
+        content.store('condition', condition)
+
+        contents_list.push(content)
+      else
+        puts('no image news')
+      end
+
+    end
+
+end
+
+def youtube(text, langcode, num, contents_list)
+
+    google_api_key = ENV['GCP_API_KEY']
+
+    apiUrl = 'www.googleapis.com'
+    uri = "https://" + apiUrl
+
+    conn = Faraday::Connection.new(:url => uri) do |builder|
+      builder.use Faraday::Request::UrlEncoded
+      builder.use Faraday::Response::Logger
+      builder.use Faraday::Adapter::NetHttp
+
+    end
+
+    requrl = '/youtube/v3/search'
+
+    res = conn.get do |req|
+       req.url requrl
+       req.headers['Content-Type'] = 'application/json'
+       req.params['key'] = google_api_key
+       req.params['q'] = text
+       req.params['maxResults'] = num
+       req.params['type'] = 'video'
+       req.params['part'] = 'snippet'
+    end
+
+    body = JSON.parse(res.body)
+
+    puts(body)
+
+    service = 'YouTube Data API'
+    condition = {}
+    condition.store('service', service)
+    condition.store('word', text)
+
+    for item in body['items']
+      content = {}
+
+      title = item['snippet']['title']
+      desc = item['snippet']['description']
+      img_url = item['snippet']['thumbnails']['medium']['url']
+      url = 'https://www.youtube.com/watch?v=' + item['id']['videoId']
+      source = 'www.youtube.com'
+
+      content.store('title', title)
+      content.store('desc', desc)
+      content.store('url', url)
+      content.store('img_url', img_url)
+      content.store('content_type', 'video')
       content.store('source', source)
       content.store('condition', condition)
 
