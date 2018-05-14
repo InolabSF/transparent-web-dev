@@ -82,11 +82,11 @@ $ bundle install
 
       is_visible : BOOLEAN, // if is visible
 
-      mode : NUM
+      mode : STRING // search type (Image, News, Video)
 
     }
 
-#### RelatedContentオブジェクト ： ユーザー発言に関連するコンテンツ
+#### RelatedContentオブジェクト ： 検索結果のコンテンツ
 
     RelatedContent = {
 
@@ -137,9 +137,37 @@ $ bundle install
 
     responseBody = {
 
-        searchs : List[ object( Search ) ],
+        searches : List[ object( Search ) ],
 
         search_index : NUM,
+
+        related_contents : List[ object( RelatedContent ) ],
+
+        related_content_index : NUM
+
+    }
+
+Sample Response
+
+    responseBody = {
+
+        searches : [
+
+          {
+            id : 20,
+            transcript_id : 200, //
+            words : [ 'transparent', 'world'], // words used for search
+            is_visible : true,
+            mode : 1
+
+          }
+
+
+
+
+        ],
+
+        search_index : 20,
 
         related_contents : List[ object( RelatedContent ) ],
 
@@ -153,7 +181,21 @@ $ bundle install
 
     responseBody = {
 
-        searchs : List[ object( Search ) ],
+        searches : List[ object( Search ) ],
+
+        search_index : NUM,
+
+        related_contents : List[ object( RelatedContent ) ],
+
+        related_content_index : NUM
+
+    }
+
+Sample Response
+
+    responseBody = {
+
+        searches : List[ object( Search ) ],
 
         entity_index : NUM,
 

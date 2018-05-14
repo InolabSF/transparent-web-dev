@@ -73,13 +73,13 @@ class HomeController < ApplicationController
     end
 
     if search_type == 1
-      search_mode = 'image'
+      search_mode = 'Image'
     elsif search_type == 2
-      search_mode = 'news'
+      search_mode = 'News'
     elsif search_type == 3
-      search_mode = 'video'
+      search_mode = 'Video'
     else
-      search_mode = 'image'
+      search_mode = 'Image'
     end
 
     if api_req[:UI_version]
