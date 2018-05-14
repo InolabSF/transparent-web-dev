@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180509172110) do
+ActiveRecord::Schema.define(version: 20180514040648) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -68,6 +68,15 @@ ActiveRecord::Schema.define(version: 20180509172110) do
     t.string "category"
   end
 
+  create_table "entity_searches", force: :cascade do |t|
+    t.integer "search_id"
+    t.integer "entity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["entity_id"], name: "index_entity_searches_on_entity_id"
+    t.index ["search_id"], name: "index_entity_searches_on_search_id"
+  end
+
   create_table "no_good_words", force: :cascade do |t|
     t.string "word"
     t.string "langcode", default: "ja-JP"
@@ -88,6 +97,15 @@ ActiveRecord::Schema.define(version: 20180509172110) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "awesome", default: 0
+    t.integer "search_id"
+  end
+
+  create_table "searches", force: :cascade do |t|
+    t.string "mode"
+    t.integer "transcript_id"
+    t.boolean "is_visible"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "transcripts", force: :cascade do |t|
@@ -118,6 +136,22 @@ ActiveRecord::Schema.define(version: 20180509172110) do
     t.datetime "updated_at", null: false
     t.string "name"
     t.integer "manager_id"
+  end
+
+  create_table "with_word_searches", force: :cascade do |t|
+    t.integer "search_id"
+    t.integer "with_word_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["search_id"], name: "index_with_word_searches_on_search_id"
+    t.index ["with_word_id"], name: "index_with_word_searches_on_with_word_id"
+  end
+
+  create_table "with_words", force: :cascade do |t|
+    t.string "text"
+    t.integer "transcript_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

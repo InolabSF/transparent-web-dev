@@ -70,3 +70,18 @@ rails generate model NoGoodWord word:string:unique langcode:string
  rails g migration ChangeLangcodeToNoGoodWord
 
  export MS_IMAGE_SEARCH_KEY="3ae4873e178642819682634164b61aed"
+ export MS_TEXT_KEY="2e2990cf679b4c5cae642ebaf93b0588"
+
+--------------------------------v----------------------------------------
+
+ rails generate model WithWord text:string transcript_id:integer
+
+ rails generate model Search mode:string transcript_id:integer　is_visible:boolean
+
+ rails g migration AddVisibleToSearch is_visible:boolean
+
+ rails generate model entity_search search:references entity:references
+
+ rails generate model with_word_search search:references with_word:references
+
+ rails g migration AddSearchToRelatedContent search_id:integer

@@ -71,7 +71,7 @@
 
       is_visible : BOOLEAN, // if is visible
 
-      type : NUM
+      mode : NUM
 
     }
 
@@ -168,7 +168,9 @@
 
         search_type : NUM, (1:Image, 2:Webpage, 3:Video)
 
-        with_words : List[ STRING ]
+        with_words : List[ STRING ],
+
+        UI_version : "alpha" (demo, alpha, beta)
 
 
     }
@@ -179,7 +181,7 @@
 
 ## 画像の削除
 
-"GET", "/update/realtedcontent/" + related_content_id
+"GET", "/update/relatedcontent/" + related_content_id
 
 <!-- ## &検索ワードの設定
 

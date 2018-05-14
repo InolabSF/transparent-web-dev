@@ -1,61 +1,124 @@
+def word_handler(word, langcode, is_word_only, search_type, is_test_mode)
+
+  puts(word)
+
+  if word.present?
+
+    if is_test_mode
+      contents = test_alpha(word, langcode, search_type)
+    else
+      contents = production_alpha(word, langcode, search_type)
+    end
+
+  else
+    contents = []
+  end
+
+  return contents
+end
+
+def search_handler(search, transcript, langcode, is_word_only, search_type, is_test_mode)
+
+  puts(search)
+  puts(search.entities)
+  puts(search.with_words)
+
+  word = ''
+
+  for entity in search.entities
+    word += entity.name
+    word += ' '
+  end
+
+  for with_word in search.with_words
+    word += with_word.text
+    word += ' '
+  end
+
+  if word.present?
+
+    if is_test_mode
+      contents = test_alpha(word, langcode, search_type)
+    else
+      contents = production_alpha(word, langcode, search_type)
+    end
+
+  else
+    contents = []
+  end
+
+  transcript.has_content = true
+
+  for content in contents
+    related_content = search.related_contents.build(:transcript => transcript, :title => content['title'], :desc => content['desc'], :url => content['url'], :img_url => content['img_url'], :content_type => content['content_type'], :source => content['source'], :is_visible => true)
+    condition = related_content.build_condition(:service => content['condition']['service'], :word => content['condition']['word'])
+    transcript.save
+    search.save
+    # alpha 対応
+    # search.save
+  end
+
+  return contents
+end
+
 def entity_handler(entity, langcode, is_word_only, search_type, is_test_mode)
 
   if is_test_mode
-    contents = test_alpha(entity, langcode, search_type)
+    contents = test_alpha(entity['name'], langcode, search_type)
   else
-    contents = production_alpha(entity, langcode, search_type)
+    contents = production_alpha(entity['name'], langcode, search_type)
   end
 
   return contents
 end
 
 
-def test_alpha(entity, langcode, search_type)
+def test_alpha(word, langcode, search_type)
 
   if search_type == 1
-    contents = image_search(entity, langcode)
+    contents = image_search(word, langcode)
   elsif search_type == 2
-    contents = news_search(entity, langcode)
+    contents = news_search(word, langcode)
   elsif search_type == 3
-    contents = video_search(entity, langcode)
+    contents = video_search(word, langcode)
   else
-    contents = image_search(entity, langcode)
+    contents = image_search(word, langcode)
   end
 
   return contents
 end
 
-def production_alpha(entity, langcode)
+def production_alpha(word, langcode)
   contents = []
 
   if search_type == 1
-    contents = image_search(entity, langcode)
+    contents = image_search(word, langcode)
   elsif search_type == 2
-    contents = news_search(entity, langcode)
+    contents = news_search(word, langcode)
   elsif search_type == 3
-    contents = video_search(entity, langcode)
+    contents = video_search(word, langcode)
   else
-    contents = image_search(entity, langcode)
+    contents = image_search(word, langcode)
   end
 
   return contents
 end
 
-def image_search(entity, langcode)
+def image_search(word, langcode)
   contents = []
 
   threads = []
   threads << Thread.new do
-    ms_image_search(entity['name'], langcode, 3, contents)
+    ms_image_search(word, langcode, 3, contents)
   end
   threads << Thread.new do
-    unsplash(entity['name'], langcode, 2, contents)
+    unsplash(word, langcode, 2, contents)
   end
   threads << Thread.new do
-    getty_images(entity['name'], langcode, 2, contents)
+    getty_images(word, langcode, 2, contents)
   end
   threads << Thread.new do
-    flickr(entity['name'], langcode, 2, contents)
+    flickr(word, langcode, 2, contents)
   end
 
   # google_custom_search(entity['name'], langcode, 3, contents)
@@ -65,12 +128,12 @@ def image_search(entity, langcode)
   return contents
 end
 
-def news_search(entity, langcode)
+def news_search(word, langcode)
   contents = []
 
   threads = []
   threads << Thread.new do
-    ms_news_search(entity['name'], langcode, 9, contents)
+    ms_news_search(word, langcode, 9, contents)
   end
 
   threads.each { |t| t.join }
@@ -78,12 +141,12 @@ def news_search(entity, langcode)
   return contents
 end
 
-def video_search(entity, langcode)
+def video_search(word, langcode)
   contents = []
 
   threads = []
   threads << Thread.new do
-    youtube(entity['name'], langcode, 9, contents)
+    youtube(word, langcode, 9, contents)
   end
 
   threads.each { |t| t.join }
@@ -131,29 +194,29 @@ def ms_image_search(text, langcode, num, contents_list)
     condition.store('service', service)
     condition.store('word', text)
 
-    # if body.has_key?(:value)
-    for value in body['value']
-      content = {}
+    if body['value']
+      for value in body['value']
+        content = {}
 
-      title = value['name']
-      img_url = value['contentUrl']
-      url = value['hostPageUrl']
-      source = value['hostPageDisplayUrl']
+        title = value['name']
+        img_url = value['contentUrl']
+        url = value['hostPageUrl']
+        source = value['hostPageDisplayUrl']
 
-      content.store('title', title)
-      content.store('desc', url)
-      content.store('url', url)
-      content.store('img_url', img_url)
-      content.store('content_type', 'image')
-      content.store('source', source)
-      content.store('condition', condition)
+        content.store('title', title)
+        content.store('desc', url)
+        content.store('url', url)
+        content.store('img_url', img_url)
+        content.store('content_type', 'image')
+        content.store('source', source)
+        content.store('condition', condition)
 
-      contents_list.push(content)
+        contents_list.push(content)
 
+      end
+    else
+      puts(body.keys)
     end
-    # else
-    #   puts(body.keys)
-    # end
 
     # puts('in ms function')
     # puts(contents_list)

@@ -20,7 +20,10 @@ Rails.application.routes.draw do
 
   get '/media',   to: 'home#media'
 
-  post '/test',   to: 'home#post_transcript'
+  post '/post',   to: 'home#post_transcript'
+
+  get '/alpha/ja/test',   to: 'home#alpha_test_ja'
+  get '/alpha/en/test',   to: 'home#alpha_test_en'
 
   # namespace :api, format: 'json' do
   #   resources :transcripts, only: [:index, :show, :create, :update]
