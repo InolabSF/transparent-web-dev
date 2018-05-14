@@ -261,17 +261,90 @@ $ bundle install
 
     }
 
-#### Sample Response
+#### Sample Response 1
 
     responseBody = {
 
-        searches : List[ object( Search ) ],
+        searches : [
 
-        entity_index : NUM,
+          {
+            "id" : 22,
+            "transcript_id" : 200,
+            "words" : [ 'san francisco', 'world'],
+            "is_visible" : true,
+            "mode" : 'Image'
+          }
+        ],
 
-        related_contents : List[ object( RelatedContent ) ],
+        search_index : 22,
 
-        related_content_index : NUM
+        related_contents : [
+
+            {
+                "id": 104,
+                "search_id": 22,
+                "title": "sample 5",
+                "desc": "You Tube - Smasher - ",
+                "url": "https://www.youtube.com/watch?v=22cdBDK-8hk",
+                "img_url": "https://wikitravel.org/upload/en/thumb/2/23/Us-ca-sanfran-goldengate.jpg/510px-Us-ca-sanfran-goldengate.jpg",
+                "content_type": "image",
+                "source": "www.youtube.com",
+                "is_visible": true,
+                "created_at": "2018-02-28T05:20:27.091Z",
+                "updated_at": "2018-02-28T05:20:27.091Z",
+                "awesome": 0,
+                "condition":{"service": "MS Bing Image Search API", "word": "san francisco world"}
+            }
+
+        ],
+
+        related_content_index : 103
+
+    }
+
+#### Sample Response 2
+
+    responseBody = {
+
+        searches : [],
+
+        search_index : 21,
+
+        related_contents : [
+
+            {
+                "id": 105,
+                "search_id": 22,
+                "title": "sample 6",
+                "desc": "You Tube - Smasher - ",
+                "url": "https://www.youtube.com/watch?v=22cdBDK-8hk",
+                "img_url": "https://www.omm.com/~/media/images/site/locations/san_francisco_780x520px.ashx",
+                "content_type": "image",
+                "source": "www.youtube.com",
+                "is_visible": true,
+                "created_at": "2018-02-28T05:20:27.091Z",
+                "updated_at": "2018-02-28T05:20:27.091Z",
+                "awesome": 0,
+                "condition":{"service": "MS Bing Image Search API", "word": "san francisco world"}
+            },
+            {
+                "id": 106,
+                "search_id": 22,
+                "title": "sample 7",
+                "desc": "You Tube - Smasher - ",
+                "url": "https://www.youtube.com/watch?v=22cdBDK-8hk",
+                "img_url": "https://lonelyplanetimages.imgix.net/a/g/hi/t/9cf024dfd5c0bcb2b17f4785340145ea-san-francisco.jpg?sharp=10&vib=20&w=1200",
+                "content_type": "image",
+                "source": "www.youtube.com",
+                "is_visible": true,
+                "created_at": "2018-02-28T05:20:27.091Z",
+                "updated_at": "2018-02-28T05:20:27.091Z",
+                "awesome": 0,
+                "condition":{"service": "MS Bing Image Search API", "word": "san francisco world"}
+            }
+        ],
+
+        related_content_index : 106
 
     }
 
