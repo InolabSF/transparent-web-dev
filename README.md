@@ -1,3 +1,17 @@
+# README
+
+
+## Versions
+- Rails - 5.1.4
+- Ruby - 2.3.1
+
+
+## Set up
+
+$ bundle install
+
+
+
 ## Transparent　データオブジェクト構造　(5/1/2018)
 
 <!-- 主にユーザーに提供するのはユーザー発言（Transcript）が持つテキスト情報（Transcript.text）とそれに付随した関連情報（Transcript.related_contents）になります。 -->
