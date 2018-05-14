@@ -60,7 +60,7 @@ class Api::TranscriptsController < ApplicationController
 
     for transcript in transcripts_list do
 
-      if transcript.searches
+      if transcript.searches.present?
 
         for search in transcript.searches
 
@@ -122,7 +122,7 @@ class Api::TranscriptsController < ApplicationController
 
         end
 
-      elsif transcript.entities
+      elsif transcript.entities.present?
 
         data = {}
 
@@ -160,8 +160,6 @@ class Api::TranscriptsController < ApplicationController
           word += entity.name
           word += ' '
         end
-
-
 
         data.store('id', id)
         data.store('text', word)
