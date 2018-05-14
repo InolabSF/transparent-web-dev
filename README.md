@@ -154,24 +154,90 @@ Sample Response
         searches : [
 
           {
-            id : 20,
-            transcript_id : 200, //
-            words : [ 'transparent', 'world'], // words used for search
-            is_visible : true,
-            mode : 1
-
+            "id" : 20,
+            "transcript_id" : 200, //
+            "words" : [ 'transparent', 'world'],
+            "is_visible" : true,
+            "mode" : 'Image'
+          },
+          {
+            "id" : 21,
+            "transcript_id" : 201, //
+            "words" : [ 'world', 'camera'],
+            "is_visible" : true,
+            "mode" : 'Image'
           }
-
-
-
 
         ],
 
-        search_index : 20,
+        search_index : 21,
 
-        related_contents : List[ object( RelatedContent ) ],
+        related_contents : [
 
-        related_content_index : NUM
+            {
+                "id": 100,
+                "search_id": 20,
+                "title": "sample 1",
+                "desc": "You Tube - Smasher - ",
+                "url": "https://www.youtube.com/watch?v=22cdBDK-8hk",
+                "img_url": "http://www.designbolts.com/wp-content/uploads/2013/09/40-Free-Transparent-Social-Media-Icons-01.jpg",
+                "content_type": "image",
+                "source": "www.youtube.com",
+                "is_visible": true,
+                "created_at": "2018-02-28T05:20:27.091Z",
+                "updated_at": "2018-02-28T05:20:27.091Z",
+                "awesome": 0,
+                "condition":{"service": "MS Bing Image Search API", "word": "transparent world"}
+            },
+            {
+                "id": 101,
+                "search_id": 20,
+                "title": "sample 2",
+                "desc": "You Tube - Smasher - ",
+                "url": "https://www.youtube.com/watch?v=22cdBDK-8hk",
+                "img_url": "http://www.pgwebs.com/wp-content/uploads/2014/12/Social-Media-Solutions-for-Your-Troubles.png",
+                "content_type": "image",
+                "source": "www.youtube.com",
+                "is_visible": true,
+                "created_at": "2018-02-28T05:20:27.091Z",
+                "updated_at": "2018-02-28T05:20:27.091Z",
+                "awesome": 0,
+                "condition":{"service": "MS Bing Image Search API", "word": "transparent world"}
+            },
+            {
+                "id": 102,
+                "search_id": 21,
+                "title": "sample 3",
+                "desc": "You Tube - Smasher - ",
+                "url": "https://www.youtube.com/watch?v=22cdBDK-8hk",
+                "img_url": "https://coziest.net/wp-content/uploads/2013/12/sc.jpg",
+                "content_type": "image",
+                "source": "www.youtube.com",
+                "is_visible": true,
+                "created_at": "2018-02-28T05:20:27.091Z",
+                "updated_at": "2018-02-28T05:20:27.091Z",
+                "awesome": 0,
+                "condition":{"service": "MS Bing Image Search API", "word": "world camera"}
+            },
+            {
+                "id": 103,
+                "search_id": 21,
+                "title": "sample 4",
+                "desc": "You Tube - Smasher - ",
+                "url": "https://www.youtube.com/watch?v=22cdBDK-8hk",
+                "img_url": "http://image.itmedia.co.jp/bizid/articles/0909/30/st_photo1.jpg",
+                "content_type": "image",
+                "source": "www.youtube.com",
+                "is_visible": true,
+                "created_at": "2018-02-28T05:20:27.091Z",
+                "updated_at": "2018-02-28T05:20:27.091Z",
+                "awesome": 0,
+                "condition":{"service": "MS Bing Image Search API", "word": "world camera"}
+            }
+
+        ],
+
+        related_content_index : 103
 
     }
 
