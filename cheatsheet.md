@@ -72,8 +72,6 @@ rails generate model NoGoodWord word:string:unique langcode:string
  export MS_IMAGE_SEARCH_KEY="3ae4873e178642819682634164b61aed"
  export MS_TEXT_KEY="2e2990cf679b4c5cae642ebaf93b0588"
 
---------------------------------v----------------------------------------
-
  rails generate model WithWord text:string transcript_id:integer
 
  rails generate model Search mode:string transcript_id:integer　is_visible:boolean

@@ -7,10 +7,7 @@
 
 
 ## Set up
-
 $ bundle install
-
-
 
 ## Transparent　データオブジェクト構造　(5/1/2018)
 

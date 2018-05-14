@@ -1,13 +1,23 @@
-def word_handler(word, langcode, is_word_only, search_type, is_test_mode)
+def search_handler(word, search, transcript, langcode, is_concurrent, is_word_only, search_type, is_test_mode)
 
-  puts(word)
+  # word = ''
+  #
+  # for entity in search.entities
+  #   word += entity.name
+  #   word += ' '
+  # end
+  #
+  # for with_word in search.with_words
+  #   word += with_word.text
+  #   word += ' '
+  # end
 
   if word.present?
 
     if is_test_mode
-      contents = test_alpha(word, langcode, search_type)
+      contents = test_alpha(word, search, transcript, langcode, is_concurrent, search_type)
     else
-      contents = production_alpha(word, langcode, search_type)
+      contents = production_alpha(word, search, transcript, langcode, is_concurrent, search_type)
     end
 
   else
@@ -17,123 +27,75 @@ def word_handler(word, langcode, is_word_only, search_type, is_test_mode)
   return contents
 end
 
-def search_handler(search, transcript, langcode, is_word_only, search_type, is_test_mode)
+def test_alpha(word, search, transcript, langcode, is_concurrent, search_type)
 
-  puts(search)
-  puts(search.entities)
-  puts(search.with_words)
-
-  word = ''
-
-  for entity in search.entities
-    word += entity.name
-    word += ' '
+  if search_type == 1
+    contents = image_search(word, search, transcript, langcode, is_concurrent)
+  elsif search_type == 2
+    contents = news_search(word, search, transcript, langcode, is_concurrent)
+  elsif search_type == 3
+    contents = video_search(word, search, transcript, langcode, is_concurrent)
+  else
+    contents = image_search(word, search, transcript, langcode, is_concurrent)
   end
 
-  for with_word in search.with_words
-    word += with_word.text
-    word += ' '
+  return contents
+end
+
+def production_alpha(word, search, transcript, langcode, is_concurrent, search_type)
+  contents = []
+
+  if search_type == 1
+    contents = image_search(word, search, transcript, langcode, is_concurrent)
+  elsif search_type == 2
+    contents = news_search(word, search, transcript, langcode, is_concurrent)
+  elsif search_type == 3
+    contents = video_search(word, search, transcript, langcode, is_concurrent)
+  else
+    contents = image_search(word, search, transcript, langcode, is_concurrent)
   end
 
-  if word.present?
+  return contents
+end
 
-    if is_test_mode
-      contents = test_alpha(word, langcode, search_type)
-    else
-      contents = production_alpha(word, langcode, search_type)
+def image_search(word, search, transcript, langcode, is_concurrent)
+  contents = []
+
+  threads = []
+  threads << Thread.new do
+    ActiveRecord::Base.connection_pool.with_connection do
+      ms_image_search(word, search, transcript, langcode, is_concurrent, 3, contents)
     end
-
-  else
-    contents = []
-  end
-
-  transcript.has_content = true
-
-  for content in contents
-    related_content = search.related_contents.build(:transcript => transcript, :title => content['title'], :desc => content['desc'], :url => content['url'], :img_url => content['img_url'], :content_type => content['content_type'], :source => content['source'], :is_visible => true)
-    condition = related_content.build_condition(:service => content['condition']['service'], :word => content['condition']['word'])
-    transcript.save
-    search.save
-    # alpha 対応
-    # search.save
-  end
-
-  return contents
-end
-
-def entity_handler(entity, langcode, is_word_only, search_type, is_test_mode)
-
-  if is_test_mode
-    contents = test_alpha(entity['name'], langcode, search_type)
-  else
-    contents = production_alpha(entity['name'], langcode, search_type)
-  end
-
-  return contents
-end
-
-
-def test_alpha(word, langcode, search_type)
-
-  if search_type == 1
-    contents = image_search(word, langcode)
-  elsif search_type == 2
-    contents = news_search(word, langcode)
-  elsif search_type == 3
-    contents = video_search(word, langcode)
-  else
-    contents = image_search(word, langcode)
-  end
-
-  return contents
-end
-
-def production_alpha(word, langcode)
-  contents = []
-
-  if search_type == 1
-    contents = image_search(word, langcode)
-  elsif search_type == 2
-    contents = news_search(word, langcode)
-  elsif search_type == 3
-    contents = video_search(word, langcode)
-  else
-    contents = image_search(word, langcode)
-  end
-
-  return contents
-end
-
-def image_search(word, langcode)
-  contents = []
-
-  threads = []
-  threads << Thread.new do
-    ms_image_search(word, langcode, 3, contents)
   end
   threads << Thread.new do
-    unsplash(word, langcode, 2, contents)
+    ActiveRecord::Base.connection_pool.with_connection do
+      unsplash(word, search, transcript, langcode, is_concurrent, 2, contents)
+    end
   end
   threads << Thread.new do
-    getty_images(word, langcode, 2, contents)
+    ActiveRecord::Base.connection_pool.with_connection do
+      getty_images(word, search, transcript, langcode, is_concurrent, 2, contents)
+    end
   end
   threads << Thread.new do
-    flickr(word, langcode, 2, contents)
+    ActiveRecord::Base.connection_pool.with_connection do
+      flickr(word, search, transcript, langcode, is_concurrent, 2, contents)
+    end
   end
 
-  # google_custom_search(entity['name'], langcode, 3, contents)
+  # google_custom_search(word, search, transcript, langcode, is_concurrent, 3, contents)
 
   threads.each { |t| t.join }
 
   return contents
 end
 
-def news_search(word, langcode)
+def news_search(word, search, transcript, langcode, is_concurrent)
   contents = []
 
   threads = []
   threads << Thread.new do
-    ms_news_search(word, langcode, 9, contents)
+    ms_news_search(word, search, transcript, langcode, is_concurrent, 9, contents)
   end
 
   threads.each { |t| t.join }
@@ -141,12 +103,12 @@ def news_search(word, langcode)
   return contents
 end
 
-def video_search(word, langcode)
+def video_search(word, search, transcript, langcode, is_concurrent)
   contents = []
 
   threads = []
   threads << Thread.new do
-    youtube(word, langcode, 9, contents)
+    youtube(word, search, transcript, langcode, is_concurrent, 9, contents)
   end
 
   threads.each { |t| t.join }
@@ -155,7 +117,7 @@ def video_search(word, langcode)
 end
 
 
-def ms_image_search(text, langcode, num, contents_list)
+def ms_image_search(text, search, transcript, langcode, is_concurrent, num, contents_list)
 
     ms_search_key = ENV['MS_IMAGE_SEARCH_KEY']
 
@@ -194,6 +156,8 @@ def ms_image_search(text, langcode, num, contents_list)
     condition.store('service', service)
     condition.store('word', text)
 
+    contents_list_local = []
+
     if body['value']
       for value in body['value']
         content = {}
@@ -212,17 +176,19 @@ def ms_image_search(text, langcode, num, contents_list)
         content.store('condition', condition)
 
         contents_list.push(content)
+        contents_list_local.push(content)
 
       end
     else
       puts(body.keys)
     end
 
-    # puts('in ms function')
-    # puts(contents_list)
+    if is_concurrent
+      save_related_contents(transcript, search, contents_list_local)
+    end
 end
 
-def unsplash(text, langcode, num, contents_list)
+def unsplash(text, search, transcript, langcode, is_concurrent, num, contents_list)
 
   begin
 
@@ -263,6 +229,8 @@ def unsplash(text, langcode, num, contents_list)
     condition.store('service', service)
     condition.store('word', text)
 
+    contents_list_local = []
+
     for result in body['results']
       content = {}
 
@@ -287,7 +255,13 @@ def unsplash(text, langcode, num, contents_list)
       content.store('condition', condition)
 
       contents_list.push(content)
+      contents_list_local.push(content)
 
+
+    end
+
+    if is_concurrent
+      save_related_contents(transcript, search, contents_list_local)
     end
 
   rescue => error
@@ -296,7 +270,7 @@ def unsplash(text, langcode, num, contents_list)
 
 end
 
-def getty_images(text, langcode, num, contents_list)
+def getty_images(text, search, transcript, langcode, is_concurrent, num, contents_list)
 
     getty_images_key = ENV['GETTY_IMAGES_KEY']
 
@@ -343,6 +317,8 @@ def getty_images(text, langcode, num, contents_list)
     condition.store('service', service)
     condition.store('word', text)
 
+    contents_list_local = []
+
     for image in body['images']
       content = {}
 
@@ -361,12 +337,17 @@ def getty_images(text, langcode, num, contents_list)
       content.store('condition', condition)
 
       contents_list.push(content)
+      contents_list_local.push(content)
 
+    end
+
+    if is_concurrent
+      save_related_contents(transcript, search, contents_list_local)
     end
 
 end
 
-def flickr(text, langcode, num, contents_list)
+def flickr(text, search, transcript, langcode, is_concurrent, num, contents_list)
 
     flickr_key = ENV['FLICKR_KEY']
 
@@ -409,6 +390,8 @@ def flickr(text, langcode, num, contents_list)
     condition.store('service', service)
     condition.store('word', text)
 
+    contents_list_local = []
+
     for photo in body['photos']['photo']
       content = {}
 
@@ -428,12 +411,17 @@ def flickr(text, langcode, num, contents_list)
       content.store('condition', condition)
 
       contents_list.push(content)
+      contents_list_local.push(content)
 
+    end
+
+    if is_concurrent
+      save_related_contents(transcript, search, contents_list_local)
     end
 
 end
 
-def google_custom_search(text, langcode, num, contents_list)
+def google_custom_search(text, search, transcript, langcode, is_concurrent, num, contents_list)
 
     google_api_key = ENV['GCP_API_KEY']
 
@@ -478,6 +466,8 @@ def google_custom_search(text, langcode, num, contents_list)
     condition.store('service', service)
     condition.store('word', text)
 
+    contents_list_local = []
+
     for item in body['items']
       content = {}
 
@@ -496,12 +486,17 @@ def google_custom_search(text, langcode, num, contents_list)
       content.store('condition', condition)
 
       contents_list.push(content)
+      contents_list_local.push(content)
 
+    end
+
+    if is_concurrent
+      save_related_contents(transcript, search, contents_list_local)
     end
 
 end
 
-def ms_news_search(text, langcode, num, contents_list)
+def ms_news_search(text, search, transcript, langcode, is_concurrent, num, contents_list)
 
     ms_search_key = ENV['MS_NEWS_SEARCH_KEY']
 
@@ -540,6 +535,8 @@ def ms_news_search(text, langcode, num, contents_list)
     condition.store('service', service)
     condition.store('word', text)
 
+    contents_list_local = []
+
     # if body.has_key?(:value)
 
     for value in body['value']
@@ -564,15 +561,20 @@ def ms_news_search(text, langcode, num, contents_list)
         content.store('condition', condition)
 
         contents_list.push(content)
+        contents_list_local.push(content)
       else
         puts('no image news')
       end
 
     end
 
+    if is_concurrent
+      save_related_contents(transcript, search, contents_list_local)
+    end
+
 end
 
-def youtube(text, langcode, num, contents_list)
+def youtube(text, search, transcript, langcode, is_concurrent, num, contents_list)
 
     google_api_key = ENV['GCP_API_KEY']
 
@@ -607,6 +609,8 @@ def youtube(text, langcode, num, contents_list)
     condition.store('service', service)
     condition.store('word', text)
 
+    contents_list_local = []
+
     for item in body['items']
       content = {}
 
@@ -625,7 +629,12 @@ def youtube(text, langcode, num, contents_list)
       content.store('condition', condition)
 
       contents_list.push(content)
+      contents_list_local.push(content)
 
+    end
+
+    if is_concurrent
+      save_related_contents(transcript, search, contents_list_local)
     end
 
 end
@@ -673,5 +682,19 @@ def google_translate(langcode, targetcode, text)
 
     result = body['data']['translations'][0]['translatedText']
     return result
+
+end
+
+def save_related_contents(transcript, search, contents)
+
+    puts('save contents')
+
+    for content in contents
+      transcript.has_content = true
+      related_content = search.related_contents.build(:transcript => transcript, :title => content['title'], :desc => content['desc'], :url => content['url'], :img_url => content['img_url'], :content_type => content['content_type'], :source => content['source'], :is_visible => true)
+      condition = related_content.build_condition(:service => content['condition']['service'], :word => content['condition']['word'])
+      transcript.save
+      search.save
+    end
 
 end

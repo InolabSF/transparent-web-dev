@@ -248,7 +248,7 @@
 
 
       function postTranscript(text) {
-        var API_KEY = 'P2ysni7WOO8DcPtvIa2sY7gRvyN6QfRz7vDkELYC';
+        // var API_KEY = 'P2ysni7WOO8DcPtvIa2sY7gRvyN6QfRz7vDkELYC';
         var language_code = '<%= @language_code %>';
         var wallID = <%= @wall_id %>;
         var FacebookID = 'guest_x';
@@ -261,7 +261,8 @@
                 'wallID' : wallID,
                 'clientID' : FacebookID,
                 'search_type' : 1,
-                'with_words' : []
+                'with_words' : [],
+                'UI_version' : 'alpha'
             };
 
         console.log(body)
