@@ -70,7 +70,9 @@ $ bundle install
 
     } -->
 
-#### Searchオブジェクト ： 検索に使用した情報（ワード）
+#### Searchオブジェクト ： コメントカードに出力する検索に使用した情報（ワード）
+
+複数のワード情報がある場合はコメントカードに並列出力するようにしてください。
 
     Search = {
 
@@ -86,7 +88,9 @@ $ bundle install
 
     }
 
-#### RelatedContentオブジェクト ： 検索結果のコンテンツ
+#### RelatedContentオブジェクト ： コメントカードに関連づける検索結果のコンテンツ
+
+どのコメントカードに紐付けるかは'search_id'で識別します。
 
     RelatedContent = {
 
@@ -106,25 +110,25 @@ $ bundle install
 
       source : STRING, // information source
 
-      search_service : STRING, // serach API information
+      <!-- search_service : STRING, // serach API information -->
 
-      <!-- condition : Object( Condition ),  // search condition -->
+      condition : Object( Condition ),  // search condition
 
       is_visible : BOOLEAN, // if is visible
 
     }
 
-<!-- #### Conditionオブジェクト ： 関連コンテンツを検索するための条件
+#### Conditionオブジェクト ： 関連コンテンツを検索するための条件
 
     Condition = {
 
       related_content_id : NUM, // related content id
 
-      service : STRING,　// service for search
+      service : STRING,　// API service for search
 
       word : String // word for search
 
-    } -->
+    }
 
 
 ## Transparent　API　(5/1/2018)
@@ -147,7 +151,7 @@ $ bundle install
 
     }
 
-Sample Response
+#### Sample Response
 
     responseBody = {
 
@@ -155,14 +159,14 @@ Sample Response
 
           {
             "id" : 20,
-            "transcript_id" : 200, //
+            "transcript_id" : 200,
             "words" : [ 'transparent', 'world'],
             "is_visible" : true,
             "mode" : 'Image'
           },
           {
             "id" : 21,
-            "transcript_id" : 201, //
+            "transcript_id" : 201,
             "words" : [ 'world', 'camera'],
             "is_visible" : true,
             "mode" : 'Image'
@@ -257,7 +261,7 @@ Sample Response
 
     }
 
-Sample Response
+#### Sample Response
 
     responseBody = {
 
