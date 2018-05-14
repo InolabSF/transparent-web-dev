@@ -247,7 +247,7 @@ $ bundle install
 
 ## 更新情報ロード（検索キーワード・関連コンテンツ）の取得
 
-"GET", "/api/transcripts/" + wall_id / index
+"GET", "/api/transcripts/" + wall_id + "/" + search_index + "/" + related_content_index
 
     responseBody = {
 
@@ -348,7 +348,7 @@ $ bundle install
 
     }
 
-## 認識テキストのPOST（テキスト, langcode, wallID, facebook_id, search_type, &検索ワード）
+## 認識テキストのPOST（transcript(テキスト), langcode, wallID, facebook_id, search_type, with_words(&検索ワード), UI_version）
 
 "POST", "/api/transcripts/"
 
