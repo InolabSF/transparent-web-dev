@@ -1,14 +1,20 @@
+require './lib/assets/api/transcripts/format'
 require './lib/assets/nlp/nlp_handler'
 require './lib/assets/search/search_handler'
 
 class Api::TranscriptsController < ApplicationController
 
-  # GET /tasks
   def index
     transcripts = Transcript.where(:wall_id => params[:wall_id]).order('updated_at DESC')[0...20]
     transcripts_index = Transcript.where(:wall_id => params[:wall_id]).length
     data_list = format_transcripts(transcripts)
     render json: {'transcripts' => data_list, 'index' => transcripts_index }
+
+    # @searches = Search.with_transcript.search_with_wall_id(params[:wall_id]).order('updated_at DESC')[0...20]
+    # @searches = Search.with_transcript.search_with_wall_id(params[:wall_id]).order('updated_at DESC')[0...20]
+    # puts(@searches)
+
+    render json: @searches
   end
 
   def show
@@ -194,133 +200,6 @@ class Api::TranscriptsController < ApplicationController
 
   end
 
-  def format_transcripts(transcripts_list)
-    data_list_temp = []
-
-    for transcript in transcripts_list do
-
-      if transcript.searches.present?
-
-        for search in transcript.searches
-
-          data = {}
-
-          id = transcript.id
-          # text = transcript.text
-          user = transcript.user.attributes
-          # context = transcript.context.attributes
-          # entities_obj = Entity.where(:transcript_id => transcript.id)
-          entities_obj = transcript.entities
-          entities = []
-          for entity in entities_obj
-            entities.push(entity.attributes)
-          end
-
-          has_content = transcript.has_content
-          related_contents = []
-
-          related_contents_obj = search.related_contents
-          for related_content in related_contents_obj
-            condition = related_content.condition
-            if condition then
-              related_content = related_content.attributes
-              related_content.store('condition', condition.attributes)
-            end
-            related_contents.push(related_content)
-          end
-
-          awesome = transcript.awesome
-          created_at = transcript.created_at
-          updated_at = transcript.updated_at
-
-          word = ''
-
-
-          for entity in search.entities
-            word += entity.name
-            word += ' '
-          end
-
-          for with_word in search.with_words
-            word += with_word.text
-            word += ' '
-          end
-
-          data.store('id', id)
-          data.store('text', word)
-          data.store('user', user)
-          # data.store('context', context)
-          data.store('entities', entities)
-          data.store('has_content', has_content)
-          data.store('related_contents', related_contents)
-          data.store('awesome', awesome)
-          data.store('created_at', created_at)
-          data.store('updated_at', updated_at)
-
-          data_list_temp.push(data)
-
-        end
-
-      elsif transcript.entities.present?
-
-        data = {}
-
-        id = transcript.id
-        # text = transcript.text
-        user = transcript.user.attributes
-        # context = transcript.context.attributes
-        # entities_obj = Entity.where(:transcript_id => transcript.id)
-        entities_obj = transcript.entities
-        entities = []
-        for entity in entities_obj
-          entities.push(entity.attributes)
-        end
-
-        has_content = transcript.has_content
-        related_contents = []
-
-        related_contents_obj = transcript.related_contents
-        for related_content in related_contents_obj
-          condition = related_content.condition
-          if condition then
-            related_content = related_content.attributes
-            related_content.store('condition', condition.attributes)
-          end
-          related_contents.push(related_content)
-        end
-
-        awesome = transcript.awesome
-        created_at = transcript.created_at
-        updated_at = transcript.updated_at
-
-        word = ''
-
-        for entity in transcript.entities
-          word += entity.name
-          word += ' '
-        end
-
-        data.store('id', id)
-        data.store('text', word)
-        data.store('user', user)
-        # data.store('context', context)
-        data.store('entities', entities)
-        data.store('has_content', has_content)
-        data.store('related_contents', related_contents)
-        data.store('awesome', awesome)
-        data.store('created_at', created_at)
-        data.store('updated_at', updated_at)
-
-        data_list_temp.push(data)
-
-      end
-
-    end
-
-    return data_list_temp
-
-  end
-
   def create_by_outer
     transcript_hash = params
 
@@ -359,6 +238,24 @@ class Api::TranscriptsController < ApplicationController
       render json: @transcript.errors, status: :unprocessable_entity
     end
   end
+
+  def index_sxsw_demo
+    transcripts = Transcript.where(:wall_id => params[:wall_id]).order('updated_at DESC')[0...20]
+    transcripts_index = Transcript.where(:wall_id => params[:wall_id]).length
+    data_list = format_transcripts(transcripts)
+    render json: {'transcripts' => data_list, 'index' => transcripts_index }
+  end
+
+  def show_sxsw_demo
+    new_transcripts = Transcript.where(:wall_id => params[:wall_id]).order(:id).offset(params[:index].to_i)
+    index = params[:index].to_i + new_transcripts.length
+    new_data_list = format_transcripts(new_transcripts)
+    new_transcripts = nil
+    render json: {'transcripts' => new_data_list, 'index' => index }
+  end
+
+
+
 
   # # PATCH/PUT /tasks/1
   # def update

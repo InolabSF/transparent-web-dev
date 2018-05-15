@@ -115,7 +115,7 @@
 
   function fetchTranscripts(initial_transcripts, index){
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("GET", "/api/transcripts/" + <%= @wall_id %>, false);
+    xmlHttp.open("GET", "/demo/api/transcripts/" + <%= @wall_id %>, false);
     xmlHttp.send();
     data = JSON.parse(xmlHttp.response)
     for(var i = 0; i < data.transcripts.length; i++) {
@@ -132,7 +132,7 @@
     console.log(index);
     // const axiosBase = require('axios');
     var instance = axios.create({
-      baseURL: '/api',
+      baseURL: '/demo',
       headers: {
         'ContentType': 'application/json'
         // 'origin' : 'https://transparent-sxsw-dev.herokuapp.com'
@@ -140,7 +140,7 @@
       responseType: 'json'
     });
     console.log('send req with index : ' + index);
-    instance.get('/transcripts/' + <%= @wall_id %> + '/' + index).then(function (response){
+    instance.get('/api/transcripts/' + <%= @wall_id %> + '/' + index).then(function (response){
       console.log(response.data);
       transcripts = response.data.transcripts
       index += transcripts.length;

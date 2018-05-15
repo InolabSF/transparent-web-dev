@@ -1,4 +1,5 @@
 class Search < ApplicationRecord
+  belongs_to :transcript
   has_many :entity_searches
   has_many :entities, through: :entity_searches
   accepts_nested_attributes_for :entity_searches
@@ -7,4 +8,7 @@ class Search < ApplicationRecord
   accepts_nested_attributes_for :with_word_searches
   has_many :related_contents
   accepts_nested_attributes_for :related_contents
+
+  scope :with_transcript, -> { joins(:transcript) }
+  scope :search_with_wall_id, ->(wall_id) { where(wall_id: wall_id) }
 end
