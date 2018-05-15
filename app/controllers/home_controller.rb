@@ -65,6 +65,7 @@ class HomeController < ApplicationController
     is_test_mode = true
     is_word_only = true
     is_concurrent = true
+    multiple_search = true
 
     if api_req[:search_type]
       search_type = api_req[:search_type]
@@ -115,42 +116,83 @@ class HomeController < ApplicationController
     if entities_list.length == 0
       puts('no entities')
     else
-      search = @transcript.searches.new(:mode => search_mode, :is_visible => true)
 
-      word = ''
+      word_list = []
 
-      for entity in @transcript.entities
-        entity_search = search.entity_searches.build(:entity => entity)
+      if multiple_search
 
-        word += entity.name
-        word += ' '
-      end
+        search = @transcript.searches.new(:mode => search_mode, :is_visible => true)
 
-      for with_word in @transcript.with_words
-        with_word_search = search.with_word_searches.build(:with_word => with_word)
+        word = ''
 
-        word += with_word.text
-        word += ' '
+        for entity in @transcript.entities
+          entity_search = search.entity_searches.build(:entity => entity)
+
+          word += entity.name
+          word += ' '
+        end
+
+        for with_word in @transcript.with_words
+          with_word_search = search.with_word_searches.build(:with_word => with_word)
+
+          word += with_word.text
+          word += ' '
+        end
+
+        word_list.push(word)
+
+      else
+
+        for entity in @transcript.entities
+
+          search = @transcript.searches.new(:mode => search_mode, :is_visible => true)
+
+          word = ''
+
+          entity_search = search.entity_searches.build(:entity => entity)
+
+          word += entity.name
+          word += ' '
+
+          for with_word in @transcript.with_words
+            with_word_search = search.with_word_searches.build(:with_word => with_word)
+
+            word += with_word.text
+            word += ' '
+          end
+
+          word_list.push(word)
+
+        end
+
       end
 
       if is_concurrent
         @transcript.save
       end
 
-      contents_list = search_handler(word, search, @transcript, langcode, is_concurrent, is_word_only, search_type, is_test_mode)
+      @transcript.searches.length.times do |i|
 
-      if !is_concurrent
+        search = @transcript.searches[i]
+        word = word_list[i]
 
-        if contents_list.length == 0
-          puts('no contents')
-        else
-          @transcript.has_content = true
-          for content in contents_list
-            related_content = search.related_contents.build(:transcript => @transcript, :title => content['title'], :desc => content['desc'], :url => content['url'], :img_url => content['img_url'], :content_type => content['content_type'], :source => content['source'], :is_visible => true)
-            condition = related_content.build_condition(:service => content['condition']['service'], :word => content['condition']['word'])
+        contents_list = search_handler(word, search, @transcript, langcode, is_concurrent, is_word_only, search_type, is_test_mode)
+
+        if !is_concurrent
+
+          if contents_list.length == 0
+            puts('no contents')
+          else
+            @transcript.has_content = true
+            for content in contents_list
+              related_content = search.related_contents.build(:transcript => @transcript, :title => content['title'], :desc => content['desc'], :url => content['url'], :img_url => content['img_url'], :content_type => content['content_type'], :source => content['source'], :is_visible => true)
+              condition = related_content.build_condition(:service => content['condition']['service'], :word => content['condition']['word'])
+            end
           end
         end
+
       end
+
     end
 
     if @transcript.save

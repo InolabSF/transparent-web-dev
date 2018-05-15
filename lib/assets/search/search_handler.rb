@@ -66,6 +66,11 @@ def image_search(word, search, transcript, langcode, is_concurrent)
     ActiveRecord::Base.connection_pool.with_connection do
       ms_image_search(word, search, transcript, langcode, is_concurrent, 3, contents)
     end
+    # ActiveRecord::Base.connection_pool.with_connection do
+    #   ActiveRecord::Base.transaction do
+    #     ms_image_search(word, search, transcript, langcode, is_concurrent, 3, contents)
+    #   end
+    # end
   end
   threads << Thread.new do
     ActiveRecord::Base.connection_pool.with_connection do
@@ -95,7 +100,9 @@ def news_search(word, search, transcript, langcode, is_concurrent)
 
   threads = []
   threads << Thread.new do
-    ms_news_search(word, search, transcript, langcode, is_concurrent, 9, contents)
+    ActiveRecord::Base.connection_pool.with_connection do
+      ms_news_search(word, search, transcript, langcode, is_concurrent, 9, contents)
+    end
   end
 
   threads.each { |t| t.join }
@@ -108,7 +115,9 @@ def video_search(word, search, transcript, langcode, is_concurrent)
 
   threads = []
   threads << Thread.new do
-    youtube(word, search, transcript, langcode, is_concurrent, 9, contents)
+    ActiveRecord::Base.connection_pool.with_connection do
+      youtube(word, search, transcript, langcode, is_concurrent, 9, contents)
+    end
   end
 
   threads.each { |t| t.join }
@@ -125,13 +134,9 @@ def ms_image_search(text, search, transcript, langcode, is_concurrent, num, cont
     uri = "https://" + apiUrl
 
     conn = Faraday::Connection.new(:url => uri) do |builder|
-     ## URLをエンコードする
       builder.use Faraday::Request::UrlEncoded
-     ## ログを標準出力に出したい時(本番はコメントアウトでいいかも)
       builder.use Faraday::Response::Logger
-     ## アダプター選択（選択肢は他にもあり）
       builder.use Faraday::Adapter::NetHttp
-
     end
 
     requrl = '/bing/v7.0/images/search'
@@ -693,8 +698,8 @@ def save_related_contents(transcript, search, contents)
       transcript.has_content = true
       related_content = search.related_contents.build(:transcript => transcript, :title => content['title'], :desc => content['desc'], :url => content['url'], :img_url => content['img_url'], :content_type => content['content_type'], :source => content['source'], :is_visible => true)
       condition = related_content.build_condition(:service => content['condition']['service'], :word => content['condition']['word'])
-      transcript.save
-      search.save
     end
+    transcript.save
+    search.save
 
 end

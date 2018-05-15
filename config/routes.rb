@@ -9,6 +9,9 @@ Rails.application.routes.draw do
   post '/api/transcripts', to: 'api/transcripts#create'
   get '/api/transcripts/:wall_id/:index', to: 'api/transcripts#show'
 
+  get '/update/searches/:search_id',   to: 'api/transcripts#update_search'
+  get '/update/related_contents/:related_content_id',   to: 'api/transcripts#update_related_content'
+
   get '/wall/:wall_id/en',   to: 'home#demo_en'
   get '/wall/:wall_id/ja',   to: 'home#demo_ja'
 
