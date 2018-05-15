@@ -371,11 +371,11 @@ $ bundle install
 
 ## コメントカードの削除
 
-"GET", "/update/search/" + search_id
+"GET", "/update/searches/" + search_id
 
 ## 画像の削除
 
-"GET", "/update/relatedcontent/" + related_content_id
+"GET", "/update/contents/" + related_content_id
 
 <!-- ## &検索ワードの設定
 
