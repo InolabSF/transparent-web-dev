@@ -84,7 +84,7 @@ $ bundle install
 
       is_visible : BOOLEAN, // if is visible
 
-      mode : STRING // search type (Image, News, Video)
+      mode : STRING // search type ( Image, Webpage, Video )
 
     }
 
@@ -106,11 +106,9 @@ $ bundle install
 
       img_url : STRING, // content image url
 
-      content_type : STRING, // content type ( webpage, image, video )
+      content_type : STRING, // content type ( Image, Webpage, Video )
 
       source : STRING, // information source
-
-      <!-- search_service : STRING, // serach API information -->
 
       condition : Object( Condition ),  // search condition
 
@@ -131,7 +129,7 @@ $ bundle install
     }
 
 
-## Transparent　API　(5/1/2018)
+## Transparent α API　(5/1/2018)
 
 α版Transparentに必要なAPI群をまとめています。
 

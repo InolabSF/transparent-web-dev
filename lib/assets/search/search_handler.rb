@@ -171,7 +171,7 @@ def ms_image_search(text, search, transcript, langcode, is_concurrent, num, cont
         content.store('desc', url)
         content.store('url', url)
         content.store('img_url', img_url)
-        content.store('content_type', 'image')
+        content.store('content_type', 'Image')
         content.store('source', source)
         content.store('condition', condition)
 
@@ -250,7 +250,7 @@ def unsplash(text, search, transcript, langcode, is_concurrent, num, contents_li
       content.store('desc', desc)
       content.store('url', url)
       content.store('img_url', img_url)
-      content.store('content_type', 'image')
+      content.store('content_type', 'Image')
       content.store('source', source)
       content.store('condition', condition)
 
@@ -332,7 +332,7 @@ def getty_images(text, search, transcript, langcode, is_concurrent, num, content
       content.store('desc', desc)
       content.store('url', url)
       content.store('img_url', img_url)
-      content.store('content_type', 'image')
+      content.store('content_type', 'Image')
       content.store('source', source)
       content.store('condition', condition)
 
@@ -406,7 +406,7 @@ def flickr(text, search, transcript, langcode, is_concurrent, num, contents_list
       content.store('desc', desc)
       content.store('url', url)
       content.store('img_url', img_url)
-      content.store('content_type', 'image')
+      content.store('content_type', 'Image')
       content.store('source', source)
       content.store('condition', condition)
 
@@ -481,7 +481,7 @@ def google_custom_search(text, search, transcript, langcode, is_concurrent, num,
       content.store('desc', desc)
       content.store('url', url)
       content.store('img_url', img_url)
-      content.store('content_type', 'image')
+      content.store('content_type', 'Image')
       content.store('source', source)
       content.store('condition', condition)
 
@@ -556,7 +556,7 @@ def ms_news_search(text, search, transcript, langcode, is_concurrent, num, conte
         content.store('desc', desc)
         content.store('url', url)
         content.store('img_url', img_url)
-        content.store('content_type', 'web page')
+        content.store('content_type', 'Webpage')
         content.store('source', source)
         content.store('condition', condition)
 
@@ -624,7 +624,7 @@ def youtube(text, search, transcript, langcode, is_concurrent, num, contents_lis
       content.store('desc', desc)
       content.store('url', url)
       content.store('img_url', img_url)
-      content.store('content_type', 'video')
+      content.store('content_type', 'Video')
       content.store('source', source)
       content.store('condition', condition)
 
