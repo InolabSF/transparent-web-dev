@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   get '/update/searches/:search_id',   to: 'api/transcripts#update_search'
   get '/update/contents/:related_content_id',   to: 'api/transcripts#update_related_content'
 
+  post '/post', to: 'api/transcripts#create_by_outer'
+
   get '/wall/:wall_id/en',   to: 'home#demo_en'
   get '/wall/:wall_id/ja',   to: 'home#demo_ja'
 
@@ -22,8 +24,6 @@ Rails.application.routes.draw do
   get '/demo/google',   to: 'home#demo_google'
 
   get '/media',   to: 'home#media'
-
-  post '/post',   to: 'home#post_transcript'
 
   get '/alpha/ja/test',   to: 'home#alpha_test_ja'
   get '/alpha/en/test',   to: 'home#alpha_test_en'
