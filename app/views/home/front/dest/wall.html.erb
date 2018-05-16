@@ -142,8 +142,8 @@
     console.log('send req with index : ' + index);
     instance.get('/api/transcripts/' + <%= @wall_id %> + '/' + index).then(function (response){
       console.log(response.data);
-      transcripts = response.data.transcripts
-      index += transcripts.length;
+      transcripts = response.data.transcripts;
+      index = response.data.index;
 
       for(var i = 0; i < transcripts.length; i++) {
           initial_transcripts.unshift(transcripts[i]);
