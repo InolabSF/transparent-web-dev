@@ -1,24 +1,14 @@
-require './lib/assets/api/transcripts/format'
+require './lib/assets/api/transcripts/get_transcripts'
+require './lib/assets/api/transcripts/get_searches'
 require './lib/assets/nlp/nlp_handler'
 require './lib/assets/search/search_handler'
 
 class Api::TranscriptsController < ApplicationController
 
   def index
-    transcripts = Transcript.where(:wall_id => params[:wall_id]).order('updated_at DESC')[0...20]
-    transcripts_index = Transcript.where(:wall_id => params[:wall_id]).length
-
-    search_list = []
-    for transcript in transcripts
-      for search in transcript.searches
-        search_list.push(search)
-      end
-    end
-    search_index = search_list[0].id
-    render json: {'searches' => search_list, 'search_index' => search_index }
-
-    # @searches = Search.with_transcript.search_with_wall_id(params[:wall_id]).order('updated_at DESC')[0...20]
-    # puts(@searches)
+    initial_load_num = 20
+    searches, search_index, related_contents, related_content_index = get_initial_searches(params[:wall_id], initial_load_num)
+    render json: {'searches' => searches, 'search_index' => search_index, 'related_contents' => related_contents, 'related_content_index' => related_content_index}
   end
 
   def show
@@ -48,13 +38,13 @@ class Api::TranscriptsController < ApplicationController
     end
 
     if search_type == 1
-      search_mode = 'Image'
+      search_mode = 'image'
     elsif search_type == 2
-      search_mode = 'News'
+      search_mode = 'news'
     elsif search_type == 3
-      search_mode = 'Video'
+      search_mode = 'video'
     else
-      search_mode = 'Image'
+      search_mode = 'image'
     end
 
     if api_req[:UI_version]
@@ -246,7 +236,7 @@ class Api::TranscriptsController < ApplicationController
   end
 
   def index_sxsw_demo
-    transcripts = Transcript.where(:wall_id => params[:wall_id]).order('updated_at DESC')[0...20]
+    transcripts = Transcript.where(:wall_id => params[:wall_id]).order('id DESC')[0...20]
     transcripts_index = Transcript.where(:wall_id => params[:wall_id]).length
     data_list = format_transcripts(transcripts)
     render json: {'transcripts' => data_list, 'index' => transcripts_index }
@@ -256,11 +246,8 @@ class Api::TranscriptsController < ApplicationController
     new_transcripts = Transcript.where(:wall_id => params[:wall_id]).order(:id).offset(params[:index].to_i)
     index = params[:index].to_i + new_transcripts.length
     new_data_list = format_transcripts(new_transcripts)
-    new_transcripts = nil
     render json: {'transcripts' => new_data_list, 'index' => index }
   end
-
-
 
 
   # # PATCH/PUT /tasks/1

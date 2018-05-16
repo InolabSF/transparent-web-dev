@@ -84,7 +84,7 @@ $ bundle install
 
       is_visible : BOOLEAN, // if is visible
 
-      mode : STRING // search type ( Image, Webpage, Video )
+      mode : STRING // search type ( image, webpage, video )
 
     }
 
@@ -106,7 +106,7 @@ $ bundle install
 
       img_url : STRING, // content image url
 
-      content_type : STRING, // content type ( Image, Webpage, Video )
+      content_type : STRING, // content type ( image, webpage, video )
 
       source : STRING, // information source
 

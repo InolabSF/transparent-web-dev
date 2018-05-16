@@ -9,6 +9,6 @@ class Search < ApplicationRecord
   has_many :related_contents
   accepts_nested_attributes_for :related_contents
 
-  scope :with_transcript, -> { joins(:transcript) }
-  scope :search_with_wall_id, ->(wall_id) { where(wall_id: wall_id) }
+  # scope :with_transcript, -> { joins(:transcript) }
+  # scope :search_with_wall_id, ->(wall_id) { where(transcripts.wall_id: wall_id) }
 end

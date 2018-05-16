@@ -11,15 +11,13 @@ def search_handler(word, search, transcript, langcode, is_concurrent, is_word_on
   #   word += with_word.text
   #   word += ' '
   # end
-  transcript_id = transcript.id
-  search_id = search.id
 
   if word.present?
 
     if is_test_mode
-      contents = test_alpha(word, search_id, transcript_id, langcode, is_concurrent, search_type)
+      contents = test_alpha(word, search, transcript, langcode, is_concurrent, search_type)
     else
-      contents = production_alpha(word, search_id, transcript_id, langcode, is_concurrent, search_type)
+      contents = production_alpha(word, search, transcript, langcode, is_concurrent, search_type)
     end
 
   else
@@ -29,10 +27,10 @@ def search_handler(word, search, transcript, langcode, is_concurrent, is_word_on
   return contents
 end
 
-def test_alpha(word, search_id, transcript_id, langcode, is_concurrent, search_type)
+def test_alpha(word, search, transcript, langcode, is_concurrent, search_type)
 
   if search_type == 1
-    contents = image_search(word, search_id, transcript_id, langcode, is_concurrent)
+    contents = image_search(word, search, transcript, langcode, is_concurrent)
   elsif search_type == 2
     contents = news_search(word, search, transcript, langcode, is_concurrent)
   elsif search_type == 3
@@ -60,13 +58,13 @@ def production_alpha(word, search, transcript, langcode, is_concurrent, search_t
   return contents
 end
 
-def image_search(word, search_id, transcript_id, langcode, is_concurrent)
+def image_search(word, search, transcript, langcode, is_concurrent)
   contents = []
 
   threads = []
   threads << Thread.new do
     ActiveRecord::Base.connection_pool.with_connection do
-      ms_image_search(word, search_id, transcript_id, langcode, is_concurrent, 3, contents)
+      ms_image_search(word, search, transcript, langcode, is_concurrent, 3, contents)
     end
     # ActiveRecord::Base.connection_pool.with_connection do
     #   ActiveRecord::Base.transaction do
@@ -76,28 +74,34 @@ def image_search(word, search_id, transcript_id, langcode, is_concurrent)
   end
   threads << Thread.new do
     ActiveRecord::Base.connection_pool.with_connection do
-      unsplash(word, search_id, transcript_id, langcode, is_concurrent, 2, contents)
+      unsplash(word, search, transcript, langcode, is_concurrent, 2, contents)
     end
   end
   threads << Thread.new do
     ActiveRecord::Base.connection_pool.with_connection do
-      getty_images(word, search_id, transcript_id, langcode, is_concurrent, 2, contents)
+      getty_images(word, search, transcript, langcode, is_concurrent, 2, contents)
     end
   end
   threads << Thread.new do
     ActiveRecord::Base.connection_pool.with_connection do
-      flickr(word, search_id, transcript_id, langcode, is_concurrent, 2, contents)
+      flickr(word, search, transcript, langcode, is_concurrent, 2, contents)
     end
   end
 
   # google_custom_search(word, search, transcript, langcode, is_concurrent, 3, contents)
 
-  threads.each { |t| t.join }
+  if !is_concurrent
+
+    threads.each { |t| t.join }
+
+  end
+
+  # threads.each { |t| t.join }
 
   return contents
 end
 
-def news_search(word, search_id, transcript_id, langcode, is_concurrent)
+def news_search(word, search, transcript, langcode, is_concurrent)
   contents = []
 
   threads = []
@@ -112,7 +116,7 @@ def news_search(word, search_id, transcript_id, langcode, is_concurrent)
   return contents
 end
 
-def video_search(word, search_id, transcript_id, langcode, is_concurrent)
+def video_search(word, search, transcript, langcode, is_concurrent)
   contents = []
 
   threads = []
@@ -128,7 +132,7 @@ def video_search(word, search_id, transcript_id, langcode, is_concurrent)
 end
 
 
-def ms_image_search(text, search_id, transcript_id, langcode, is_concurrent, num, contents_list)
+def ms_image_search(text, search, transcript, langcode, is_concurrent, num, contents_list)
 
     ms_search_key = ENV['MS_IMAGE_SEARCH_KEY']
 
@@ -192,11 +196,11 @@ def ms_image_search(text, search_id, transcript_id, langcode, is_concurrent, num
     end
 
     if is_concurrent
-      save_related_contents(transcript_id, search_id, contents_list_local)
+      save_related_contents(transcript, search, contents_list_local)
     end
 end
 
-def unsplash(text, search_id, transcript_id, langcode, is_concurrent, num, contents_list)
+def unsplash(text, search, transcript, langcode, is_concurrent, num, contents_list)
 
   begin
 
@@ -270,7 +274,7 @@ def unsplash(text, search_id, transcript_id, langcode, is_concurrent, num, conte
     end
 
     if is_concurrent
-      save_related_contents(transcript_id, search_id, contents_list_local)
+      save_related_contents(transcript, search, contents_list_local)
     end
 
   rescue => error
@@ -279,7 +283,7 @@ def unsplash(text, search_id, transcript_id, langcode, is_concurrent, num, conte
 
 end
 
-def getty_images(text, search_id, transcript_id, langcode, is_concurrent, num, contents_list)
+def getty_images(text, search, transcript, langcode, is_concurrent, num, contents_list)
 
     getty_images_key = ENV['GETTY_IMAGES_KEY']
 
@@ -352,12 +356,12 @@ def getty_images(text, search_id, transcript_id, langcode, is_concurrent, num, c
     end
 
     if is_concurrent
-      save_related_contents(transcript_id, search_id, contents_list_local)
+      save_related_contents(transcript, search, contents_list_local)
     end
 
 end
 
-def flickr(text, search_id, transcript_id, langcode, is_concurrent, num, contents_list)
+def flickr(text, search, transcript, langcode, is_concurrent, num, contents_list)
 
     flickr_key = ENV['FLICKR_KEY']
 
@@ -427,7 +431,7 @@ def flickr(text, search_id, transcript_id, langcode, is_concurrent, num, content
     end
 
     if is_concurrent
-      save_related_contents(transcript_id, search_id, contents_list_local)
+      save_related_contents(transcript, search, contents_list_local)
     end
 
 end
@@ -697,18 +701,16 @@ def google_translate(langcode, targetcode, text)
 
 end
 
-def save_related_contents(transcript_id, search_id, contents)
+def save_related_contents(transcript, search, contents)
 
     puts('save contents')
 
     for content in contents
-      # transcript.has_content = true
-      # related_content = search.related_contents.build(:transcript => transcript, :title => content['title'], :desc => content['desc'], :url => content['url'], :img_url => content['img_url'], :content_type => content['content_type'], :source => content['source'], :is_visible => true)
-      related_content = RelatedContent.new(:transcript_id => transcript_id, :search_id => search_id, :title => content['title'], :desc => content['desc'], :url => content['url'], :img_url => content['img_url'], :content_type => content['content_type'], :source => content['source'], :is_visible => true)
+      transcript.has_content = true
+      related_content = search.related_contents.build(:transcript => transcript, :title => content['title'], :desc => content['desc'], :url => content['url'], :img_url => content['img_url'], :content_type => content['content_type'], :source => content['source'], :is_visible => true)
+      # related_content = RelatedContent.new(:transcript => transcript, :search => search, :title => content['title'], :desc => content['desc'], :url => content['url'], :img_url => content['img_url'], :content_type => content['content_type'], :source => content['source'], :is_visible => true)
       condition = related_content.build_condition(:service => content['condition']['service'], :word => content['condition']['word'])
-      related_content.save
     end
-    # transcript.save
-    # search.save
+    transcript.save
 
 end
