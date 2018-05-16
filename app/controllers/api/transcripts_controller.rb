@@ -197,7 +197,6 @@ class Api::TranscriptsController < ApplicationController
     related_content_id = params[:related_content_id]
     @related_content = RelatedContent.find(related_content_id)
     @related_content.is_visible = false
-    @related_content.save
 
     if @related_content.save
       render json: @related_content
