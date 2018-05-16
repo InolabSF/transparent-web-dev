@@ -172,9 +172,7 @@ class Api::TranscriptsController < ApplicationController
     search_id = params[:search_id]
     @search = Search.find(search_id)
     @search.is_visible = false
-    for related_content in @search.related_contents
-      related_content.is_visible = false
-    end
+    @search.related_contents.each {|related_content| related_content.is_visible = false }
 
     if @search.save
       render json: @search
