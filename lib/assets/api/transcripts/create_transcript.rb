@@ -144,23 +144,19 @@ def same_search?(search, entities, with_words, num)
   # entities.each {|entity| current_words.push(entity.name) }
   # with_words.each {|with_word| current_words.push(with_word.text) }
 
-  puts('current_words')
-  puts(current_words)
-
   past_searches = Search.joins(:transcript).where("transcripts.wall_id" => search.transcript.wall_id).order('id DESC')[0...num]
 
   for past_search in past_searches
 
     next if search.id == past_search.id
 
-    result = true
-
     past_words = []
     past_search.entities.each {|entity| past_words.push(entity.name) }
     past_search.with_words.each {|with_word| past_words.push(with_word.text) }
 
-    puts('past_words')
-    puts(past_words)
+    next if current_words.length != past_words.length
+
+    result = true
 
     for current_word in current_words
       if !past_words.include?(current_word)
