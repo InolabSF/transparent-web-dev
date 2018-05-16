@@ -62,16 +62,16 @@ def image_search(word, search, transcript, langcode, is_concurrent)
   contents = []
 
   threads = []
-  threads << Thread.new do
-    ActiveRecord::Base.connection_pool.with_connection do
-      ms_image_search(word, search, transcript, langcode, is_concurrent, 3, contents)
-    end
+  # threads << Thread.new do
+  #   ActiveRecord::Base.connection_pool.with_connection do
+  #     ms_image_search(word, search, transcript, langcode, is_concurrent, 3, contents)
+  #   end
     # ActiveRecord::Base.connection_pool.with_connection do
     #   ActiveRecord::Base.transaction do
     #     ms_image_search(word, search, transcript, langcode, is_concurrent, 3, contents)
     #   end
     # end
-  end
+  # end
   threads << Thread.new do
     ActiveRecord::Base.connection_pool.with_connection do
       unsplash(word, search, transcript, langcode, is_concurrent, 2, contents)
@@ -176,7 +176,8 @@ def ms_image_search(text, search, transcript, langcode, is_concurrent, num, cont
         content.store('desc', url)
         content.store('url', url)
         content.store('img_url', img_url)
-        content.store('content_type', 'Image')
+        # content.store('content_type', 'Image')
+        content.store('content_type', 'webpage')
         content.store('source', source)
         content.store('condition', condition)
 
@@ -249,13 +250,14 @@ def unsplash(text, search, transcript, langcode, is_concurrent, num, contents_li
 
       img_url = result['urls']['thumb']
       url = result['user']['links']['html'] +'?utm_source=Transparent&utm_medium=referral'
-      source = 'https://unsplash.com/'
+      source = 'unsplash.com'
 
       content.store('title', title)
       content.store('desc', desc)
       content.store('url', url)
       content.store('img_url', img_url)
-      content.store('content_type', 'Image')
+      # content.store('content_type', 'Image')
+      content.store('content_type', 'webpage')
       content.store('source', source)
       content.store('condition', condition)
 
@@ -337,7 +339,8 @@ def getty_images(text, search, transcript, langcode, is_concurrent, num, content
       content.store('desc', desc)
       content.store('url', url)
       content.store('img_url', img_url)
-      content.store('content_type', 'Image')
+      # content.store('content_type', 'Image')
+      content.store('content_type', 'webpage')
       content.store('source', source)
       content.store('condition', condition)
 
@@ -405,13 +408,14 @@ def flickr(text, search, transcript, langcode, is_concurrent, num, contents_list
 
       img_url = 'https://farm' + photo['farm'].to_s + '.staticflickr.com/' + photo['server'] + '/' + photo['id'] + '_' + photo['secret'] + '.jpg'
       url = img_url
-      source = 'https://www.flickr.com/'
+      source = 'www.flickr.com'
 
       content.store('title', title)
       content.store('desc', desc)
       content.store('url', url)
       content.store('img_url', img_url)
-      content.store('content_type', 'Image')
+      # content.store('content_type', 'Image')
+      content.store('content_type', 'webpage')
       content.store('source', source)
       content.store('condition', condition)
 
@@ -486,7 +490,8 @@ def google_custom_search(text, search, transcript, langcode, is_concurrent, num,
       content.store('desc', desc)
       content.store('url', url)
       content.store('img_url', img_url)
-      content.store('content_type', 'Image')
+      # content.store('content_type', 'Image')
+      content.store('content_type', 'webpage')
       content.store('source', source)
       content.store('condition', condition)
 
@@ -561,7 +566,7 @@ def ms_news_search(text, search, transcript, langcode, is_concurrent, num, conte
         content.store('desc', desc)
         content.store('url', url)
         content.store('img_url', img_url)
-        content.store('content_type', 'Webpage')
+        content.store('content_type', 'webpage')
         content.store('source', source)
         content.store('condition', condition)
 
@@ -629,7 +634,8 @@ def youtube(text, search, transcript, langcode, is_concurrent, num, contents_lis
       content.store('desc', desc)
       content.store('url', url)
       content.store('img_url', img_url)
-      content.store('content_type', 'Video')
+      # content.store('content_type', 'Video')
+      content.store('content_type', 'webpage')
       content.store('source', source)
       content.store('condition', condition)
 
@@ -643,7 +649,6 @@ def youtube(text, search, transcript, langcode, is_concurrent, num, contents_lis
     end
 
 end
-
 
 def google_translate(langcode, targetcode, text)
 

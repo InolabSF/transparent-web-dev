@@ -7,17 +7,24 @@ class Api::TranscriptsController < ApplicationController
   def index
     transcripts = Transcript.where(:wall_id => params[:wall_id]).order('updated_at DESC')[0...20]
     transcripts_index = Transcript.where(:wall_id => params[:wall_id]).length
-    data_list = format_transcripts(transcripts)
-    render json: {'transcripts' => data_list, 'index' => transcripts_index }
 
-    # @searches = Search.with_transcript.search_with_wall_id(params[:wall_id]).order('updated_at DESC')[0...20]
+    search_list = []
+    for transcript in transcripts
+      for search in transcript.searches
+        search_list.push(search)
+      end
+    end
+    search_index = search_list[0].id
+    render json: {'searches' => search_list, 'search_index' => search_index }
+
     # @searches = Search.with_transcript.search_with_wall_id(params[:wall_id]).order('updated_at DESC')[0...20]
     # puts(@searches)
-
-    render json: @searches
   end
 
   def show
+    last_search = Search.find(search_index)
+    transcript_index = last_search.transcript.id
+
     new_transcripts = Transcript.where(:wall_id => params[:wall_id]).order(:id).offset(params[:index].to_i)
     index = params[:index].to_i + new_transcripts.length
     new_data_list = format_transcripts(new_transcripts)
