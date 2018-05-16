@@ -1,7 +1,7 @@
 def get_initial_searches(wall_id, num)
 
-  searches = Search.joins(:transcript).where("transcripts.wall_id" => wall_id).order('id DESC')[0...num]
-  search_index = Search.joins(:transcript).where("transcripts.wall_id" => wall_id).count
+  searches = Search.joins(:transcript).where("transcripts.wall_id" => wall_id, "searches.is_visible" => true).order('id DESC')[0...num]
+  search_index = Search.joins(:transcript).where("transcripts.wall_id" => wall_id, "searches.is_visible" => true).count
 
   search_list = []
   related_contents_list = []
@@ -18,7 +18,7 @@ def get_initial_searches(wall_id, num)
 
     for related_content in search.related_contents
       related_content_hash = related_content.attributes
-      related_content_hash.store('condition', related_content.condition.attributes)
+      related_content_hash.store('condition', related_content.condition.attributes) if related_content.condition
       related_contents_list.unshift(related_content_hash)
     end
 

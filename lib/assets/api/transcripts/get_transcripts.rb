@@ -7,6 +7,8 @@ def format_transcripts(transcripts_list)
 
       for search in transcript.searches
 
+        next if !search.is_visible
+
         transcript_hash = transcript.attributes
         transcript_hash.store('user', transcript.user.attributes)
 
@@ -19,7 +21,7 @@ def format_transcripts(transcripts_list)
         related_contents = []
         for related_content in search.related_contents
           related_content_hash = related_content.attributes
-          related_content_hash.store('condition', related_content.condition.attributes)
+          related_content_hash.store('condition', related_content.condition.attributes) if related_content.condition
           related_contents.push(related_content_hash)
         end
 
@@ -52,7 +54,7 @@ def format_transcripts(transcripts_list)
       related_contents = []
       for related_content in transcript.related_contents
         related_content_hash = related_content.attributes
-        related_content_hash.store('condition', related_content.condition.attributes)
+        related_content_hash.store('condition', related_content.condition.attributes) if related_content.condition
         related_contents.push(related_content_hash)
       end
 
