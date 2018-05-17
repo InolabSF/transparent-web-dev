@@ -141,6 +141,8 @@ $ bundle install
 
         searches : List[ object( Search ) ],
 
+        first_search_id : NUM,
+
         search_index : NUM,
 
         related_contents : List[ object( RelatedContent ) ],
