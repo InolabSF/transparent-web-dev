@@ -9,8 +9,8 @@ Rails.application.routes.draw do
   post '/api/transcripts', to: 'api/transcripts#create'
   get '/api/transcripts/:wall_id/:search_index/:related_content_index', to: 'api/transcripts#show'
 
-  get '/update/searches/:search_id',   to: 'api/transcripts#update_search'
-  get '/update/contents/:related_content_id',   to: 'api/transcripts#update_related_content'
+  get '/api/update/searches/:search_id',   to: 'api/transcripts#update_search'
+  get '/api/update/contents/:related_content_id',   to: 'api/transcripts#update_related_content'
 
   post '/post', to: 'api/transcripts#create_by_outer'
   get '/demo/api/transcripts/:wall_id', to: 'api/transcripts#index_sxsw_demo'

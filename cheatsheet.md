@@ -69,10 +69,10 @@ rails generate model NoGoodWord word:string:unique langcode:string
 
  rails g migration ChangeLangcodeToNoGoodWord
 
- export MS_IMAGE_SEARCH_KEY="3ae4873e178642819682634164b61aed"
- export MS_TEXT_KEY="2e2990cf679b4c5cae642ebaf93b0588"
+ export MS_IMAGE_SEARCH_KEY=""
+ export MS_TEXT_KEY=""
 
- heroku config:set MS_IMAGE_SEARCH_KEY=3ae4873e178642819682634164b61aed
+ heroku config:set MS_IMAGE_SEARCH_KEY=
 
  rails generate model WithWord text:string transcript_id:integer
 
@@ -85,3 +85,5 @@ rails generate model NoGoodWord word:string:unique langcode:string
  rails g migration AddSearchToRelatedContent search_id:integer
 
  RelatedContent.update_all("content_type='webpage'")
+
+ Search.update_all("mode='image'")

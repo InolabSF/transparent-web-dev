@@ -249,30 +249,30 @@ $ bundle install
 
     }
 
-    <!-- [
-        {
-            "id": 960,
-            "mode": "image",
-            "transcript_id": 32964,
-            "is_visible": true,
-            "created_at": "2018-05-16T05:50:07.440Z",
-            "updated_at": "2018-05-16T05:50:07.440Z",
-            "words": [
-                "children"
-            ]
-        },
-        {
-            "id": 959,
-            "mode": "image",
-            "transcript_id": 32962,
-            "is_visible": true,
-            "created_at": "2018-05-16T05:49:57.049Z",
-            "updated_at": "2018-05-16T05:49:57.049Z",
-            "words": [
-                "dude"
-            ]
-        }
-    ] -->
+<!-- [
+    {
+        "id": 960,
+        "mode": "image",
+        "transcript_id": 32964,
+        "is_visible": true,
+        "created_at": "2018-05-16T05:50:07.440Z",
+        "updated_at": "2018-05-16T05:50:07.440Z",
+        "words": [
+            "children"
+        ]
+    },
+    {
+        "id": 959,
+        "mode": "image",
+        "transcript_id": 32962,
+        "is_visible": true,
+        "created_at": "2018-05-16T05:49:57.049Z",
+        "updated_at": "2018-05-16T05:49:57.049Z",
+        "words": [
+            "dude"
+        ]
+    }
+] -->
 
 ## 更新情報ロード（検索キーワード・関連コンテンツ）の取得
 
@@ -289,6 +289,10 @@ $ bundle install
         related_content_index : NUM
 
     }
+
+#### Sample Request 1
+
+  "GET", "/api/transcripts/1/21/103"
 
 #### Sample Response 1
 
@@ -327,9 +331,13 @@ $ bundle install
 
         ],
 
-        related_content_index : 103
+        related_content_index : 104
 
     }
+
+#### Sample Request 2
+
+  "GET", "/api/transcripts/1/22/104"
 
 #### Sample Response 2
 
@@ -337,7 +345,7 @@ $ bundle install
 
         searches : [],
 
-        search_index : 21,
+        search_index : 22,
 
         related_contents : [
 
@@ -402,11 +410,11 @@ $ bundle install
 
 ## コメントカードの削除
 
-"GET", "/update/searches/" + search_id
+"GET", "/api/update/searches/" + search_id
 
 ## 画像の削除
 
-"GET", "/update/contents/" + related_content_id
+"GET", "/api/update/contents/" + related_content_id
 
 <!-- ## &検索ワードの設定
 
