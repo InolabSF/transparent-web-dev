@@ -64,24 +64,19 @@ def image_search(word, search, transcript, langcode, is_concurrent)
   threads = []
   threads << Thread.new do
     ActiveRecord::Base.connection_pool.with_connection do
-      ms_image_search(word, search, transcript, langcode, is_concurrent, 3, contents)
+      ms_image_search(word, search, transcript, langcode, is_concurrent, 5, contents)
     end
-    # ActiveRecord::Base.connection_pool.with_connection do
-    #   ActiveRecord::Base.transaction do
-    #     ms_image_search(word, search, transcript, langcode, is_concurrent, 3, contents)
-    #   end
-    # end
   end
   threads << Thread.new do
     ActiveRecord::Base.connection_pool.with_connection do
       unsplash(word, search, transcript, langcode, is_concurrent, 2, contents)
     end
   end
-  threads << Thread.new do
-    ActiveRecord::Base.connection_pool.with_connection do
-      getty_images(word, search, transcript, langcode, is_concurrent, 2, contents)
-    end
-  end
+  # threads << Thread.new do
+  #   ActiveRecord::Base.connection_pool.with_connection do
+  #     getty_images(word, search, transcript, langcode, is_concurrent, 2, contents)
+  #   end
+  # end
   threads << Thread.new do
     ActiveRecord::Base.connection_pool.with_connection do
       flickr(word, search, transcript, langcode, is_concurrent, 2, contents)

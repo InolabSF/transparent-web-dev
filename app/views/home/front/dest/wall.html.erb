@@ -147,9 +147,23 @@
 
       for(var i = 0; i < transcripts.length; i++) {
           initial_transcripts.unshift(transcripts[i]);
+          console.log(transcripts[i]);
           transcripts_add([transcripts[i]]);
           startBtn.innerHTML = onMicPhrase + '<br> Status : <i>' + 'Recording...' + '</i>';
       }
+
+      // if (transcripts.length　> 1){
+      //       initial_transcripts.unshift(transcripts[1]);
+      //       // transcripts_add([transcripts[1]]);
+      //       // startBtn.innerHTML = onMicPhrase + '<br> Status : <i>' + 'Recording...' + '</i>';
+      // }
+      //
+      // if (transcripts.length　!= 0){
+      //       initial_transcripts.unshift(transcripts[0]);
+      //       transcripts_add([transcripts[0]]);
+      //       startBtn.innerHTML = onMicPhrase + '<br> Status : <i>' + 'Recording...' + '</i>';
+      // }
+
     }, function (error) {
       console.log(error);
     }).then(function (response){

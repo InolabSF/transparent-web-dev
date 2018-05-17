@@ -16,7 +16,7 @@ def format_transcripts(transcripts_list)
         # context ={}
 
         entities = []
-        transcript.entities.each {|entity| entities.push(entity.attributes) }
+        search.entities.each {|entity| entities.push(entity.attributes) }
 
         related_contents = []
         for related_content in search.related_contents
@@ -35,6 +35,7 @@ def format_transcripts(transcripts_list)
           word += ' '
         end
 
+        transcript_hash.store('id', search.id)
         transcript_hash.store('text', word)
         transcript_hash.store('entities', entities)
         transcript_hash.store('related_contents', related_contents)

@@ -71,6 +71,7 @@ rails generate model NoGoodWord word:string:unique langcode:string
 
  export MS_IMAGE_SEARCH_KEY="3ae4873e178642819682634164b61aed"
  export MS_TEXT_KEY="2e2990cf679b4c5cae642ebaf93b0588"
+
  heroku config:set MS_IMAGE_SEARCH_KEY=3ae4873e178642819682634164b61aed
 
  rails generate model WithWord text:string transcript_id:integer
@@ -82,3 +83,7 @@ rails generate model NoGoodWord word:string:unique langcode:string
  rails generate model with_word_search search:references with_word:references
 
  rails g migration AddSearchToRelatedContent search_id:integer
+
+ RelatedContent.update_all("content_type='webpage'")
+
+ $ rails g migration AddForeignKeyToPlays
