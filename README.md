@@ -397,7 +397,7 @@ $ bundle install
 
         wallID : NUM,
 
-        FacebookID : STRING,
+        FacebookID : STRING, ("guest_x"に固定してください。)
 
         search_type : NUM, (1:Image, 2:Webpage, 3:Video)
 
@@ -406,6 +406,25 @@ $ bundle install
         UI_version : "alpha" (demo, alpha, beta)
 
 
+    }
+
+#### Sample Request Body
+
+    requestBody = {
+
+        "transcript": "今日は六本木にいきましょう。",
+
+        "langcode": "ja-JP",
+
+        "wallID": 3,
+
+        "FacebookID": "guest_x",
+
+        "search_type": 1,
+
+        "with_words": [ "クール" ],
+
+        "UI_version": "alpha"
     }
 
 ## コメントカードの削除
