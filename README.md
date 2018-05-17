@@ -153,7 +153,7 @@ $ bundle install
 
 #### Sample Request
 
-  "GET", "/api/transcripts/1
+  "GET", "/api/transcripts/1"
 
 #### Sample Response
 
@@ -176,32 +176,7 @@ $ bundle install
             "mode" : 'Image'
           }
 
-        ],
-
-        <!-- [
-            {
-                "id": 960,
-                "mode": "image",
-                "transcript_id": 32964,
-                "is_visible": true,
-                "created_at": "2018-05-16T05:50:07.440Z",
-                "updated_at": "2018-05-16T05:50:07.440Z",
-                "words": [
-                    "children"
-                ]
-            },
-            {
-                "id": 959,
-                "mode": "image",
-                "transcript_id": 32962,
-                "is_visible": true,
-                "created_at": "2018-05-16T05:49:57.049Z",
-                "updated_at": "2018-05-16T05:49:57.049Z",
-                "words": [
-                    "dude"
-                ]
-            }
-        ] -->
+        ],  
 
         search_index : 21,
 
@@ -273,6 +248,31 @@ $ bundle install
         related_content_index : 103
 
     }
+
+    <!-- [
+        {
+            "id": 960,
+            "mode": "image",
+            "transcript_id": 32964,
+            "is_visible": true,
+            "created_at": "2018-05-16T05:50:07.440Z",
+            "updated_at": "2018-05-16T05:50:07.440Z",
+            "words": [
+                "children"
+            ]
+        },
+        {
+            "id": 959,
+            "mode": "image",
+            "transcript_id": 32962,
+            "is_visible": true,
+            "created_at": "2018-05-16T05:49:57.049Z",
+            "updated_at": "2018-05-16T05:49:57.049Z",
+            "words": [
+                "dude"
+            ]
+        }
+    ] -->
 
 ## 更新情報ロード（検索キーワード・関連コンテンツ）の取得
 
