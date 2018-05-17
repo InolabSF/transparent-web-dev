@@ -85,5 +85,3 @@ rails generate model NoGoodWord word:string:unique langcode:string
  rails g migration AddSearchToRelatedContent search_id:integer
 
  RelatedContent.update_all("content_type='webpage'")
-
- $ rails g migration AddForeignKeyToPlays

@@ -11,14 +11,8 @@ class Api::TranscriptsController < ApplicationController
   end
 
   def show
-    last_search = Search.find(search_index)
-    transcript_index = last_search.transcript.id
-
-    new_transcripts = Transcript.where(:wall_id => params[:wall_id]).order(:id).offset(params[:index].to_i)
-    index = params[:index].to_i + new_transcripts.length
-    new_data_list = format_transcripts(new_transcripts)
-    new_transcripts = nil
-    render json: {'transcripts' => new_data_list, 'index' => index }
+    searches, search_index, related_contents, related_content_index = get_new_searches(params[:wall_id], params[:search_index], params[:related_content_index])
+    render json: {'searches' => searches, 'search_index' => search_index, 'related_contents' => related_contents, 'related_content_index' => related_content_index}
   end
 
   def create
@@ -118,6 +112,22 @@ class Api::TranscriptsController < ApplicationController
     new_data_list = format_transcripts(new_transcripts)
     render json: {'transcripts' => new_data_list, 'index' => index }
   end
+
+  # def index_sxsw_demo
+  #   show_dummy = false
+  #   transcripts = Transcript.where(:wall_id => params[:wall_id]).order('id DESC')[0...20]
+  #   transcripts_index = Transcript.where(:wall_id => params[:wall_id]).length
+  #   data_list = format_multi_search(transcripts, show_dummy)
+  #   render json: {'transcripts' => data_list, 'index' => transcripts_index }
+  # end
+  #
+  # def show_sxsw_demo
+  #   show_dummy = true
+  #   new_transcripts = Transcript.where(:wall_id => params[:wall_id]).order(:id).offset(params[:index].to_i)
+  #   index = params[:index].to_i + new_transcripts.length
+  #   new_data_list = format_multi_search(new_transcripts, show_dummy)
+  #   render json: {'transcripts' => new_data_list, 'index' => index }
+  # end
 
 
   # # PATCH/PUT /tasks/1
