@@ -3,6 +3,8 @@ require './lib/assets/search/search_handler'
 
 def create_transcript(api_req, default_nlp, is_test_mode, is_word_only, is_concurrent, multiple_search)
 
+  max_words_number = 3
+
   if api_req[:search_type]
     search_type = api_req[:search_type]
   else
@@ -50,7 +52,7 @@ def create_transcript(api_req, default_nlp, is_test_mode, is_word_only, is_concu
 
     if multiple_search
 
-      limited_entities_list  = transcript.entities.each_slice(3).to_a
+      limited_entities_list  = transcript.entities.each_slice(max_words_number).to_a
 
       for limited_entities in limited_entities_list
 
