@@ -34,7 +34,8 @@ def create_transcript(api_req, default_nlp, is_test_mode, is_word_only, is_concu
   total_entities, sentiment = nlp_handler(default_nlp, text, langcode, is_test_mode)
 
   #フロントバグのための暫定対応（最大キーワード数制御）
-  total_entities_list  = total_entities.each_slice(3).to_a
+  # total_entities_list  = total_entities.each_slice(3).to_a
+  total_entities_list  = [total_entities]
   transcripts = []
 
   for entities_list in total_entities_list
@@ -57,8 +58,11 @@ def create_transcript(api_req, default_nlp, is_test_mode, is_word_only, is_concu
       if multiple_search
 
         #フロントバグのための暫定対応（最大キーワード数制御）
-        # limited_entities_list  = transcript.entities.each_slice(3).to_a
-        limited_entities_list  = [transcript.entities]
+        if wall_id == 3
+          limited_entities_list  = transcript.entities.each_slice(3).to_a
+        else
+          limited_entities_list  = [transcript.entities]
+        end
 
         for limited_entities in limited_entities_list
 
