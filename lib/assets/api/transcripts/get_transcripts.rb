@@ -89,8 +89,6 @@ end
 #
 #     if transcript.searches.present?
 #
-#       # iterator with number に変更
-#
 #       # for search in transcript.searches
 #       transcript.searches.each_with_index do |search, i|
 #
