@@ -31,130 +31,113 @@ def create_transcript(api_req, default_nlp, is_test_mode, is_word_only, is_concu
   langcode = api_req[:langcode]
   with_words = api_req[:with_words]
 
-  total_entities, sentiment = nlp_handler(default_nlp, text, langcode, is_test_mode)
+  entities_list, sentiment = nlp_handler(default_nlp, text, langcode, is_test_mode)
 
-  #フロントバグのための暫定対応（最大キーワード数制御）
-  # total_entities_list  = total_entities.each_slice(3).to_a
-  total_entities_list  = [total_entities]
-  transcripts = []
+  transcript = Transcript.new(:text => text, :wall_id => wall_id, :user_id => user_id, :has_content => false, :is_visible => true, :langcode => langcode, :sentiment => sentiment)
+  entities_list.each {|entity_hash| entity = transcript.entities.build(:category => entity_hash['category'], :name => entity_hash['name']) }
 
-  for entities_list in total_entities_list
-
-    transcript = Transcript.new(:text => text, :wall_id => wall_id, :user_id => user_id, :has_content => false, :is_visible => true, :langcode => langcode, :sentiment => sentiment)
-    entities_list.each {|entity_hash| entity = transcript.entities.build(:category => entity_hash['category'], :name => entity_hash['name']) }
-
-    for word in with_words
-      if word.present?
-        with_word = transcript.with_words.build(:text => word)
-      end
+  for word in with_words
+    if word.present?
+      with_word = transcript.with_words.build(:text => word)
     end
+  end
 
-    if entities_list.length == 0
-      puts('no entities')
-    else
+  if entities_list.length == 0
+    puts('no entities')
+  else
 
-      word_list = []
+    word_list = []
 
-      if multiple_search
+    if multiple_search
 
-        #フロントバグのための暫定対応（最大キーワード数制御）
-        if wall_id == 3
-          limited_entities_list  = transcript.entities.each_slice(3).to_a
-        else
-          limited_entities_list  = [transcript.entities]
-        end
+      limited_entities_list  = transcript.entities.each_slice(3).to_a
 
-        for limited_entities in limited_entities_list
+      for limited_entities in limited_entities_list
 
-          search = transcript.searches.new(:mode => search_mode, :is_visible => true)
+        search = transcript.searches.new(:mode => search_mode, :is_visible => true)
 
-          word = ''
-          for entity in limited_entities
-            entity_search = search.entity_searches.build(:entity => entity)
-
-            word += entity.name
-            word += ' '
-          end
-
-          for with_word in transcript.with_words
-            with_word_search = search.with_word_searches.build(:with_word => with_word)
-
-            word += with_word.text
-            word += ' '
-          end
-
-          word_list.push(word)
-
-        end
-
-      else
-
-        for entity in transcript.entities
-
-          search = transcript.searches.build(:mode => search_mode, :is_visible => true)
-
-          word = ''
-
+        word = ''
+        for entity in limited_entities
           entity_search = search.entity_searches.build(:entity => entity)
 
           word += entity.name
           word += ' '
-
-          for with_word in transcript.with_words
-            with_word_search = search.with_word_searches.build(:with_word => with_word)
-
-            word += with_word.text
-            word += ' '
-          end
-
-          word_list.push(word)
-
         end
+
+        for with_word in transcript.with_words
+          with_word_search = search.with_word_searches.build(:with_word => with_word)
+
+          word += with_word.text
+          word += ' '
+        end
+
+        word_list.push(word)
 
       end
 
-      transcript.save if is_concurrent
+    else
 
-      transcript.searches.length.times do |i|
+      for entity in transcript.entities
 
-        search = transcript.searches[i]
+        search = transcript.searches.build(:mode => search_mode, :is_visible => true)
 
-        puts('search.entities')
-        puts(search.entities)
+        word = ''
 
-        if same_search?(search, entities_list, with_words, 15)
-          search.is_visible = false
-        else
+        entity_search = search.entity_searches.build(:entity => entity)
 
-          word = word_list[i]
-          contents_list = search_handler(word, search, transcript, langcode, is_concurrent, is_word_only, search_type, is_test_mode)
+        word += entity.name
+        word += ' '
 
-          if !is_concurrent
+        for with_word in transcript.with_words
+          with_word_search = search.with_word_searches.build(:with_word => with_word)
 
-            if contents_list.length == 0
-              puts('no contents')
-            else
-              transcript.has_content = true
-              for content in contents_list
-                related_content = search.related_contents.build(:transcript => transcript, :title => content['title'], :desc => content['desc'], :url => content['url'], :img_url => content['img_url'], :content_type => content['content_type'], :source => content['source'], :is_visible => true)
-                condition = related_content.build_condition(:service => content['condition']['service'], :word => content['condition']['word'])
-              end
-            end
-          end
-
+          word += with_word.text
+          word += ' '
         end
 
+        word_list.push(word)
+
       end
+
     end
 
-    transcript.save
+    transcript.save if is_concurrent
 
-    # フロントバグのための暫定対応
-    transcripts.push(transcript)
+    transcript.searches.length.times do |i|
 
+      search = transcript.searches[i]
+
+      puts('search.entities')
+      puts(search.entities)
+
+      if same_search?(search, entities_list, with_words, 15)
+        search.is_visible = false
+      else
+
+        word = word_list[i]
+        contents_list = search_handler(word, search, transcript, langcode, is_concurrent, is_word_only, search_type, is_test_mode)
+
+        if !is_concurrent
+
+          if contents_list.length == 0
+            puts('no contents')
+          else
+            transcript.has_content = true
+            for content in contents_list
+              related_content = search.related_contents.build(:transcript => transcript, :title => content['title'], :desc => content['desc'], :url => content['url'], :img_url => content['img_url'], :content_type => content['content_type'], :source => content['source'], :is_visible => true)
+              condition = related_content.build_condition(:service => content['condition']['service'], :word => content['condition']['word'])
+            end
+          end
+        end
+
+      end
+
+    end
   end
 
-  return transcripts
+  transcript.save
+
+  return transcript
 
 end
 

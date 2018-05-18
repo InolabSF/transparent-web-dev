@@ -25,14 +25,12 @@ class Api::TranscriptsController < ApplicationController
 
     @transcript = create_transcript(params, default_nlp, is_test_mode, is_word_only, is_concurrent, multiple_search)
 
-    render :json => @transcript
-
-    # if @transcript.save
-    #   render :json => @transcript
-    # else
-    #   puts('error')
-    #   render json: @transcript.errors, status: :unprocessable_entity
-    # end
+    if @transcript.save
+      render :json => @transcript
+    else
+      puts('error')
+      render json: @transcript.errors, status: :unprocessable_entity
+    end
 
   end
 

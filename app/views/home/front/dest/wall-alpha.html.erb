@@ -145,11 +145,24 @@
       transcripts = response.data.transcripts;
       index = response.data.index;
 
+      // for(var i = 0; i < transcripts.length; i++) {
+      //     initial_transcripts.unshift(transcripts[i]);
+      //     transcripts_add([transcripts[i]]);
+      //     startBtn.innerHTML = onMicPhrase + '<br> Status : <i>' + 'Recording...' + '</i>';
+      // }
+
       for(var i = 0; i < transcripts.length; i++) {
           initial_transcripts.unshift(transcripts[i]);
-          transcripts_add([transcripts[i]]);
-          startBtn.innerHTML = onMicPhrase + '<br> Status : <i>' + 'Recording...' + '</i>';
+          console.log(transcripts[i]);
+          // transcripts_add(transcripts);
+          // startBtn.innerHTML = onMicPhrase + '<br> Status : <i>' + 'Recording...' + '</i>';
       }
+      if (transcripts.length　!= 0){
+
+            transcripts_add(transcripts);
+            startBtn.innerHTML = onMicPhrase + '<br> Status : <i>' + 'Recording...' + '</i>';
+      }
+      
     }, function (error) {
       console.log(error);
     }).then(function (response){
