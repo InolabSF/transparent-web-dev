@@ -133,7 +133,7 @@ $ bundle install
 
 α版Transparentに必要なAPI群をまとめています。
 
-## 初期コンテンツロード（検索キーワード・関連コンテンツ）の取得
+### 初期コンテンツロード（検索キーワード・関連コンテンツ）の取得
 
 "GET", "/api/transcripts/" + wall_id
 
@@ -274,7 +274,7 @@ $ bundle install
     }
 ] -->
 
-## 更新情報ロード（検索キーワード・関連コンテンツ）の取得
+### 更新情報ロード（検索キーワード・関連コンテンツ）の取得
 
 "GET", "/api/transcripts/" + wall_id + "/" + search_index + "/" + related_content_index
 
@@ -385,7 +385,7 @@ $ bundle install
 
     }
 
-## 認識テキストのPOST（transcript(テキスト), langcode, wallID, facebook_id, search_type, with_words(&検索ワード), UI_version）
+### 認識テキストのPOST（transcript(テキスト), langcode, wallID, facebook_id, search_type, with_words(&検索ワード), UI_version）
 
 "POST", "/api/transcripts/"
 
@@ -427,13 +427,22 @@ $ bundle install
         "UI_version": "alpha"
     }
 
-## コメントカードの削除
+### コメントカードの削除
 
 "GET", "/api/update/searches/" + search_id
 
-## 画像の削除
+### 画像の削除
 
 "GET", "/api/update/contents/" + related_content_id
+
+## フロントコーディングのための各種サンプル設定値
+
+    wall_id = 3
+
+    langcode = 'ja-JP'
+
+    FacebookID = 'guest_x'
+
 
 <!-- ## &検索ワードの設定
 
