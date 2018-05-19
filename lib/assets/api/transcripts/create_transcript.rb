@@ -154,7 +154,7 @@ def same_search?(search, entities, with_words, num)
   # entities.each {|entity| current_words.push(entity.name) }
   # with_words.each {|with_word| current_words.push(with_word.text) }
 
-  past_searches = Search.joins(:transcript).where("transcripts.wall_id" => search.transcript.wall_id).order('id DESC')[0...num]
+  past_searches = Search.joins(:transcript).where("transcripts.wall_id" => search.transcript.wall_id, "searches.is_visible" => true).order('id DESC')[0...num]
 
   for past_search in past_searches
 
@@ -162,13 +162,14 @@ def same_search?(search, entities, with_words, num)
 
     past_words = []
     past_search.entities.each {|entity| past_words.push(entity.name) }
-    past_search.with_words.each {|with_word| past_words.push(with_word.text) }
+    past_search.with_words.each {|with_word| past_words.push(with_word.text) if with_word.present? }
 
     next if current_words.length != past_words.length
 
     result = true
 
     for current_word in current_words
+
       if !past_words.include?(current_word)
         result = false
         break
