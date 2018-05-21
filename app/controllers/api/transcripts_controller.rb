@@ -6,13 +6,34 @@ class Api::TranscriptsController < ApplicationController
 
   def index
     initial_load_num = 20
-    searches, search_index, related_contents, related_content_index = get_initial_searches(params[:wall_id], initial_load_num)
-    render json: {'searches' => searches, 'search_index' => search_index, 'related_contents' => related_contents, 'related_content_index' => related_content_index}
+    searches, search_last_index, search_first_index, related_contents, related_content_last_index = get_initial_searches(params[:wall_id], initial_load_num)
+    render json: {
+              'searches' => searches,
+              'search_last_index' => search_last_index,
+              'search_first_index' => search_first_index,
+              'related_contents' => related_contents,
+              'related_content_last_index' => related_content_last_index
+            }
   end
 
   def show
-    searches, search_index, related_contents, related_content_index = get_new_searches(params[:wall_id], params[:search_index], params[:related_content_index])
-    render json: {'searches' => searches, 'search_index' => search_index, 'related_contents' => related_contents, 'related_content_index' => related_content_index}
+    searches, search_last_index, related_contents, related_content_last_index = get_new_searches(params[:wall_id], params[:search_last_index], params[:related_content_last_index])
+    render json: {
+            'searches' => searches,
+            'search_last_index' => search_last_index,
+            'related_contents' => related_contents,
+            'related_content_last_index' => related_content_last_index
+          }
+  end
+
+  def get_further
+    further_load_num = 20
+    searches, search_first_index, related_contents = get_further_searches(params[:wall_id], params[:search_first_index], further_load_num)
+    render json: {
+              'searches' => searches,
+              'search_first_index' => search_first_index,
+              'related_contents' => related_contents
+            }
   end
 
   def create

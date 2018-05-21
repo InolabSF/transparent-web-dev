@@ -141,13 +141,13 @@ $ bundle install
 
         searches : List[ object( Search ) ],
 
-        first_search_id : NUM,
+        search_last_index : NUM,
 
-        search_index : NUM,
+        search_first_index : NUM,
 
         related_contents : List[ object( RelatedContent ) ],
 
-        related_content_index : NUM
+        related_content_last_index : NUM
 
     }
 
@@ -178,7 +178,9 @@ $ bundle install
 
         ],  
 
-        search_index : 21,
+        search_last_index : 21,
+
+        search_first_index : 1,
 
         related_contents : [
 
@@ -245,7 +247,7 @@ $ bundle install
 
         ],
 
-        related_content_index : 103
+        related_content_last_index : 103
 
     }
 
@@ -276,17 +278,17 @@ $ bundle install
 
 ### 更新情報ロード（検索キーワード・関連コンテンツ）の取得
 
-"GET", "/api/transcripts/" + wall_id + "/" + search_index + "/" + related_content_index
+"GET", "/api/transcripts/" + wall_id + "/" + search_last_index + "/" + related_content_last_index
 
     responseBody = {
 
         searches : List[ object( Search ) ],
 
-        search_index : NUM,
+        search_last_index : NUM,
 
         related_contents : List[ object( RelatedContent ) ],
 
-        related_content_index : NUM
+        related_content_last_index : NUM
 
     }
 
@@ -309,7 +311,7 @@ $ bundle install
           }
         ],
 
-        search_index : 22,
+        search_last_index : 22,
 
         related_contents : [
 
@@ -331,7 +333,7 @@ $ bundle install
 
         ],
 
-        related_content_index : 104
+        related_content_last_index : 104
 
     }
 
@@ -345,7 +347,7 @@ $ bundle install
 
         searches : [],
 
-        search_index : 22,
+        search_last_index : 22,
 
         related_contents : [
 
@@ -381,9 +383,74 @@ $ bundle install
             }
         ],
 
-        related_content_index : 106
+        related_content_last_index : 106
 
     }
+
+### 過去コンテンツ（初期コンテンツより古いもの）のロード（検索キーワード・関連コンテンツ）の取得
+
+"GET", "/api/transcripts/" + wall_id + "/" + search_first_index
+
+    responseBody = {
+
+        searches : List[ object( Search ) ],
+
+        search_first_index : NUM,
+
+        related_contents : List[ object( RelatedContent ) ]
+
+    }
+
+#### Sample Request 1
+
+  "GET", "/api/transcripts/3/15"
+
+#### Sample Response 1
+
+    responseBody = {
+
+        searches : [
+
+          {
+            "id" : 14,
+            "transcript_id" : 200,
+            "words" : [ 'san francisco', 'soccer'],
+            "is_visible" : true,
+            "mode" : 'Image'
+          },
+          {
+            "id" : 13,
+            "transcript_id" : 200,
+            "words" : [ 'san francisco', 'soccer'],
+            "is_visible" : true,
+            "mode" : 'Image'
+          },
+        ],
+
+        search_first_index : 13,
+
+        related_contents : [
+
+            {
+                "id": 104,
+                "search_id": 14,
+                "title": "sample 5",
+                "desc": "You Tube - Smasher - ",
+                "url": "https://www.youtube.com/watch?v=22cdBDK-8hk",
+                "img_url": "https://wikitravel.org/upload/en/thumb/2/23/Us-ca-sanfran-goldengate.jpg/510px-Us-ca-sanfran-goldengate.jpg",
+                "content_type": "image",
+                "source": "www.youtube.com",
+                "is_visible": true,
+                "created_at": "2018-02-28T05:20:27.091Z",
+                "updated_at": "2018-02-28T05:20:27.091Z",
+                "awesome": 0,
+                "condition":{"service": "MS Bing Image Search API", "word": "san francisco soccer"}
+            }
+
+        ]
+
+    }
+
 
 ### 認識テキストのPOST（transcript(テキスト), langcode, wallID, facebook_id, search_type, with_words(&検索ワード), UI_version）
 
