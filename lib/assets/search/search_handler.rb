@@ -29,11 +29,11 @@ end
 
 def test_alpha(word, search, transcript, langcode, is_concurrent, search_type)
 
-  if search_type == 1
+  if search_type == 0
     contents = image_search(word, search, transcript, langcode, is_concurrent)
-  elsif search_type == 2
+  elsif search_type == 1
     contents = news_search(word, search, transcript, langcode, is_concurrent)
-  elsif search_type == 3
+  elsif search_type == 2
     contents = video_search(word, search, transcript, langcode, is_concurrent)
   else
     contents = image_search(word, search, transcript, langcode, is_concurrent)

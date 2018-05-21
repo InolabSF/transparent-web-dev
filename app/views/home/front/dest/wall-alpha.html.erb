@@ -162,7 +162,7 @@
             transcripts_add(transcripts);
             startBtn.innerHTML = onMicPhrase + '<br> Status : <i>' + 'Recording...' + '</i>';
       }
-      
+
     }, function (error) {
       console.log(error);
     }).then(function (response){
@@ -273,7 +273,7 @@
                 'langcode' : language_code,
                 'wallID' : wallID,
                 'clientID' : FacebookID,
-                'search_type' : 1,
+                'search_type' : 0,
                 'with_words' : [],
                 'UI_version' : 'alpha'
             };

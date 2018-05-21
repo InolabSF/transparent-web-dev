@@ -8,14 +8,14 @@ def create_transcript(api_req, default_nlp, is_test_mode, is_word_only, is_concu
   if api_req[:search_type]
     search_type = api_req[:search_type]
   else
-    search_type = 1
+    search_type = 0
   end
 
-  if search_type == 1
+  if search_type == 0
     search_mode = 'image'
-  elsif search_type == 2
+  elsif search_type == 1
     search_mode = 'news'
-  elsif search_type == 3
+  elsif search_type == 2
     search_mode = 'video'
   else
     search_mode = 'image'
