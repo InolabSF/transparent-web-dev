@@ -399,7 +399,7 @@ $ bundle install
 
         FacebookID : STRING, ("guest_x"に固定してください。)
 
-        search_type : NUM, (1:Image, 2:Webpage, 3:Video)
+        search_type : NUM, (0:image, 1:webpage, 2:Video)
 
         with_words : List[ STRING ],
 
