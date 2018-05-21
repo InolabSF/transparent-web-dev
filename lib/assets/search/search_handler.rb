@@ -169,12 +169,13 @@ def ms_image_search(text, search, transcript, langcode, is_concurrent, num, cont
         content = {}
 
         title = value['name']
+        desc = 'The result by MS Bing Search Image with " ' + text + '"'
         img_url = value['contentUrl']
         url = value['hostPageUrl']
         source = value['hostPageDisplayUrl']
 
         content.store('title', title)
-        content.store('desc', url)
+        content.store('desc', desc)
         content.store('url', url)
         content.store('img_url', img_url)
         # content.store('content_type', 'Image')
@@ -405,7 +406,7 @@ def flickr(text, search, transcript, langcode, is_concurrent, num, contents_list
       content = {}
 
       title = photo['title']
-      desc = 'By Flickr'
+      desc = 'The result by Flickr with " ' + text + '"'
 
       img_url = 'https://farm' + photo['farm'].to_s + '.staticflickr.com/' + photo['server'] + '/' + photo['id'] + '_' + photo['secret'] + '.jpg'
       url = img_url
