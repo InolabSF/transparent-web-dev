@@ -119,7 +119,7 @@ def create_transcript(api_req, default_nlp, is_test_mode, is_word_only, is_concu
         word = word_list[i]
         contents_list = search_handler(word, search, transcript, langcode, is_concurrent, is_word_only, search_type, is_test_mode)
 
-        if !is_concurrent
+        unless is_concurrent
 
           if contents_list.length == 0
             puts('no contents')
@@ -170,7 +170,7 @@ def same_search?(search, entities, with_words, num)
 
     for current_word in current_words
 
-      if !past_words.include?(current_word)
+      unless past_words.include?(current_word)
         result = false
         break
       end

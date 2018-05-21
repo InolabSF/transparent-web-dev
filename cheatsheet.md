@@ -87,3 +87,5 @@ rails generate model NoGoodWord word:string:unique langcode:string
  RelatedContent.update_all("content_type='webpage'")
 
  Search.update_all("mode='image'")
+
+ bundle exec rake db:migrate
