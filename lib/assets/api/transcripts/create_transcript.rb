@@ -49,10 +49,9 @@ def create_transcript(api_req, default_nlp, is_test_mode, is_word_only, is_concu
   else
 
     word_list = []
+    limited_entities_list  = transcript.entities.each_slice(max_words_number).to_a
 
     if multiple_search
-
-      limited_entities_list  = transcript.entities.each_slice(max_words_number).to_a
 
       for limited_entities in limited_entities_list
 
@@ -60,6 +59,7 @@ def create_transcript(api_req, default_nlp, is_test_mode, is_word_only, is_concu
 
         word = ''
         for entity in limited_entities
+
           entity_search = search.entity_searches.build(:entity => entity)
 
           word += entity.name
@@ -67,6 +67,7 @@ def create_transcript(api_req, default_nlp, is_test_mode, is_word_only, is_concu
         end
 
         for with_word in transcript.with_words
+
           with_word_search = search.with_word_searches.build(:with_word => with_word)
 
           word += with_word.text
@@ -74,6 +75,11 @@ def create_transcript(api_req, default_nlp, is_test_mode, is_word_only, is_concu
         end
 
         word_list.push(word)
+
+        puts('search.entities')
+        puts(search.entities)
+
+        search.is_visible = false unless is_different_search?(search, limited_entities, with_words, 15)
 
       end
 
@@ -82,15 +88,14 @@ def create_transcript(api_req, default_nlp, is_test_mode, is_word_only, is_concu
       for entity in transcript.entities
 
         search = transcript.searches.build(:mode => search_mode, :is_visible => true)
-
-        word = ''
-
         entity_search = search.entity_searches.build(:entity => entity)
 
+        word = ''
         word += entity.name
         word += ' '
 
         for with_word in transcript.with_words
+
           with_word_search = search.with_word_searches.build(:with_word => with_word)
 
           word += with_word.text
@@ -98,6 +103,10 @@ def create_transcript(api_req, default_nlp, is_test_mode, is_word_only, is_concu
         end
 
         word_list.push(word)
+
+        puts('search.entities')
+        puts(search.entities)
+        search.is_visible = false unless is_different_search?(search, entities_list, with_words, 15)
 
       end
 
@@ -109,12 +118,7 @@ def create_transcript(api_req, default_nlp, is_test_mode, is_word_only, is_concu
 
       search = transcript.searches[i]
 
-      puts('search.entities')
-      puts(search.entities)
-
-      if same_search?(search, entities_list, with_words, 15)
-        search.is_visible = false
-      else
+      if search.is_visible
 
         word = word_list[i]
         contents_list = search_handler(word, search, transcript, langcode, is_concurrent, is_word_only, search_type, is_test_mode)
@@ -143,10 +147,7 @@ def create_transcript(api_req, default_nlp, is_test_mode, is_word_only, is_concu
 
 end
 
-def same_search?(search, entities, with_words, num)
-
-  # puts('search.entities')
-  # puts(search.entities)
+def is_different_search?(search, entities, with_words, num)
 
   current_words = []
   entities.each {|entity| current_words.push(entity['name']) }
@@ -164,19 +165,22 @@ def same_search?(search, entities, with_words, num)
     past_search.entities.each {|entity| past_words.push(entity.name) }
     past_search.with_words.each {|with_word| past_words.push(with_word.text) if with_word.present? }
 
-    next if current_words.length != past_words.length
+    result = false
 
-    result = true
+    if current_words.length != past_words.length
+      result = true
+      next
+    end
 
     for current_word in current_words
 
       unless past_words.include?(current_word)
-        result = false
+        result = true
         break
       end
     end
 
-    break if result
+    break unless result
 
   end
 

@@ -12,6 +12,9 @@ def nlp_handler(nlp_type, text, langcode, is_test_mode)
     if NoGoodWord.exists?(word: entity['name'])
       puts('No Good Entity')
       puts(entity['name'])
+    elsif !is_moderate?(entity['name'])
+      puts('profane terms')
+      puts(entity['name'])
     else
       entities_list.push(entity)
     end
@@ -70,4 +73,29 @@ def analyze_text_ms(text, langcode)
 
     return entities_hash, sentiment
 
+end
+
+def is_moderate?(term)
+  ms_content_moderator_key = ENV['MS_CONTENT_MODERATOR_KEY']
+
+  apiUrl = 'westus.api.cognitive.microsoft.com'
+  uri = "https://" + apiUrl
+  conn = Faraday::Connection.new(:url => uri) do |builder|
+    builder.use Faraday::Request::UrlEncoded
+    builder.use Faraday::Response::Logger
+    builder.use Faraday::Adapter::NetHttp
+  end
+
+  requrl = '/contentmoderator/moderate/v1.0/ProcessText/Screen'
+  res = conn.post do |req|
+     req.url requrl
+     req.headers['Content-Type'] = 'text/plain'
+     req.headers['Ocp-Apim-Subscription-Key'] = ms_content_moderator_key
+     req.body = term
+  end
+
+  body = JSON.parse(res.body)
+  puts(body)
+  result = body['Terms'].blank?
+  return result
 end
