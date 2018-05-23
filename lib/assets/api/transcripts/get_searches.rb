@@ -91,3 +91,60 @@ def get_further_searches(wall_id, search_first_index, num)
 
   return search_list, search_first_index, related_contents_list
 end
+
+
+def get_formated_data_debug(transcripts)
+  formated_transcripts = []
+
+  for transcript in transcripts
+
+    transcript_hash = transcript.attributes
+    transcript_hash.store('user', transcript.user.attributes)
+
+    entities = []
+    transcript.entities.each {|entity| entities.push(entity.attributes) }
+
+    searches = []
+
+    for search in transcript.searches
+
+      search_hash = search.attributes
+
+      search_word = ''
+      for entity_search in search.entity_searches
+        search_word += entity_search.entity.name
+        search_word += ' '
+      end
+
+      # for with_word in search.with_words
+      #   search_word += with_word.text
+      #   search_word += ' '
+      # end
+
+      search_hash.store('search_word', search_word)
+
+      search_entities = []
+      search.entity_searches.each {|entity_search| search_entities.push(entity_search.entity.attributes) }
+      search_hash.store('entities', search_entities)
+
+      search_related_contents = []
+      for related_content in search.related_contents
+        related_content_hash = related_content.attributes
+        related_content_hash.store('condition', related_content.condition.attributes) if related_content.condition
+        search_related_contents.push(related_content_hash)
+      end
+      search_hash.store('related_contents', search_related_contents)
+
+      searches.push(search_hash)
+    end
+
+    transcript_hash.store('entities', entities)
+    transcript_hash.store('searches', searches)
+
+    formated_transcripts.push(transcript_hash)
+
+  end
+
+  return formated_transcripts
+
+end

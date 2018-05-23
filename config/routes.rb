@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   get '/api/update/searches/:search_id',   to: 'api/transcripts#update_search'
   get '/api/update/contents/:related_content_id',   to: 'api/transcripts#update_related_content'
 
+  post '/api/transcripts/debug', to: 'api/transcripts#create_debug'
+
   post '/post', to: 'api/transcripts#create_by_outer'
   get '/demo/api/transcripts/:wall_id', to: 'api/transcripts#index_sxsw_demo'
   get '/demo/api/transcripts/:wall_id/:index', to: 'api/transcripts#show_sxsw_demo'

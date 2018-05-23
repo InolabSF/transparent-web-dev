@@ -105,7 +105,8 @@ def create_transcript(api_req, default_nlp, is_test_mode, is_word_only, is_concu
         word_list.push(word)
 
         puts('search.entities')
-        puts(search.entities)
+        search.entity_searches.each {|entity_search| puts(entity_search.entity.attributes) }
+        
         search.is_visible = false unless is_different_search?(search, entities_list, with_words, 15)
 
       end
@@ -156,6 +157,8 @@ def is_different_search?(search, entities, with_words, num)
   # with_words.each {|with_word| current_words.push(with_word.text) }
 
   past_searches = Search.joins(:transcript).where("transcripts.wall_id" => search.transcript.wall_id, "searches.is_visible" => true).order('id DESC')[0...num]
+
+  result = true if past_searches.blank?
 
   for past_search in past_searches
 
