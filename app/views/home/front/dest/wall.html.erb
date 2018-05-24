@@ -188,7 +188,7 @@
       var recognize_counter = 0;
 
       var offMicPhrase = '<b>Start</b> to press here' + '<br> Recording : <i>' + 'OFF' + '</i>';
-      var onMicPhrase = '<b>Start</b> to press here' + '<br> Recording : <i>' + 'ON' + '</i>';
+      var onMicPhrase = '<b>Stop</b> to press here' + '<br> Recording : <i>' + 'ON' + '</i>';
       // var onMicPhrase = '<b>Stop</b> to press here';
 
 
@@ -260,6 +260,9 @@
         return xhr;
       }
 
+      function sleepByPromise(sec) {
+           return new Promise(resolve => setTimeout(resolve, sec*1000));
+       }
 
       function postTranscript(text) {
         // var API_KEY = 'P2ysni7WOO8DcPtvIa2sY7gRvyN6QfRz7vDkELYC';
@@ -288,7 +291,10 @@
         // var xmlHttp = createCORSRequest('POST', post_url);
         xmlHttp.setRequestHeader( 'Content-Type', 'application/json' )
         // xmlHttp.setRequestHeader( 'x-api-key', API_KEY )
-        xmlHttp.onreadystatechange = function() {
+        xmlHttp.onreadystatechange = async function() {
+
+            await sleepByPromise(2)
+
             if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
               if (isActive){
                   startBtn.innerHTML = onMicPhrase
