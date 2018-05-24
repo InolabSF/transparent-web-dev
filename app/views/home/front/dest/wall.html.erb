@@ -153,8 +153,14 @@
       }
       if (transcripts.length　!= 0){
 
-            transcripts_add(transcripts);
-            startBtn.innerHTML = onMicPhrase + '<br> Status : <i>' + 'Recording...' + '</i>';
+          transcripts_add(transcripts);
+
+          console.log(isActive);
+          if (isActive){
+              startBtn.innerHTML = onMicPhrase
+          } else {
+              startBtn.innerHTML = offMicPhrase
+          }
       }
 
     }, function (error) {
@@ -181,8 +187,9 @@
       var timeout_counter = 0;
       var recognize_counter = 0;
 
-      var offMicPhrase = '<b>Start</b> to press here' + '<br> Status : <i>' + 'Idle' + '</i>';
-      var onMicPhrase = '<b>Stop</b> to press here';
+      var offMicPhrase = '<b>Start</b> to press here' + '<br> Recording : <i>' + 'OFF' + '</i>';
+      var onMicPhrase = '<b>Start</b> to press here' + '<br> Recording : <i>' + 'ON' + '</i>';
+      // var onMicPhrase = '<b>Stop</b> to press here';
 
 
       document.addEventListener("DOMContentLoaded", function () {
@@ -255,13 +262,12 @@
 
 
       function postTranscript(text) {
-        var API_KEY = 'P2ysni7WOO8DcPtvIa2sY7gRvyN6QfRz7vDkELYC';
+        // var API_KEY = 'P2ysni7WOO8DcPtvIa2sY7gRvyN6QfRz7vDkELYC';
         var language_code = '<%= @language_code %>';
         var wallID = <%= @wall_id %>;
         var FacebookID = 'guest_x';
         // var post_url = "https://i496f4jiu1.execute-api.us-east-1.amazonaws.com/api/streaming";
         var post_url = '/api/transcripts';
-
 
         var body = {
                 'transcript' : text,
@@ -280,12 +286,19 @@
 
         xmlHttp.open("POST", post_url);
         // var xmlHttp = createCORSRequest('POST', post_url);
-
         xmlHttp.setRequestHeader( 'Content-Type', 'application/json' )
-        xmlHttp.setRequestHeader( 'x-api-key', API_KEY )
-
+        // xmlHttp.setRequestHeader( 'x-api-key', API_KEY )
+        xmlHttp.onreadystatechange = function() {
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+              if (isActive){
+                  startBtn.innerHTML = onMicPhrase
+              } else {
+                  startBtn.innerHTML = offMicPhrase
+              }
+            }
+        };
         xmlHttp.send(JSON.stringify(body));
-        console.log(xmlHttp.response)
+        console.log(xmlHttp.response);
 
       }
 
@@ -323,12 +336,18 @@
           if(json.RecognitionStatus == "Success"){
 
             result = json.DisplayText;
-            startBtn.innerHTML = onMicPhrase + '<br> <i>' + result + '</i>';
+            // startBtn.innerHTML = 'Transcript :<br><i>' + result + '</i>';
+            if (isActive){
+                status = 'Recording : <i>' + 'ON' + '</i>'
+            } else {
+                status = 'Recording : <i>' + 'OFF' + '</i>'
+            }
+            startBtn.innerHTML = status + '<br>' + result;
             postTranscript(json.DisplayText)
             console.log(JSON.stringify(json));
             timeout_counter = 0;
             recognize_counter += 1;
-            if (recognize_counter == 120){
+            if (recognize_counter == 240){
 
               errorHandler();
               killMic();
@@ -343,7 +362,7 @@
             console.log('Timeout Counter : '+timeout_counter);
             console.log('Timeout Counter : '+recognize_counter);
 
-            if (timeout_counter == 12){
+            if (timeout_counter == 24){
 
               errorHandler();
 
@@ -369,7 +388,7 @@
         if (!recognizer) {
             Setup();
         }
-        startBtn.innerHTML = onMicPhrase + '<br> Status : <i>' + 'Recording...' + '</i>';
+        startBtn.innerHTML = onMicPhrase;
         isActive = true;
         RecognizerStart(SDK, recognizer);
       }

@@ -33,6 +33,8 @@ Rails.application.routes.draw do
   get '/alpha/ja/test',   to: 'home#alpha_test_ja'
   get '/alpha/en/test',   to: 'home#alpha_test_en'
 
+  get '/callback',   to: 'home#callback'
+
   # namespace :api, format: 'json' do
   #   resources :transcripts, only: [:index, :show, :create, :update]
   # end

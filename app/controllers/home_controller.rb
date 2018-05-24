@@ -55,4 +55,12 @@ class HomeController < ApplicationController
     render :file => "home/media"
   end
 
+  def callback
+    if params["hub.verify_token"] == "demo2dokidoki"
+      render json: params["hub.challenge"]
+    else
+      render json: "Error, wrong validation token"
+    end
+  end
+
 end
