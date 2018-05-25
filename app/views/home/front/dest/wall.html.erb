@@ -200,7 +200,7 @@
           hypothesisDiv = document.getElementById("hypothesisDiv");
           statusDiv = document.getElementById("statusDiv");
 
-          key = "3691bfeb1c2c4e8eac710fd87c1a8def";
+          key = '<%= @MS_ASR_KEY %>';
           languageOptions = '<%= @language_code %>';
           formatOptions = "Simple";
           inputSource = "Mic";
@@ -265,11 +265,9 @@
        }
 
       function postTranscript(text) {
-        // var API_KEY = 'P2ysni7WOO8DcPtvIa2sY7gRvyN6QfRz7vDkELYC';
         var language_code = '<%= @language_code %>';
         var wallID = <%= @wall_id %>;
         var FacebookID = 'guest_x';
-        // var post_url = "https://i496f4jiu1.execute-api.us-east-1.amazonaws.com/api/streaming";
         var post_url = '/api/transcripts';
 
         var body = {
@@ -290,7 +288,6 @@
         xmlHttp.open("POST", post_url);
         // var xmlHttp = createCORSRequest('POST', post_url);
         xmlHttp.setRequestHeader( 'Content-Type', 'application/json' )
-        // xmlHttp.setRequestHeader( 'x-api-key', API_KEY )
         xmlHttp.onreadystatechange = async function() {
 
             await sleepByPromise(2)

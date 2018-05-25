@@ -1,4 +1,7 @@
 class HomeController < ApplicationController
+
+  before_action :get_keys
+
   def index
     # render :file => "home/front/dest/index"
   end
@@ -61,6 +64,11 @@ class HomeController < ApplicationController
     else
       render json: "Error, wrong validation token"
     end
+  end
+
+
+  def get_keys
+    @MS_ASR_KEY = ENV['MS_ASR_KEY']
   end
 
 end
