@@ -25,7 +25,7 @@ end
 
 def analyze_text_ms(text, langcode)
 
-    apiUrl = "westus.api.cognitive.microsoft.com"
+    apiUrl = "eastasia.api.cognitive.microsoft.com"
     uri = "https://" + apiUrl
 
     conn = Faraday::Connection.new(:url => uri) do |builder|
@@ -78,7 +78,7 @@ end
 def is_moderate?(term)
   ms_content_moderator_key = ENV['MS_CONTENT_MODERATOR_KEY']
 
-  apiUrl = 'westus.api.cognitive.microsoft.com'
+  apiUrl = 'eastasia.api.cognitive.microsoft.com'
   uri = "https://" + apiUrl
   conn = Faraday::Connection.new(:url => uri) do |builder|
     builder.use Faraday::Request::UrlEncoded
