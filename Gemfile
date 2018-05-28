@@ -72,3 +72,5 @@ gem 'cancancan'
 gem 'rack-cors'
 
 gem 'faraday'                                                   # http client
+
+gem 'newrelic_rpm'

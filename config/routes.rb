@@ -29,11 +29,11 @@ Rails.application.routes.draw do
   get '/demo/google',   to: 'home#demo_google'
 
   get '/media',   to: 'home#media'
+  # 
+  # get '/alpha/ja/test',   to: 'home#alpha_test_ja'
+  # get '/alpha/en/test',   to: 'home#alpha_test_en'
 
-  get '/alpha/ja/test',   to: 'home#alpha_test_ja'
-  get '/alpha/en/test',   to: 'home#alpha_test_en'
-
-  get '/callback',   to: 'home#callback'
+  # get '/callback',   to: 'home#callback'
 
   # namespace :api, format: 'json' do
   #   resources :transcripts, only: [:index, :show, :create, :update]
