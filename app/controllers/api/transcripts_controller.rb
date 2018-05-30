@@ -78,7 +78,9 @@ class Api::TranscriptsController < ApplicationController
     search_id = params[:search_id]
     @search = Search.find(search_id)
     @search.is_visible = false
+    @search.is_archived = true
     @search.related_contents.each {|related_content| related_content.is_visible = false }
+    @search.related_contents.each {|related_content| related_content.is_archived = true }
 
     if @search.save
       render json: @search
@@ -91,6 +93,7 @@ class Api::TranscriptsController < ApplicationController
     related_content_id = params[:related_content_id]
     @related_content = RelatedContent.find(related_content_id)
     @related_content.is_visible = false
+    @related_content.is_archived = true
 
     if @related_content.save
       render json: @related_content

@@ -89,3 +89,10 @@ rails generate model NoGoodWord word:string:unique langcode:string
  Search.update_all("mode='image'")
 
  bundle exec rake db:migrate
+
+
+rails g migration AddIsarchivedToSearch is_archived:boolean
+
+rails g migration AddIsarchivedToRelatedContent is_archived:boolean
+
+rails g migration AddIsarchivedToTranscript is_archived:boolean
