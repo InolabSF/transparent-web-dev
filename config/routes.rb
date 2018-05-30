@@ -22,6 +22,9 @@ Rails.application.routes.draw do
   get '/wall/:wall_id/en',   to: 'home#demo_en'
   get '/wall/:wall_id/ja',   to: 'home#demo_ja'
 
+  get '/alpha/wall/:wall_id/en',   to: 'home#alpha_en'
+  get '/alpha/wall/:wall_id/ja',   to: 'home#alpha_ja'
+
   get '/demo/en',   to: 'home#demo_sxsw_en'
   get '/demo/ja',   to: 'home#demo_sxsw_ja'
 
@@ -29,7 +32,7 @@ Rails.application.routes.draw do
   get '/demo/google',   to: 'home#demo_google'
 
   get '/media',   to: 'home#media'
-  # 
+  #
   # get '/alpha/ja/test',   to: 'home#alpha_test_ja'
   # get '/alpha/en/test',   to: 'home#alpha_test_en'
 

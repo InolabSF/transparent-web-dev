@@ -1,0 +1,322 @@
+<head>
+  <meta charset="utf-8">
+  <title>Transparent</title>
+  <meta name="description" content="Transparent, the first audio recognition tool that serves a stream of content that follows your verbal conversation.">
+  <meta name="keywords" content="Transparent">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta property="og:title" content="Transparent">
+  <meta property="og:site_name" content="Transparent">
+  <meta property="og:description" content="Transparent, the first audio recognition tool that serves a stream of content that follows your verbal conversation.">
+  <meta property="og:url" content="http://trnspt.com/">
+  <meta property="og:image" content="http://res.cloudinary.com/negic/image/upload/v1520401274/og.png">
+  <meta property="og:type" content="website">
+  <link rel="shortcut icon" href="http://res.cloudinary.com/negic/image/upload/v1520401272/favicon.ico" type="image/x-icon">
+  <link rel="canonical" href="http://trnspt.com/">
+  <!-- <link rel="stylesheet" href="./assets/css/app.css"> -->
+  <%= stylesheet_link_tag    'front-alpha', media: 'all', 'data-turbolinks-track': 'reload' %>
+</head>
+<body class="page-top">
+  <div id="wrapper">
+    <header id="global-header">
+      <h1 id="logo" class="logo01">transparent</h1>
+      <button class="btn-menu01 tap is-active">
+        <div class="btn-inner"><span class="line line-1"></span><span class="line line-2"></span><span class="line line-3"></span></div>
+      </button>
+      <div id="btn-recording" class="btn-recording rec"><span class="r1">Recording</span><span class="r2">REC</span></div>
+      <p class="txt-recording"></p>
+    </header>
+    <div id="global-menu" class="is-active">
+      <form class="form-keyword">
+        <p class="tit">Keyword Filtering</p>
+        <input type="text" placeholder="Input Keyword" class="input-keyword">
+        <button class="input-submit">SUBMIT</button>
+      </form>
+      <div class="keyword-list">
+      </div>
+      <div class="setting-btn-area">
+        <p class="tit">Title / Description</p>
+        <div class="btn-toggle01 on-txt-hidden">
+          <div class="toggle"><span class="on">On</span><span class="off">Off</span></div>
+        </div>
+      </div>
+      <div class="setting-btn-area">
+        <p class="tit">Comment Card</p>
+        <div class="btn-toggle01 on-card-hidden">
+          <div class="toggle"><span class="on">On</span><span class="off">Off</span></div>
+        </div>
+      </div>
+    </div>
+    <div id="transparent-container" class="menu-is-active">
+    </div>
+  </div>
+  <script>
+    var TRANSCRIPTS = [];
+    var searches = [];
+    var related_contents = [];
+
+    function fetchTranscripts(){
+      var xmlHttp = new XMLHttpRequest();
+      xmlHttp.open("GET", "/api/transcripts/" + <%= @wall_id %>, false);
+      xmlHttp.send();
+      data = JSON.parse(xmlHttp.response)
+
+      searches = data.searches;
+      related_contents = data.related_contents;
+    }
+
+  </script>
+
+  <%= javascript_include_tag 'front-alpha-manifest', 'data-turbolinks-track': 'reload'  %>
+
+  <script>
+    document.getElementById('logo').addEventListener('click', function() {
+        fetchTranscripts();
+        TRANSCRIPTS.addContents({ searches, related_contents });
+    }, false);
+
+    document.getElementById('btn-recording').addEventListener('click', function() {
+        TRANSCRIPTS.setRecordingText('text text text text');
+    }, false);
+
+    //- TRANSCRIPTS.getKeywords();
+  </script>
+
+  <!-- Browser Hooks -->
+  <!-- <script>
+      var startBtn, stopBtn, hypothesisDiv, phraseDiv, statusDiv;
+      var key, languageOptions, formatOptions, recognitionMode, inputSource, filePicker;
+      var SDK;
+      var recognizer;
+      var previousSubscriptionKey;
+      var isActive = false;
+      var result;
+      var timeout_counter = 0;
+      var recognize_counter = 0;
+
+      var offMicPhrase = '<b>Start</b> to press here' + '<br> Recording : <i>' + 'OFF' + '</i>';
+      var onMicPhrase = '<b>Stop</b> to press here' + '<br> Recording : <i>' + 'ON' + '</i>';
+      // var onMicPhrase = '<b>Stop</b> to press here';
+
+
+      document.addEventListener("DOMContentLoaded", function () {
+          startBtn = document.getElementById("startBtn");
+          startBtn.innerHTML = offMicPhrase
+
+          phraseDiv = document.getElementById("phraseDiv");
+          hypothesisDiv = document.getElementById("hypothesisDiv");
+          statusDiv = document.getElementById("statusDiv");
+
+          key = '<%= @MS_ASR_KEY %>';
+          languageOptions = '<%= @language_code %>';
+          formatOptions = "Simple";
+          inputSource = "Mic";
+          recognitionMode = "Conversation";
+
+          startBtn.addEventListener("click", function () {
+
+
+            if (isActive){
+
+              killMic();
+                // startBtn.innerHTML = offMicPhrase;
+                // RecognizerStop(SDK, recognizer);
+                // isActive = false;
+            } else {
+
+              activateMic();
+              // if (!recognizer) {
+              //     Setup();
+              // }
+              //
+              // startBtn.innerHTML = onMicPhrase;
+              // isActive = true;
+              // RecognizerStart(SDK, recognizer);
+
+            }
+
+          });
+
+          // stopBtn.addEventListener("click", function () {
+          //     RecognizerStop(SDK, recognizer);
+          //     startBtn.disabled = false;
+          //     stopBtn.disabled = true;
+          // });
+
+          Initialize(function (speechSdk) {
+              SDK = speechSdk;
+              startBtn.disabled = false;
+          });
+
+          // loadTranscripts(initial_transcripts, index)
+      });
+
+      function createCORSRequest(method, url) {
+        var xhr = new XMLHttpRequest();
+        if ("withCredentials" in xhr) {
+          // XHR for Chrome/Firefox/Opera/Safari.
+          xhr.open(method, url, false);
+        } else if (typeof XDomainRequest != "undefined") {
+          // XDomainRequest for IE.
+          xhr = new XDomainRequest();
+          xhr.open(method, url);
+        } else {
+          // CORS not supported.
+          xhr = null;
+        }
+        return xhr;
+      }
+
+      function sleepByPromise(sec) {
+           return new Promise(resolve => setTimeout(resolve, sec*1000));
+       }
+
+      function postTranscript(text) {
+        var language_code = '<%= @language_code %>';
+        var wallID = <%= @wall_id %>;
+        var FacebookID = 'guest_x';
+        var post_url = '/api/transcripts';
+
+        var body = {
+                'transcript' : text,
+                'FacebookID' :  FacebookID,
+                'langcode' : language_code,
+                'wallID' : wallID,
+                'clientID' : FacebookID,
+                'search_type' : 0,
+                'with_words' : [],
+                'UI_version' : 'alpha'
+            };
+
+        console.log(body)
+
+        var xmlHttp = new XMLHttpRequest();
+
+        xmlHttp.open("POST", post_url);
+        // var xmlHttp = createCORSRequest('POST', post_url);
+        xmlHttp.setRequestHeader( 'Content-Type', 'application/json' )
+        xmlHttp.onreadystatechange = async function() {
+
+            await sleepByPromise(2)
+
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+              if (isActive){
+                  startBtn.innerHTML = ''
+              } else {
+                  startBtn.innerHTML = ''
+              }
+            }
+        };
+        xmlHttp.send(JSON.stringify(body));
+        console.log(xmlHttp.response);
+
+      }
+
+      function Setup() {
+          if (recognizer != null) {
+              RecognizerStop(SDK, recognizer);
+          }
+          recognizer = RecognizerSetup(SDK, recognitionMode, languageOptions, SDK.SpeechResultFormat[formatOptions], key);
+      }
+
+      function UpdateStatus(status) {
+          statusDiv.innerHTML = status;
+      }
+
+      // function UpdateRecognizedHypothesis(text, append) {
+      //     if (append)
+      //         hypothesisDiv.innerHTML += text + " ";
+      //     else
+      //         hypothesisDiv.innerHTML = text;
+      //
+      //     var length = hypothesisDiv.innerHTML.length;
+      //     if (length > 403) {
+      //         hypothesisDiv.innerHTML = "..." + hypothesisDiv.innerHTML.substr(length-400, length);
+      //     }
+      // }
+
+      function OnSpeechEndDetected() {
+          // stopBtn.disabled = true;
+      }
+
+      function UpdateRecognizedPhrase(json) {
+        console.log('UpdateRecognizedPhrase');
+        console.log(json)
+
+          if(json.RecognitionStatus == "Success"){
+
+            result = json.DisplayText;
+            // startBtn.innerHTML = 'Transcript :<br><i>' + result + '</i>';
+            if (isActive){
+                status = 'Recording : <i>' + 'ON' + '</i>'
+            } else {
+                status = 'Recording : <i>' + 'OFF' + '</i>'
+            }
+            startBtn.innerHTML = status + '<br>' + result;
+            postTranscript(json.DisplayText)
+            console.log(JSON.stringify(json));
+            timeout_counter = 0;
+            recognize_counter += 1;
+            if (recognize_counter == 240){
+
+              errorHandler();
+              killMic();
+
+            }
+
+          } else if(json.RecognitionStatus == "InitialSilenceTimeout"){
+
+            timeout_counter += 1;
+            recognize_counter += 1;
+            console.log('15 seconds silense Timeout');
+            console.log('Timeout Counter : '+timeout_counter);
+            console.log('Timeout Counter : '+recognize_counter);
+
+            if (timeout_counter == 24){
+
+              errorHandler();
+
+            } else {
+              activateMic();
+            }
+
+          } else {
+
+            console.log('No transcript');
+            console.log(JSON.stringify(json));
+
+          }
+      }
+
+      function OnComplete() {
+          // startBtn.disabled = false;
+          // stopBtn.disabled = true;
+      }
+
+      function activateMic() {
+        console.log('activate Mic')
+        if (!recognizer) {
+            Setup();
+        }
+        startBtn.innerHTML = onMicPhrase;
+        isActive = true;
+        RecognizerStart(SDK, recognizer);
+      }
+
+      function killMic() {
+        console.log('kill Mic')
+
+        startBtn.innerHTML = offMicPhrase;
+        RecognizerStop(SDK, recognizer);
+        isActive = false;
+
+      }
+
+      function errorHandler() {
+        alert("Session Timeout. Please Restart.");
+        killMic();
+      }
+  </script> -->
+
+</body>
