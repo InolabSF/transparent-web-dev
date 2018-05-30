@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180514040648) do
+ActiveRecord::Schema.define(version: 20180530225018) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -98,6 +98,7 @@ ActiveRecord::Schema.define(version: 20180514040648) do
     t.datetime "updated_at", null: false
     t.integer "awesome", default: 0
     t.integer "search_id"
+    t.boolean "is_archived", default: false
   end
 
   create_table "searches", force: :cascade do |t|
@@ -106,6 +107,7 @@ ActiveRecord::Schema.define(version: 20180514040648) do
     t.boolean "is_visible"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_archived", default: false
   end
 
   create_table "transcripts", force: :cascade do |t|
@@ -119,6 +121,7 @@ ActiveRecord::Schema.define(version: 20180514040648) do
     t.string "sentiment"
     t.integer "awesome", default: 0
     t.string "langcode"
+    t.boolean "is_archived", default: false
   end
 
   create_table "users", force: :cascade do |t|

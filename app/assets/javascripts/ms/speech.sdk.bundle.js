@@ -1759,7 +1759,7 @@ var WebsocketMessageAdapter = /** @class */ (function () {
                 pendingSendItem.SendStatusDeferral.Reject(closeReason);
             }, closeReason);
 
-            // edited
+            // edited by transparent team
             alert("Sorry, Session Closed. Please Restart.");
             killMic();
         };
