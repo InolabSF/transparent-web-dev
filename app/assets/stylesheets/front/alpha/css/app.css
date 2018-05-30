@@ -981,6 +981,67 @@ input
     opacity: 1;
 }
 
+.btn-toggle02
+{
+    overflow: hidden;
+
+    width: 100%;
+
+    cursor: pointer;
+    user-select: none;
+
+    border-radius: 5px;
+    background-color: #fff;
+}
+.btn-toggle02:after
+{
+    display: block;
+    clear: both;
+
+    content: '';
+}
+.btn-toggle02 div
+{
+    float: left;
+
+    width: 33.33%;
+    height: 50px;
+
+    transition: background-color ease 200ms;
+
+    color: transparent;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: contain;
+}
+.btn-toggle02 div.photo
+{
+    background-image: url(../img/top/ico01.png);
+}
+.btn-toggle02 div.photo.is-active
+{
+    background-color: #2dadff;
+    background-image: url(../img/top/ico01_on.png);
+}
+.btn-toggle02 div.news
+{
+    background-image: url(../img/top/ico02.png);
+}
+.btn-toggle02 div.news.is-active
+{
+    background-color: #92e023;
+    background-image: url(../img/top/ico02_on.png);
+}
+.btn-toggle02 div.movie
+{
+    background-image: url(../img/top/ico03.png);
+}
+.btn-toggle02 div.movie.is-active
+{
+    background-color: #f13c33;
+    background-image: url(../img/top/ico03_on.png);
+}
+
 .btn-close01
 {
     width: 30px;
@@ -1416,7 +1477,7 @@ input
 }
 #global-menu .keyword-list
 {
-    min-height: 140px;
+    min-height: 100px;
     margin-bottom: 30px;
 }
 #global-menu .keyword-list .list-item

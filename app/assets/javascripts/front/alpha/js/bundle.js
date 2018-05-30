@@ -19349,10 +19349,19 @@
 
 	        var _this = _possibleConstructorReturn(this, (TopScene.__proto__ || Object.getPrototypeOf(TopScene)).call(this));
 
-	        $('#wrapper').on('click', '.btn-menu01', _this.menuToggle.bind(_this)).on('click', '.on-txt-hidden', _this.mediaTextToggle.bind(_this)).on('click', '.on-card-hidden', _this.mediaCardToggle.bind(_this)).on('click', '.input-submit', _this.addKeywordList.bind(_this)).on('click', '.keyword-list .list-item', _this.removeKeywordList.bind(_this)).on('click', '.post-media', _this.showDetail.bind(_this)).on('click', '.btn-close01', _this.hideDetail.bind(_this)).on('click', '.btn-recording', _this.recording.bind(_this));
+	        _this.kerwords = [];
+	        _this.scrollBottomPos = false;
+
+	        $('#wrapper').on('click', '.btn-menu01', _this.menuToggle.bind(_this)).on('click', '.on-txt-hidden', _this.mediaTextToggle.bind(_this)).on('click', '.on-card-hidden', _this.mediaCardToggle.bind(_this)).on('click', '.on-switch-media .media', _this.mediaSwitch.bind(_this)).on('click', '.input-submit', _this.addKeywordList.bind(_this)).on('click', '.keyword-list .list-item', _this.removeKeywordList.bind(_this)).on('click', '.post-media', _this.showDetail.bind(_this)).on('click', '.btn-close01', _this.hideDetail.bind(_this)).on('click', '.btn-recording', _this.toggleRecordhing.bind(_this));
+
+	        $(window).on('scroll', _this.onScroll.bind(_this));
 
 	        TRANSCRIPTS.addContents = _this.addContents.bind(_this);
 	        TRANSCRIPTS.setRecordingText = _this.setRecordingText.bind(_this);
+	        TRANSCRIPTS.getKeywords = _this.getKeywords.bind(_this);
+	        TRANSCRIPTS.toggleRecordhing = _this.toggleRecordhing.bind(_this);
+	        TRANSCRIPTS.getMediaType = _this.getMediaType.bind(_this);
+	        TRANSCRIPTS.getScrollBottomPosition = _this.getScrollBottomPosition.bind(_this);
 	        return _this;
 	    }
 
@@ -19427,7 +19436,7 @@
 	                    var post = $('<a />', { href: d.url, class: 'grid post-media', target: '_blank' }).appendTo(container);
 
 	                    $('<img />', { src: d.img_url, class: 'img', alt: d.title }).appendTo(post);
-	                    $('<p />', { class: 'txt' }).text(d.desc).appendTo(post);
+	                    $('<p />', { class: 'txt' }).text(d.title).appendTo(post);
 	                }
 	            }
 
@@ -19545,6 +19554,20 @@
 	            }, 100);
 	        }
 	    }, {
+	        key: 'mediaSwitch',
+	        value: function mediaSwitch(event) {
+	            var el = $(event.currentTarget);
+	            el.closest('.btn-toggle02').find('.media').removeClass('is-active');
+	            el.addClass('is-active');
+
+	            this.mediaType = parseInt(el.data('type'), 10);
+	        }
+	    }, {
+	        key: 'getMediaType',
+	        value: function getMediaType() {
+	            return this.mediaType;
+	        }
+	    }, {
 	        key: 'addKeywordList',
 	        value: function addKeywordList(event) {
 	            event.preventDefault();
@@ -19552,10 +19575,16 @@
 	            var val = $('.input-keyword').val();
 
 	            if (val) {
+	                this.kerwords.push(val);
 	                $('.keyword-list').append('<div class="list-item">' + val + '</div>');
 	            }
 
 	            $('.input-keyword').val('');
+	        }
+	    }, {
+	        key: 'getKeywords',
+	        value: function getKeywords() {
+	            return this.kerwords;
 	        }
 	    }, {
 	        key: 'removeKeywordList',
@@ -19588,23 +19617,46 @@
 	            }, 100);
 	        }
 	    }, {
-	        key: 'recording',
-	        value: function recording(event) {
+	        key: 'toggleRecordhing',
+	        value: function toggleRecordhing(event) {
 	            event.preventDefault();
 
 	            if ($('.btn-recording').hasClass('rec')) {
 
 	                $('.btn-recording').removeClass('rec');
 	                $('.btn-recording').addClass('recording');
+
+	                return true;
 	            } else {
 	                $('.btn-recording').addClass('rec');
 	                $('.btn-recording').removeClass('recording');
+
+	                return false;
 	            }
 	        }
 	    }, {
 	        key: 'setRecordingText',
 	        value: function setRecordingText(text) {
 	            $('.txt-recording').text(text);
+	        }
+	    }, {
+	        key: 'onScroll',
+	        value: function onScroll() {
+	            var scrollHeight = $(document).height();
+	            var scrollPosition = $(window).height() + $(window).scrollTop();
+
+	            if ((scrollHeight - scrollPosition) / scrollHeight <= 0.05) {
+
+	                //スクロールの位置が下部5%の範囲に来た場合
+	                this.scrollBottomPos = true;
+	            } else {
+	                this.scrollBottomPos = false;
+	            }
+	        }
+	    }, {
+	        key: 'getScrollBottomPosition',
+	        value: function getScrollBottomPosition() {
+	            return this.scrollBottomPos;
 	        }
 	    }]);
 

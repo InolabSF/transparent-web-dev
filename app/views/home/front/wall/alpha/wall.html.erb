@@ -17,6 +17,7 @@
   <!-- <link rel="stylesheet" href="./assets/css/app.css"> -->
   <%= stylesheet_link_tag    'front-alpha', media: 'all', 'data-turbolinks-track': 'reload' %>
 </head>
+
 <body class="page-top">
   <div id="wrapper">
     <header id="global-header">
@@ -27,11 +28,12 @@
       <div id="btn-recording" class="btn-recording rec"><span class="r1">Recording</span><span class="r2">REC</span></div>
       <p class="txt-recording"></p>
     </header>
-    <div id="global-menu" class="is-active">
+    <div id="global-menu" class="is-<%= 'active' %>">
+    <!-- <div id="global-menu" class="is-active"> -->
       <form class="form-keyword">
         <p class="tit">Keyword Filtering</p>
         <input type="text" placeholder="Input Keyword" class="input-keyword">
-        <button class="input-submit">SUBMIT</button>
+        <button id="input-submit" class="input-submit">SUBMIT</button>
       </form>
       <div class="keyword-list">
       </div>
@@ -47,16 +49,43 @@
           <div class="toggle"><span class="on">On</span><span class="off">Off</span></div>
         </div>
       </div>
+      <div class="setting-btn-area">
+        <p class="tit">Media</p>
+        <div id="on-switch-media" class="btn-toggle02 on-switch-media">
+          <div data-type="0" class="media photo">Photo</div>
+          <div data-type="1" class="media news">News</div>
+          <div data-type="2" class="media movie">Movie</div>
+        </div>
+      </div>
     </div>
     <div id="transparent-container" class="menu-is-active">
     </div>
   </div>
+
   <script>
     var TRANSCRIPTS = [];
+  </script>
+
+  <!-- ここから　藤森追加部分 -->
+
+  <div id="warning">
+      <h1 style="font-weight:500;">Speech Recognition SDK not found.</h1>
+      <h2 style="font-weight:500;">Please execute <code>npm run bundle</code> and reload.</h2>
+  </div>
+  <div id="content" style="display:none">
+  </div>
+
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <%= javascript_include_tag 'front-alpha-manifest', 'data-turbolinks-track': 'reload'  %>
+
+  <script>
     var searches = [];
     var related_contents = [];
+    var search_last_index;
+    var search_first_index;
+    var related_content_last_index;
 
-    function fetchTranscripts(){
+    function fetchContents(){
       var xmlHttp = new XMLHttpRequest();
       xmlHttp.open("GET", "/api/transcripts/" + <%= @wall_id %>, false);
       xmlHttp.send();
@@ -64,28 +93,116 @@
 
       searches = data.searches;
       related_contents = data.related_contents;
+      search_last_index = data.search_last_index;
+      search_first_index = data.search_first_index;
+      related_content_last_index = data.related_content_last_index;
+
+      TRANSCRIPTS.addContents({ searches, related_contents });
+      TRANSCRIPTS.addContents({ searches, related_contents });
     }
+
+    function loadContents(){
+      var instance = axios.create({
+        baseURL: '/api',
+        headers: {
+          'ContentType': 'application/json'
+        },
+        responseType: 'json'
+      });
+      console.log('send req with index : ' + search_last_index);
+      instance.get('/transcripts/' + <%= @wall_id %> + '/' + search_last_index + '/' + related_content_last_index ).then(function (response){
+        console.log(response.data);
+        searches = response.data.searches;
+        related_contents = response.data.related_contents;
+        search_last_index = response.data.search_last_index;
+
+        TRANSCRIPTS.addContents({ searches, related_contents });
+
+      }, function (error) {
+        console.log(error);
+      }).then(function (response){
+        loadTranscripts();
+      });
+
+    }
+
+    function loadPastContents(){
+      var xmlHttp = new XMLHttpRequest();
+      xmlHttp.open("GET", "/api/transcripts/" + <%= @wall_id %> + '/' + search_first_index, false);
+      xmlHttp.send();
+      data = JSON.parse(xmlHttp.response)
+
+      searches = data.searches;
+      related_contents = data.related_contents;
+      search_last_index = data.search_last_index;
+      search_first_index = data.search_first_index;
+      related_content_last_index = data.related_content_last_index;
+
+      TRANSCRIPTS.addContents({ searches, related_contents });
+      TRANSCRIPTS.addContents({ searches, related_contents });
+    }
+
+
+
+
+
+    window.addEventListener('load', function() {
+        fetchContents();
+        loadContents();
+    }, false);
+    // window.addEventListener('load', loadTranscripts())
 
   </script>
 
-  <%= javascript_include_tag 'front-alpha-manifest', 'data-turbolinks-track': 'reload'  %>
+  <!-- ここまで　藤森追加部分 -->
 
   <script>
     document.getElementById('logo').addEventListener('click', function() {
-        fetchTranscripts();
         TRANSCRIPTS.addContents({ searches, related_contents });
     }, false);
 
-    document.getElementById('btn-recording').addEventListener('click', function() {
-        TRANSCRIPTS.setRecordingText('text text text text');
+    // document.getElementById('btn-recording').addEventListener('click', function() {
+    //
+    //     // テキストの設定
+    //     TRANSCRIPTS.setRecordingText('text text text text');
+    //
+    //     // レコーディングボタンのON/OFF と レコーディング中かの取得
+    //     var isRecording = TRANSCRIPTS.toggleRecordhing();
+    //     console.log(isRecording);
+    // }, false);
+
+    document.getElementById('input-submit').addEventListener('click', function() {
+        setTimeout(function() {
+
+            // 検索キーワードの取得
+            console.log(TRANSCRIPTS.getKeywords());
+        });
     }, false);
 
-    //- TRANSCRIPTS.getKeywords();
+    document.getElementById('on-switch-media').addEventListener('click', function() {
+        setTimeout(function() {
+
+            // メディアのタイプの取得
+            console.log(TRANSCRIPTS.getMediaType());
+        });
+    }, false);
+
+    window.addEventListener('scroll', function() {
+
+        // スクロールが下部に来たらtrueを返します
+        console.log(TRANSCRIPTS.getScrollBottomPosition());
+
+        if (TRANSCRIPTS.getScrollBottomPosition()) {
+            TRANSCRIPTS.addContents({ searches, related_contents });
+        }
+    }, false);
   </script>
 
+  <!-- ここから　藤森追加部分 -->
+
   <!-- Browser Hooks -->
-  <!-- <script>
-      var startBtn, stopBtn, hypothesisDiv, phraseDiv, statusDiv;
+  <script>
+      var recBtn;
       var key, languageOptions, formatOptions, recognitionMode, inputSource, filePicker;
       var SDK;
       var recognizer;
@@ -95,18 +212,8 @@
       var timeout_counter = 0;
       var recognize_counter = 0;
 
-      var offMicPhrase = '<b>Start</b> to press here' + '<br> Recording : <i>' + 'OFF' + '</i>';
-      var onMicPhrase = '<b>Stop</b> to press here' + '<br> Recording : <i>' + 'ON' + '</i>';
-      // var onMicPhrase = '<b>Stop</b> to press here';
-
-
       document.addEventListener("DOMContentLoaded", function () {
-          startBtn = document.getElementById("startBtn");
-          startBtn.innerHTML = offMicPhrase
-
-          phraseDiv = document.getElementById("phraseDiv");
-          hypothesisDiv = document.getElementById("hypothesisDiv");
-          statusDiv = document.getElementById("statusDiv");
+          recBtn = document.getElementById("btn-recording");
 
           key = '<%= @MS_ASR_KEY %>';
           languageOptions = '<%= @language_code %>';
@@ -114,59 +221,26 @@
           inputSource = "Mic";
           recognitionMode = "Conversation";
 
-          startBtn.addEventListener("click", function () {
+          recBtn.addEventListener("click", function () {
 
 
             if (isActive){
 
               killMic();
-                // startBtn.innerHTML = offMicPhrase;
-                // RecognizerStop(SDK, recognizer);
-                // isActive = false;
+
             } else {
 
               activateMic();
-              // if (!recognizer) {
-              //     Setup();
-              // }
-              //
-              // startBtn.innerHTML = onMicPhrase;
-              // isActive = true;
-              // RecognizerStart(SDK, recognizer);
 
             }
 
           });
 
-          // stopBtn.addEventListener("click", function () {
-          //     RecognizerStop(SDK, recognizer);
-          //     startBtn.disabled = false;
-          //     stopBtn.disabled = true;
-          // });
-
           Initialize(function (speechSdk) {
               SDK = speechSdk;
-              startBtn.disabled = false;
           });
 
-          // loadTranscripts(initial_transcripts, index)
       });
-
-      function createCORSRequest(method, url) {
-        var xhr = new XMLHttpRequest();
-        if ("withCredentials" in xhr) {
-          // XHR for Chrome/Firefox/Opera/Safari.
-          xhr.open(method, url, false);
-        } else if (typeof XDomainRequest != "undefined") {
-          // XDomainRequest for IE.
-          xhr = new XDomainRequest();
-          xhr.open(method, url);
-        } else {
-          // CORS not supported.
-          xhr = null;
-        }
-        return xhr;
-      }
 
       function sleepByPromise(sec) {
            return new Promise(resolve => setTimeout(resolve, sec*1000));
@@ -177,6 +251,9 @@
         var wallID = <%= @wall_id %>;
         var FacebookID = 'guest_x';
         var post_url = '/api/transcripts';
+        var with_words = TRANSCRIPTS.getKeywords();
+        var search_type = TRANSCRIPTS.getMediaType();
+
 
         var body = {
                 'transcript' : text,
@@ -184,8 +261,8 @@
                 'langcode' : language_code,
                 'wallID' : wallID,
                 'clientID' : FacebookID,
-                'search_type' : 0,
-                'with_words' : [],
+                'search_type' : search_type,
+                'with_words' : with_words,
                 'UI_version' : 'alpha'
             };
 
@@ -194,19 +271,14 @@
         var xmlHttp = new XMLHttpRequest();
 
         xmlHttp.open("POST", post_url);
-        // var xmlHttp = createCORSRequest('POST', post_url);
         xmlHttp.setRequestHeader( 'Content-Type', 'application/json' )
         xmlHttp.onreadystatechange = async function() {
 
             await sleepByPromise(2)
-
             if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-              if (isActive){
-                  startBtn.innerHTML = ''
-              } else {
-                  startBtn.innerHTML = ''
-              }
+              TRANSCRIPTS.setRecordingText('');
             }
+
         };
         xmlHttp.send(JSON.stringify(body));
         console.log(xmlHttp.response);
@@ -221,20 +293,8 @@
       }
 
       function UpdateStatus(status) {
-          statusDiv.innerHTML = status;
+          console.log(status);
       }
-
-      // function UpdateRecognizedHypothesis(text, append) {
-      //     if (append)
-      //         hypothesisDiv.innerHTML += text + " ";
-      //     else
-      //         hypothesisDiv.innerHTML = text;
-      //
-      //     var length = hypothesisDiv.innerHTML.length;
-      //     if (length > 403) {
-      //         hypothesisDiv.innerHTML = "..." + hypothesisDiv.innerHTML.substr(length-400, length);
-      //     }
-      // }
 
       function OnSpeechEndDetected() {
           // stopBtn.disabled = true;
@@ -247,13 +307,8 @@
           if(json.RecognitionStatus == "Success"){
 
             result = json.DisplayText;
-            // startBtn.innerHTML = 'Transcript :<br><i>' + result + '</i>';
-            if (isActive){
-                status = 'Recording : <i>' + 'ON' + '</i>'
-            } else {
-                status = 'Recording : <i>' + 'OFF' + '</i>'
-            }
-            startBtn.innerHTML = status + '<br>' + result;
+            TRANSCRIPTS.setRecordingText(result);
+
             postTranscript(json.DisplayText)
             console.log(JSON.stringify(json));
             timeout_counter = 0;
@@ -299,7 +354,6 @@
         if (!recognizer) {
             Setup();
         }
-        startBtn.innerHTML = onMicPhrase;
         isActive = true;
         RecognizerStart(SDK, recognizer);
       }
@@ -307,7 +361,6 @@
       function killMic() {
         console.log('kill Mic')
 
-        startBtn.innerHTML = offMicPhrase;
         RecognizerStop(SDK, recognizer);
         isActive = false;
 
@@ -317,6 +370,6 @@
         alert("Session Timeout. Please Restart.");
         killMic();
       }
-  </script> -->
+  </script>
 
 </body>

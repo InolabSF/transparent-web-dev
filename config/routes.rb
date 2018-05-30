@@ -25,6 +25,9 @@ Rails.application.routes.draw do
   get '/alpha/wall/:wall_id/en',   to: 'home#alpha_en'
   get '/alpha/wall/:wall_id/ja',   to: 'home#alpha_ja'
 
+  get '/alpha/test/en',   to: 'home#alpha_test_en'
+  get '/alpha/test/ja',   to: 'home#alpha_test_ja'
+
   get '/demo/en',   to: 'home#demo_sxsw_en'
   get '/demo/ja',   to: 'home#demo_sxsw_ja'
 

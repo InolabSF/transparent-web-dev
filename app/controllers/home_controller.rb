@@ -22,6 +22,18 @@ class HomeController < ApplicationController
     render :file => "home/front/wall/alpha/wall"
   end
 
+  def alpha_test_en
+    @wall_id = 1
+    @language_code = 'en-US'
+    render :file => "home/front/wall/alpha/wall"
+  end
+
+  def alpha_test_ja
+    @wall_id = 3
+    @language_code = 'ja-JP'
+    render :file => "home/front/wall/alpha/wall"
+  end
+
   def demo_en
     @wall_id = params[:wall_id]
     @language_code = 'en-US'
