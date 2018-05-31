@@ -5,7 +5,7 @@ def get_initial_searches(wall_id, num)
   search_first_index = searches.last.id if searches.present?
 
   search_list = []
-  related_contents_list = []
+  # related_contents_list = []
 
   for search in searches.reverse
 
