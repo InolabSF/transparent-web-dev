@@ -237,12 +237,13 @@
       var result;
       var timeout_counter = 0;
       var recognize_counter = 0;
+      var language_code = '<%= @language_code %>';
 
       document.addEventListener("DOMContentLoaded", function () {
           recBtn = document.getElementById("btn-recording");
 
           key = '<%= @MS_ASR_KEY %>';
-          languageOptions = '<%= @language_code %>';
+          languageOptions = language_code;
           formatOptions = "Simple";
           inputSource = "Mic";
           recognitionMode = "Conversation";
@@ -273,23 +274,21 @@
        }
 
       function postTranscript(text) {
-        var language_code = '<%= @language_code %>';
-        var wallID = <%= @wall_id %>;
         var FacebookID = 'guest_x';
         var post_url = '/api/transcripts';
         var with_words = TRANSCRIPTS.getKeywords();
         var search_type = TRANSCRIPTS.getMediaType();
-
+        var UI_version = 'alpha';
 
         var body = {
                 'transcript' : text,
                 'FacebookID' :  FacebookID,
                 'langcode' : language_code,
-                'wallID' : wallID,
+                'wallID' : wall_id,
                 'clientID' : FacebookID,
                 'search_type' : search_type,
                 'with_words' : with_words,
-                'UI_version' : 'alpha'
+                'UI_version' : UI_version
             };
 
         console.log(body)
