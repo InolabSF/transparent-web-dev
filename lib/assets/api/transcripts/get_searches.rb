@@ -1,8 +1,8 @@
 def get_initial_searches(wall_id, num)
 
   searches = Search.joins(:transcript).where("transcripts.wall_id" => wall_id, "searches.is_visible" => true).order('id DESC')[0...num]
-  search_last_index = searches.first.id
-  search_first_index = searches.last.id
+  search_last_index = searches.first.id if searches.present?
+  search_first_index = searches.last.id if searches.present?
 
   search_list = []
   related_contents_list = []
@@ -25,7 +25,7 @@ def get_initial_searches(wall_id, num)
 
   end
 
-  related_content_last_index = related_contents_list.first['id']
+  related_content_last_index = related_contents_list.first['id'] if searches.present?
 
   return search_list, search_last_index, search_first_index, related_contents_list, related_content_last_index
 end
