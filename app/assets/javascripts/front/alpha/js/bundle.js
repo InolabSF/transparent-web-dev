@@ -19354,12 +19354,13 @@
 	        _this.scrollBottomPos = false;
 	        _this.recordingStatus = false;
 
-	        $('#wrapper').on('click', '.btn-menu01', _this.menuToggle.bind(_this)).on('click', '.on-txt-hidden', _this.mediaTextToggle.bind(_this)).on('click', '.on-card-hidden', _this.mediaCardToggle.bind(_this)).on('click', '.on-switch-media .media', _this.mediaSwitch.bind(_this)).on('click', '.input-submit', _this.addKeywordList.bind(_this)).on('click', '.keyword-list .list-item', _this.removeKeywordList.bind(_this)).on('click', '.post-media', _this.showDetail.bind(_this)).on('click', '.btn-close01', _this.hideDetail.bind(_this));
+	        $('#wrapper').on('click', '.btn-menu01', _this.menuToggle.bind(_this)).on('click', '.on-txt-hidden', _this.mediaTextToggle.bind(_this)).on('click', '.on-card-hidden', _this.mediaCardToggle.bind(_this)).on('click', '.on-switch-media .media', _this.mediaSwitch.bind(_this)).on('click', '.input-submit', _this.addKeywordList.bind(_this)).on('click', '.keyword-list .list-item', _this.removeKeywordList.bind(_this)).on('click', '#transparent-container .btn-close02', _this.removeMedia.bind(_this)).on('click', '.post-media .img', _this.showDetail.bind(_this)).on('click', '.btn-close01', _this.hideDetail.bind(_this));
 	        // .on('click', '.btn-recording', this.toggleRecordhing.bind(this));
 
 	        $(window).on('scroll', _this.onScroll.bind(_this));
 
-	        TRANSCRIPTS.addContents = _this.addContents.bind(_this);
+	        TRANSCRIPTS.appendContents = _this.appendContents.bind(_this);
+	        TRANSCRIPTS.prependContents = _this.prependContents.bind(_this);
 	        TRANSCRIPTS.setRecordingText = _this.setRecordingText.bind(_this);
 	        TRANSCRIPTS.getKeywords = _this.getKeywords.bind(_this);
 	        TRANSCRIPTS.toggleRecordhing = _this.toggleRecordhing.bind(_this);
@@ -19369,33 +19370,9 @@
 	        return _this;
 	    }
 
-	    /**
-	     * 最初のトランスクリプト生成
-	     */
-
-
 	    _createClass(TopScene, [{
-	        key: 'init',
-	        value: function init() {
-	            var _this2 = this;
-
-	            $.get(TRANSCRIPTS.API_URI, function (data) {
-	                var length = data.searches.length - 1;
-	                var index = 0;
-
-	                for (var i = 0; i < length; i++) {
-
-	                    var post = _this2.createKeywordArea(data, i);
-	                    $('#transparent-container').append(post);
-	                }
-
-	                _this2.isStamped = false;
-	                _this2.masonry();
-	            });
-	        }
-	    }, {
-	        key: 'addContents',
-	        value: function addContents(data) {
+	        key: 'appendContents',
+	        value: function appendContents(data) {
 	            var length = data.searches.length;
 	            var index = 0;
 
@@ -19403,6 +19380,27 @@
 
 	                var post = this.createKeywordArea(data, i);
 	                $('#transparent-container').append(post);
+	            }
+
+	            this.isStamped = false;
+
+	            if (this.firstFlg) {
+	                this.firstFlg = false;
+	                this.masonry();
+	            } else {
+	                this.reLayout();
+	            }
+	        }
+	    }, {
+	        key: 'prependContents',
+	        value: function prependContents(data) {
+	            var length = data.searches.length;
+	            var index = 0;
+
+	            for (var i = 0; i < length; i++) {
+
+	                var post = this.createKeywordArea(data, i);
+	                $('#transparent-container').prepend(post);
 	            }
 
 	            this.isStamped = false;
@@ -19435,18 +19433,26 @@
 	                }
 	            }
 
-	            $('<p />', { class: 'post-keyword' }).text(words).appendTo(container);
+	            var postKeyword = $('<p />', { class: 'post-keyword grid-item' }).text(words).appendTo(container);
+
+	            $('<button />', { class: 'btn-close02' }).appendTo(postKeyword);
 
 	            for (var i = 0, l = data.related_contents.length; i < l; i++) {
 	                var d = data.related_contents[i];
 
 	                // search_idが一致したら
 	                if (d.search_id === searcheId1) {
-	                    // data.related_contents[i]
-	                    var post = $('<a />', { href: d.url, class: 'grid post-media', target: '_blank' }).appendTo(container);
+	                    // console.log(d.search_id);
+	                    // console.log(data.related_contents[i].id);
+	                    var post = $('<a />').attr({ href: d.url, class: 'grid post-media grid-item', target: '_blank', 'data-searchId': d.search_id, 'data-relatedContentId': data.related_contents[i].id }).appendTo(container);
 
-	                    $('<img />', { src: d.img_url, class: 'img', alt: d.title }).appendTo(post);
+	                    var img = $('<div />', { class: 'wrap' }).appendTo(post);
+	                    $('<img />', { src: d.img_url, class: 'img', alt: d.title }).appendTo(img);
+	                    $('<img />', { src: 'http://www.google.com/s2/favicons?domain=' + d.source, class: 'favicon' }).appendTo(img);
+
 	                    $('<p />', { class: 'txt' }).text(d.title).appendTo(post);
+
+	                    $('<button />', { class: 'btn-close02' }).appendTo(post);
 	                }
 	            }
 
@@ -19490,9 +19496,17 @@
 	            $('body, html').stop().animate({ scrollTop: $(event.currentTarget).closest('.keyword-area').offset().top - 100 }, 500, 'swing');
 	        }
 	    }, {
+	        key: 'removeMedia',
+	        value: function removeMedia(event) {
+	            event.preventDefault();
+
+	            $(event.currentTarget).closest('.grid-item').remove();
+	            this.reLayout();
+	        }
+	    }, {
 	        key: 'masonry',
 	        value: function masonry() {
-	            var _this3 = this;
+	            var _this2 = this;
 
 	            this.masonry = $('.media-container').masonry({
 	                itemSelector: '.grid',
@@ -19500,7 +19514,7 @@
 	            });
 
 	            setInterval(function () {
-	                _this3.reLayout();
+	                _this2.reLayout();
 	            }, 2000);
 	        }
 	    }, {
@@ -19524,7 +19538,7 @@
 	    }, {
 	        key: 'mediaTextToggle',
 	        value: function mediaTextToggle(event) {
-	            var _this4 = this;
+	            var _this3 = this;
 
 	            if ($('.post-media').hasClass('hidden-text')) {
 
@@ -19539,13 +19553,13 @@
 	            }
 
 	            setTimeout(function () {
-	                _this4.reLayout();
+	                _this3.reLayout();
 	            }, 100);
 	        }
 	    }, {
 	        key: 'mediaCardToggle',
 	        value: function mediaCardToggle(event) {
-	            var _this5 = this;
+	            var _this4 = this;
 
 	            if ($('.post-keyword').hasClass('is-active')) {
 
@@ -19560,7 +19574,7 @@
 	            }
 
 	            setTimeout(function () {
-	                _this5.reLayout(true);
+	                _this4.reLayout(true);
 	            }, 100);
 	        }
 	    }, {
@@ -19599,7 +19613,6 @@
 	            var index = this.kewwords.indexOf($(event.currentTarget).text());
 	            this.kewwords.splice(index, 1);
 	            $(event.currentTarget).remove();
-	            console.log(this.kewwords);
 	        }
 	    }, {
 	        key: 'getKeywords',
@@ -19609,7 +19622,7 @@
 	    }, {
 	        key: 'menuToggle',
 	        value: function menuToggle() {
-	            var _this6 = this;
+	            var _this5 = this;
 
 	            if ($('.btn-menu01').hasClass('is-active')) {
 
@@ -19626,7 +19639,7 @@
 	            }
 
 	            setTimeout(function () {
-	                _this6.reLayout();
+	                _this5.reLayout();
 	            }, 100);
 	        }
 	    }, {

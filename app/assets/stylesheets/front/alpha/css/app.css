@@ -1052,6 +1052,17 @@ input
     background-position: 50% 50%;
 }
 
+.btn-close02
+{
+    width: 30px;
+    height: 30px;
+
+    border-radius: 50%;
+    background-color: #f9c03c;
+    background-image: url('https://res.cloudinary.com/negic/image/upload/v1527732494/ico02.png');
+    background-position: 50% 50%;
+}
+
 .ico-twitter01,
 .ico-twitter02,
 .ico-facebook01,
@@ -1563,8 +1574,24 @@ input
 }
 #transparent-container .keyword-area .media-container .grid
 {
+    position: relative;
+
     transform: translate3d(0, 0, 0);
 
+    opacity: 1;
+}
+#transparent-container .keyword-area .media-container .grid-item .btn-close02
+{
+    position: absolute;
+    top: -10px;
+    right: -10px;
+
+    transition: opacity 200ms ease;
+
+    opacity: 0;
+}
+#transparent-container .keyword-area .media-container .grid-item:hover .btn-close02
+{
     opacity: 1;
 }
 #transparent-container .keyword-area .media-container .post-keyword
@@ -1599,6 +1626,8 @@ input
 }
 #transparent-container .keyword-area .media-container .post-media
 {
+    position: relative;
+
     display: block;
     float: left;
 
@@ -1606,7 +1635,11 @@ input
     height: auto;
     margin: 0 20px 20px 0;
 }
-#transparent-container .keyword-area .media-container .post-media .img
+#transparent-container .keyword-area .media-container .post-media .wrap
+{
+    position: relative;
+}
+#transparent-container .keyword-area .media-container .post-media .wrap .img
 {
     overflow: hidden;
 
@@ -1615,6 +1648,15 @@ input
 
     border: 1px solid #999;
     border-radius: 6px;
+}
+#transparent-container .keyword-area .media-container .post-media .wrap .favicon
+{
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+
+    width: auto;
+    height: 14px;
 }
 #transparent-container .keyword-area .media-container .post-media .txt
 {
