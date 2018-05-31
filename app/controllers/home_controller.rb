@@ -13,49 +13,49 @@ class HomeController < ApplicationController
   def alpha_en
     @wall_id = params[:wall_id]
     @language_code = 'en-US'
-    render :file => "home/front/wall/alpha/wall"
+    render :file => "home/front/wall/alpha/wall-alpha"
   end
 
   def alpha_ja
     @wall_id = params[:wall_id]
     @language_code = 'ja-JP'
-    render :file => "home/front/wall/alpha/wall"
+    render :file => "home/front/wall/alpha/wall-alpha"
   end
 
   def alpha_test_en
     @wall_id = 1
     @language_code = 'en-US'
-    render :file => "home/front/wall/alpha/wall"
+    render :file => "home/front/wall/alpha/wall-alpha"
   end
 
   def alpha_test_ja
     @wall_id = 3
     @language_code = 'ja-JP'
-    render :file => "home/front/wall/alpha/wall"
+    render :file => "home/front/wall/alpha/wall-alpha"
   end
 
   def demo_en
     @wall_id = params[:wall_id]
     @language_code = 'en-US'
-    render :file => "home/front/dest/wall"
+    render :file => "home/front/wall/demo-sxsw/wall-demo"
   end
 
   def demo_ja
     @wall_id = params[:wall_id]
     @language_code = 'ja-JP'
-    render :file => "home/front/dest/wall"
+    render :file => "home/front/wall/demo-sxsw/wall-demo"
   end
 
   def demo_sxsw_en
     @wall_id = 1
     @language_code = 'en-US'
-    render :file => "home/front/dest/wall"
+    render :file => "home/front/wall/demo-sxsw/wall-demo"
   end
 
   def demo_sxsw_ja
     @wall_id = 2
     @language_code = 'ja-JP'
-    render :file => "home/front/dest/wall"
+    render :file => "home/front/wall/demo-sxsw/wall-demo"
   end
 
   def demo_ms

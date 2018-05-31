@@ -388,9 +388,9 @@
       function killMic() {
         console.log('kill Mic')
 
-        RecognizerStop(SDK, recognizer);
         TRANSCRIPTS.toggleRecordhing();
-
+        RecognizerStop(SDK, recognizer);
+        
       }
 
       function errorHandler() {
