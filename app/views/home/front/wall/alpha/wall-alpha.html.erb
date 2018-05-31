@@ -238,6 +238,7 @@
       var timeout_counter = 0;
       var recognize_counter = 0;
       var language_code = '<%= @language_code %>';
+      // var isActive = false; // セッションアラート対策
 
       document.addEventListener("DOMContentLoaded", function () {
           recBtn = document.getElementById("btn-recording");
@@ -358,7 +359,9 @@
               errorHandler();
 
             } else {
-              activateMic();
+
+              if (TRANSCRIPTS.getRecordingStatus()){ activateMic(); }
+
             }
 
           } else {
@@ -385,7 +388,6 @@
 
       function killMic() {
         console.log('kill Mic')
-
         TRANSCRIPTS.toggleRecordhing();
         RecognizerStop(SDK, recognizer);
 

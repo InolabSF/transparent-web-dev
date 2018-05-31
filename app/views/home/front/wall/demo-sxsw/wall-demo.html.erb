@@ -366,7 +366,9 @@
               errorHandler();
 
             } else {
-              activateMic();
+
+              if (isActive){ activateMic(); } 
+
             }
 
           } else {
