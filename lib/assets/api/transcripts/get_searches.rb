@@ -30,7 +30,7 @@ def get_initial_searches(wall_id, num)
   return search_list, search_last_index, search_first_index, related_contents_list, related_content_last_index
 end
 
-def get_new_searches(wall_id, search_last_index, related_content_index)
+def get_new_searches(wall_id, search_last_index, related_content_last_index)
 
   searches = Search.joins(:transcript).where("transcripts.wall_id" => wall_id, "searches.is_visible" => true).where("searches.id > ?", search_last_index).order('id DESC')
   search_last_index = searches.first.id if searches.present?
@@ -49,7 +49,7 @@ def get_new_searches(wall_id, search_last_index, related_content_index)
 
   end
 
-  related_contents = RelatedContent.joins(:transcript).where("transcripts.wall_id" => wall_id, "related_contents.is_visible" => true).where("related_contents.id > ?", related_content_index).order('id DESC')
+  related_contents = RelatedContent.joins(:transcript).where("transcripts.wall_id" => wall_id, "related_contents.is_visible" => true).where("related_contents.id > ?", related_content_last_index).order('id DESC')
   related_content_last_index = related_contents.first.id if related_contents.present?
 
   related_contents_list = []

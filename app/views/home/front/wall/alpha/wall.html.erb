@@ -17,7 +17,6 @@
   <!-- <link rel="stylesheet" href="./assets/css/app.css"> -->
   <%= stylesheet_link_tag    'front-alpha', media: 'all', 'data-turbolinks-track': 'reload' %>
 </head>
-
 <body class="page-top">
   <div id="wrapper">
     <header id="global-header">
@@ -28,8 +27,7 @@
       <div id="btn-recording" class="btn-recording rec"><span class="r1">Recording</span><span class="r2">REC</span></div>
       <p class="txt-recording"></p>
     </header>
-    <div id="global-menu" class="is-<%= 'active' %>">
-    <!-- <div id="global-menu" class="is-active"> -->
+    <div id="global-menu" class="is-active">
       <form class="form-keyword">
         <p class="tit">Keyword Filtering</p>
         <input type="text" placeholder="Input Keyword" class="input-keyword">
@@ -98,7 +96,6 @@
       related_content_last_index = data.related_content_last_index;
 
       TRANSCRIPTS.addContents({ searches, related_contents });
-      TRANSCRIPTS.addContents({ searches, related_contents });
     }
 
     function loadContents(){
@@ -109,19 +106,25 @@
         },
         responseType: 'json'
       });
-      console.log('send req with index : ' + search_last_index);
+      console.log('send req with search_last_index : ' + search_last_index);
+      console.log('send req with related_content_last_index : ' + related_content_last_index);
       instance.get('/transcripts/' + <%= @wall_id %> + '/' + search_last_index + '/' + related_content_last_index ).then(function (response){
         console.log(response.data);
+
         searches = response.data.searches;
         related_contents = response.data.related_contents;
         search_last_index = response.data.search_last_index;
+        related_content_last_index = response.data.related_content_last_index;
+
+        console.log(searches);
+        console.log(related_contents);
 
         TRANSCRIPTS.addContents({ searches, related_contents });
 
       }, function (error) {
         console.log(error);
       }).then(function (response){
-        loadTranscripts();
+        loadContents();
       });
 
     }
@@ -138,7 +141,6 @@
       search_first_index = data.search_first_index;
       related_content_last_index = data.related_content_last_index;
 
-      TRANSCRIPTS.addContents({ searches, related_contents });
       TRANSCRIPTS.addContents({ searches, related_contents });
     }
 
@@ -166,9 +168,11 @@
     //     // テキストの設定
     //     TRANSCRIPTS.setRecordingText('text text text text');
     //
-    //     // レコーディングボタンのON/OFF と レコーディング中かの取得
-    //     var isRecording = TRANSCRIPTS.toggleRecordhing();
-    //     console.log(isRecording);
+    //     // レコーディングボタンのON/OFF
+    //     TRANSCRIPTS.toggleRecordhing();
+    //
+    //     // レコーディング中かの取得
+    //     console.log(TRANSCRIPTS.getRecordingStatus());
     // }, false);
 
     document.getElementById('input-submit').addEventListener('click', function() {
@@ -207,7 +211,6 @@
       var SDK;
       var recognizer;
       var previousSubscriptionKey;
-      var isActive = false;
       var result;
       var timeout_counter = 0;
       var recognize_counter = 0;
@@ -224,7 +227,7 @@
           recBtn.addEventListener("click", function () {
 
 
-            if (isActive){
+            if (TRANSCRIPTS.getRecordingStatus()){
 
               killMic();
 
@@ -354,7 +357,7 @@
         if (!recognizer) {
             Setup();
         }
-        isActive = true;
+        TRANSCRIPTS.toggleRecordhing();
         RecognizerStart(SDK, recognizer);
       }
 
@@ -362,7 +365,7 @@
         console.log('kill Mic')
 
         RecognizerStop(SDK, recognizer);
-        isActive = false;
+        TRANSCRIPTS.toggleRecordhing();
 
       }
 

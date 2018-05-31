@@ -19349,10 +19349,13 @@
 
 	        var _this = _possibleConstructorReturn(this, (TopScene.__proto__ || Object.getPrototypeOf(TopScene)).call(this));
 
-	        _this.kerwords = [];
+	        _this.firstFlg = true;
+	        _this.kewwords = [];
 	        _this.scrollBottomPos = false;
+	        _this.recordingStatus = false;
 
-	        $('#wrapper').on('click', '.btn-menu01', _this.menuToggle.bind(_this)).on('click', '.on-txt-hidden', _this.mediaTextToggle.bind(_this)).on('click', '.on-card-hidden', _this.mediaCardToggle.bind(_this)).on('click', '.on-switch-media .media', _this.mediaSwitch.bind(_this)).on('click', '.input-submit', _this.addKeywordList.bind(_this)).on('click', '.keyword-list .list-item', _this.removeKeywordList.bind(_this)).on('click', '.post-media', _this.showDetail.bind(_this)).on('click', '.btn-close01', _this.hideDetail.bind(_this)).on('click', '.btn-recording', _this.toggleRecordhing.bind(_this));
+	        $('#wrapper').on('click', '.btn-menu01', _this.menuToggle.bind(_this)).on('click', '.on-txt-hidden', _this.mediaTextToggle.bind(_this)).on('click', '.on-card-hidden', _this.mediaCardToggle.bind(_this)).on('click', '.on-switch-media .media', _this.mediaSwitch.bind(_this)).on('click', '.input-submit', _this.addKeywordList.bind(_this)).on('click', '.keyword-list .list-item', _this.removeKeywordList.bind(_this)).on('click', '.post-media', _this.showDetail.bind(_this)).on('click', '.btn-close01', _this.hideDetail.bind(_this));
+	        // .on('click', '.btn-recording', this.toggleRecordhing.bind(this));
 
 	        $(window).on('scroll', _this.onScroll.bind(_this));
 
@@ -19362,6 +19365,7 @@
 	        TRANSCRIPTS.toggleRecordhing = _this.toggleRecordhing.bind(_this);
 	        TRANSCRIPTS.getMediaType = _this.getMediaType.bind(_this);
 	        TRANSCRIPTS.getScrollBottomPosition = _this.getScrollBottomPosition.bind(_this);
+	        TRANSCRIPTS.getRecordingStatus = _this.getRecordingStatus.bind(_this);
 	        return _this;
 	    }
 
@@ -19392,7 +19396,7 @@
 	    }, {
 	        key: 'addContents',
 	        value: function addContents(data) {
-	            var length = data.searches.length - 1;
+	            var length = data.searches.length;
 	            var index = 0;
 
 	            for (var i = 0; i < length; i++) {
@@ -19402,7 +19406,13 @@
 	            }
 
 	            this.isStamped = false;
-	            this.masonry();
+
+	            if (this.firstFlg) {
+	                this.firstFlg = false;
+	                this.masonry();
+	            } else {
+	                this.reLayout();
+	            }
 	        }
 	    }, {
 	        key: 'createKeywordArea',
@@ -19520,12 +19530,12 @@
 
 	                // 閉じる
 	                $('.post-media').removeClass('hidden-text');
-	                $(event.currentTarget).removeClass('hidden-text');
+	                $(event.currentTarget).removeClass('is-active');
 	            } else {
 
 	                // 開く
 	                $('.post-media').addClass('hidden-text');
-	                $(event.currentTarget).addClass('hidden-text');
+	                $(event.currentTarget).addClass('is-active');
 	            }
 
 	            setTimeout(function () {
@@ -19575,23 +19585,26 @@
 	            var val = $('.input-keyword').val();
 
 	            if (val) {
-	                this.kerwords.push(val);
+	                this.kewwords.push(val);
 	                $('.keyword-list').append('<div class="list-item">' + val + '</div>');
 	            }
 
 	            $('.input-keyword').val('');
 	        }
 	    }, {
-	        key: 'getKeywords',
-	        value: function getKeywords() {
-	            return this.kerwords;
-	        }
-	    }, {
 	        key: 'removeKeywordList',
 	        value: function removeKeywordList(event) {
 	            event.preventDefault();
 
+	            var index = this.kewwords.indexOf($(event.currentTarget).text());
+	            this.kewwords.splice(index, 1);
 	            $(event.currentTarget).remove();
+	            console.log(this.kewwords);
+	        }
+	    }, {
+	        key: 'getKeywords',
+	        value: function getKeywords() {
+	            return this.kewwords;
 	        }
 	    }, {
 	        key: 'menuToggle',
@@ -19618,26 +19631,29 @@
 	        }
 	    }, {
 	        key: 'toggleRecordhing',
-	        value: function toggleRecordhing(event) {
-	            event.preventDefault();
+	        value: function toggleRecordhing() {
 
 	            if ($('.btn-recording').hasClass('rec')) {
-
 	                $('.btn-recording').removeClass('rec');
 	                $('.btn-recording').addClass('recording');
 
-	                return true;
+	                this.recordingStatus = true;
 	            } else {
 	                $('.btn-recording').addClass('rec');
 	                $('.btn-recording').removeClass('recording');
 
-	                return false;
+	                this.recordingStatus = false;
 	            }
 	        }
 	    }, {
 	        key: 'setRecordingText',
 	        value: function setRecordingText(text) {
 	            $('.txt-recording').text(text);
+	        }
+	    }, {
+	        key: 'getRecordingStatus',
+	        value: function getRecordingStatus() {
+	            return this.recordingStatus;
 	        }
 	    }, {
 	        key: 'onScroll',

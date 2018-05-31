@@ -1016,30 +1016,30 @@ input
 }
 .btn-toggle02 div.photo
 {
-    background-image: url(../img/top/ico01.png);
+    background-image: url('https://res.cloudinary.com/negic/image/upload/v1527732490/ico05.png');
 }
 .btn-toggle02 div.photo.is-active
 {
     background-color: #2dadff;
-    background-image: url(../img/top/ico01_on.png);
+    background-image: url('https://res.cloudinary.com/negic/image/upload/v1527732490/ico05_on.png');
 }
 .btn-toggle02 div.news
 {
-    background-image: url(../img/top/ico02.png);
+    background-image: url('https://res.cloudinary.com/negic/image/upload/v1527732490/ico06.png');
 }
 .btn-toggle02 div.news.is-active
 {
     background-color: #92e023;
-    background-image: url(../img/top/ico02_on.png);
+    background-image: url('https://res.cloudinary.com/negic/image/upload/v1527732490/ico06_on.png');
 }
 .btn-toggle02 div.movie
 {
-    background-image: url(../img/top/ico03.png);
+    background-image: url('https://res.cloudinary.com/negic/image/upload/v1527732490/ico07.png');
 }
 .btn-toggle02 div.movie.is-active
 {
     background-color: #f13c33;
-    background-image: url(../img/top/ico03_on.png);
+    background-image: url('https://res.cloudinary.com/negic/image/upload/v1527732490/ico07_on.png');
 }
 
 .btn-close01
@@ -1048,7 +1048,7 @@ input
     height: 30px;
 
     background-color: transparent;
-    background-image: url(../img/common/ico03.png);
+    background-image: url('https://res.cloudinary.com/negic/image/upload/v1527732493/ico03.png');
     background-position: 50% 50%;
 }
 
@@ -1179,7 +1179,7 @@ input
     white-space: nowrap;
     text-indent: 100%;
 
-    background-image: url(../img/common/logo01.png);
+    background-image: url('https://res.cloudinary.com/negic/image/upload/v1527732493/logo01.png');
     background-repeat: no-repeat;
     background-size: 168px 54px;
 }
@@ -1396,7 +1396,7 @@ input
 #global-header .btn-recording.rec
 {
     background-color: #dadada;
-    background-image: url(../img/common/ico01.png);
+    background-image: url('http://res.cloudinary.com/negic/image/upload/v1527732494/ico01.png');
 }
 #global-header .btn-recording.rec .r1
 {
@@ -1409,7 +1409,7 @@ input
 #global-header .btn-recording.recording
 {
     background-color: #f13c33;
-    background-image: url(../img/common/ico01.png), url(../img/common/ico04.png);
+    background-image: url('http://res.cloudinary.com/negic/image/upload/v1527732494/ico01.png'), url('https://res.cloudinary.com/negic/image/upload/v1527731641/ico04.png');
 }
 #global-header .btn-recording.recording .r1
 {
@@ -1497,7 +1497,7 @@ input
     color: #595959;
     border-radius: 15px;
     background-color: #f9c03c;
-    background-image: url(../img/common/ico02.png);
+    background-image: url('https://res.cloudinary.com/negic/image/upload/v1527732494/ico02.png');
     background-position: right 10px top 50%;
 }
 #global-menu .setting-btn-area
@@ -1519,7 +1519,7 @@ input
 {
     padding: 80px 0 0;
 
-    background-image: url(../img/common/bg01.png);
+    background-image: url('https://res.cloudinary.com/negic/image/upload/v1527732493/bg01.png');
     background-repeat: repeat;
     background-position: 40px 0;
 }
