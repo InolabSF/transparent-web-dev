@@ -384,12 +384,14 @@
         }
         TRANSCRIPTS.toggleRecordhing();
         RecognizerStart(SDK, recognizer);
+        isActive = true;
       }
 
       function killMic() {
         console.log('kill Mic')
         TRANSCRIPTS.toggleRecordhing();
         RecognizerStop(SDK, recognizer);
+        isActive = false;
 
       }
 

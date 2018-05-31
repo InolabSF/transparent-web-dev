@@ -1760,8 +1760,13 @@ var WebsocketMessageAdapter = /** @class */ (function () {
             }, closeReason);
 
             // edited by transparent team
-            alert("Sorry, Session Closed. Please Restart.");
-            killMic();
+            if (isActive){
+
+              alert("Sorry, Session Closed. Please Restart.");
+              killMic();
+
+            }
+
         };
         this.ProcessSendQueue = function () {
             _this.sendMessageQueue
