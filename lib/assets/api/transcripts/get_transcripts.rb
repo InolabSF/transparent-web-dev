@@ -10,20 +10,7 @@ def format_transcripts(transcripts_list)
         next if !search.is_visible
 
         transcript_hash = transcript.attributes
-        transcript_hash.store('user', transcript.user.attributes)
-
-        # context = transcript.context.attributes
-        # context ={}
-
-        entities = []
-        search.entities.each {|entity| entities.push(entity.attributes) }
-
-        related_contents = []
-        for related_content in search.related_contents
-          related_content_hash = related_content.attributes
-          related_content_hash.store('condition', related_content.condition.attributes) if related_content.condition
-          related_contents.push(related_content_hash)
-        end
+        transcript_hash.store('user', transcript.user)
 
         word = ''
         for entity in search.entities
@@ -37,8 +24,8 @@ def format_transcripts(transcripts_list)
 
         transcript_hash.store('id', search.id)
         transcript_hash.store('text', word)
-        transcript_hash.store('entities', entities)
-        transcript_hash.store('related_contents', related_contents)
+        transcript_hash.store('entities', search.entities)
+        transcript_hash.store('related_contents', search.related_contents)
 
         formated_transcripts.push(transcript_hash)
 
@@ -47,17 +34,7 @@ def format_transcripts(transcripts_list)
     elsif transcript.entities.present?
 
       transcript_hash = transcript.attributes
-      transcript_hash.store('user', transcript.user.attributes)
-
-      entities = []
-      transcript.entities.each {|entity| entities.push(entity.attributes) }
-
-      related_contents = []
-      for related_content in transcript.related_contents
-        related_content_hash = related_content.attributes
-        related_content_hash.store('condition', related_content.condition.attributes) if related_content.condition
-        related_contents.push(related_content_hash)
-      end
+      transcript_hash.store('user', transcript.user)
 
       word = ''
 
@@ -67,8 +44,8 @@ def format_transcripts(transcripts_list)
       end
 
       transcript_hash.store('text', word)
-      transcript_hash.store('entities', entities)
-      transcript_hash.store('related_contents', related_contents)
+      transcript_hash.store('entities', transcript.entities)
+      transcript_hash.store('related_contents', transcript.related_contents)
 
       formated_transcripts.push(transcript_hash)
 

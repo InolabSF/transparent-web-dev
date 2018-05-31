@@ -17,17 +17,20 @@ def get_initial_searches(wall_id, num)
     search_hash.store('words', words)
     search_list.unshift(search_hash)
 
-    for related_content in search.related_contents
-      related_content_hash = related_content.attributes
-      # related_content_hash.store('condition', related_content.condition.attributes) if related_content.condition
-      related_contents_list.unshift(related_content_hash)
-    end
+    # for related_content in search.related_contents
+    #   related_content_hash = related_content.attributes
+    #   # related_content_hash.store('condition', related_content.condition.attributes) if related_content.condition
+    #   related_contents_list.unshift(related_content_hash)
+    # end
 
   end
+  # related_content_last_index = related_contents_list.first['id'] if searches.present?
 
-  related_content_last_index = related_contents_list.first['id'] if searches.present?
+  query_search_index = search_first_index - 1
+  related_contents = RelatedContent.joins(:transcript).where("transcripts.wall_id" => wall_id, "related_contents.is_visible" => true).joins(:search).where("searches.id > ?", query_search_index).order('id DESC')
+  related_content_last_index = related_contents.first.id if related_contents.present?
 
-  return search_list, search_last_index, search_first_index, related_contents_list, related_content_last_index
+  return search_list, search_last_index, search_first_index, related_contents, related_content_last_index
 end
 
 def get_new_searches(wall_id, search_last_index, related_content_last_index)
@@ -52,15 +55,15 @@ def get_new_searches(wall_id, search_last_index, related_content_last_index)
   related_contents = RelatedContent.joins(:transcript).where("transcripts.wall_id" => wall_id, "related_contents.is_visible" => true).where("related_contents.id > ?", related_content_last_index).order('id DESC')
   related_content_last_index = related_contents.first.id if related_contents.present?
 
-  related_contents_list = []
+  # related_contents_list = []
+  #
+  # for related_content in related_contents
+  #   related_content_hash = related_content.attributes
+  #   # related_content_hash.store('condition', related_content.condition.attributes) if related_content.condition
+  #   related_contents_list.push(related_content_hash)
+  # end
 
-  for related_content in related_contents
-    related_content_hash = related_content.attributes
-    related_content_hash.store('condition', related_content.condition.attributes) if related_content.condition
-    related_contents_list.push(related_content_hash)
-  end
-
-  return search_list, search_last_index, related_contents_list, related_content_last_index
+  return search_list, search_last_index, related_contents, related_content_last_index
 end
 
 def get_further_searches(wall_id, search_first_index, num)
@@ -83,7 +86,7 @@ def get_further_searches(wall_id, search_first_index, num)
 
     for related_content in search.related_contents
       related_content_hash = related_content.attributes
-      related_content_hash.store('condition', related_content.condition.attributes) if related_content.condition
+      # related_content_hash.store('condition', related_content.condition.attributes) if related_content.condition
       related_contents_list.unshift(related_content_hash)
     end
 
@@ -127,13 +130,13 @@ def get_formated_data_debug(transcripts)
       search.entity_searches.each {|entity_search| search_entities.push(entity_search.entity.attributes) }
       search_hash.store('entities', search_entities)
 
-      search_related_contents = []
-      for related_content in search.related_contents
-        related_content_hash = related_content.attributes
-        related_content_hash.store('condition', related_content.condition.attributes) if related_content.condition
-        search_related_contents.push(related_content_hash)
-      end
-      search_hash.store('related_contents', search_related_contents)
+      # search_related_contents = []
+      # for related_content in search.related_contents
+      #   related_content_hash = related_content.attributes
+      #   related_content_hash.store('condition', related_content.condition.attributes) if related_content.condition
+      #   search_related_contents.push(related_content_hash)
+      # end
+      search_hash.store('related_contents', search.related_contents)
 
       searches.push(search_hash)
     end
