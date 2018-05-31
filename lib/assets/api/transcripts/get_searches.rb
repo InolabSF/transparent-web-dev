@@ -19,7 +19,7 @@ def get_initial_searches(wall_id, num)
 
     for related_content in search.related_contents
       related_content_hash = related_content.attributes
-      related_content_hash.store('condition', related_content.condition.attributes) if related_content.condition
+      # related_content_hash.store('condition', related_content.condition.attributes) if related_content.condition
       related_contents_list.unshift(related_content_hash)
     end
 
