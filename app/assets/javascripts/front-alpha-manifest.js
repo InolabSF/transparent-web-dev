@@ -13,6 +13,7 @@
 //= require rails-ujs
 //= require turbolinks
 //= require front/alpha/js/jquery.js
+//= require front/alpha/js/axios.min.js
 //= require front/alpha/js/masonry.pkgd.min.js
 //= require front/alpha/js/bundle.js
 //= require ms/speech.sdk.bundle.js

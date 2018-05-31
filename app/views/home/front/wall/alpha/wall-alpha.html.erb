@@ -80,7 +80,6 @@
   <div id="content" style="display:none">
   </div>
 
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <%= javascript_include_tag 'front-alpha-manifest', 'data-turbolinks-track': 'reload'  %>
 
   <script>
@@ -390,7 +389,7 @@
 
         TRANSCRIPTS.toggleRecordhing();
         RecognizerStop(SDK, recognizer);
-        
+
       }
 
       function errorHandler() {

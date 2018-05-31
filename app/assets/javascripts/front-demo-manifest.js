@@ -14,6 +14,7 @@
 //= require turbolinks
 //= require front/demo-sxsw/js/jquery.js
 //= require front/demo-sxsw/js/jquery.randomElements.js
+//= require front/demo-sxsw/js/axios.min.js
 //= require front/demo-sxsw/js/bundle.js
 //= require ms/speech.sdk.bundle.js
 //= require ms/sdk-usage.js

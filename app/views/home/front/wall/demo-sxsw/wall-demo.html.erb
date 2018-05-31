@@ -102,7 +102,6 @@
     var MEDIA_MIN_SIZE = MEDIA_MAX_SIZE / 2; // ランダム配置される画像の最小サイズ
   </script>
 
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script>
   var initial_transcripts = [];
   var index;
@@ -121,6 +120,12 @@
   }
 
   initial_transcripts, index = fetchTranscripts(initial_transcripts, index);
+
+  </script>
+
+  <%= javascript_include_tag 'front-demo-manifest', 'data-turbolinks-track': 'reload'  %>
+
+  <script>
 
   function loadTranscripts(initial_transcripts, index){
     console.log(index);
@@ -165,8 +170,6 @@
   window.addEventListener('load', loadTranscripts(initial_transcripts, index))
 
   </script>
-
-  <%= javascript_include_tag 'front-demo-manifest', 'data-turbolinks-track': 'reload'  %>
 
   <!-- Browser Hooks -->
   <script>
