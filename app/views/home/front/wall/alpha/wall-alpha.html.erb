@@ -209,9 +209,38 @@
     $('#wrapper').on('click', '#transparent-container .btn-close02', function(event) {
         setTimeout(function() {
 
-            // メディアのタイプの取得
-            console.log("searchId: ", $(event.currentTarget).closest('.grid-item').attr('data-searchId'));
-            console.log("relatedContentId: ", $(event.currentTarget).closest('.grid-item').attr('data-relatedContentId'));
+            search_id = $(event.currentTarget).closest('.grid-item').attr('data-searchId')
+            related_content_id = $(event.currentTarget).closest('.grid-item').attr('data-relatedContentId')
+
+            if (related_content_id){
+
+                var instance = axios.create({
+                  baseURL: '/api',
+                  headers: {'ContentType': 'application/json'},
+                  responseType: 'json'
+                });
+                instance.get('/update/contents/' + related_content_id).then(function (response){
+                  console.log("relatedContentId: ", related_content_id);
+                }, function (error) {
+                  console.log(error);
+                });
+
+            } else {
+
+                var instance = axios.create({
+                  baseURL: '/api',
+                  headers: {'ContentType': 'application/json'},
+                  responseType: 'json'
+                });
+                instance.get('/update/searches/' + search_id).then(function (response){
+                  console.log("relatedContentId: ", search_id);
+                }, function (error) {
+                  console.log(error);
+                });
+
+            }
+
+
         }, 100);
     });
 
