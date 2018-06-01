@@ -22,9 +22,9 @@ def create_transcript(api_req, default_nlp, is_test_mode, is_word_only, is_concu
   end
 
   if api_req[:UI_version]
-    if api_req[:UI_version] == 'demo'
-      is_concurrent = false
-    end
+
+    is_concurrent = false if api_req[:UI_version] == 'demo'
+
   end
 
   text = api_req[:transcript]
@@ -39,9 +39,9 @@ def create_transcript(api_req, default_nlp, is_test_mode, is_word_only, is_concu
   entities_list.each {|entity_hash| entity = transcript.entities.build(:category => entity_hash['category'], :name => entity_hash['name']) }
 
   for word in with_words
-    if word.present?
-      with_word = transcript.with_words.build(:text => word)
-    end
+    
+    with_word = transcript.with_words.build(:text => word) if word.present?
+
   end
 
   if entities_list.length == 0
@@ -106,7 +106,7 @@ def create_transcript(api_req, default_nlp, is_test_mode, is_word_only, is_concu
 
         puts('search.entities')
         search.entity_searches.each {|entity_search| puts(entity_search.entity.attributes) }
-        
+
         search.is_visible = false unless is_different_search?(search, entities_list, with_words, 15)
 
       end
