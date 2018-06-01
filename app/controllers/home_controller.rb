@@ -23,7 +23,7 @@ class HomeController < ApplicationController
   end
 
   def alpha_test_en
-    @wall_id = 1
+    @wall_id = 12
     @language_code = 'en-US'
     render :file => "home/front/wall/alpha/wall-alpha"
   end
