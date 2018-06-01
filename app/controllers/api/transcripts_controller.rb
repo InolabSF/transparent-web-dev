@@ -5,7 +5,7 @@ require './lib/assets/api/transcripts/create_transcript'
 class Api::TranscriptsController < ApplicationController
 
   def index
-    initial_load_num = 20
+    initial_load_num = 15
     searches, search_last_index, search_first_index, related_contents, related_content_last_index = get_initial_searches(params[:wall_id], initial_load_num)
     render json: {
               'searches' => searches,

@@ -1529,10 +1529,9 @@ input
 #transparent-container
 {
     padding: 80px 0 0;
-
-    background-image: url('https://res.cloudinary.com/negic/image/upload/v1527732493/bg01.png');
-    background-repeat: repeat;
-    background-position: 40px 0;
+    /* background-image: url("https://res.cloudinary.com/negic/image/upload/v1527732493/bg01.png");
+  background-repeat: repeat;
+  background-position: 40px 0; */
 }
 #transparent-container.menu-is-active
 {
@@ -1541,6 +1540,8 @@ input
 #transparent-container .keyword-area
 {
     position: relative;
+
+    overflow: hidden;
 
     min-height: 300px;
     padding: 50px 0 0;
@@ -1608,21 +1609,20 @@ input
 
     width: 180px;
     min-height: 180px;
-    margin: 0 20px 20px 0;
+    margin: 0 15px 15px 0;
     padding: 20px;
-
-    transition: opacity 300ms 300ms ease;
 
     color: #f9c03c;
     border: 4px solid #f9c03c;
     border-radius: 6px;
     background-color: #fff;
+    /* transition: opacity 300ms 300ms ease; */
 }
 #transparent-container .keyword-area .media-container .post-keyword.is-active
 {
-    transition: opacity 300ms ease;
-
-    opacity: 0;
+    /* transition: opacity 300ms ease; */
+    /* opacity: 0; */
+    /* display: none; */
 }
 #transparent-container .keyword-area .media-container .post-media
 {
@@ -1633,7 +1633,7 @@ input
 
     width: 180px;
     height: auto;
-    margin: 0 20px 20px 0;
+    margin: 0 15px 15px 0;
 }
 #transparent-container .keyword-area .media-container .post-media .wrap
 {
@@ -1663,13 +1663,15 @@ input
     font-size: 12px;
     line-height: 1.4;
 
+    transition: opacity 200ms ease;
     word-break: break-all;
 
     color: #767676;
 }
 #transparent-container .keyword-area .media-container .post-media.hidden-text .txt
 {
-    display: none;
+    opacity: 0;
+    /* display: none; */
 }
 #transparent-container .keyword-area .media-container .post-media.is-active .img
 {

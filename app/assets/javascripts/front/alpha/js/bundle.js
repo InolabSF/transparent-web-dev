@@ -19350,11 +19350,11 @@
 	        var _this = _possibleConstructorReturn(this, (TopScene.__proto__ || Object.getPrototypeOf(TopScene)).call(this));
 
 	        _this.firstFlg = true;
-	        _this.kewwords = [];
+	        _this.keywords = [];
 	        _this.scrollBottomPos = false;
 	        _this.recordingStatus = false;
 
-	        $('#wrapper').on('click', '.btn-menu01', _this.menuToggle.bind(_this)).on('click', '.on-txt-hidden', _this.mediaTextToggle.bind(_this)).on('click', '.on-card-hidden', _this.mediaCardToggle.bind(_this)).on('click', '.on-switch-media .media', _this.mediaSwitch.bind(_this)).on('click', '.input-submit', _this.addKeywordList.bind(_this)).on('click', '.keyword-list .list-item', _this.removeKeywordList.bind(_this)).on('click', '#transparent-container .btn-close02', _this.removeMedia.bind(_this)).on('click', '.post-media .img', _this.showDetail.bind(_this)).on('click', '.btn-close01', _this.hideDetail.bind(_this));
+	        $('#wrapper').on('click', '.btn-menu01', _this.menuToggle.bind(_this)).on('click', '.on-txt-hidden', _this.mediaTextToggle.bind(_this)).on('click', '.on-card-hidden', _this.mediaCardToggle.bind(_this)).on('click', '.on-switch-media .media', _this.mediaSwitch.bind(_this)).on('click', '.input-submit', _this.addKeywordList.bind(_this)).on('click', '.keyword-list .list-item', _this.removeKeywordList.bind(_this)).on('click', '#transparent-container .post-media   .btn-close02', _this.removeMedia.bind(_this)).on('click', '#transparent-container .post-keyword .btn-close02', _this.removeMediaSection.bind(_this)).on('click', '.post-media', _this.showDetail.bind(_this)).on('click', '.btn-close01', _this.hideDetail.bind(_this));
 	        // .on('click', '.btn-recording', this.toggleRecordhing.bind(this));
 
 	        $(window).on('scroll', _this.onScroll.bind(_this));
@@ -19371,6 +19371,25 @@
 	    }
 
 	    _createClass(TopScene, [{
+	        key: 'init',
+	        value: function init() {
+	            var _this2 = this;
+
+	            $.get(TRANSCRIPTS.API_URI, function (data) {
+	                var length = data.searches.length - 1;
+	                var index = 0;
+
+	                for (var i = 0; i < length; i++) {
+
+	                    var post = _this2.createKeywordArea(data, i);
+	                    $('#transparent-container').append(post);
+	                }
+
+	                _this2.isStamped = false;
+	                _this2.masonry();
+	            });
+	        }
+	    }, {
 	        key: 'appendContents',
 	        value: function appendContents(data) {
 	            var length = data.searches.length;
@@ -19433,10 +19452,11 @@
 	                }
 	            }
 
-	            var postKeyword = $('<p />', { class: 'post-keyword grid-item' }).text(words).appendTo(container);
-
+	            // コメントカード
+	            var postKeyword = $('<p />', { class: 'post-keyword grid-item', 'data-searchId': searcheId1 }).text(words).appendTo(container);
 	            $('<button />', { class: 'btn-close02' }).appendTo(postKeyword);
 
+	            // 画像コンテンツ
 	            for (var i = 0, l = data.related_contents.length; i < l; i++) {
 	                var d = data.related_contents[i];
 
@@ -19447,7 +19467,7 @@
 	                    var post = $('<a />').attr({ href: d.url, class: 'grid post-media grid-item', target: '_blank', 'data-searchId': d.search_id, 'data-relatedContentId': data.related_contents[i].id }).appendTo(container);
 
 	                    var img = $('<div />', { class: 'wrap' }).appendTo(post);
-	                    $('<img />', { src: d.img_url, class: 'img', alt: d.title }).appendTo(img);
+	                    $('<img />', { src: d.img_url, class: 'img', alt: d.desc }).appendTo(img);
 	                    $('<img />', { src: 'http://www.google.com/s2/favicons?domain=' + d.source, class: 'favicon' }).appendTo(img);
 
 	                    $('<p />', { class: 'txt' }).text(d.title).appendTo(post);
@@ -19463,16 +19483,22 @@
 	        value: function showDetail(event) {
 	            event.preventDefault();
 
-	            $('.detail-area').removeClass('is-active');
-	            $('.detail-area').find('.inner').remove();
+	            // クローズボタンだったら抜ける
+	            if ($(event.target).hasClass('btn-close02')) {
+	                return false;
+	            }
+
+	            // $(event.currentTarget).closest('.keyword-area').find('.detail-area').removeClass('is-active');
+	            $(event.currentTarget).closest('.keyword-area').find('.detail-area').find('.inner').remove();
 
 	            var post = $(event.currentTarget).closest('.post-media');
 	            var img = post.find('.img').attr('src');
 	            var url = post.attr('href');
-	            var title = post.find('.img').attr('alt');
-	            var desc = post.find('.txt').text();
+	            var desc = post.find('.img').attr('alt');
+	            var title = post.find('.txt').text();
 
-	            post.find('.img').addClass('is-active');
+	            $(event.currentTarget).closest('.keyword-area').find('.post-media').removeClass('is-active');
+	            post.addClass('is-active');
 
 	            var detail = $(event.currentTarget).closest('.keyword-area').find('.detail-area');
 	            var inner = $('<div />', { class: 'inner' }).appendTo(detail);
@@ -19492,7 +19518,7 @@
 	        value: function hideDetail(event) {
 	            event.preventDefault();
 
-	            $('.detail-area').removeClass('is-active');
+	            $(event.currentTarget).closest('.detail-area').removeClass('is-active');
 	            $('body, html').stop().animate({ scrollTop: $(event.currentTarget).closest('.keyword-area').offset().top - 100 }, 500, 'swing');
 	        }
 	    }, {
@@ -19500,13 +19526,26 @@
 	        value: function removeMedia(event) {
 	            event.preventDefault();
 
-	            $(event.currentTarget).closest('.grid-item').remove();
+	            // $(event.currentTarget).closest('.grid-item').remove();
+	            this.masonry.masonry('remove', $(event.currentTarget).closest('.grid-item'));
+	            this.reLayout();
+	        }
+	    }, {
+	        key: 'removeMediaSection',
+	        value: function removeMediaSection(event) {
+	            event.preventDefault();
+
+	            var section = $(event.currentTarget).closest('.keyword-area');
+
+	            section.fadeOut(function () {
+	                section.remove();
+	            });
 	            this.reLayout();
 	        }
 	    }, {
 	        key: 'masonry',
 	        value: function masonry() {
-	            var _this2 = this;
+	            var _this3 = this;
 
 	            this.masonry = $('.media-container').masonry({
 	                itemSelector: '.grid',
@@ -19514,31 +19553,31 @@
 	            });
 
 	            setInterval(function () {
-	                _this2.reLayout();
+	                _this3.reLayout();
 	            }, 2000);
 	        }
 	    }, {
 	        key: 'reLayout',
 	        value: function reLayout(stamp) {
 
-	            if (stamp) {
-	                var $stamp = this.masonry.find('.post-keyword');
-
-	                if (this.isStamped) {
-	                    this.masonry.masonry('unstamp', $stamp);
-	                } else {
-	                    this.masonry.masonry('stamp', $stamp);
-	                }
-
-	                this.isStamped = !this.isStamped;
-	            }
+	            // if (stamp) {
+	            //     var $stamp = this.masonry.find('.post-keyword');
+	            //
+	            //     if (this.isStamped) {
+	            //       this.masonry.masonry( 'unstamp', $stamp );
+	            //     } else {
+	            //       this.masonry.masonry( 'stamp', $stamp );
+	            //     }
+	            //
+	            //     this.isStamped = !this.isStamped;
+	            // }
 
 	            this.masonry.masonry('layout');
 	        }
 	    }, {
 	        key: 'mediaTextToggle',
 	        value: function mediaTextToggle(event) {
-	            var _this3 = this;
+	            var _this4 = this;
 
 	            if ($('.post-media').hasClass('hidden-text')) {
 
@@ -19553,29 +19592,33 @@
 	            }
 
 	            setTimeout(function () {
-	                _this3.reLayout();
+	                _this4.reLayout();
 	            }, 100);
 	        }
 	    }, {
 	        key: 'mediaCardToggle',
 	        value: function mediaCardToggle(event) {
-	            var _this4 = this;
+	            var _this5 = this;
 
 	            if ($('.post-keyword').hasClass('is-active')) {
 
 	                // 閉じる
-	                $('.post-keyword').removeClass('is-active');
 	                $(event.currentTarget).removeClass('is-active');
+
+	                $('.post-keyword').fadeIn(200, function () {
+	                    $('.post-keyword').removeClass('is-active');
+	                    _this5.reLayout(true);
+	                });
 	            } else {
 
 	                // 開く
 	                $('.post-keyword').addClass('is-active');
 	                $(event.currentTarget).addClass('is-active');
-	            }
 
-	            setTimeout(function () {
-	                _this4.reLayout(true);
-	            }, 100);
+	                $('.post-keyword').fadeOut(200, function () {
+	                    _this5.reLayout(true);
+	                });
+	            }
 	        }
 	    }, {
 	        key: 'mediaSwitch',
@@ -19599,7 +19642,7 @@
 	            var val = $('.input-keyword').val();
 
 	            if (val) {
-	                this.kewwords.push(val);
+	                this.keywords.push(val);
 	                $('.keyword-list').append('<div class="list-item">' + val + '</div>');
 	            }
 
@@ -19610,19 +19653,19 @@
 	        value: function removeKeywordList(event) {
 	            event.preventDefault();
 
-	            var index = this.kewwords.indexOf($(event.currentTarget).text());
-	            this.kewwords.splice(index, 1);
+	            var index = this.keywords.indexOf($(event.currentTarget).text());
+	            this.keywords.splice(index, 1);
 	            $(event.currentTarget).remove();
 	        }
 	    }, {
 	        key: 'getKeywords',
 	        value: function getKeywords() {
-	            return this.kewwords;
+	            return this.keywords;
 	        }
 	    }, {
 	        key: 'menuToggle',
 	        value: function menuToggle() {
-	            var _this5 = this;
+	            var _this6 = this;
 
 	            if ($('.btn-menu01').hasClass('is-active')) {
 
@@ -19639,7 +19682,7 @@
 	            }
 
 	            setTimeout(function () {
-	                _this5.reLayout();
+	                _this6.reLayout();
 	            }, 100);
 	        }
 	    }, {

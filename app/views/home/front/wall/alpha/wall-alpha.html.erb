@@ -25,6 +25,7 @@
 
 <!-- ↑↑↑　バックエンド編集分 ↑↑↑　-->
 
+<body class="ja">
   <div id="wrapper">
     <header id="global-header">
       <h1 id="logo" class="logo01">transparent</h1>
@@ -57,7 +58,7 @@
       <div class="setting-btn-area">
         <p class="tit">Media</p>
         <div id="on-switch-media" class="btn-toggle02 on-switch-media">
-          <div data-type="0" class="media photo">Photo</div>
+          <div data-type="0" class="media photo is-active">Photo</div>
           <div data-type="1" class="media news">News</div>
           <div data-type="2" class="media movie">Movie</div>
         </div>
@@ -106,7 +107,7 @@
         search_first_index = response.data.search_first_index;
         related_content_last_index = response.data.related_content_last_index;
 
-        TRANSCRIPTS.prependContents({ searches, related_contents });
+        TRANSCRIPTS.appendContents({ searches, related_contents });
 
       }, function (error) {
         console.log(error);
@@ -251,7 +252,6 @@
 
           recBtn.addEventListener("click", function () {
 
-
             if (TRANSCRIPTS.getRecordingStatus()){
 
               killMic();
@@ -261,6 +261,8 @@
               activateMic();
 
             }
+
+            TRANSCRIPTS.toggleRecordhing();
 
           });
 
@@ -382,17 +384,16 @@
         if (!recognizer) {
             Setup();
         }
-        TRANSCRIPTS.toggleRecordhing();
-        RecognizerStart(SDK, recognizer);
         isActive = true;
+        // TRANSCRIPTS.toggleRecordhing();
+        RecognizerStart(SDK, recognizer);
       }
 
       function killMic() {
         console.log('kill Mic')
-        TRANSCRIPTS.toggleRecordhing();
-        RecognizerStop(SDK, recognizer);
         isActive = false;
-
+        // TRANSCRIPTS.toggleRecordhing();
+        RecognizerStop(SDK, recognizer);
       }
 
       function errorHandler() {
