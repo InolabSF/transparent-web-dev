@@ -134,6 +134,7 @@
         related_content_last_index = response.data.related_content_last_index;
 
         TRANSCRIPTS.prependContents({ searches, related_contents });
+        TRANSCRIPTS.addContents(related_contents);
 
       }, function (error) {
         console.log(error);
