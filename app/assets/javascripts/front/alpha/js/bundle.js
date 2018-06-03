@@ -19353,11 +19353,24 @@
 	        _this.keywords = [];
 	        _this.scrollBottomPos = false;
 	        _this.recordingStatus = false;
+	        _this.commentCard = true;
+	        _this.masonryOpt = {
+	            itemSelector: '.grid',
+	            stamp: '.post-keyword'
+	        };
 
 	        $('#wrapper').on('click', '.btn-menu01', _this.menuToggle.bind(_this)).on('click', '.on-txt-hidden', _this.mediaTextToggle.bind(_this)).on('click', '.on-card-hidden', _this.mediaCardToggle.bind(_this)).on('click', '.on-switch-media .media', _this.mediaSwitch.bind(_this)).on('click', '.input-submit', _this.addKeywordList.bind(_this)).on('click', '.keyword-list .list-item', _this.removeKeywordList.bind(_this)).on('click', '#transparent-container .post-media   .btn-close02', _this.removeMedia.bind(_this)).on('click', '#transparent-container .post-keyword .btn-close02', _this.removeMediaSection.bind(_this)).on('click', '.post-media', _this.showDetail.bind(_this)).on('click', '.btn-close01', _this.hideDetail.bind(_this)).on('click', '.btn-arrow01.right', _this.next.bind(_this)).on('click', '.btn-arrow01.left', _this.prev.bind(_this));
 	        // .on('click', '.btn-recording', this.toggleRecordhing.bind(this));
 
 	        $(window).on('scroll', _this.onScroll.bind(_this));
+
+	        $('.img').error(function (event) {
+	            console.log(event);
+
+	            $(event.currentTarget).attr({
+	                src: '/assets/img/commonimg_blank01.png'
+	            });
+	        });
 
 	        TRANSCRIPTS.appendContents = _this.appendContents.bind(_this);
 	        TRANSCRIPTS.prependContents = _this.prependContents.bind(_this);
@@ -19387,7 +19400,7 @@
 	                }
 
 	                _this2.isStamped = false;
-	                _this2.masonry();
+	                _this2.initMasonry();
 	            });
 	        }
 	    }, {
@@ -19404,11 +19417,7 @@
 
 	            this.isStamped = false;
 
-	            if (this.firstFlg) {
-	                this.masonry();
-	            } else {
-	                this.reLayout();
-	            }
+	            this.initMasonry();
 	            this.masonry.masonry('reloadItems');
 	        }
 	    }, {
@@ -19425,11 +19434,7 @@
 
 	            this.isStamped = false;
 
-	            if (this.firstFlg) {
-	                this.masonry();
-	            } else {
-	                this.reLayout();
-	            }
+	            this.initMasonry();
 	            this.masonry.masonry('reloadItems');
 	        }
 	    }, {
@@ -19490,7 +19495,14 @@
 	            }
 
 	            // コメントカード
-	            var postKeyword = $('<p />', { class: 'post-keyword grid-item', 'data-searchId': searcheId1 }).text(words).appendTo(container);
+	            var cardStyle;
+	            if (!this.commentCard) {
+	                cardStyle = { display: 'none' };
+	            } else {
+	                cardStyle = { display: 'block' };
+	            }
+
+	            var postKeyword = $('<p />', { class: 'post-keyword grid-item', 'data-searchId': searcheId1 }).css(cardStyle).text(words).appendTo(container);
 	            $('<button />', { class: 'btn-close02' }).appendTo(postKeyword);
 
 	            // 画像コンテンツ
@@ -19615,16 +19627,13 @@
 	            this.reLayout();
 	        }
 	    }, {
-	        key: 'masonry',
-	        value: function masonry() {
+	        key: 'initMasonry',
+	        value: function initMasonry() {
 	            var _this4 = this;
 
 	            this.firstFlg = false;
 
-	            this.masonry = $('.media-container').masonry({
-	                itemSelector: '.grid',
-	                stamp: '.post-keyword'
-	            });
+	            this.masonry = $('.media-container').masonry(this.masonryOpt);
 
 	            setInterval(function () {
 	                _this4.reLayout();
@@ -19682,6 +19691,7 @@
 
 	                $('.post-keyword').fadeIn(200, function () {
 	                    $('.post-keyword').removeClass('is-active');
+	                    _this6.commentCard = true;
 	                    _this6.reLayout(true);
 	                });
 	            } else {
@@ -19692,6 +19702,7 @@
 
 	                $('.post-keyword').fadeOut(200, function () {
 	                    _this6.reLayout(true);
+	                    _this6.commentCard = false;
 	                });
 	            }
 	        }

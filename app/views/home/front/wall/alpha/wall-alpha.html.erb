@@ -255,7 +255,7 @@
         };
 
     }, false);
-    
+
   </script>
 
   <!-- ここから　藤森追加部分 -->
@@ -294,7 +294,7 @@
 
             }
 
-            TRANSCRIPTS.toggleRecordhing();
+            // TRANSCRIPTS.toggleRecordhing();
 
           });
 
@@ -417,14 +417,14 @@
             Setup();
         }
         isActive = true;
-        // TRANSCRIPTS.toggleRecordhing();
+        if (!TRANSCRIPTS.getRecordingStatus()){ TRANSCRIPTS.toggleRecordhing(); }
         RecognizerStart(SDK, recognizer);
       }
 
       function killMic() {
         console.log('kill Mic')
         isActive = false;
-        // TRANSCRIPTS.toggleRecordhing();
+        if (TRANSCRIPTS.getRecordingStatus()){ TRANSCRIPTS.toggleRecordhing(); }
         RecognizerStop(SDK, recognizer);
       }
 
