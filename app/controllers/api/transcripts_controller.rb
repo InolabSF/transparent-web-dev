@@ -27,7 +27,7 @@ class Api::TranscriptsController < ApplicationController
   end
 
   def get_further
-    further_load_num = 20
+    further_load_num = 5
     searches, search_first_index, related_contents = get_further_searches(params[:wall_id], params[:search_first_index], further_load_num)
     render json: {
               'searches' => searches,

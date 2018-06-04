@@ -90,6 +90,7 @@
     var search_last_index;
     var search_first_index;
     var related_content_last_index;
+    var is_loading = false;
 
     function fetchContents(){
       var instance = axios.create({
@@ -145,6 +146,7 @@
     }
 
     function loadPastContents(){
+      is_loading = true;
       var instance = axios.create({
         baseURL: '/api',
         headers: {
@@ -162,6 +164,8 @@
 
       }, function (error) {
         console.log(error);
+      }).then(function (response){
+        is_loading = false;
       });
 
     }
@@ -251,7 +255,11 @@
         console.log(TRANSCRIPTS.getScrollBottomPosition());
 
         if (TRANSCRIPTS.getScrollBottomPosition()) {
-         loadPastContents();
+
+          if (!is_loading) {
+            loadPastContents();
+          };
+
         };
 
     }, false);
