@@ -134,16 +134,25 @@
         search_last_index = response.data.search_last_index;
         related_content_last_index = response.data.related_content_last_index;
 
-        TRANSCRIPTS.prependContents({ searches, related_contents });
-        TRANSCRIPTS.addContents(related_contents);
+        if (searches.length){ TRANSCRIPTS.prependContents({ searches, related_contents }); }
+        if (related_contents.length){ TRANSCRIPTS.addContents(related_contents); }
 
       }, function (error) {
         console.log(error);
+      }).then(function (response){
+
+        // if (TRANSCRIPTS.getScrollBottomPosition()) {
+        //
+        //   if (!is_loading) { loadPastContents(); };
+        //
+        // };
+
       }).then(function (response){
         loadContents();
       });
 
     }
+
 
     function loadPastContents(){
       is_loading = true;
