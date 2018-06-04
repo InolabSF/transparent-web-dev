@@ -14,7 +14,23 @@
   <meta property="og:type" content="website">
   <link rel="shortcut icon" href="https://res.cloudinary.com/negic/image/upload/v1520401272/favicon.ico" type="image/x-icon">
   <link rel="canonical" href="http://trnspt.com/">
+  <style rel="stylesheet">
+    /* コメントカード */
+    #transparent-container .keyword-area .media-container .post-keyword {
+        border: 4px solid #f9c03c;
+        background-color: #fff;
+        color: #f9c03c;
+        font-size: 30px;
+        line-height: 1.4;
+    }
 
+    /* 画像コンテンツ */
+    #transparent-container .keyword-area .media-container .post-media .txt {
+        font-size: 12px;
+        line-height: 1.4;
+        color: #767676;
+    }
+  </style>
 
 <!-- ↓↓↓　バックエンド編集分　↓↓↓ -->
 
@@ -140,19 +156,10 @@
       }, function (error) {
         console.log(error);
       }).then(function (response){
-
-        // if (TRANSCRIPTS.getScrollBottomPosition()) {
-        //
-        //   if (!is_loading) { loadPastContents(); };
-        //
-        // };
-
-      }).then(function (response){
         loadContents();
       });
 
     }
-
 
     function loadPastContents(){
       is_loading = true;
