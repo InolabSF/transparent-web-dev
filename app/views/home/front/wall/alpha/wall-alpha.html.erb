@@ -186,6 +186,36 @@
 
     }
 
+    function deleteSearch(search_id){
+
+      var instance = axios.create({
+        baseURL: '/api',
+        headers: {'ContentType': 'application/json'},
+        responseType: 'json'
+      });
+      instance.get('/update/searches/' + search_id).then(function (response){
+        console.log("relatedContentId: ", search_id);
+      }, function (error) {
+        console.log(error);
+      });
+
+    }
+
+    function deleteContents(related_content_id){
+
+      var instance = axios.create({
+        baseURL: '/api',
+        headers: {'ContentType': 'application/json'},
+        responseType: 'json'
+      });
+      instance.get('/update/contents/' + related_content_id).then(function (response){
+        console.log("relatedContentId: ", related_content_id);
+      }, function (error) {
+        console.log(error);
+      });
+
+    }
+
     window.addEventListener('load', function() {
         fetchContents();
     }, false);
@@ -235,32 +265,13 @@
 
             if (related_content_id){
 
-                var instance = axios.create({
-                  baseURL: '/api',
-                  headers: {'ContentType': 'application/json'},
-                  responseType: 'json'
-                });
-                instance.get('/update/contents/' + related_content_id).then(function (response){
-                  console.log("relatedContentId: ", related_content_id);
-                }, function (error) {
-                  console.log(error);
-                });
+                deleteContents(related_content_id)
 
             } else {
 
-                var instance = axios.create({
-                  baseURL: '/api',
-                  headers: {'ContentType': 'application/json'},
-                  responseType: 'json'
-                });
-                instance.get('/update/searches/' + search_id).then(function (response){
-                  console.log("relatedContentId: ", search_id);
-                }, function (error) {
-                  console.log(error);
-                });
+                deleteSearch(search_id)
 
             }
-
 
         }, 100);
     });
