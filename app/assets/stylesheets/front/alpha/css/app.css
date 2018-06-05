@@ -1012,34 +1012,36 @@ input
     color: transparent;
     background-repeat: no-repeat;
     background-position: 50% 50%;
-    background-size: contain;
 }
 .btn-toggle02 div.photo
 {
-    background-image: url('https://res.cloudinary.com/negic/image/upload/v1527732490/ico05.png');
+    background-image: url('https://res.cloudinary.com/negic/image/upload/v1528136023/ico05.png');
+    background-size: 26px auto;
 }
 .btn-toggle02 div.photo.is-active
 {
     background-color: #2dadff;
-    background-image: url('https://res.cloudinary.com/negic/image/upload/v1527732490/ico05_on.png');
+    background-image: url('https://res.cloudinary.com/negic/image/upload/v1528136024/ico05_on.png');
 }
 .btn-toggle02 div.news
 {
-    background-image: url('https://res.cloudinary.com/negic/image/upload/v1527732490/ico06.png');
+    background-image: url('https://res.cloudinary.com/negic/image/upload/v1528136023/ico06.png');
+    background-size: 24px auto;
 }
 .btn-toggle02 div.news.is-active
 {
     background-color: #92e023;
-    background-image: url('https://res.cloudinary.com/negic/image/upload/v1527732490/ico06_on.png');
+    background-image: url('https://res.cloudinary.com/negic/image/upload/v1528136024/ico06_on.png');
 }
 .btn-toggle02 div.movie
 {
-    background-image: url('https://res.cloudinary.com/negic/image/upload/v1527732490/ico07.png');
+    background-image: url('https://res.cloudinary.com/negic/image/upload/v1528136023/ico07.png');
+    background-size: 27px auto;
 }
 .btn-toggle02 div.movie.is-active
 {
     background-color: #f13c33;
-    background-image: url('https://res.cloudinary.com/negic/image/upload/v1527732490/ico07_on.png');
+    background-image: url('https://res.cloudinary.com/negic/image/upload/v1528136024/ico07_on.png');
 }
 
 .btn-close01
@@ -1048,8 +1050,9 @@ input
     height: 30px;
 
     background-color: transparent;
-    background-image: url('https://res.cloudinary.com/negic/image/upload/v1527732493/ico03.png');
+    background-image: url('https://res.cloudinary.com/negic/image/upload/v1528136023/ico03.png');
     background-position: 50% 50%;
+    background-size: 24px auto;
 }
 
 .btn-close02
@@ -1061,6 +1064,7 @@ input
     background-color: #f9c03c;
     background-image: url('https://res.cloudinary.com/negic/image/upload/v1527732494/ico02.png');
     background-position: 50% 50%;
+    background-size: 12px auto;
 }
 
 .btn-arrow01
@@ -1069,7 +1073,7 @@ input
     height: 24px;
 
     background-color: transparent;
-    background-image: url('https://res.cloudinary.com/negic/image/upload/v1527980836/ico08.png');
+    background-image: url('https://res.cloudinary.com/negic/image/upload/v1528136024/ico08.png');
     background-position: 50% 50%;
     background-size: 15px 24px;
 }
@@ -1205,7 +1209,7 @@ input
     white-space: nowrap;
     text-indent: 100%;
 
-    background-image: url('https://res.cloudinary.com/negic/image/upload/v1527732493/logo01.png');
+    background-image: url('https://res.cloudinary.com/negic/image/upload/v1528136024/logo01.png');
     background-repeat: no-repeat;
     background-size: 168px 54px;
 }
@@ -1422,7 +1426,8 @@ input
 #global-header .btn-recording.rec
 {
     background-color: #dadada;
-    background-image: url('http://res.cloudinary.com/negic/image/upload/v1527732494/ico01.png');
+    background-image: url('https://res.cloudinary.com/negic/image/upload/v1528136024/ico01.png');
+    background-size: 20px auto;
 }
 #global-header .btn-recording.rec .r1
 {
@@ -1435,7 +1440,8 @@ input
 #global-header .btn-recording.recording
 {
     background-color: #f13c33;
-    background-image: url('http://res.cloudinary.com/negic/image/upload/v1527732494/ico01.png'), url('https://res.cloudinary.com/negic/image/upload/v1527731641/ico04.png');
+    background-image: url('https://res.cloudinary.com/negic/image/upload/v1528136024/ico01.png'), url('https://res.cloudinary.com/negic/image/upload/v1528136023/ico04.png');
+    background-size: 20px auto, 8px auto;
 }
 #global-header .btn-recording.recording .r1
 {
@@ -1444,6 +1450,68 @@ input
 #global-header .btn-recording.recording .r2
 {
     display: none;
+}
+#global-header .btn-recording.recording .loader
+{
+    display: block;
+}
+#global-header .btn-recording .loader,
+#global-header .btn-recording .loader:before,
+#global-header .btn-recording .loader:after
+{
+    width: 9px;
+    height: 9px;
+
+    animation: load7 1s infinite ease-in-out;
+
+    border-radius: 50%;
+
+    animation-fill-mode: both;
+}
+#global-header .btn-recording .loader
+{
+    position: absolute;
+    top: 45px;
+    left: 55%;
+
+    display: none;
+
+    transform: translateZ(0);
+    animation-delay: -.16s;
+
+    color: #fff;
+}
+#global-header .btn-recording .loader:before,
+#global-header .btn-recording .loader:after
+{
+    position: absolute;
+    top: 0;
+
+    content: '';
+}
+#global-header .btn-recording .loader:before
+{
+    left: -10px;
+
+    -webkit-animation-delay: -.32s;
+            animation-delay: -.32s;
+}
+#global-header .btn-recording .loader:after
+{
+    left: 10px;
+}
+@keyframes load7
+{
+    0%,
+    80%,
+    100%
+    {
+        box-shadow: 0 9px 0 -2px;
+    }
+    40%
+    {
+        box-shadow: 0 9px 0 0;
+    }
 }
 #global-header .btn-menu01
 {
@@ -1523,8 +1591,9 @@ input
     color: #595959;
     border-radius: 15px;
     background-color: #f9c03c;
-    background-image: url('https://res.cloudinary.com/negic/image/upload/v1527732494/ico02.png');
+    background-image: url('https://res.cloudinary.com/negic/image/upload/v1528136023/ico02.png');
     background-position: right 10px top 50%;
+    background-size: 12px auto;
 }
 #global-menu .setting-btn-area
 {
@@ -1544,9 +1613,10 @@ input
 #transparent-container
 {
     padding: 80px 0 0;
-    /* background-image: url("https://res.cloudinary.com/negic/image/upload/v1527732493/bg01.png");
-  background-repeat: repeat;
-  background-position: 40px 0; */
+
+    background-image: url('https://res.cloudinary.com/negic/image/upload/v1528187834/bg01.png');
+    background-repeat: repeat;
+    background-position: 43px 0;
 }
 #transparent-container.menu-is-active
 {
