@@ -14,6 +14,12 @@
   <meta property="og:type" content="website">
   <link rel="shortcut icon" href="https://res.cloudinary.com/negic/image/upload/v1520401272/favicon.ico" type="image/x-icon">
   <link rel="canonical" href="http://trnspt.com/">
+
+<!-- ↓↓↓　バックエンド編集分　↓↓↓ -->
+
+  <!-- <link rel="stylesheet" href="./assets/css/app.css"> -->
+  <%= stylesheet_link_tag    'front-alpha', media: 'all', 'data-turbolinks-track': 'reload' %>
+
   <style rel="stylesheet">
     /* コメントカード */
     #transparent-container .keyword-area .media-container .post-keyword {
@@ -32,10 +38,6 @@
     }
   </style>
 
-<!-- ↓↓↓　バックエンド編集分　↓↓↓ -->
-
-  <!-- <link rel="stylesheet" href="./assets/css/app.css"> -->
-  <%= stylesheet_link_tag    'front-alpha', media: 'all', 'data-turbolinks-track': 'reload' %>
 </head>
 <body class="<%= @language_code[0, 2] %>">
 
@@ -145,12 +147,16 @@
       instance.get('/transcripts/' + wall_id + '/' + search_last_index + '/' + related_content_last_index ).then(function (response){
         console.log(response.data);
 
-        searches = response.data.searches;
-        related_contents = response.data.related_contents;
         search_last_index = response.data.search_last_index;
         related_content_last_index = response.data.related_content_last_index;
 
-        if (searches.length){ TRANSCRIPTS.prependContents({ searches, related_contents }); }
+        searches = response.data.searches;
+        if (searches.length){
+          related_contents = [];
+          TRANSCRIPTS.prependContents({ searches, related_contents });
+        }
+
+        related_contents = response.data.related_contents;
         if (related_contents.length){ TRANSCRIPTS.addContents(related_contents); }
 
       }, function (error) {
