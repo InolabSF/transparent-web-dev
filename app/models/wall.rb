@@ -19,13 +19,12 @@ class Wall < ApplicationRecord
     new_hash = [*1..9, *'A'..'Z', *'a'..'z'].sample(8).join
 
     if self.name.present?
-      wall_name = self.name.gsub(" ", "")
+      wall_name = self.name.gsub(" ", "-")
     else
-      wall_name = 'blank'
+      wall_name = 'blankname'
     end
 
-    self.url = 'trnspt.com/alpha/wall/' + new_hash + '/' + wall_name
-    self.save
+    self.url = 'https://trnspt.com/alpha/wall/' + new_hash + '/' + wall_name
   end
 
 end

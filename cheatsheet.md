@@ -96,3 +96,6 @@ rails g migration AddIsarchivedToSearch is_archived:boolean
 rails g migration AddIsarchivedToRelatedContent is_archived:boolean
 
 rails g migration AddIsarchivedToTranscript is_archived:boolean
+
+ Wall.all.each {|w|w.new_url}
+ Wall.all.each {|w|w.save}

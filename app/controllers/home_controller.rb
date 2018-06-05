@@ -10,6 +10,35 @@ class HomeController < ApplicationController
     render :file => "home/web/dest/top"
   end
 
+  # alpha
+
+  def alpha
+    random_key = params[:random_key]
+    walls = Wall.where("url like '%" + random_key + "%'")
+
+    if walls.blank?
+      render json: {'message' => 'no wall found'}
+    elsif random_key.length != 8
+      render json: {'message' => 'invalid url'}
+    elsif walls.length != 1
+      render json: {'message' => 'invalid url'}
+    else
+      wall = walls[0]
+
+      @wall_id = wall.id
+      default_langcode = wall.default_langcode
+      if default_langcode == 'en'
+        @language_code = 'en-US'
+      elsif default_langcode == 'ja'
+        @language_code = 'ja-JP'
+      else
+        @language_code = 'ja-JP'
+      end
+
+      render :file => "home/front/wall/alpha/wall-alpha"
+    end
+  end
+
   def alpha_en
     @wall_id = params[:wall_id]
     @language_code = 'en-US'
