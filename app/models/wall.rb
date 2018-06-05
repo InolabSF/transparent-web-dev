@@ -17,10 +17,9 @@ class Wall < ApplicationRecord
 
   def new_url
     new_hash = [*1..9, *'A'..'Z', *'a'..'z'].sample(8).join
-    
+
     if self.name.present?
-      wall_name = self.name
-      wall_name = wall_name.gsub(" ", "")
+      wall_name = self.name.gsub(" ", "")
     else
       wall_name = 'blank'
     end
