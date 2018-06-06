@@ -97,5 +97,7 @@ rails g migration AddIsarchivedToRelatedContent is_archived:boolean
 
 rails g migration AddIsarchivedToTranscript is_archived:boolean
 
- Wall.all.each {|w|w.new_url}
- Wall.all.each {|w|w.save}
+ w = Wall.all
+ w.each {|w|w.new_url}
+ w.each {|w|w.save}
+ Wall.update_all("default_langcode=1")
