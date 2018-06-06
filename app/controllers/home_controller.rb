@@ -76,7 +76,7 @@ class HomeController < ApplicationController
   end
 
   def demo_sxsw_en
-    @wall_id = 1
+    @wall_id = 12
     @language_code = 'en-US'
     render :file => "home/front/wall/demo-sxsw/wall-demo"
   end
