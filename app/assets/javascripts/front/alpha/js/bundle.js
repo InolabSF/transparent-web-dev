@@ -19354,23 +19354,15 @@
 	        _this.scrollBottomPos = false;
 	        _this.recordingStatus = false;
 	        _this.commentCard = true;
+	        _this.mediaText = true;
 	        _this.masonryOpt = {
 	            itemSelector: '.grid',
 	            stamp: '.post-keyword'
 	        };
 
 	        $('#wrapper').on('click', '.btn-menu01', _this.menuToggle.bind(_this)).on('click', '.on-txt-hidden', _this.mediaTextToggle.bind(_this)).on('click', '.on-card-hidden', _this.mediaCardToggle.bind(_this)).on('click', '.on-switch-media .media', _this.mediaSwitch.bind(_this)).on('click', '.input-submit', _this.addKeywordList.bind(_this)).on('click', '.keyword-list .list-item', _this.removeKeywordList.bind(_this)).on('click', '#transparent-container .post-media   .btn-close02', _this.removeMedia.bind(_this)).on('click', '#transparent-container .post-keyword .btn-close02', _this.removeMediaSection.bind(_this)).on('click', '.post-media', _this.showDetail.bind(_this)).on('click', '.btn-close01', _this.hideDetail.bind(_this)).on('click', '.btn-arrow01.right', _this.next.bind(_this)).on('click', '.btn-arrow01.left', _this.prev.bind(_this));
-	        // .on('click', '.btn-recording', this.toggleRecordhing.bind(this));
 
 	        $(window).on('scroll', _this.onScroll.bind(_this));
-
-	        $('.img').error(function (event) {
-	            console.log(event);
-
-	            $(event.currentTarget).attr({
-	                src: '/assets/img/commonimg_blank01.png'
-	            });
-	        });
 
 	        TRANSCRIPTS.appendContents = _this.appendContents.bind(_this);
 	        TRANSCRIPTS.prependContents = _this.prependContents.bind(_this);
@@ -19381,6 +19373,7 @@
 	        TRANSCRIPTS.getScrollBottomPosition = _this.getScrollBottomPosition.bind(_this);
 	        TRANSCRIPTS.getRecordingStatus = _this.getRecordingStatus.bind(_this);
 	        TRANSCRIPTS.addContents = _this.addContents.bind(_this);
+	        // TRANSCRIPTS.imageNotFound = this.imageNotFound.bind(this);
 	        return _this;
 	    }
 
@@ -19453,7 +19446,14 @@
 	                    var container = $(data2).closest('.media-container');
 
 	                    if (id1 === id2) {
-	                        var post = $('<a />').attr({ href: data1.url, class: 'grid post-media grid-item', target: '_blank', 'data-searchId': data1.search_id, 'data-relatedContentId': data1.id });
+
+	                        // テキスト表示の出しわけ
+	                        var klass = '';
+	                        if (!_this3.mediaText) {
+	                            klass = ' hidden-text';
+	                        }
+
+	                        var post = $('<a />').attr({ href: data1.url, class: 'grid post-media grid-item' + klass, target: '_blank', 'data-searchId': data1.search_id, 'data-relatedContentId': data1.id });
 
 	                        var img = $('<div />', { class: 'wrap' }).appendTo(post);
 	                        $('<img />', { src: data1.img_url, class: 'img', alt: data1.desc }).appendTo(img);
@@ -19511,13 +19511,28 @@
 
 	                // search_idが一致したら
 	                if (d.search_id === searcheId1) {
-	                    var post = $('<a />').attr({ href: d.url, class: 'grid post-media grid-item', target: '_blank', 'data-searchId': d.search_id, 'data-relatedContentId': data.related_contents[i].id }).appendTo(container);
+
+	                    // テキスト表示の出しわけ
+	                    var klass = '';
+	                    if (!this.mediaText) {
+	                        klass = ' hidden-text';
+	                    }
+
+	                    var post = $('<a />').attr({ href: d.url, class: 'grid post-media grid-item' + klass, target: '_blank', 'data-searchId': d.search_id, 'data-relatedContentId': data.related_contents[i].id }).appendTo(container);
 
 	                    var img = $('<div />', { class: 'wrap' }).appendTo(post);
-	                    $('<img />', { src: d.img_url, class: 'img', alt: d.desc }).appendTo(img);
+	                    $('<img />', { src: d.img_url, class: 'img', alt: d.desc, onerror: this.imageNotFound }).appendTo(img);
 	                    $('<img />', { src: 'http://www.google.com/s2/favicons?domain=' + d.source, class: 'favicon' }).appendTo(img);
 
-	                    $('<p />', { class: 'txt' }).text(d.title).appendTo(post);
+	                    var title = d.title;
+	                    var count = 60;
+
+	                    if (title.length > count) {
+	                        title = title.substr(0, count);
+	                        title += "...";
+	                    }
+
+	                    $('<p />', { class: 'txt' }).text(title).appendTo(post);
 
 	                    $('<button />', { class: 'btn-close02' }).appendTo(post);
 	                }
@@ -19665,12 +19680,14 @@
 
 	            if ($('.post-media').hasClass('hidden-text')) {
 
-	                // 閉じる
+	                // テキスト表示
+	                this.mediaText = true;
 	                $('.post-media').removeClass('hidden-text');
 	                $(event.currentTarget).removeClass('is-active');
 	            } else {
 
-	                // 開く
+	                // テキスト非表示
+	                this.mediaText = false;
 	                $('.post-media').addClass('hidden-text');
 	                $(event.currentTarget).addClass('is-active');
 	            }
@@ -19815,6 +19832,18 @@
 	        key: 'getScrollBottomPosition',
 	        value: function getScrollBottomPosition() {
 	            return this.scrollBottomPos;
+	        }
+	    }, {
+	        key: 'imageNotFound',
+	        value: function imageNotFound(event) {
+	            var _this8 = this;
+
+	            var img = new Image();
+	            img.src = $(this).attr('src');
+
+	            img.onerror = function () {
+	                $(_this8).attr('src', 'https://res.cloudinary.com/negic/image/upload/v1528273682/img_notfound.png');
+	            };
 	        }
 	    }]);
 
