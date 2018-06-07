@@ -47,7 +47,7 @@
   <div id="wrapper">
     <header id="global-header">
       <h1 id="logo" class="logo01">transparent</h1>
-      <button class="btn-menu01 tap is-active">
+      <button id="menu-btn" class="btn-menu01 tap is-active">
         <div class="btn-inner"><span class="line line-1"></span><span class="line line-2"></span><span class="line line-3"></span></div>
       </button>
       <div id="btn-recording" class="btn-recording rec"><span class="r1">Recording</span><span class="r2">REC</span>
@@ -66,13 +66,13 @@
         </div>
         <div class="setting-btn-area">
           <p class="tit">Title / Description</p>
-          <div class="btn-toggle01 on-txt-hidden">
+          <div id="txt-toggle" class="btn-toggle01 on-txt-hidden">
             <div class="toggle"><span class="on">On</span><span class="off">Off</span></div>
           </div>
         </div>
         <div class="setting-btn-area">
           <p class="tit">Comment Card</p>
-          <div class="btn-toggle01 on-card-hidden">
+          <div id="comment-toggle" class="btn-toggle01 on-card-hidden">
             <div class="toggle"><span class="on">On</span><span class="off">Off</span></div>
           </div>
         </div>
@@ -114,6 +114,10 @@
     var related_content_last_index;
     var is_loading = false;
 
+    var menu_hidden = false;
+    var text_hidden = false;
+    var comment_hidden = false;
+
     function fetchContents(){
       var instance = axios.create({
         baseURL: '/api',
@@ -147,9 +151,9 @@
         },
         responseType: 'json'
       });
-      console.log('send req with index : ' + search_last_index + ', ' + related_content_last_index);
+      // console.log('send req with index : ' + search_last_index + ', ' + related_content_last_index);
       instance.get('/transcripts/' + wall_id + '/' + search_last_index + '/' + related_content_last_index ).then(function (response){
-        console.log(response.data);
+        // console.log(response.data);
 
         search_last_index = response.data.search_last_index;
         related_content_last_index = response.data.related_content_last_index;
@@ -235,21 +239,23 @@
   <!-- ↑↑↑　バックエンド編集分 ↑↑↑　-->
 
   <script>
-    document.getElementById('logo').addEventListener('click', function() {
-        TRANSCRIPTS.prependContents({ searches, related_contents });
-    }, false);
+    document.getElementById('menu-btn').addEventListener('click', function() {
 
-    // document.getElementById('btn-recording').addEventListener('click', function() {
-    //
-    //     // テキストの設定
-    //     TRANSCRIPTS.setRecordingText('text text text text');
-    //
-    //     // レコーディングボタンのON/OFF
-    //     TRANSCRIPTS.toggleRecordhing();
-    //
-    //     // レコーディング中かの取得
-    //     console.log(TRANSCRIPTS.getRecordingStatus());
-    // }, false);
+        setTimeout(function() {
+
+            menu_hidden = !menu_hidden;
+            if(menu_hidden) {
+              var dimensionValue = 'off';
+            }else {
+              var dimensionValue = 'on';
+            }
+
+            console.log(dimensionValue);
+            ga('set', 'dimension5', dimensionValue);
+
+        });
+
+    }, false);
 
     document.getElementById('input-submit').addEventListener('click', function() {
         setTimeout(function() {
@@ -259,11 +265,55 @@
         });
     }, false);
 
+    document.getElementById('txt-toggle').addEventListener('click', function() {
+        setTimeout(function() {
+
+            text_hidden = !text_hidden;
+            if(text_hidden) {
+              var dimensionValue = 'off';
+            }else {
+              var dimensionValue = 'on';
+            }
+
+            console.log(dimensionValue);
+            ga('set', 'dimension1', dimensionValue);
+
+        });
+    }, false);
+
+    document.getElementById('comment-toggle').addEventListener('click', function() {
+        setTimeout(function() {
+
+            comment_hidden = !comment_hidden;
+            if(comment_hidden) {
+              var dimensionValue = 'off';
+            }else {
+              var dimensionValue = 'on';
+            }
+
+            console.log(dimensionValue);
+            ga('set', 'dimension2', dimensionValue);
+
+        });
+    }, false);
+
     document.getElementById('on-switch-media').addEventListener('click', function() {
         setTimeout(function() {
 
             // メディアのタイプの取得
-            console.log(TRANSCRIPTS.getMediaType());
+            media_type = TRANSCRIPTS.getMediaType()
+            console.log(media_type);
+
+            if(media_type==0) {
+              var dimensionValue = 'image';
+            }else if (media_type==1) {
+              var dimensionValue = 'webpage';
+            }else if (media_type==2) {
+              var dimensionValue = 'video';
+            };
+
+            ga('set', 'dimension3', dimensionValue);
+
         });
     }, false);
 
@@ -329,17 +379,24 @@
 
           recBtn.addEventListener("click", function () {
 
-            if (TRANSCRIPTS.getRecordingStatus()){
+            setTimeout(function() {
 
-              killMic();
+              if (TRANSCRIPTS.getRecordingStatus()){
 
-            } else {
+                killMic();
+                var dimensionValue = 'off';
 
-              activateMic();
+              } else {
 
-            }
+                activateMic();
+                var dimensionValue = 'on';
 
-            // TRANSCRIPTS.toggleRecordhing();
+              }
+
+              ga('set', 'dimension4', dimensionValue);
+              // TRANSCRIPTS.toggleRecordhing();
+
+            });
 
           });
 
