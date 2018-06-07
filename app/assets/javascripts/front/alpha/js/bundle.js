@@ -19652,26 +19652,13 @@
 
 	            setInterval(function () {
 	                _this4.reLayout();
-	            }, 2000);
+	            }, 1500);
 	        }
 	    }, {
 	        key: 'reLayout',
 	        value: function reLayout(stamp) {
-
-	            // if (stamp) {
-	            //     var $stamp = this.masonry.find('.post-keyword');
-	            //
-	            //     if (this.isStamped) {
-	            //       this.masonry.masonry( 'unstamp', $stamp );
-	            //     } else {
-	            //       this.masonry.masonry( 'stamp', $stamp );
-	            //     }
-	            //
-	            //     this.isStamped = !this.isStamped;
-	            // }
-
-	            this.masonry.masonry('layout');
 	            this.masonry.masonry('reloadItems');
+	            this.masonry.masonry('layout');
 	        }
 	    }, {
 	        key: 'mediaTextToggle',
