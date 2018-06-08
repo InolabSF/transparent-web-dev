@@ -160,12 +160,16 @@
 
         searches = response.data.searches;
         if (searches.length){
+          console.log(searches);
           related_contents = [];
           TRANSCRIPTS.prependContents({ searches, related_contents });
         }
 
         related_contents = response.data.related_contents;
-        if (related_contents.length){ TRANSCRIPTS.addContents(related_contents); }
+        if (related_contents.length){
+          console.log(related_contents);
+          TRANSCRIPTS.addContents(related_contents);
+        }
 
       }, function (error) {
         console.log(error);

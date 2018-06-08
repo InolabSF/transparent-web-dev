@@ -1439,8 +1439,6 @@ input
     line-height: 1;
 
     position: absolute;
-    top: 30px;
-    left: 60px;
 
     color: #fff;
 }
@@ -1449,6 +1447,11 @@ input
     background-color: #dadada;
     background-image: url('https://res.cloudinary.com/negic/image/upload/v1528136024/ico01.png');
     background-size: 20px auto;
+}
+#global-header .btn-recording.rec span
+{
+    top: 34px;
+    left: 72px;
 }
 #global-header .btn-recording.rec .r1
 {
@@ -1463,6 +1466,11 @@ input
     background-color: #f13c33;
     background-image: url('https://res.cloudinary.com/negic/image/upload/v1528136024/ico01.png'), url('https://res.cloudinary.com/negic/image/upload/v1528136023/ico04.png');
     background-size: 20px auto, 8px auto;
+}
+#global-header .btn-recording.recording span
+{
+    top: 30px;
+    left: 60px;
 }
 #global-header .btn-recording.recording .r1
 {
@@ -1574,7 +1582,7 @@ input
     font-size: 14px;
     font-weight: 700;
 
-    color: #333;
+    color: #555;
 }
 #global-menu .form-keyword .input-keyword
 {
@@ -1638,7 +1646,7 @@ input
     font-size: 14px;
     font-weight: 700;
 
-    color: #333;
+    color: #555;
 }
 #global-menu.is-active
 {
@@ -1675,6 +1683,19 @@ input
 .keyword-area:last-child
 {
     border-bottom: 0;
+}
+.keyword-area:after
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 50px;
+    height: 100%;
+
+    content: '';
+
+    background-color: #fff;
 }
 .keyword-area .media-container
 {
@@ -1827,6 +1848,7 @@ input
 .detail-area
 {
     position: relative;
+    z-index: 2;
 
     display: none;
     /* height: 640px; */
