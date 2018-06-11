@@ -9,7 +9,7 @@
 ## Set up
 $ bundle install
 
-## Transparent　データオブジェクト構造　(5/1/2018)
+## Transparent　α　データオブジェクト構造　(5/1/2018)
 
 <!-- 主にユーザーに提供するのはユーザー発言（Transcript）が持つテキスト情報（Transcript.text）とそれに付随した関連情報（Transcript.related_contents）になります。 -->
 
@@ -70,7 +70,7 @@ $ bundle install
 
     } -->
 
-#### Searchオブジェクト ： コメントカードに出力する検索に使用した情報（ワード）
+#### Searchオブジェクト ： 検索に使用した情報（ワード）です。α版ではコメントカードに出力します。
 
 複数のワード情報がある場合はコメントカードに並列出力するようにしてください。
 
@@ -84,11 +84,15 @@ $ bundle install
 
       is_visible : BOOLEAN, // if is visible
 
-      mode : STRING // search type ( image, webpage, video )
+      mode : STRING, // search type ( image, webpage, video )
+
+      created_at : DATETIME, // time when created
+
+      updated_at : DATETIME // time when updated
 
     }
 
-#### RelatedContentオブジェクト ： コメントカードに関連づける検索結果のコンテンツ
+#### RelatedContentオブジェクト ： 検索結果のコンテンツ情報です。α版ではコメントカードに関連づけて表示します。
 
 どのコメントカードに紐付けるかは'search_id'で識別します。
 
@@ -114,9 +118,13 @@ $ bundle install
 
       is_visible : BOOLEAN, // if is visible
 
+      created_at : DATETIME, // time when created
+
+      updated_at : DATETIME // time when updated
+
     }
 
-#### Conditionオブジェクト ： 関連コンテンツを検索するための条件
+<!-- #### Conditionオブジェクト ： 関連コンテンツを検索するための条件（α版アプリでは使用しません）
 
     Condition = {
 
@@ -126,12 +134,17 @@ $ bundle install
 
       word : String // word for search
 
-    }
+    } -->
 
 
 ## Transparent α API　(5/1/2018)
 
 α版Transparentに必要なAPI群をまとめています。
+
+・データ取得方法に関しては"/app/views/home/front/wall/alpha/wall-alpha.html.erb"を参考にしてください。
+・全てのAPIエンドポイントはtrnspt.comドメインにて動作しています。
+
+  APIエンドポイント例）<https://trnspt.com/api/transcripts/2>
 
 ### 初期コンテンツロード（検索キーワード・関連コンテンツ）の取得
 
@@ -141,13 +154,13 @@ $ bundle install
 
         searches : List[ object( Search ) ],
 
-        search_last_index : NUM,
+        search_last_index : NUM, // 最も新しいsearch.id情報。コンテンツの更新に使用します。
 
-        search_first_index : NUM,
+        search_first_index : NUM, // 最も古いsearch.id情報。コンテンツの更新に使用します。
 
         related_contents : List[ object( RelatedContent ) ],
 
-        related_content_last_index : NUM
+        related_content_last_index : NUM　// 最も新しいrelated_content.id情報。コンテンツの更新に使用します。
 
     }
 
@@ -284,11 +297,11 @@ $ bundle install
 
         searches : List[ object( Search ) ],
 
-        search_last_index : NUM,
+        search_last_index : NUM,　// 最も新しいsearch.id。コンテンツの更新に使用します。
 
         related_contents : List[ object( RelatedContent ) ],
 
-        related_content_last_index : NUM
+        related_content_last_index : NUM　// 最も新しいrelated_content.id。コンテンツの更新に使用します。
 
     }
 
@@ -395,7 +408,7 @@ $ bundle install
 
         searches : List[ object( Search ) ],
 
-        search_first_index : NUM,
+        search_first_index : NUM, // 最も古いsearch.id情報。コンテンツの更新に使用します。
 
         related_contents : List[ object( RelatedContent ) ]
 
@@ -502,7 +515,7 @@ $ bundle install
 
 "GET", "/api/update/contents/" + related_content_id
 
-## フロントコーディングのための各種設定値サンプル
+## フロント開発者のための各種設定値サンプル
 
 フロントコーディング時は下記の値を使用してください。バックエンドと統合時に動的なものに変更します。
 統合時のために各種設定値はbundle.jsの外に出して頂くようにお願いします。
