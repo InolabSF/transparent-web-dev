@@ -1,0 +1,79 @@
+
+extends ./_include/_layout
+
+block variable
+    - var page = [ 'top' ];
+    - var path = '.';
+
+
+block content
+
+    header#global-header
+        h1.logo01#logo transparent
+
+        button.btn-menu01.tap.is-active
+            div.btn-inner
+                span.line.line-1
+                span.line.line-2
+                span.line.line-3
+
+        div.btn-recording.rec#btn-recording
+            span.r1 Recording
+            span.r2 REC
+            div.loader
+
+        p.txt-recording
+
+
+    div#global-menu.is-active
+        .inner
+
+            form.form-keyword
+                p.tit Keyword Filtering
+                input.input-keyword(type="text" placeholder="Input Keyword")
+                button.input-submit#input-submit Submit
+
+            div.keyword-list
+                //- div.list-item Keyword 01
+                //- div.list-item Long Keyword 02
+                //- div.list-item Short
+
+            div.setting-btn-area
+                p.tit Title / Description
+                div.btn-toggle01.on-txt-hidden
+                    div.toggle
+                        span.on On
+                        span.off Off
+
+            div.setting-btn-area
+                p.tit Comment Card
+                div.btn-toggle01.on-card-hidden
+                    div.toggle
+                        span.on On
+                        span.off Off
+
+            div.setting-btn-area
+                p.tit Media
+                div.btn-toggle02.on-switch-media#on-switch-media
+                    div(data-type="0").media.photo.is-active Photo
+                    div(data-type="1").media.news News
+                    div(data-type="2").media.movie Movie
+
+    div#transparent-container.menu-is-active
+
+        //- div.keyword-area
+        //-     div.media-container
+        //-         p.post-keyword Sporken Keywords 02
+        //-         - for (var i = 0, l = 9; i < l; i++) {
+        //-             a.grid.post-media(href="#")
+        //-                 img.img(src="https://placehold.jp/180x150.png" alt="")
+        //-                 p.txt Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+        //-         - }
+        //-     div.detail-area
+        //-         button.btn-close01
+        //-         .inner
+        //-             div.img(style="background-image: url(https://placehold.jp/180x150.png)" alt="")
+        //-             div.info
+        //-                 p.title Lorem ipsum dolor sit amet
+        //-                 p.desc Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+        //-                 a.btn-style01.link(href="#" target="_blank") LINK

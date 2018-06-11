@@ -1,0 +1,10 @@
+
+.logo01 {
+    background-image: url("https://res.cloudinary.com/negic/image/upload/v1528136024/logo01.png");
+    background-repeat: no-repeat;
+    width: 168px;
+    height: 54px;
+    background-size: 168px 54px;
+    display: block;
+    @include textHidden();
+}

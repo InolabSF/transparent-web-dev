@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja" class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <title>Transparent</title>
+    <meta name="description" content="Transparent, the first audio recognition tool that serves a stream of content that follows your verbal conversation.">
+    <meta name="keywords" content="Transparent">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta property="og:title" content="Transparent">
+    <meta property="og:site_name" content="Transparent">
+    <meta property="og:description" content="Transparent, the first audio recognition tool that serves a stream of content that follows your verbal conversation.">
+    <meta property="og:url" content="http://trnspt.com/">
+    <meta property="og:image" content="http://trnspt.com//assets/img/config/og.png">
+    <meta property="og:type" content="website">
+    <link rel="shortcut icon" href="http://res.cloudinary.com/negic/image/upload/v1520401272/favicon.ico" type="image/x-icon">
+    <link rel="canonical" href="http://trnspt.com/">
+    <link rel="stylesheet" href="./assets/css/app.css">
+    <style rel="stylesheet">
+      /* ここからiPad proのサイズ */
+      
+      /* 背景画像 */
+      .transparent-container .bg {
+          background-image: url('http://res.cloudinary.com/negic/image/upload/v1519806520/bg01.jpg');
+      }
+      
+      /* コメントボックスの背景色、文字色、フォントサイズ */
+      .transparent-container .post .comment {
+          background-color: rgba(234, 83, 80, 0.9);
+          color: #fff;
+          font-size: 16px;
+          width: 333px;
+          padding: 40px;
+      }
+      
+      /* ユーザアイコンの背景色 */
+      .transparent-container .post .comment .comment-user-icon {
+          background-color: rgba(0, 61, 193, 0.3);
+      }
+      
+      /* ここからパソコンサイズ */
+      @media only screen and (min-width: 1280px) {
+      
+          /* コメントボックスの背景色、文字色、フォントサイズ */
+          .transparent-container .post .comment {
+              width: 250px;
+              padding: 30px;
+              font-size: 12px;
+          }
+      }
+    </style>
+  </head>
+  <body class="page-top">
+    <div id="wrapper">
+      <div class="transparent-container">
+        <div class="bg"></div>
+        <button class="btn-bg-toggle">Switch</button>
+        <button id="add" class="btn-add">Add</button>
+        <div class="modal-layer">
+          <div class="modal-back"></div>
+          <div class="modal-inner"></div>
+          <button class="btn-close01"></button>
+        </div>
+      </div>
+    </div>
+    <script>
+      var transcripts_add;
+      
+      var MEDIA_MAX_SIZE = 350; // ランダム配置される画像の最大サイズ
+      var MEDIA_MIN_SIZE = MEDIA_MAX_SIZE / 3; // ランダム配置される画像の最小サイズ
+      
+      
+    </script>
+    <script src="./assets/js/jquery.js"></script>
+    <script src="./assets/js/jquery.randomElements.js"></script>
+    <script src="./assets/js/sample-data.js"></script>
+    <script src="./assets/js/bundle.js"></script>
+    <script>
+      document.getElementById('add').addEventListener('click', function() {
+          transcripts_add(initial_transcripts);
+      }, false);
+    </script>
+  </body>
+</html>

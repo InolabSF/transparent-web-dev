@@ -1,0 +1,194 @@
+
+.transparent-container {
+    position: relative;
+    width: 98%;
+    min-height: 96vh;
+    margin: 0 auto;
+    padding: 2% 0;
+
+    .post {
+        position: relative;
+        z-index: 1;
+        padding: 240px 0;
+
+        @media #{$mq_large} {
+            padding: 180px 0;
+        }
+
+        &.no-content {
+            padding: 40px 0;
+        }
+
+        .comment {
+            position: relative;
+            left: 50%;
+            z-index: 10;
+
+            width: #{500 / $retina}px;
+            padding: #{60 / $retina}px;
+
+            /* background-color: rgba(#ea5350, 0.9); */
+            box-shadow: 7px 7px 45px 5px rgba(0,0,0,.5);
+
+            pointer-events: none;
+
+            transition: all 200ms ease;
+            opacity: 0;
+            transform: translate(0, 50px);
+
+            @media #{$mq_large} {
+                width: 250px;
+                padding: 30px;
+
+                font-size: 12px;
+            }
+
+            .comment-user-icon {
+                width: #{80 / $retina}px;
+                height: #{80 / $retina}px;
+
+                margin: 0 0 #{35 / $retina}px;
+                border-radius: 50%;
+
+                background-image: url('http://res.cloudinary.com/negic/image/upload/v1519805067/img_user_default01.png');
+                background-size: 50% auto;
+                background-position: 50% 50%;
+                background-color: rgba(#003dc1, 0.3);
+
+                @media #{$mq_large} {
+                    width: 40px;
+                    height: 40px;
+                    margin: 0 0 16px;
+                }
+            }
+
+            .comment-text {
+                color: #fff;
+            }
+        }
+
+        .media-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+
+            .media-photo {
+                position: absolute;
+                top: 0;
+                left: 0;
+
+                width: 100%;
+                height: auto !important;
+
+                .img {
+                    width: 100%;
+                    height: auto !important;
+
+                    box-shadow: 7px 7px 45px 5px rgba(0,0,0,.5);
+                    background-color: #000;
+
+                    transition: all 200ms ease;
+                    opacity: 0;
+                    transform: translate(0, 50px);
+                }
+                @for $i from 1 through 10 {
+                    &:nth-child(#{$i}) {
+                        .img {
+                            transition-delay: #{80 * $i}ms;
+                        }
+                    }
+                }
+
+                .favicon {
+                    width: auto;
+                    height: 30px;
+
+                    position: absolute;
+                    bottom: 10px;
+                    right: 10px;
+                    opacity: 0;
+                    transition: all 200ms ease;
+                    transition-delay: 500ms;
+                }
+
+                @media #{$mq_large} {
+
+                    transition: all 200ms ease;
+                    /* transform: scale3d(1); */
+                    opacity: 1;
+
+                    &:hover {
+                        z-index: 15;
+                        transform: scale(1.1);
+                    }
+                }
+            }
+        }
+
+        &.transit {
+            .comment {
+                opacity: 1;
+                transform: translate(0, 0);
+            }
+
+            .media-container {
+                .media-photo {
+                    .img {
+                        opacity: 1;
+                        transform: translate(0, 0);
+                    }
+                    .favicon {
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+    }
+
+    .bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 0;
+        width: 100%;
+        height: 100%;
+        background-position: 50% 50%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-color: #000;
+
+        &.black {
+            background-image: none;
+        }
+    }
+
+    .btn-add,
+    .btn-bg-toggle {
+        position: fixed;
+        z-index: 100;
+
+        width: 200px;
+        padding: 10px 20px;
+        border-radius: 30px;
+
+        background: #fff;
+
+        color: #000;
+        text-align: center;
+
+        opacity: 0.8;
+    }
+
+    .btn-add {
+        top: 80px;
+        right: 10px;
+    }
+
+    .btn-bg-toggle {
+        top: 10px;
+        right: 10px;
+    }
+}

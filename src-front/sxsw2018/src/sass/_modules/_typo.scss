@@ -1,0 +1,52 @@
+
+.logo01 {
+    background-image: url(../img/common/logo01.png);
+    background-repeat: no-repeat;
+    width: 59px;
+    height: 21px;
+    background-size: 59px 21px;
+    display: block;
+    @include textHidden();
+
+    @media #{$mq_medium} {
+        background-image: url(../img/common/logo01_sp.png);
+        width: 74px;
+        height: 26px;
+        background-size: 74px auto;
+    }
+}
+
+
+.logo02 {
+    background-image: url(../img/common/logo02.png);
+    background-repeat: no-repeat;
+    width: 87px;
+    height: 123px;
+    background-size: 87px 123px;
+    display: block;
+    @include textHidden();
+
+    @media #{$mq_medium} {
+        background-image: url(../img/common/logo02_sp.png);
+        width: 124px;
+        height: 176px;
+        background-size: 124px 176px;
+    }
+}
+
+.logo03 {
+    background-image: url(../img/common/logo03.png);
+    background-repeat: no-repeat;
+    width: 119px;
+    height: 34px;
+    background-size: 119px auto;
+    display: block;
+    @include textHidden();
+
+    @media #{$mq_medium} {
+        background-image: url(../img/common/logo03_sp.png);
+        width: 239px;
+        height: 67px;
+        background-size: 239px 67px;
+    }
+}

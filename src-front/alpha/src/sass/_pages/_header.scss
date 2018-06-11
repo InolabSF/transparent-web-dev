@@ -1,0 +1,255 @@
+#global-header {
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+
+    width: 100%;
+    height: 80px;
+
+    background-color: #f9f8f8;
+
+    @include clearfix();
+
+    .logo01 {
+        float: left;
+        margin-top: 14px;
+        margin-left: 50px;
+
+        position: relative;
+        overflow: visible;
+
+        &:after {
+            content: '';
+            width: 1px;
+            height: 36px;
+            background-color: #d6d6d6;
+
+            position: absolute;
+            right: -20px;
+            top: 10px;
+        }
+    }
+
+    .txt-recording {
+        display: flex; /* 子要素をflexboxで揃える */
+        flex-direction: column; /* 子要素をflexboxにより縦方向に揃える */
+        justify-content: center; /* 子要素をflexboxにより中央に配置する */
+        padding: 0 24px;
+        width: 55%;
+        height: 100%;
+
+        font-size: 12px;
+        color: #999;
+
+        float: right;
+
+    }
+
+    .btn-recording {
+        float: right;
+        position: relative;
+
+        width: 160px;
+        height: 80px;
+
+        background-repeat: no-repeat;
+        background-position: 30px 50%, 0px 50%;
+
+        cursor: pointer;
+        user-select: none;
+
+        span {
+            position: absolute;
+
+            color: #fff;
+            font-size: 16px;
+            font-family: $robot-font-family;
+            font-weight: 500;
+            line-height: 1;
+        }
+
+        &.rec {
+            background-color: #dadada;
+            background-image: url("https://res.cloudinary.com/negic/image/upload/v1528136024/ico01.png");
+            background-size: 20px auto;
+
+            span {
+                top: 34px;
+                left: 72px;
+            }
+
+            .r1 { display: none; }
+            .r2 { display: block; }
+        }
+
+        &.recording {
+            background-color: #f13c33;
+            background-image: url("https://res.cloudinary.com/negic/image/upload/v1528136024/ico01.png"), url("https://res.cloudinary.com/negic/image/upload/v1528136023/ico04.png");
+            background-size: 20px auto, 8px auto;
+
+            span {
+                top: 30px;
+                left: 60px;
+            }
+
+            .r1 { display: block; }
+            .r2 { display: none; }
+            .loader {display: block;}
+        }
+
+        .loader,
+        .loader:before,
+        .loader:after {
+            border-radius: 50%;
+            width: 9px;
+            height: 9px;
+            animation-fill-mode: both;
+            animation: load7 1s infinite ease-in-out;
+        }
+        .loader {
+            position: absolute;
+            top: 45px;
+            left: 55%;
+            transform: translateZ(0);
+            animation-delay: -0.16s;
+            color: #fff;
+            display: none;
+
+            &:before,
+            &:after {
+                content: '';
+                position: absolute;
+                top: 0;
+            }
+            &:before {
+                left: -10px;
+                -webkit-animation-delay: -0.32s;
+                animation-delay: -0.32s;
+            }
+            &:after {
+                left: 10px;
+            }
+        }
+
+        @keyframes load7 {
+            0%, 80%, 100% {
+                box-shadow: 0 9px 0 -2px;
+            }
+            40%
+            {
+                box-shadow: 0 9px 0 0px;
+            }
+        }
+    }
+
+    .btn-menu01 {
+        float: right;
+    }
+}
+
+
+#global-menu {
+    position: fixed;
+    top: 80px;
+    right: 0;
+    z-index: 10;
+
+    width: 240px;
+    height: 100%;
+
+    padding: 0 30px 50px;
+
+    background-color: #eeeeee;
+
+    display: none;
+
+    .inner {
+        overflow-y: scroll;
+        width: 100%;
+        height: 100%;
+        padding: 50px 0;
+    }
+
+    .form-keyword {
+        position: relative;
+        margin-bottom: 30px;
+
+        .tit {
+            color: #555555;
+            font-size: 14px;
+            font-family: $robot-font-family;
+            font-weight: 700;
+        }
+
+        .input-keyword {
+            color: #000;
+
+            width: 100%;
+
+            margin: 0 0 15px;
+            border: 0;
+            border-bottom: 2px solid #d6d6d6;
+
+            background-color: rgba(#000, 0);
+        }
+
+        .input-submit {
+            color: #595959;
+            font-size: 12px;
+            text-align: center;
+            line-height: 1;
+
+            width: 100%;
+            padding: 9px 0;
+            border-radius: 15px;
+
+            background-color: #fff;
+        }
+    }
+
+    .keyword-list {
+        min-height: 100px;
+        margin-bottom: 30px;
+
+        .list-item {
+            display: inline-block;
+
+            color: #333;
+            font-size: 12px;
+            font-family: $robot-font-family;
+            font-weight: 500;
+            line-height: 1;
+
+            width: auto;
+            margin: 0 6px 6px 0;
+            padding: 9px 40px 9px 14px;
+            border-radius: 15px;
+
+            background-color: #f9c03c;
+            background-image: url('https://res.cloudinary.com/negic/image/upload/v1528136023/ico02.png');
+            background-position: right 10px top 50%;
+            background-size: 12px auto;
+
+            cursor: pointer;
+            user-select: none;
+        }
+    }
+
+    .setting-btn-area {
+        margin-bottom: 30px;
+
+        .tit {
+            color: #555555;
+            font-size: 14px;
+            font-family: $robot-font-family;
+            font-weight: 700;
+        }
+
+    }
+
+    &.is-active {
+        display: block;
+    }
+}

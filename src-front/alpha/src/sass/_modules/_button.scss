@@ -1,0 +1,222 @@
+.btn-style01 {
+    display: inline-block;
+
+    color: #fff;
+    font-size: 12px;
+    text-align: center;
+    line-height: 1;
+
+    /* width: 100%; */
+    padding: 9px 30px;
+    border-radius: 15px;
+
+    background-color: #f9c03c;
+
+}
+
+
+.btn-menu01 {
+    $width-line: 24px;
+    $height-line: 2px;
+    $height-icon: 16px;
+    $rotation: -45deg;
+    $translateY: ($height-icon / 2);
+    $translateX: 0;
+    $line-color: #333;
+    $transition-speed: 400ms;
+    width: 80px;
+    height: 80px;
+
+    background: no-repeat;
+
+    .btn-inner {
+        position: relative;
+        display: block;
+        margin: auto;
+        padding: 0;
+        width: $width-line;
+        height: $height-icon;
+        background: no-repeat;
+        transition: transform $transition-speed ease;
+
+        top: 1px;
+        left: 1px;
+    }
+
+    .line {
+        position: absolute;
+        left: 0;
+        display: block;
+        width: $width-line;
+        height: $height-line;
+        background-color: $line-color;
+        transition: all $transition-speed ease;
+
+        &.line-1 { top: 0; }
+        &.line-2 { top: 50%; }
+        &.line-3 { top: 100%; }
+    }
+
+    &.is-active {
+        .btn-inner {
+            transform: rotate($rotation * 6);
+
+            .line-1 { transform: translate($translateX, $translateY) rotate($rotation * 3); }
+            .line-2 { transform: rotate($rotation * 3) scale(0); }
+            .line-3 { transform: translate($translateX, $translateY * -1) rotate($rotation); }
+        }
+    }
+}
+
+
+.btn-toggle01 {
+    width: 100%;
+
+    border-radius: 15px;
+
+    background-color: rgba(#f9c03c, 0.2);
+    transition: all 200ms ease;
+
+    cursor: pointer;
+
+    user-select: none;
+
+    .toggle {
+        position: relative;
+        left: 0;
+
+        text-align: center;
+
+        width: 90px;
+        height: 30px;
+
+        background: #fff;
+
+        border-radius: 15px;
+
+        transition: all 200ms ease;
+
+        span {
+            color: #f9c03c;
+            font-size: 12px;
+            line-height: 28px;
+
+            position: absolute;
+            left: 40%;
+            top: 0;
+
+            transition: all 200ms ease;
+
+            &.on { opacity: 1; }
+            &.off { opacity: 0; }
+        }
+    }
+
+
+    &.is-active {
+        background-color: #dadada;
+
+        .toggle {
+            left: 90px;
+
+            span {
+                color: #dadada;
+
+                &.on { opacity: 0; }
+                &.off { opacity: 1; }
+            }
+        }
+    }
+}
+
+.btn-toggle02 {
+    width: 100%;
+
+    border-radius: 5px;
+    overflow: hidden;
+
+    background-color: #fff;
+
+    cursor: pointer;
+
+    user-select: none;
+
+    @include clearfix;
+
+    div {
+        width: 33.33%;
+        height: 50px;
+        float: left;
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+
+        color: transparent;
+        transition: background-color ease 200ms;
+
+
+        &.photo {
+            background-image: url("https://res.cloudinary.com/negic/image/upload/v1528136023/ico05.png");
+            background-size: 26px auto;
+
+            &.is-active {
+                background-image: url("https://res.cloudinary.com/negic/image/upload/v1528136024/ico05_on.png");
+                background-color: #2dadff;
+            }
+        }
+        &.news {
+            background-image: url("https://res.cloudinary.com/negic/image/upload/v1528136023/ico06.png");
+            background-size: 24px auto;
+
+            &.is-active {
+                background-image: url("https://res.cloudinary.com/negic/image/upload/v1528136024/ico06_on.png");
+                background-color: #92e023;
+            }
+        }
+        &.movie {
+            background-image: url("https://res.cloudinary.com/negic/image/upload/v1528136023/ico07.png");
+            background-size: 27px auto;
+
+            &.is-active {
+                background-image: url("https://res.cloudinary.com/negic/image/upload/v1528136024/ico07_on.png");
+                background-color: #f13c33;
+            }
+        }
+    }
+
+}
+
+.btn-close01 {
+    width: 30px;
+    height: 30px;
+
+    background-image: url("https://res.cloudinary.com/negic/image/upload/v1528136023/ico03.png");
+    background-position: 50% 50%;
+    background-color: transparent;
+    background-size: 24px auto;
+}
+
+.btn-close02 {
+    width: 30px;
+    height: 30px;
+
+    background-image: url('https://res.cloudinary.com/negic/image/upload/v1527732494/ico02.png');
+    background-position: 50% 50%;
+    background-color: #f9c03c;
+    background-size: 12px auto;
+
+    border-radius: 50%;
+}
+
+
+.btn-arrow01 {
+    width: 15px;
+    height: 24px;
+
+    background-image: url('https://res.cloudinary.com/negic/image/upload/v1528136024/ico08.png');
+    background-size: 15px 24px;
+    background-position: 50% 50%;
+    background-color: transparent;
+
+    &.right {  }
+    &.left { transform: rotateY(180deg); }
+}
