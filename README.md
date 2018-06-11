@@ -144,7 +144,7 @@ $ bundle install
 
   APIエンドポイント例）<https://trnspt.com/api/transcripts/2>
 
-### 初期コンテンツロード（検索キーワード・関連コンテンツ）の取得
+### 初期コンテンツロード（検索キーワード, 関連コンテンツ）の取得
 
 "GET", "/api/transcripts/" + wall_id
 
@@ -287,7 +287,7 @@ $ bundle install
     }
 ] -->
 
-### 更新情報ロード（検索キーワード・関連コンテンツ）の取得
+### 更新情報ロード（検索キーワード, 関連コンテンツ）の取得
 
 "GET", "/api/transcripts/" + wall_id + "/" + search_last_index + "/" + related_content_last_index
 
@@ -398,7 +398,7 @@ $ bundle install
 
     }
 
-### 過去コンテンツ（初期コンテンツより古いもの）のロード（検索キーワード・関連コンテンツ）の取得
+### 過去コンテンツ（初期コンテンツより古いもの）のロード（検索キーワード, 関連コンテンツ）の取得
 
 "GET", "/api/transcripts/" + wall_id + "/" + search_first_index
 
