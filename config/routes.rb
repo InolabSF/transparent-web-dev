@@ -12,6 +12,9 @@ Rails.application.routes.draw do
   get '/alpha/test/en',   to: 'home#alpha_test_en'
   get '/alpha/test/ja',   to: 'home#alpha_test_ja'
 
+  get '/alpha/test-amana/en',   to: 'home#amana_test_en'
+  get '/alpha/test-amana/ja',   to: 'home#amana_test_ja'
+
   # get '/alpha/wall/:wall_id/en',   to: 'home#alpha_en'
   # get '/alpha/wall/:wall_id/ja',   to: 'home#alpha_ja'
 

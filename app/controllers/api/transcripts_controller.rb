@@ -39,10 +39,15 @@ class Api::TranscriptsController < ApplicationController
   def create
 
     default_nlp = 'MS'
-    is_test_mode = true
     is_word_only = true
     is_concurrent = true
     multiple_search = true
+    is_test_mode = false
+
+    #amana test
+    test_wall = [1, 9, 15, 16]
+    is_test_mode = true if test_wall.include?(params[:wallID])
+    puts(is_test_mode)
 
     @transcript = create_transcript(params, default_nlp, is_test_mode, is_word_only, is_concurrent, multiple_search)
 

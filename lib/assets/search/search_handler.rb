@@ -30,7 +30,7 @@ end
 def test_alpha(word, search, transcript, langcode, is_concurrent, search_type)
 
   if search_type == 0
-    contents = image_search(word, search, transcript, langcode, is_concurrent)
+    contents = image_search_amana(word, search, transcript, langcode, is_concurrent)
   elsif search_type == 1
     contents = news_search(word, search, transcript, langcode, is_concurrent)
   elsif search_type == 2
@@ -43,13 +43,12 @@ def test_alpha(word, search, transcript, langcode, is_concurrent, search_type)
 end
 
 def production_alpha(word, search, transcript, langcode, is_concurrent, search_type)
-  contents = []
 
-  if search_type == 1
+  if search_type == 0
     contents = image_search(word, search, transcript, langcode, is_concurrent)
-  elsif search_type == 2
+  elsif search_type == 1
     contents = news_search(word, search, transcript, langcode, is_concurrent)
-  elsif search_type == 3
+  elsif search_type == 2
     contents = video_search(word, search, transcript, langcode, is_concurrent)
   else
     contents = image_search(word, search, transcript, langcode, is_concurrent)
@@ -92,6 +91,25 @@ def image_search(word, search, transcript, langcode, is_concurrent)
   end
 
   # threads.each { |t| t.join }
+
+  return contents
+end
+
+def image_search_amana(word, search, transcript, langcode, is_concurrent)
+  contents = []
+
+  threads = []
+  threads << Thread.new do
+    ActiveRecord::Base.connection_pool.with_connection do
+      amana(word, search, transcript, langcode, is_concurrent, 9, contents)
+    end
+  end
+
+  if !is_concurrent
+
+    threads.each { |t| t.join }
+
+  end
 
   return contents
 end
@@ -194,6 +212,75 @@ def ms_image_search(text, search, transcript, langcode, is_concurrent, num, cont
     if is_concurrent
       save_related_contents(transcript, search, contents_list_local)
     end
+end
+
+def amana(text, search, transcript, langcode, is_concurrent, num, contents_list)
+
+  begin
+
+    amana_key = ENV['AMANA_KEY']
+
+    apiUrl = 'api02.amanaimages.com'
+    uri = "http://" + apiUrl
+
+    conn = Faraday::Connection.new(:url => uri) do |builder|
+      builder.use Faraday::Request::UrlEncoded
+      builder.use Faraday::Response::Logger
+      builder.use Faraday::Adapter::NetHttp
+    end
+
+    requrl = '/api/trnspt/searchImage'
+
+    res = conn.get do |req|
+       req.url requrl
+       req.headers['Content-Type'] = 'application/json'
+       req.params['code'] = amana_key
+       req.params['keyword'] = text
+       req.params['limit'] = num
+    end
+
+    body = JSON.parse(res.body)
+    puts(body)
+
+    service = 'Amanaimages API'
+    condition = {}
+    condition.store('service', service)
+    condition.store('word', text)
+
+    contents_list_local = []
+
+    for item in body['items']
+      content = {}
+
+      title = item['title']
+      desc = item['author']
+
+      img_url = item['previewUrl']
+      url = img_url
+      source = 'amanaimages.com'
+
+      content.store('title', title)
+      content.store('desc', desc)
+      content.store('url', url)
+      content.store('img_url', img_url)
+      # content.store('content_type', 'Image')
+      content.store('content_type', 'webpage')
+      content.store('source', source)
+      content.store('condition', condition)
+
+      contents_list.push(content)
+      contents_list_local.push(content)
+
+    end
+
+    if is_concurrent
+      save_related_contents(transcript, search, contents_list_local)
+    end
+
+  rescue => error
+    puts error
+  end
+
 end
 
 def unsplash(text, search, transcript, langcode, is_concurrent, num, contents_list)

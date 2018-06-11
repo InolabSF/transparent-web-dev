@@ -41,13 +41,11 @@
 </head>
 <body class="<%= @language_code[0, 2] %>">
 
-<!-- ↑↑↑　バックエンド編集分 ↑↑↑　-->
-
 <body class="ja">
   <div id="wrapper">
     <header id="global-header">
       <h1 id="logo" class="logo01">transparent</h1>
-      <button id="menu-btn" class="btn-menu01 tap is-active">
+      <button id="btn-menu" class="btn-menu01 tap is-active">
         <div class="btn-inner"><span class="line line-1"></span><span class="line line-2"></span><span class="line line-3"></span></div>
       </button>
       <div id="btn-recording" class="btn-recording rec"><span class="r1">Recording</span><span class="r2">REC</span>
@@ -79,9 +77,9 @@
         <div class="setting-btn-area">
           <p class="tit">Media</p>
           <div id="on-switch-media" class="btn-toggle02 on-switch-media">
-            <div data-type="0" class="media photo is-active">Photo</div>
-            <div data-type="1" class="media news">News</div>
-            <div data-type="2" class="media movie">Movie</div>
+            <div id="btn-image" data-type="0" class="media photo is-active">Photo</div>
+            <div id="btn-webpage" data-type="1" class="media news">News</div>
+            <div id="btn-video" data-type="2" class="media movie">Movie</div>
           </div>
         </div>
       </div>
@@ -93,8 +91,6 @@
   <script>
     var TRANSCRIPTS = [];
   </script>
-
-  <!-- ↓↓↓　バックエンド編集分　↓↓↓ -->
 
   <div id="warning">
       <h2 style="display:none">Speech Recognition SDK not found.</h1>
@@ -117,6 +113,37 @@
     var menu_hidden = false;
     var text_hidden = false;
     var comment_hidden = false;
+
+    // function fetchContents(){
+    //   var instance = axios.create({
+    //     baseURL: '/api',
+    //     headers: {
+    //       'ContentType': 'application/json'
+    //     },
+    //     responseType: 'json'
+    //   });
+    //   instance.get('/transcripts/' + wall_id ).then(function (response){
+    //
+    //     init_setting.bind(this);
+    //
+    //     return response
+    //
+    //   }).then(function (response){
+    //
+    //     searches = response.data.searches;
+    //     related_contents = response.data.related_contents;
+    //     search_last_index = response.data.search_last_index;
+    //     search_first_index = response.data.search_first_index;
+    //     related_content_last_index = response.data.related_content_last_index;
+    //
+    //     TRANSCRIPTS.appendContents({ searches, related_contents });
+    //
+    //   }, function (error) {
+    //       console.log(error);
+    //   }).then(function (response){
+    //     loadContents();
+    //   });
+    // }
 
     function fetchContents(){
       var instance = axios.create({
@@ -234,16 +261,53 @@
 
     }
 
+    function getCookieArray(){
+      var arr = new Array();
+      if(document.cookie != ''){
+        var tmp = document.cookie.split('; ');
+        for(var i=0;i<tmp.length;i++){
+          var data = tmp[i].split('=');
+          arr[data[0]] = decodeURIComponent(data[1]);
+        }
+      }
+      return arr;
+    }
+
+    function init_setting(){
+      console.log( 'cookies' );
+      var cookies = getCookieArray();
+      console.log( cookies );
+
+      if (cookies['menu_hidden'] == 'true') {
+        document.getElementById('btn-menu').click();
+      }
+
+      if (cookies['text_hidden'] == 'true') {
+        document.getElementById('txt-toggle').click();
+      }
+
+      if (cookies['comment_hidden'] == 'true') {
+        document.getElementById('comment-toggle').click();
+      }
+
+      if (cookies['media_type'] == '1'){
+        document.getElementById('btn-webpage').click();
+      }else if (cookies['media_type'] == '2') {
+        document.getElementById('btn-video').click();
+      }
+
+    };
+
+    // window.addEventListener('load', init_setting.bind(this), false);
+
     window.addEventListener('load', function() {
         fetchContents();
     }, false);
 
   </script>
 
-  <!-- ↑↑↑　バックエンド編集分 ↑↑↑　-->
-
   <script>
-    document.getElementById('menu-btn').addEventListener('click', function() {
+    document.getElementById('btn-menu').addEventListener('click', function() {
 
         setTimeout(function() {
 
@@ -254,8 +318,13 @@
               var dimensionValue = 'on';
             }
 
-            console.log(dimensionValue);
-            ga('set', 'dimension5', dimensionValue);
+            document.cookie = 'menu_hidden=' + menu_hidden
+
+            if(ga === undefined) {
+              console.log('undefined');
+            }else {
+              ga('set', 'dimension5', dimensionValue);
+            };
 
         });
 
@@ -278,9 +347,13 @@
             }else {
               var dimensionValue = 'on';
             }
+            document.cookie = 'text_hidden=' + text_hidden
 
-            console.log(dimensionValue);
-            ga('set', 'dimension1', dimensionValue);
+            if(ga === undefined) {
+              console.log('undefined');
+            }else {
+              ga('set', 'dimension1', dimensionValue);
+            };
 
         });
     }, false);
@@ -295,8 +368,13 @@
               var dimensionValue = 'on';
             }
 
-            console.log(dimensionValue);
-            ga('set', 'dimension2', dimensionValue);
+            document.cookie = 'comment_hidden=' + comment_hidden
+
+            if(ga === undefined) {
+              console.log('undefined');
+            }else {
+              ga('set', 'dimension2', dimensionValue);
+            };
 
         });
     }, false);
@@ -307,6 +385,7 @@
             // メディアのタイプの取得
             media_type = TRANSCRIPTS.getMediaType()
             console.log(media_type);
+            document.cookie = 'media_type=' + media_type
 
             if(media_type==0) {
               var dimensionValue = 'image';
@@ -316,7 +395,11 @@
               var dimensionValue = 'video';
             };
 
-            ga('set', 'dimension3', dimensionValue);
+            if(ga === undefined) {
+              console.log('undefined');
+            }else {
+              ga('set', 'dimension3', dimensionValue);
+            };
 
         });
     }, false);
@@ -328,13 +411,9 @@
             related_content_id = $(event.currentTarget).closest('.grid-item').attr('data-relatedContentId')
 
             if (related_content_id){
-
                 deleteContents(related_content_id)
-
             } else {
-
                 deleteSearch(search_id)
-
             }
 
         }, 100);
@@ -356,8 +435,6 @@
     }, false);
 
   </script>
-
-  <!-- ここから　藤森追加部分 -->
 
   <!-- Browser Hooks -->
   <script>
@@ -397,7 +474,11 @@
 
               }
 
-              ga('set', 'dimension4', dimensionValue);
+              if(ga === undefined) {
+                console.log('undefined');
+              }else {
+                ga('set', 'dimension4', dimensionValue);
+              };
               // TRANSCRIPTS.toggleRecordhing();
 
             });
