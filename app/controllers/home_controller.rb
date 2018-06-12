@@ -7,6 +7,14 @@ class HomeController < ApplicationController
   end
 
   def top
+    if params[:lang] == 'jp'
+      render :file => "home/web/alpha/index-jp.php"
+    else
+      render :file => "home/web/alpha/index.php"
+    end
+  end
+
+  def top_sxsw
     render :file => "home/web/dest/top"
   end
 

@@ -1,0 +1,157 @@
+<!-- <?php
+if (isset($_GET['lang'])) {
+	if($_GET['lang']=='jp'){
+		include_once 'index-jp.php';
+		exit;
+	}
+}
+?> -->
+<!DOCTYPE html>
+<html lang="en">
+<head prefix="og: http://ogp.me/sns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/website#">
+	<meta charset="UTF-8">
+
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width">
+    <meta name="format-detection" content="telephone=no">
+	<meta http-equiv="imagetoolbar" content="no">
+
+	<title>Transparent</title>
+
+	<meta name="keywords" content="Transparent">
+	<meta name="description" content="Transparent, the first audio recognition tool that serves a stream of content that follows your verbal conversation.">
+	<!-- SNS Share -->
+	<meta property="og:title" content="Transparent">
+	<meta property="og:url" content="https://trnspt.com/">
+	<meta property="og:description" content="Transparent, the first audio recognition tool that serves a stream of content that follows your verbal conversation.">
+	<meta property="og:type" content="website">
+	<meta property="og:image" content="https://res.cloudinary.com/dvztbxjyp/image/upload/v1528769428/ogp.png">
+    <meta name="twitter:card" content="summary_large_image">
+	<!-- /SNS Share -->
+	<link rel="shortcut icon" href="https://res.cloudinary.com/dvztbxjyp/image/upload/v1528769428/favicon.ico" type="image/x-icon">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/notosansjp.css">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+
+	<!-- <link rel="stylesheet" type="text/css" href="assets/css/base.css" media="all"> -->
+	<%= stylesheet_link_tag    'web-alpha', media: 'all', 'data-turbolinks-track': 'reload' %>
+	<%= javascript_include_tag 'web-alpha-manifest', 'data-turbolinks-track': 'reload'  %>
+	<!-- <script type="text/javascript" src="assets/js/modernizr.min.js"></script> -->
+</head>
+<body id="top" class="en">
+	<div id="wrapper">
+		<div id="content" ontouchstart="">
+			<noscript>
+				<dl id="browserMsg">
+					<dt>Please check the setting of JavaScript</dt>
+					<dd>Your browser do not arrow or support JavaScript.<br>
+					Our page is using JavaScript to show some contents.</dd>
+				</dl>
+			</noscript>
+			<section id="intro">
+				<h1 class="MV">
+					<picture>
+						<source media="(max-width:600px)" srcset="https://res.cloudinary.com/dvztbxjyp/image/upload/v1528769428/mv_m.jpg">
+						<source media="(min-width:601px)" srcset="https://res.cloudinary.com/dvztbxjyp/image/upload/v1528769428/mv.jpg">
+						<img src="https://res.cloudinary.com/dvztbxjyp/image/upload/v1528769428/mv.jpg" alt="Transparent">
+					</picture>
+				</h1>
+				<ul class="lang">
+					<li><a class="active" href="/">EN</a></li>
+					<li><a href="/?lang=jp">JP</a></li>
+				</ul>
+				<div class="textIntro jsMainText">
+					<h1 class="text1 textEn">See? Now you do.</h1>
+					<p class="text3">The feeling of unease that we all experience when we can't make ourselves understood through words alone is finally about to become a thing of the past. <br>We are soon about to enter an age where technology allows us to "see" our conversations! </p>
+					<p class="btn1 cSP"><a class="jsTouchEffect" href="mailto:transparent@d0kid0ki.com">CONTACT US</a></p>
+				</div>
+				<p class="btn1 cPC"><a class="jsTouchEffect" href="mailto:transparent@d0kid0ki.com">CONTACT US</a></p>
+			</section>
+
+			<section id="concept" class="jsScene cSection">
+				<div class="cSectionInner">
+					<h2 class="tagline textEn">Communication Visualization</h2>
+					<div class="cTextArea">
+						<p>Transparent is a visualization technology that promotes smooth conversation, using the latest ASR (Automatic Speech Recognition) and NLP (Natural Language Processing) technologies. <br>
+						<br>
+						As soon as a person speaks, related information is instantly visually displayed in real time via an internet connection, making it possible to convey more information than is contained in the words actually spoken. </p>
+					</div>
+					<figure class="chart1">
+						<picture>
+							<source media="(max-width:750px)" srcset="https://res.cloudinary.com/dvztbxjyp/image/upload/v1528769428/chart1_m.png">
+							<source media="(min-width:751px)" srcset="https://res.cloudinary.com/dvztbxjyp/image/upload/v1528769428/chart1.png">
+							<img src="https://res.cloudinary.com/dvztbxjyp/image/upload/v1528769428/chart1.png" alt="">
+						</picture>
+					</figure>
+				</div>
+			</section>
+
+			<section id="vision" class="jsScene cSection">
+				<div class="cSectionInner">
+					<h2 class="cTitle">
+						<picture>
+							<source media="(max-width:750px)" srcset="https://res.cloudinary.com/dvztbxjyp/image/upload/v1528769428/title_vision_m.png">
+							<source media="(min-width:751px)" srcset="https://res.cloudinary.com/dvztbxjyp/image/upload/v1528770657/title_vision.png">
+							<img src="https://res.cloudinary.com/dvztbxjyp/image/upload/v1528770657/title_vision.png" alt="VISION">
+						</picture>
+					</h2>
+					<h3 class="cCatch">Who knew that <br class="cPC">a world where we are understood <br class="cPC">could feel so satisfying!?</h3>
+					<div class="cTextArea">
+						<p>Without even knowing it, we have gradually grown used to not being understood at times in our daily lives. <br>
+						But when conversations go more smoothly and make more sense, it actually feels really great! <br>
+						Transparent is a technology that aims toward a world where conversations can be truly understood. </p>
+					</div>
+				</div>
+			</section>
+
+			<section id="media" class="jsScene cSection">
+				<div class="cSectionInner">
+					<h2 class="cTitle">
+						<picture>
+							<source media="(max-width:750px)" srcset="https://res.cloudinary.com/dvztbxjyp/image/upload/v1528769428/title_media_m.png">
+							<source media="(min-width:751px)" srcset="https://res.cloudinary.com/dvztbxjyp/image/upload/v1528771822/title_media.png">
+							<img src="https://res.cloudinary.com/dvztbxjyp/image/upload/v1528771822/title_media.png" alt="MEDIA">
+						</picture>
+					</h2>
+					<ul class="banners">
+						<li><a class="jsTouchEffect" href="http://thebridge.jp/2018/03/sxsw-2018-interactive-trade-show-day1-snapshots" target="_blank"><img src="https://res.cloudinary.com/dvztbxjyp/image/upload/v1528769428/logo_bridge.png" width="240" height="90" alt="the bridge"></a></li>
+						<li><a class="jsTouchEffect" href="https://www.pronews.jp/special/20180316151632.html" target="_blank"><img src="https://res.cloudinary.com/dvztbxjyp/image/upload/v1528769428/logo_pronews.png" width="240" height="90" alt="pronews"></a></li>
+						<li><a class="jsTouchEffect" href="http://trendy.nikkeibp.co.jp/atcl/pickup/15/1003590/032001625/" target="_blank"><img src="https://res.cloudinary.com/dvztbxjyp/image/upload/v1528769428/logo_trendy.png" width="240" height="90" alt="NIKKEI TRENDY"></a></li>
+					</ul>
+				</div>
+			</section>
+
+			<section id="partner" class="jsScene cSection">
+				<div class="cSectionInner">
+					<h2 class="cTitle">
+						<picture>
+							<source media="(max-width:750px)" srcset="https://res.cloudinary.com/dvztbxjyp/image/upload/v1528769428/title_partner_m.png">
+							<source media="(min-width:751px)" srcset="https://res.cloudinary.com/dvztbxjyp/image/upload/v1528769428/title_partner.png">
+							<img src="https://res.cloudinary.com/dvztbxjyp/image/upload/v1528769428/title_partner.png" alt="PARTNER WANTED">
+						</picture>
+					</h2>
+					<div class="cTextArea">
+						<p>We are looking for people who empathize with our vision and would like to join us in our quest to develop "understandable conversation technology". <br>We're currently recruiting partners from a diverse range of areas, including spatial, hardware, and software fields. </p>
+						<p class="btn1"><a class="jsTouchEffect" href="mailto:transparent@d0kid0ki.com">CONTACT US</a></p>
+					</div>
+				</div>
+			</section>
+
+		</div>
+		<!-- //#content -->
+		<footer id="footer" class="jsScene">
+			<dl class="sns">
+				<dt class="textEn">Find us on social media</dt>
+				<dd><a class="md" href="https://medium.com/@iguchijp" target="_blank"><img src="https://res.cloudinary.com/dvztbxjyp/image/upload/v1528769428/ico_md.png" width="80" height="80" alt="Medium"></a></dd>
+				<dd><a class="tw" href="https://twitter.com/Transparent_Web" target="_blank"><img src="https://res.cloudinary.com/dvztbxjyp/image/upload/v1528769428/ico_tw.png" width="80" height="80" alt="Twitter"></a></dd>
+				<dd><a class="fb" href="https://www.facebook.com/TransparentWeb/" target="_blank"><img src="https://res.cloudinary.com/dvztbxjyp/image/upload/v1528769428/ico_fb.png" width="80" height="80" alt="Facebook"></a></dd>
+				<dd><a class="insta" href="https://www.instagram.com/transparent_web/" target="_blank"><img src="https://res.cloudinary.com/dvztbxjyp/image/upload/v1528769428/ico_in.png" width="80" height="80" alt="Instagram"></a></dd>
+			</dl>
+			<p id="copyright">&copy;2018 Dokidoki, Inc. All Rights Reserved.</p>
+		</footer>
+		<!-- //#footer -->
+	</div>
+	<!-- //#wrapper -->
+
+	<!-- <script type="text/javascript" src="assets/js/mods.js"></script> -->
+</body>
+</html>
