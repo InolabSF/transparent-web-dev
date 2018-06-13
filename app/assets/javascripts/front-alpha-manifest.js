@@ -18,3 +18,6 @@
 //= require front/alpha/js/bundle.js
 //= require ms/speech.sdk.bundle.js
 //= require ms/sdk-usage.js
+//= require front/alpha/js/api.js
+//= require front/alpha/js/event.js
+//= require front/alpha/js/rec-btn.js

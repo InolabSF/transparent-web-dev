@@ -1,7 +1,7 @@
 # README
 
 ## Versions
-- Rails - 5.1.4
+- Rails - 5.1.6
 - Ruby - 2.3.1
 
 ## Set up
