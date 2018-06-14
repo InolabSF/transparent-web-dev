@@ -2,14 +2,14 @@ document.getElementById('btn-menu').addEventListener('click', function() {
 
     setTimeout(function() {
 
-        menu_hidden = !menu_hidden;
-        if(menu_hidden) {
+        menuHidden = !menuHidden;
+        if(menuHidden) {
           var dimensionValue = 'off';
         }else {
           var dimensionValue = 'on';
         }
 
-        document.cookie = 'menu_hidden=' + menu_hidden
+        document.cookie = 'menuHidden=' + menuHidden
 
         if(ga === undefined) {
           console.log('undefined');
@@ -32,13 +32,13 @@ document.getElementById('input-submit').addEventListener('click', function() {
 document.getElementById('txt-toggle').addEventListener('click', function() {
     setTimeout(function() {
 
-        text_hidden = !text_hidden;
-        if(text_hidden) {
+        textHidden = !textHidden;
+        if(textHidden) {
           var dimensionValue = 'off';
         }else {
           var dimensionValue = 'on';
         }
-        document.cookie = 'text_hidden=' + text_hidden
+        document.cookie = 'textHidden=' + textHidden
 
         // if(ga === undefined) {
         //   console.log('undefined');
@@ -52,14 +52,14 @@ document.getElementById('txt-toggle').addEventListener('click', function() {
 document.getElementById('comment-toggle').addEventListener('click', function() {
     setTimeout(function() {
 
-        comment_hidden = !comment_hidden;
-        if(comment_hidden) {
+        commentHidden = !commentHidden;
+        if(commentHidden) {
           var dimensionValue = 'off';
         }else {
           var dimensionValue = 'on';
         }
 
-        document.cookie = 'comment_hidden=' + comment_hidden
+        document.cookie = 'commentHidden=' + commentHidden
 
         // if(ga === undefined) {
         //   console.log('undefined');
@@ -74,15 +74,15 @@ document.getElementById('on-switch-media').addEventListener('click', function() 
     setTimeout(function() {
 
         // メディアのタイプの取得
-        media_type = TRANSCRIPTS.getMediaType()
-        console.log(media_type);
-        document.cookie = 'media_type=' + media_type
+        mediaType = TRANSCRIPTS.getMediaType()
+        console.log(mediaType);
+        document.cookie = 'mediaType=' + mediaType
 
-        if(media_type==0) {
+        if(mediaType==0) {
           var dimensionValue = 'image';
-        }else if (media_type==1) {
+        }else if (mediaType==1) {
           var dimensionValue = 'webpage';
-        }else if (media_type==2) {
+        }else if (mediaType==2) {
           var dimensionValue = 'video';
         };
 
@@ -144,21 +144,21 @@ function init_setting(){
   var cookies = getCookieArray();
   console.log( cookies );
 
-  if (cookies['menu_hidden'] == 'true') {
+  if (cookies['menuHidden'] == 'true') {
     document.getElementById('btn-menu').click();
   }
 
-  if (cookies['text_hidden'] == 'true') {
+  if (cookies['textHidden'] == 'true') {
     txt_toggle.click();
   }
 
-  if (cookies['comment_hidden'] == 'true') {
+  if (cookies['commentHidden'] == 'true') {
     document.getElementById('comment-toggle').click();
   }
 
-  if (cookies['media_type'] == '1'){
+  if (cookies['mediaType'] == '1'){
     document.getElementById('btn-webpage').click();
-  }else if (cookies['media_type'] == '2') {
+  }else if (cookies['mediaType'] == '2') {
     document.getElementById('btn-video').click();
   }
 
