@@ -1,19 +1,19 @@
 <!-- Browser Hooks -->
 
-var key, languageOptions, formatOptions, recognitionMode, inputSource, filePicker, language_code;
+var key, languageOptions, formatOptions, recognitionMode, inputSource, filePicker, languageCode;
 var SDK;
 var recognizer;
 var previousSubscriptionKey;
 var result;
 var timeout_counter = 0;
 var recognize_counter = 0;
-// var language_code = '<%= @language_code %>';
+// var languageCode = '<%= @language_code %>';
 var isActive = false; // セッションアラート対策
 
 document.addEventListener("DOMContentLoaded", function () {
 
     // key = '<%= @MS_ASR_KEY %>';
-    languageOptions = language_code;
+    languageOptions = languageCode;
     formatOptions = "Simple";
     inputSource = "Mic";
     recognitionMode = "Conversation";
@@ -65,8 +65,8 @@ function postTranscript(text) {
   var body = {
           'transcript' : text,
           'FacebookID' :  FacebookID,
-          'langcode' : language_code,
-          'wallID' : wall_id,
+          'langcode' : languageCode,
+          'wallID' : wallId,
           'clientID' : FacebookID,
           'search_type' : search_type,
           'with_words' : with_words,

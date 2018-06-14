@@ -38,10 +38,14 @@ document.getElementById('txt-toggle').addEventListener('click', function() {
         }else {
           var dimensionValue = 'on';
         }
+<<<<<<< HEAD
 
-        console.log('textHidden')
-        console.log(textHidden)
+        console.log('text_hidden')
+        console.log(text_hidden)
+        document.cookie = 'text_hidden=' + text_hidden
+=======
         document.cookie = 'textHidden=' + textHidden
+>>>>>>> 71bcc5ca80eb08f1c0fa97cc2b3dc7f5f0aa6ff3
 
         if(ga === undefined) {
           console.log('undefined');
@@ -62,10 +66,13 @@ document.getElementById('comment-toggle').addEventListener('click', function() {
           var dimensionValue = 'on';
         }
 
-        console.log('commentHidden')
-        console.log(commentHidden)
-
+<<<<<<< HEAD
+        console.log('comment_hidden')
+        console.log(comment_hidden)
+        document.cookie = 'comment_hidden=' + comment_hidden
+=======
         document.cookie = 'commentHidden=' + commentHidden
+>>>>>>> 71bcc5ca80eb08f1c0fa97cc2b3dc7f5f0aa6ff3
 
         if(ga === undefined) {
           console.log('undefined');
@@ -154,9 +161,16 @@ function init_setting(){
     document.getElementById('btn-menu').click();
   }
 
+<<<<<<< HEAD
+  // if (cookies['text_hidden'] == 'true') {
+  //   // txt_toggle.click();
+  //   document.getElementById('txt-toggle').click();
+  // }
+=======
   if (cookies['textHidden'] == 'true') {
-    document.getElementById('txt-toggle').click();
+    txt_toggle.click();
   }
+>>>>>>> 71bcc5ca80eb08f1c0fa97cc2b3dc7f5f0aa6ff3
 
   if (cookies['commentHidden'] == 'true') {
     document.getElementById('comment-toggle').click();

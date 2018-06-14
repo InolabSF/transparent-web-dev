@@ -3,7 +3,7 @@ var related_contents = [];
 var search_last_index;
 var search_first_index;
 var related_content_last_index;
-var is_loading = false;
+var isLoading = false;
 
 // function fetchContents(){
 //   var instance = axios.create({
@@ -13,7 +13,7 @@ var is_loading = false;
 //     },
 //     responseType: 'json'
 //   });
-//   instance.get('/transcripts/' + wall_id ).then(function (response){
+//   instance.get('/transcripts/' + wallId ).then(function (response){
 //
 //     init_setting();
 //
@@ -44,7 +44,7 @@ function fetchContents(){
     },
     responseType: 'json'
   });
-  instance.get('/transcripts/' + wall_id ).then(function (response){
+  instance.get('/transcripts/' + wallId ).then(function (response){
 
     searches = response.data.searches;
     related_contents = response.data.related_contents;
@@ -70,7 +70,7 @@ function loadContents(){
     responseType: 'json'
   });
   // console.log('send req with index : ' + search_last_index + ', ' + related_content_last_index);
-  instance.get('/transcripts/' + wall_id + '/' + search_last_index + '/' + related_content_last_index ).then(function (response){
+  instance.get('/transcripts/' + wallId + '/' + search_last_index + '/' + related_content_last_index ).then(function (response){
     // console.log(response.data);
 
     search_last_index = response.data.search_last_index;
@@ -98,7 +98,7 @@ function loadContents(){
 }
 
 function loadPastContents(){
-  is_loading = true;
+  isLoading = true;
   var instance = axios.create({
     baseURL: '/api',
     headers: {
@@ -106,7 +106,7 @@ function loadPastContents(){
     },
     responseType: 'json'
   });
-  instance.get('/transcripts/' + wall_id + '/' + search_first_index).then(function (response){
+  instance.get('/transcripts/' + wallId + '/' + search_first_index).then(function (response){
 
     searches = response.data.searches;
     related_contents = response.data.related_contents;
@@ -117,7 +117,7 @@ function loadPastContents(){
   }, function (error) {
     console.log(error);
   }).then(function (response){
-    is_loading = false;
+    isLoading = false;
   });
 
 }
