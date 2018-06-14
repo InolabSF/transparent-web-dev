@@ -38,15 +38,18 @@ document.getElementById('txt-toggle').addEventListener('click', function() {
         }else {
           var dimensionValue = 'on';
         }
+
+        console.log('text_hidden')
+        console.log(text_hidden)
         document.cookie = 'text_hidden=' + text_hidden
 
-        // if(ga === undefined) {
-        //   console.log('undefined');
-        // }else {
-        //   ga('set', 'dimension1', dimensionValue);
-        // };
+        if(ga === undefined) {
+          console.log('undefined');
+        }else {
+          ga('set', 'dimension1', dimensionValue);
+        };
 
-    }, 200);
+    }, 150);
 }, false);
 
 document.getElementById('comment-toggle').addEventListener('click', function() {
@@ -59,15 +62,17 @@ document.getElementById('comment-toggle').addEventListener('click', function() {
           var dimensionValue = 'on';
         }
 
+        console.log('comment_hidden')
+        console.log(comment_hidden)
         document.cookie = 'comment_hidden=' + comment_hidden
 
-        // if(ga === undefined) {
-        //   console.log('undefined');
-        // }else {
-        //   ga('set', 'dimension2', dimensionValue);
-        // };
+        if(ga === undefined) {
+          console.log('undefined');
+        }else {
+          ga('set', 'dimension2', dimensionValue);
+        };
 
-    }, 150);
+    }, 200);
 }, false);
 
 document.getElementById('on-switch-media').addEventListener('click', function() {
@@ -137,7 +142,7 @@ function getCookieArray(){
   return arr;
 }
 
-var txt_toggle = document.getElementById('txt-toggle')
+// var txt_toggle = document.getElementById('txt-toggle')
 
 function init_setting(){
   console.log( 'cookies' );
@@ -148,9 +153,10 @@ function init_setting(){
     document.getElementById('btn-menu').click();
   }
 
-  if (cookies['text_hidden'] == 'true') {
-    txt_toggle.click();
-  }
+  // if (cookies['text_hidden'] == 'true') {
+  //   // txt_toggle.click();
+  //   document.getElementById('txt-toggle').click();
+  // }
 
   if (cookies['comment_hidden'] == 'true') {
     document.getElementById('comment-toggle').click();
@@ -164,9 +170,4 @@ function init_setting(){
 
 };
 
-// window.addEventListener('load', init_setting.bind(this), false);
-// window.addEventListener('load', init_setting(), false);
-
-// window.onload = function(){
-//   init_setting();
-// };
+// window.addEventListener('load', init_setting, false);

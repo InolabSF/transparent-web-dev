@@ -15,7 +15,7 @@ var is_loading = false;
 //   });
 //   instance.get('/transcripts/' + wall_id ).then(function (response){
 //
-//     init_setting.bind(this);
+//     init_setting();
 //
 //     return response
 //
@@ -151,7 +151,9 @@ function deleteContents(related_content_id){
   });
 
 }
+//
+// window.addEventListener('load', function() {
+//     fetchContents();
+// }, false);
 
-window.addEventListener('load', function() {
-    fetchContents();
-}, false);
+window.addEventListener('load',　fetchContents, false);
