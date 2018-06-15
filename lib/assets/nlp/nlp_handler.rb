@@ -2,6 +2,8 @@ def nlp_handler(nlp_type, text, langcode, is_test_mode)
 
   if nlp_type == 'MS'
     entities, sentiment = analyze_text_ms(text, langcode)
+  elsif
+    entities, sentiment = analyze_text_gcp(text, langcode)
   else
     entities, sentiment = analyze_text_ms(text, langcode)
   end
@@ -41,10 +43,14 @@ def analyze_text_ms(text, langcode)
     requrl = "/text/analytics/v2.0/keyPhrases"
 
     req_body = {
-      :documents => [ { :language => langcode,
-                        :id => 1,
-                        :text => text } ]
-       }
+      :documents => [
+        {
+          :language => langcode,
+          :id => 1,
+          :text => text
+        }
+      ]
+    }
 
     res = conn.post do |req|
       req.url requrl
@@ -69,6 +75,66 @@ def analyze_text_ms(text, langcode)
       entity_hash.store('name', entity)
       entity_hash.store('category', nil)
       entities_hash.push(entity_hash)
+    end
+
+    return entities_hash, sentiment
+
+end
+
+def analyze_text_gcp(text, langcode)
+
+    apiUrl = "language.googleapis.com"
+    uri = "https://" + apiUrl
+
+    conn = Faraday::Connection.new(:url => uri) do |builder|
+     ## URLをエンコードする
+      builder.use Faraday::Request::UrlEncoded
+     ## ログを標準出力に出したい時(本番はコメントアウトでいいかも)
+      builder.use Faraday::Response::Logger
+     ## アダプター選択（選択肢は他にもあり）
+      builder.use Faraday::Adapter::NetHttp
+
+    end
+
+    requrl = "/v1beta2/documents:analyzeEntities"
+
+    req_body = {
+      :documents => {
+        :language => langcode[0, 2],
+        :type => "PLAIN_TEXT",
+        :content => text
+      }
+    }
+
+    res = conn.post do |req|
+      req.url requrl
+      req.headers['Content-Type'] = 'application/json'
+      req.headers['key'] = ENV['GCP_API_KEY']
+      req.body = req_body.to_json
+    end
+
+    body = JSON.parse(res.body)
+    # entry.content = body["responses"][0]["textAnnotations"][0]["description"]
+
+    puts(body)
+
+    sentiment = 'N/A'
+
+    entities = body['entities']
+
+    entities_hash = []
+
+    # extract only proper
+    for entity in entities
+      if entity['mensions'][0]['type'] == 'PROPER'
+        entity_hash = {}
+        entity_hash.store('name', entity['name'])
+        entity_hash.store('category', entity['type'])
+        entities_hash.push(entity_hash)
+      else
+        puts('common entity')
+        puts(entity)
+      end
     end
 
     return entities_hash, sentiment

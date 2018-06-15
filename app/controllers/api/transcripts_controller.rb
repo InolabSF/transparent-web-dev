@@ -44,12 +44,19 @@ class Api::TranscriptsController < ApplicationController
     multiple_search = true
     is_test_mode = false
 
-    #amana test
-    test_wall = [1, 9, 15, 16]
-    is_test_mode = true if test_wall.include?(params[:wallID])
-    puts(is_test_mode)
+    # nlp switcher
+    dev_wall = [3, 12]
+    if dev_wall.include?(params[:wallID])
+      nlp_type = 'GCP'
+    else
+      nlp_type = default_nlp
+    end
 
-    @transcript = create_transcript(params, default_nlp, is_test_mode, is_word_only, is_concurrent, multiple_search)
+    # amana test
+    amana_test_wall = [1, 9, 15, 16]
+    is_test_mode = true if amana_test_wall.include?(params[:wallID])
+
+    @transcript = create_transcript(params, nlp_type, is_test_mode, is_word_only, is_concurrent, multiple_search)
 
     if @transcript.save
       render :json => @transcript

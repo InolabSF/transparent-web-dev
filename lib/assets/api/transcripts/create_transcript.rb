@@ -1,7 +1,7 @@
 require './lib/assets/nlp/nlp_handler'
 require './lib/assets/search/search_handler'
 
-def create_transcript(api_req, default_nlp, is_test_mode, is_word_only, is_concurrent, multiple_search)
+def create_transcript(api_req, nlp_type, is_test_mode, is_word_only, is_concurrent, multiple_search)
 
   max_words_number = 3
 
@@ -33,13 +33,13 @@ def create_transcript(api_req, default_nlp, is_test_mode, is_word_only, is_concu
   langcode = api_req[:langcode]
   with_words = api_req[:with_words]
 
-  entities_list, sentiment = nlp_handler(default_nlp, text, langcode, is_test_mode)
+  entities_list, sentiment = nlp_handler(nlp_type, text, langcode, is_test_mode)
 
   transcript = Transcript.new(:text => text, :wall_id => wall_id, :user_id => user_id, :has_content => false, :is_visible => true, :langcode => langcode, :sentiment => sentiment)
   entities_list.each {|entity_hash| entity = transcript.entities.build(:category => entity_hash['category'], :name => entity_hash['name']) }
 
   for word in with_words
-    
+
     with_word = transcript.with_words.build(:text => word) if word.present?
 
   end
