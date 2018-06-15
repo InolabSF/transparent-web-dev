@@ -18,6 +18,10 @@ class HomeController < ApplicationController
     render :file => "home/web/dest/top"
   end
 
+  def media
+    render :file => "home/media"
+  end
+
   # alpha
 
   def alpha
@@ -34,16 +38,27 @@ class HomeController < ApplicationController
       wall = walls[0]
 
       @wall_id = wall.id
-      default_langcode = wall.default_langcode
-      if default_langcode == 'en'
-        @language_code = 'en-US'
-      elsif default_langcode == 'ja'
-        @language_code = 'ja-JP'
+
+      if params[:langcode] == 'en-US' || params[:langcode] == 'ja-JP'
+        @language_code = params[:langcode]
       else
-        @language_code = 'ja-JP'
+        default_langcode = wall.default_langcode
+        if default_langcode == 'en'
+          @language_code = 'en-US'
+        elsif default_langcode == 'ja'
+          @language_code = 'ja-JP'
+        else
+          @language_code = 'ja-JP'
+        end
       end
 
-      render :file => "home/front/wall/alpha/wall-alpha"
+
+      if params[:view] == 'chaos'
+        render :file => "home/front/wall/demo-sxsw/wall-demo"
+      else
+        render :file => "home/front/wall/alpha/wall-alpha"
+      end
+
     end
   end
 
@@ -113,10 +128,6 @@ class HomeController < ApplicationController
 
   def demo_google
     render :file => "home/sample-google"
-  end
-
-  def media
-    render :file => "home/media"
   end
 
   # def callback
