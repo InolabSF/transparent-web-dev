@@ -2,7 +2,7 @@ def nlp_handler(nlp_type, text, langcode, is_test_mode)
 
   if nlp_type == 'MS'
     entities, sentiment = analyze_text_ms(text, langcode)
-  elsif
+  elsif nlp_type == 'GCP'
     entities, sentiment = analyze_text_gcp(text, langcode)
   else
     entities, sentiment = analyze_text_ms(text, langcode)
@@ -99,7 +99,7 @@ def analyze_text_gcp(text, langcode)
     requrl = "/v1beta2/documents:analyzeEntities"
 
     req_body = {
-      :documents => {
+      :document => {
         :language => langcode[0, 2],
         :type => "PLAIN_TEXT",
         :content => text
@@ -109,7 +109,7 @@ def analyze_text_gcp(text, langcode)
     res = conn.post do |req|
       req.url requrl
       req.headers['Content-Type'] = 'application/json'
-      req.headers['key'] = ENV['GCP_API_KEY']
+      req.params['key'] = ENV['GCP_API_KEY']
       req.body = req_body.to_json
     end
 
@@ -126,7 +126,7 @@ def analyze_text_gcp(text, langcode)
 
     # extract only proper
     for entity in entities
-      if entity['mensions'][0]['type'] == 'PROPER'
+      if entity['mentions'][0]['type'] == 'PROPER'
         entity_hash = {}
         entity_hash.store('name', entity['name'])
         entity_hash.store('category', entity['type'])
