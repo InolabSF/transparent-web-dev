@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   root to: 'home#top'
   get '/dev',   to: 'home#index'
+  get '/media',   to: 'home#media'
 
   # alpha
 
@@ -14,9 +15,6 @@ Rails.application.routes.draw do
 
   get '/alpha/test-amana/en',   to: 'home#amana_test_en'
   get '/alpha/test-amana/ja',   to: 'home#amana_test_ja'
-
-  # get '/alpha/wall/:wall_id/en',   to: 'home#alpha_en'
-  # get '/alpha/wall/:wall_id/ja',   to: 'home#alpha_ja'
 
   get '/api/transcripts/:wall_id', to: 'api/transcripts#index'
   post '/api/transcripts', to: 'api/transcripts#create'
@@ -44,8 +42,6 @@ Rails.application.routes.draw do
 
   get '/demo/ms',   to: 'home#demo_ms'
   get '/demo/google',   to: 'home#demo_google'
-
-  get '/media',   to: 'home#media'
 
   # get '/callback',   to: 'home#callback'
 
