@@ -1,6 +1,7 @@
 require './lib/assets/api/transcripts/get_transcripts'
 require './lib/assets/api/transcripts/get_searches'
 require './lib/assets/api/transcripts/create_transcript'
+require './lib/assets/api/transcripts/create_log'
 
 class Api::TranscriptsController < ApplicationController
 
@@ -67,24 +68,14 @@ class Api::TranscriptsController < ApplicationController
 
   end
 
-  # def create_debug
-  #
-  #   default_nlp = 'MS'
-  #   is_test_mode = true
-  #   is_word_only = true
-  #   is_concurrent = true
-  #   multiple_search = true
-  #
-  #   @transcript = create_transcript(params, default_nlp, is_test_mode, is_word_only, is_concurrent, multiple_search)
-  #   formated_transcripts = get_formated_data_debug([@transcript])
-  #
-  #   if @transcript.save
-  #     render json: {'transcripts' => formated_transcripts}
-  #   else
-  #     render json: @transcript.errors, status: :unprocessable_entity
-  #   end
-  #
-  # end
+  def log_messenger
+    langcode = 'ja-JP'
+
+    create_log(text, langcode)
+
+    render json: {'transcripts' => 'formated_transcripts'}
+
+  end
 
   def update_search
     search_id = params[:search_id]

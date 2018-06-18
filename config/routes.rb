@@ -24,8 +24,6 @@ Rails.application.routes.draw do
   get '/api/update/searches/:search_id',   to: 'api/transcripts#update_search'
   get '/api/update/contents/:related_content_id',   to: 'api/transcripts#update_related_content'
 
-  post '/api/transcripts/debug', to: 'api/transcripts#create_debug'
-
   # demo sxsw
 
   post '/post', to: 'api/transcripts#create_by_outer'
@@ -39,6 +37,10 @@ Rails.application.routes.draw do
   get '/demo/ja',   to: 'home#demo_sxsw_ja'
 
   # dev
+
+  get '/console/dev/test', to: 'home#test_ai'
+
+  post '/api/transcripts/debug', to: 'api/transcripts#log_messenger'
 
   get '/demo/ms',   to: 'home#demo_ms'
   get '/demo/google',   to: 'home#demo_google'
