@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Speech Sample</title>
+    <title>ASR Test</title>
     <meta charset="utf-8" />
 </head>
 <body style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:13px;">
@@ -14,13 +14,8 @@
             <tr>
                 <td></td>
                 <td>
-                    <h1 style="font-weight:500;">Speech Recognition</h1>
-                    <h2 style="font-weight:500;">Microsoft Cognitive Services</h2>
+                    <h1 style="font-weight:500;">Microsoft ASR Streaming</h1>
                 </td>
-            </tr>
-            <tr>
-                <td align="right"><a href="https://www.microsoft.com/cognitive-services/en-us/sign-up" target="_blank">Subscription</a>:</td>
-                <td><input id="key" type="text" size="40" value="<%= @MS_ASR_KEY %>"></td>
             </tr>
             <tr>
                 <td align="right">Language:</td>
@@ -34,8 +29,7 @@
             <tr>
                 <td></td>
                 <td>
-                    <button id="startBtn" disabled="disabled">Start</button>
-                    <button id="stopBtn" disabled="disabled">Stop</button>
+                    <button id="recBtn" disabled="disabled">Start</button>
                 </td>
             </tr>
             <tr>
@@ -44,14 +38,10 @@
                     <table>
                         <tr>
                             <td>Results:</td>
-                            <td>Current hypothesis:</td>
                         </tr>
                         <tr>
                             <td>
-                                <textarea id="phraseDiv" style="display: inline-block;width:500px;height:200px"></textarea>
-                            </td>
-                            <td style="vertical-align: top">
-                                <span id="hypothesisDiv" style="width:200px;height:200px;display:block;"></span>
+                                <textarea id="phraseDiv" style="display: inline-block;width:700px;height:300px"></textarea>
                             </td>
                         </tr>
                     </table>
@@ -64,278 +54,152 @@
         </table>
     </div>
 
+    <%= javascript_include_tag 'asr-test-manifest', 'data-turbolinks-track': 'reload'  %>
 
-    <!-- <%= javascript_include_tag 'front-alpha-manifest', 'data-turbolinks-track': 'reload'  %> -->
+    <!-- Browser Hooks -->
+    <script>
+        var recBtn, hypothesisDiv, phraseDiv, statusDiv;
+        var key, languageOptions, formatOptions, recognitionMode, inputSource, filePicker;
+        var SDK;
+        var recognizer;
+        var previousSubscriptionKey;
+        var result;
+        var timeout_counter = 0;
+        var recognize_counter = 0;
 
-    <!-- handle recording -->
-    <!-- <script>
-      var recBtn = document.getElementById("btn-recording");
-      languageCode = '<%= @language_code %>';
-      key = '<%= @MS_ASR_KEY %>';
-    </script> -->
-
-
-        <!-- SDK REFERENCE -->
-        <!-- <script src="../../distrib/speech.sdk.bundle.js"></script> -->
-        <%= javascript_include_tag 'ms-manifest', 'data-turbolinks-track': 'reload'  %>
-
-        <!-- SDK USAGE -->
-        <script>
-            // On document load resolve the SDK dependency
-            function Initialize(onComplete) {
-                if (!!window.SDK) {
-                    document.getElementById('content').style.display = 'block';
-                    document.getElementById('warning').style.display = 'none';
-                    onComplete(window.SDK);
-                }
-            }
-
-            // Setup the recognizer
-            function RecognizerSetup(SDK, recognitionMode, language, format, subscriptionKey) {
-
-                switch (recognitionMode) {
-                    case "Interactive" :
-                        recognitionMode = SDK.RecognitionMode.Interactive;
-                        break;
-                    case "Conversation" :
-                        recognitionMode = SDK.RecognitionMode.Conversation;
-                        break;
-                    case "Dictation" :
-                        recognitionMode = SDK.RecognitionMode.Dictation;
-                        break;
-                    default:
-                        recognitionMode = SDK.RecognitionMode.Interactive;
-                }
-
-                var recognizerConfig = new SDK.RecognizerConfig(
-                    new SDK.SpeechConfig(
-                        new SDK.Context(
-                            new SDK.OS(navigator.userAgent, "Browser", null),
-                            new SDK.Device("SpeechSample", "SpeechSample", "1.0.00000"))),
-                    recognitionMode,
-                    language, // Supported languages are specific to each recognition mode. Refer to docs.
-                    format); // SDK.SpeechResultFormat.Simple (Options - Simple/Detailed)
+        var offMicPhrase = 'Start';
+        var onMicPhrase = 'Stop';
+        // var onMicPhrase = '<b>Stop</b> to press here';
+        var isActive = false; // セッションアラート対策
 
 
-                var useTokenAuth = false;
+        document.addEventListener("DOMContentLoaded", function () {
+            recBtn = document.getElementById("recBtn");
+            recBtn.innerHTML = offMicPhrase
 
-                var authentication = function() {
-                    if (!useTokenAuth)
-                        return new SDK.CognitiveSubscriptionKeyAuthentication(subscriptionKey);
+            phraseDiv = document.getElementById("phraseDiv");
+            hypothesisDiv = document.getElementById("hypothesisDiv");
+            statusDiv = document.getElementById("statusDiv");
+            languageOptions = document.getElementById("languageOptions");
 
-                    var callback = function() {
-                        var tokenDeferral = new SDK.Deferred();
-                        try {
-                            var xhr = new(XMLHttpRequest || ActiveXObject)('MSXML2.XMLHTTP.3.0');
-                            xhr.open('GET', '/token', 1);
-                            xhr.onload = function () {
-                                if (xhr.status === 200)  {
-                                    tokenDeferral.Resolve(xhr.responseText);
-                                } else {
-                                    tokenDeferral.Reject('Issue token request failed.');
-                                }
-                            };
-                            xhr.send();
-                        } catch (e) {
-                            window.console && console.log(e);
-                            tokenDeferral.Reject(e.message);
-                        }
-                        return tokenDeferral.Promise();
-                    }
-
-                    return new SDK.CognitiveTokenAuthentication(callback, callback);
-                }();
-
-                var files = document.getElementById('filePicker').files;
-                if (!files.length) {
-                    return SDK.CreateRecognizer(recognizerConfig, authentication);
-                } else {
-                    return SDK.CreateRecognizerWithFileAudioSource(recognizerConfig, authentication, files[0]);
-                }
-            }
-
-            // Start the recognition
-            function RecognizerStart(SDK, recognizer) {
-                recognizer.Recognize((event) => {
-                    /*
-                     Alternative syntax for typescript devs.
-                     if (event instanceof SDK.RecognitionTriggeredEvent)
-                    */
-                    switch (event.Name) {
-                        case "RecognitionTriggeredEvent" :
-                            UpdateStatus("Initializing");
-                            break;
-                        case "ListeningStartedEvent" :
-                            UpdateStatus("Listening");
-                            break;
-                        case "RecognitionStartedEvent" :
-                            UpdateStatus("Listening_Recognizing");
-                            break;
-                        case "SpeechStartDetectedEvent" :
-                            UpdateStatus("Listening_DetectedSpeech_Recognizing");
-                            console.log(JSON.stringify(event.Result)); // check console for other information in result
-                            break;
-                        case "SpeechHypothesisEvent" :
-                            UpdateRecognizedHypothesis(event.Result.Text, false);
-                            console.log(JSON.stringify(event.Result)); // check console for other information in result
-                            break;
-                        case "SpeechFragmentEvent" :
-                            UpdateRecognizedHypothesis(event.Result.Text, true);
-                            console.log(JSON.stringify(event.Result)); // check console for other information in result
-                            break;
-                        case "SpeechEndDetectedEvent" :
-                            OnSpeechEndDetected();
-                            UpdateStatus("Processing_Adding_Final_Touches");
-                            console.log(JSON.stringify(event.Result)); // check console for other information in result
-                            break;
-                        case "SpeechSimplePhraseEvent" :
-                            UpdateRecognizedPhrase(JSON.stringify(event.Result, null, 3));
-                            break;
-                        case "SpeechDetailedPhraseEvent" :
-                            UpdateRecognizedPhrase(JSON.stringify(event.Result, null, 3));
-                            break;
-                        case "RecognitionEndedEvent" :
-                            OnComplete();
-                            UpdateStatus("Idle");
-                            console.log(JSON.stringify(event)); // Debug information
-                            break;
-                        default:
-                            console.log(JSON.stringify(event)); // Debug information
-                    }
-                })
-                .On(() => {
-                    // The request succeeded. Nothing to do here.
-                },
-                (error) => {
-                    console.error(error);
-                });
-            }
-
-            // Stop the Recognition.
-            function RecognizerStop(SDK, recognizer) {
-                // recognizer.AudioSource.Detach(audioNodeId) can be also used here. (audioNodeId is part of ListeningStartedEvent)
-                recognizer.AudioSource.TurnOff();
-            }
-        </script>
-
-        <!-- Browser Hooks -->
-        <script>
-            var startBtn, stopBtn, hypothesisDiv, phraseDiv, statusDiv;
-            var key, languageOptions, formatOptions, recognitionMode, inputSource, filePicker;
-            var SDK;
-            var recognizer;
-            var previousSubscriptionKey;
-
-            document.addEventListener("DOMContentLoaded", function () {
-                createBtn = document.getElementById("createBtn");
-                startBtn = document.getElementById("startBtn");
-                stopBtn = document.getElementById("stopBtn");
-                phraseDiv = document.getElementById("phraseDiv");
-                hypothesisDiv = document.getElementById("hypothesisDiv");
-                statusDiv = document.getElementById("statusDiv");
-                key = document.getElementById("key");
-                languageOptions = document.getElementById("languageOptions");
-                formatOptions = document.getElementById("formatOptions");
-                inputSource = document.getElementById("inputSource");
-                recognitionMode = document.getElementById("recognitionMode");
-                filePicker = document.getElementById('filePicker');
-
-                languageOptions.addEventListener("change", Setup);
-                formatOptions.addEventListener("change", Setup);
-                recognitionMode.addEventListener("change", Setup);
-
-                startBtn.addEventListener("click", function () {
-                    if (key.value == "" || key.value == "YOUR_BING_SPEECH_API_KEY") {
-                        alert("Please enter your Bing Speech subscription key!");
-                        return;
-                    }
-                    if (inputSource.value === "File") {
-                        filePicker.click();
-                    } else {
-                        if (!recognizer || previousSubscriptionKey != key.value) {
-                            previousSubscriptionKey = key.value;
-                            Setup();
-                        }
-
-                        hypothesisDiv.innerHTML = "";
-                        phraseDiv.innerHTML = "";
-                        RecognizerStart(SDK, recognizer);
-                        startBtn.disabled = true;
-                        stopBtn.disabled = false;
-                    }
-                });
-
-                key.addEventListener("focus", function () {
-                   if (key.value == "YOUR_BING_SPEECH_API_KEY") {
-                       key.value = "";
-                   }
-                });
-
-                key.addEventListener("focusout", function () {
-                   if (key.value == "") {
-                       key.value = "YOUR_BING_SPEECH_API_KEY";
-                   }
-                });
-
-                filePicker.addEventListener("change", function () {
-                    Setup();
-                    hypothesisDiv.innerHTML = "";
-                    phraseDiv.innerHTML = "";
-                    RecognizerStart(SDK, recognizer);
-                    startBtn.disabled = true;
-                    stopBtn.disabled = false;
-                    filePicker.value = "";
-                });
-
-                stopBtn.addEventListener("click", function () {
-                    RecognizerStop(SDK, recognizer);
-                    startBtn.disabled = false;
-                    stopBtn.disabled = true;
-                });
-
-                Initialize(function (speechSdk) {
-                    SDK = speechSdk;
-                    startBtn.disabled = false;
-                });
+            languageOptions.addEventListener("change", function () {
+                Setup();
+                RecognizerStart(SDK, recognizer);
             });
 
-            function Setup() {
-                if (recognizer != null) {
-                    RecognizerStop(SDK, recognizer);
-                }
-                recognizer = RecognizerSetup(SDK, recognitionMode.value, languageOptions.value, SDK.SpeechResultFormat[formatOptions.value], key.value);
+            key = '<%= @MS_ASR_KEY %>';
+            formatOptions = "Simple";
+            inputSource = "Mic";
+            recognitionMode = "Conversation";
+
+
+            recBtn.addEventListener("click", function () {
+
+
+              if (isActive){
+
+                killMic();
+
+              } else {
+
+                activateMic();
+
+              }
+
+            });
+
+            Initialize(function (speechSdk) {
+                SDK = speechSdk;
+                recBtn.disabled = false;
+            });
+
+        });
+
+        function Setup() {
+            if (recognizer != null) {
+                RecognizerStop(SDK, recognizer);
             }
+            recognizer = RecognizerSetup(SDK, recognitionMode, languageOptions.value, SDK.SpeechResultFormat[formatOptions], key);
+        }
 
-            function UpdateStatus(status) {
-                statusDiv.innerHTML = status;
+        function UpdateStatus(status) {
+            statusDiv.innerHTML = status;
+        }
+
+        // function UpdateRecognizedHypothesis(text, append) {
+        //     if (append)
+        //         hypothesisDiv.innerHTML += text + " ";
+        //     else
+        //         hypothesisDiv.innerHTML = text;
+        //
+        //     var length = hypothesisDiv.innerHTML.length;
+        //     if (length > 403) {
+        //         hypothesisDiv.innerHTML = "..." + hypothesisDiv.innerHTML.substr(length-400, length);
+        //     }
+        // }
+
+        function OnSpeechEndDetected() {
+          console.log('SpeechEnd Detected');
+        }
+
+        function UpdateRecognizedPhrase(json) {
+          console.log('UpdateRecognizedPhrase');
+          console.log(json)
+
+            if(json.RecognitionStatus == "Success"){
+
+              result = json.DisplayText;
+
+              phraseDiv.innerHTML += result + '\n\n';
+
+              console.log(JSON.stringify(json));
+
+            } else if(json.RecognitionStatus == "InitialSilenceTimeout"){
+
+              timeout_counter += 1;
+              recognize_counter += 1;
+              console.log('15 seconds silense Timeout');
+              console.log('Timeout Counter : '+timeout_counter);
+              console.log('Timeout Counter : '+recognize_counter);
+
+              if (isActive){ activateMic(); }
+
+            } else {
+
+              console.log('No transcript');
+              console.log(JSON.stringify(json));
+
             }
+        }
 
-            function UpdateRecognizedHypothesis(text, append) {
-                if (append)
-                    hypothesisDiv.innerHTML += text + " ";
-                else
-                    hypothesisDiv.innerHTML = text;
+        function OnComplete() {
+            // recBtn.disabled = false;
+            // stopBtn.disabled = true;
+        }
 
-                var length = hypothesisDiv.innerHTML.length;
-                if (length > 403) {
-                    hypothesisDiv.innerHTML = "..." + hypothesisDiv.innerHTML.substr(length-400, length);
-                }
-            }
+        function activateMic() {
+          console.log('activate Mic')
+          if (!recognizer) {
+              Setup();
+          }
+          recBtn.innerHTML = onMicPhrase;
+          isActive = true;
+          RecognizerStart(SDK, recognizer);
+        }
 
-            function OnSpeechEndDetected() {
-                stopBtn.disabled = true;
-            }
+        function killMic() {
+          console.log('kill Mic')
 
-            function UpdateRecognizedPhrase(json) {
-                hypothesisDiv.innerHTML = "";
-                phraseDiv.innerHTML += json + "\n";
-            }
+          recBtn.innerHTML = offMicPhrase;
+          RecognizerStop(SDK, recognizer);
+          isActive = false;
 
-            function OnComplete() {
-                startBtn.disabled = false;
-                stopBtn.disabled = true;
-            }
-        </script>
+        }
 
+        function errorHandler() {
+          alert("Session Timeout. Please Restart.");
+          killMic();
+        }
+    </script>
 </body>
 </html>

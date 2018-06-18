@@ -22,7 +22,7 @@ class HomeController < ApplicationController
     render :file => "home/media"
   end
 
-  def test
+  def test_ai
     render :file => "home/console/dev/test-ai"
   end
 

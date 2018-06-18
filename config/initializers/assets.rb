@@ -18,6 +18,7 @@ Rails.application.config.assets.precompile += %w( front-alpha-manifest.js )
 Rails.application.config.assets.precompile += %w( web-manifest.js )
 Rails.application.config.assets.precompile += %w( web-alpha-manifest.js )
 Rails.application.config.assets.precompile += %w( ms-manifest.js )
+Rails.application.config.assets.precompile += %w( asr-test-manifest.js )
 # Rails.application.config.assets.precompile += %w( google-manifest.js )
 
 Rails.application.config.assets.precompile += %w( front-demo.scss )
