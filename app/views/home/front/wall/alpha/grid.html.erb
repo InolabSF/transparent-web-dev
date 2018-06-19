@@ -18,7 +18,7 @@
 <!-- ↓↓↓　バックエンド編集分　↓↓↓ -->
 
   <!-- <link rel="stylesheet" href="./assets/css/app.css"> -->
-  <%= stylesheet_link_tag    'front-alpha', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= stylesheet_link_tag    'front-a-grid', media: 'all', 'data-turbolinks-track': 'reload' %>
 
   <style rel="stylesheet">
     /* コメントカード */
@@ -99,7 +99,7 @@
   <div id="content" style="display:none">
   </div>
 
-  <%= javascript_include_tag 'front-alpha-manifest', 'data-turbolinks-track': 'reload'  %>
+  <%= javascript_include_tag 'front-a-grid-manifest', 'data-turbolinks-track': 'reload'  %>
 
   <!-- load contents -->
   <script>
@@ -112,6 +112,7 @@
   <!-- handle recording -->
   <script>
     var recBtn = document.getElementById("btn-recording");
+    var uiVersion = 'alpha';
     languageCode = '<%= @language_code %>';
     key = '<%= @MS_ASR_KEY %>';
   </script>

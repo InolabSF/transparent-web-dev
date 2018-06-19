@@ -60,7 +60,6 @@ function postTranscript(text) {
   var post_url = '/api/transcripts';
   var with_words = TRANSCRIPTS.getKeywords();
   var search_type = TRANSCRIPTS.getMediaType();
-  var UI_version = 'alpha';
 
   var body = {
           'transcript' : text,
@@ -70,7 +69,7 @@ function postTranscript(text) {
           'clientID' : FacebookID,
           'search_type' : search_type,
           'with_words' : with_words,
-          'UI_version' : UI_version
+          'UI_version' : uiVersion
       };
 
   console.log(body)

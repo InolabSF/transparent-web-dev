@@ -8,6 +8,8 @@ Rails.application.routes.draw do
 
   # alpha
 
+  # choas test
+
   get '/alpha/wall/:random_key/:wall_name',   to: 'home#alpha'
 
   get '/alpha/test/en',   to: 'home#alpha_test_en'

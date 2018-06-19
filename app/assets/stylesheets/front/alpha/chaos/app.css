@@ -731,25 +731,25 @@ input
 ::-webkit-input-placeholder
 {
     /* Chrome/Opera/Safari */
-    color: #ccc;
+    color: #999;
 }
 
 ::-moz-placeholder
 {
     /* Firefox 19+ */
-    color: #ccc;
+    color: #999;
 }
 
 :-ms-input-placeholder
 {
     /* IE 10+ */
-    color: #ccc;
+    color: #999;
 }
 
 :-moz-placeholder
 {
     /* Firefox 18- */
-    color: #ccc;
+    color: #999;
 }
 
 /* ==========================================================================
@@ -852,10 +852,10 @@ input
 
 .btn-menu01
 {
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
 
-    background: no-repeat;
+    background-color: rgba(0, 0, 0, .2);
 }
 .btn-menu01 .btn-inner
 {
@@ -866,7 +866,7 @@ input
     display: block;
 
     width: 24px;
-    height: 16px;
+    height: 8px;
     margin: auto;
     padding: 0;
 
@@ -886,7 +886,7 @@ input
 
     transition: all 400ms ease;
 
-    background-color: #333;
+    background-color: #fff;
 }
 .btn-menu01 .line.line-1
 {
@@ -906,7 +906,7 @@ input
 }
 .btn-menu01.is-active .btn-inner .line-1
 {
-    transform: translate(0, 8px) rotate(-135deg);
+    transform: translate(0, 4px) rotate(-135deg);
 }
 .btn-menu01.is-active .btn-inner .line-2
 {
@@ -914,7 +914,7 @@ input
 }
 .btn-menu01.is-active .btn-inner .line-3
 {
-    transform: translate(0, -8px) rotate(-45deg);
+    transform: translate(0, -4px) rotate(-45deg);
 }
 
 .btn-toggle01
@@ -926,7 +926,7 @@ input
     transition: all 200ms ease;
 
     border-radius: 15px;
-    background-color: rgba(249, 192, 60, .2);
+    background-color: #232323;
 }
 .btn-toggle01 .toggle
 {
@@ -940,7 +940,7 @@ input
     text-align: center;
 
     border-radius: 15px;
-    background: #fff;
+    background-color: #999;
 }
 .btn-toggle01 .toggle span
 {
@@ -953,7 +953,7 @@ input
 
     transition: all 200ms ease;
 
-    color: #f9c03c;
+    color: #fff;
 }
 .btn-toggle01 .toggle span.on
 {
@@ -1355,214 +1355,29 @@ input
     transition: all 10ms ease;
 }
 
-#global-header
+.btn-menu01
 {
     position: fixed;
-    z-index: 10;
+    z-index: 11;
     top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 80px;
-
-    background-color: #f9f8f8;
-}
-#global-header:after
-{
-    display: block;
-    clear: both;
-
-    content: '';
-}
-#global-header .logo01
-{
-    position: relative;
-
-    float: left;
-    overflow: visible;
-
-    margin-top: 14px;
-    margin-left: 50px;
-}
-#global-header .logo01:after
-{
-    position: absolute;
-    top: 10px;
-    right: -20px;
-
-    width: 1px;
-    height: 36px;
-
-    content: '';
-
-    background-color: #d6d6d6;
-}
-#global-header .txt-recording
-{
-    font-size: 12px;
-
-    display: flex;
-    float: right;
-    /* 子要素をflexboxで揃える */
-    flex-direction: column;
-
-    width: 55%;
-    height: 100%;
-    /* 子要素をflexboxにより中央に配置する */
-    padding: 0 24px;
-
-    color: #999;
-    /* 子要素をflexboxにより縦方向に揃える */
-
-    justify-content: center;
-}
-#global-header .btn-recording
-{
-    position: relative;
-
-    float: right;
-
-    width: 160px;
-    height: 80px;
-
-    cursor: pointer;
-    user-select: none;
-
-    background-repeat: no-repeat;
-    background-position: 30px 50%, 0 50%;
-}
-#global-header .btn-recording span
-{
-    font-family: 'Roboto', 'Yu Gothic', YuGothic, 'ヒラギノ角ゴシック Pro', 'Hiragino Kaku Gothic Pro', メイリオ, Meiryo, Osaka, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 1;
-
-    position: absolute;
-
-    color: #fff;
-}
-#global-header .btn-recording.rec
-{
-    background-color: #dadada;
-    background-image: url('https://res.cloudinary.com/negic/image/upload/v1528136024/ico01.png');
-    background-size: 20px auto;
-}
-#global-header .btn-recording.rec span
-{
-    top: 34px;
-    left: 72px;
-}
-#global-header .btn-recording.rec .r1
-{
-    display: none;
-}
-#global-header .btn-recording.rec .r2
-{
-    display: block;
-}
-#global-header .btn-recording.recording
-{
-    background-color: #f13c33;
-    background-image: url('https://res.cloudinary.com/negic/image/upload/v1528136024/ico01.png'), url('https://res.cloudinary.com/negic/image/upload/v1528136023/ico04.png');
-    background-size: 20px auto, 8px auto;
-}
-#global-header .btn-recording.recording span
-{
-    top: 30px;
-    left: 60px;
-}
-#global-header .btn-recording.recording .r1
-{
-    display: block;
-}
-#global-header .btn-recording.recording .r2
-{
-    display: none;
-}
-#global-header .btn-recording.recording .loader
-{
-    display: block;
-}
-#global-header .btn-recording .loader,
-#global-header .btn-recording .loader:before,
-#global-header .btn-recording .loader:after
-{
-    width: 9px;
-    height: 9px;
-
-    animation: load7 1s infinite ease-in-out;
-
-    border-radius: 50%;
-
-    animation-fill-mode: both;
-}
-#global-header .btn-recording .loader
-{
-    position: absolute;
-    top: 45px;
-    left: 55%;
-
-    display: none;
-
-    transform: translateZ(0);
-    animation-delay: -.16s;
-
-    color: #fff;
-}
-#global-header .btn-recording .loader:before,
-#global-header .btn-recording .loader:after
-{
-    position: absolute;
-    top: 0;
-
-    content: '';
-}
-#global-header .btn-recording .loader:before
-{
-    left: -10px;
-
-    -webkit-animation-delay: -.32s;
-            animation-delay: -.32s;
-}
-#global-header .btn-recording .loader:after
-{
-    left: 10px;
-}
-@keyframes load7
-{
-    0%,
-    80%,
-    100%
-    {
-        box-shadow: 0 9px 0 -2px;
-    }
-    40%
-    {
-        box-shadow: 0 9px 0 0;
-    }
-}
-#global-header .btn-menu01
-{
-    float: right;
+    right: 0;
 }
 
 #global-menu
 {
     position: fixed;
     z-index: 10;
-    top: 80px;
+    top: 0;
     right: 0;
 
     width: 240px;
-    height: 100%;
-    padding: 0 30px 50px;
-    /* display: none; */
+    min-height: 640px;
+    padding: 0 30px;
 
     transition: transform 400ms ease;
     transform: translate3d(240px, 0, 0);
 
-    background-color: #eee;
+    background-color: rgba(0, 0, 0, .8);
 }
 #global-menu.is-active
 {
@@ -1573,7 +1388,7 @@ input
     /* overflow-y: scroll; */
     width: 100%;
     height: 100%;
-    padding: 50px 0;
+    padding: 100px 0 0;
 }
 #global-menu .form-keyword
 {
@@ -1587,14 +1402,16 @@ input
     font-size: 14px;
     font-weight: 700;
 
-    color: #555;
+    color: #fff;
 }
 #global-menu .form-keyword .input-keyword
 {
+    font-size: 14px;
+
     width: 100%;
     margin: 0 0 15px;
 
-    color: #000;
+    color: #fff;
     border: 0;
     border-bottom: 2px solid #d6d6d6;
     background-color: transparent;
@@ -1634,9 +1451,9 @@ input
     cursor: pointer;
     user-select: none;
 
-    color: #333;
+    color: #999;
     border-radius: 15px;
-    background-color: #f9c03c;
+    background-color: #232323;
     background-image: url('https://res.cloudinary.com/negic/image/upload/v1528136023/ico02.png');
     background-position: right 10px top 50%;
     background-size: 12px auto;
@@ -1651,139 +1468,198 @@ input
     font-size: 14px;
     font-weight: 700;
 
-    color: #555;
+    color: #fff;
+}
+
+.recording-area
+{
+    position: fixed;
+    z-index: 11;
+    right: 20px;
+    bottom: 20px;
+
+    width: 480px;
+    height: 80px;
+
+    border-radius: 40px;
+    background-color: rgba(0, 0, 0, .8);
+}
+.recording-area.rec
+{
+    width: 80px;
+}
+.recording-area.rec .txt-recording
+{
+    display: none;
+}
+.recording-area.recording
+{
+    width: 480px;
+}
+.recording-area.recording .txt-recording
+{
+    display: flex;
+}
+.recording-area .txt-recording
+{
+    font-size: 12px;
+
+    display: flex;
+    /* 子要素をflexboxで揃える */
+    flex-direction: column;
+    /* 子要素をflexboxにより中央に配置する */
+
+    width: 400px;
+    height: 100%;
+    padding: 0 24px;
+
+    color: #999;
+    /* 子要素をflexboxにより縦方向に揃える */
+
+    justify-content: center;
+}
+.recording-area #btn-recording
+{
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    width: 80px;
+    height: 80px;
+
+    cursor: pointer;
+
+    border-radius: 50%;
+    background-color: #24333c;
+}
+.recording-area #btn-recording:after
+{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+
+    display: block;
+
+    width: 40px;
+    height: 40px;
+
+    content: '';
+
+    border-radius: 50%;
+    background-color: #f13c33;
+}
+.recording-area.rec #btn-recording:after
+{
+    background-color: #8fc31f;
+}
+.recording-area.recording #btn-recording:after
+{
+    background-color: #f13c33;
 }
 
 #transparent-container
 {
-    padding: 80px 0 0;
-
-    background-image: url('https://res.cloudinary.com/negic/image/upload/v1528187834/bg01.png');
-    background-repeat: repeat;
-    background-position: 43px 0;
-}
-#transparent-container.menu-is-active
-{
-    padding-right: 240px;
-}
-
-.keyword-area
-{
     position: relative;
 
-    overflow: hidden;
-
-    min-height: 300px;
-    padding: 50px 0 0;
-
-    border-bottom: 10px solid #eee;
-
-    -webkit-perspective: 100px;
-            perspective: 100px;
+    width: 100%;
+    min-height: 96vh;
+    margin: 0 auto;
+    padding: 2% 0;
 }
-.keyword-area:last-child
+#transparent-container .post
 {
-    border-bottom: 0;
+    position: relative;
+    z-index: 1;
+
+    padding: 240px 0;
 }
-.keyword-area:after
+@media only screen and (min-width: 1280px)
+{
+    #transparent-container .post
+    {
+        padding: 180px 0;
+    }
+}
+#transparent-container .post.no-content
+{
+    padding: 40px 0;
+}
+#transparent-container .post .comment
+{
+    position: relative;
+    z-index: 10;
+    left: 50%;
+
+    width: 333.33333px;
+    padding: 40px;
+
+    transition: all 200ms ease;
+    transform: translate(0, 50px);
+    pointer-events: none;
+
+    opacity: 0;
+    /* background-color: rgba(#ea5350, 0.9); */
+    box-shadow: 7px 7px 45px 5px rgba(0, 0, 0, .5);
+}
+@media only screen and (min-width: 1280px)
+{
+    #transparent-container .post .comment
+    {
+        font-size: 12px;
+
+        width: 250px;
+        padding: 30px;
+    }
+}
+#transparent-container .post .comment .comment-user-icon
+{
+    width: 53.33333px;
+    height: 53.33333px;
+    margin: 0 0 23.33333px;
+
+    border-radius: 50%;
+    background-color: rgba(0, 61, 193, .3);
+    background-image: url('http://res.cloudinary.com/negic/image/upload/v1519805067/img_user_default01.png');
+    background-position: 50% 50%;
+    background-size: 50% auto;
+}
+@media only screen and (min-width: 1280px)
+{
+    #transparent-container .post .comment .comment-user-icon
+    {
+        width: 40px;
+        height: 40px;
+        margin: 0 0 16px;
+    }
+}
+#transparent-container .post .comment .comment-text
+{
+    color: #fff;
+}
+#transparent-container .post .media-container
+{
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+}
+#transparent-container .post .media-container .media-photo
 {
     position: absolute;
     top: 0;
     left: 0;
 
-    width: 50px;
-    height: 100%;
+    overflow: hidden;
 
-    content: '';
+    width: 100%;
+    height: auto !important;
 
-    background-color: #fff;
-}
-.keyword-area .media-container
-{
-    position: relative;
-
-    padding: 0 0 0 50px;
-
-    transition: height ease 400ms;
-    transform: translate3d(0, 0, 0);
-
-    opacity: 1;
-}
-.keyword-area .media-container:after
-{
-    display: block;
-    clear: both;
-
-    content: '';
-}
-.keyword-area .media-container .grid
-{
-    position: relative;
-
-    transform: translate3d(0, 0, 0);
-
-    opacity: 1;
-}
-.keyword-area .media-container .grid-item .btn-close02
-{
-    position: absolute;
-    z-index: 4;
-    top: -10px;
-    right: -10px;
-
-    transition: opacity 200ms ease;
-
-    opacity: 0;
-}
-.keyword-area .media-container .grid-item:hover .btn-close02
-{
-    opacity: 1;
-}
-.keyword-area .media-container .post-keyword
-{
-    font-size: 30px;
-    line-height: 1.4;
-
-    position: absolute;
-    top: 0;
-    left: 50px;
-
-    display: block;
-    float: left;
-
-    width: 180px;
-    min-height: 180px;
-    margin: 0 15px 15px 0;
-    padding: 20px;
-
-    color: #f9c03c;
-    border: 4px solid #f9c03c;
     border-radius: 6px;
-    background-color: #fff;
-    /* transition: opacity 300ms 300ms ease; */
 }
-.keyword-area .media-container .post-keyword.is-active
-{
-    /* transition: opacity 300ms ease; */
-    /* opacity: 0; */
-    /* display: none; */
-}
-.keyword-area .media-container .post-media
-{
-    position: relative;
-
-    display: block;
-    float: left;
-
-    width: 180px;
-    height: auto;
-    margin: 0 15px 15px 0;
-}
-.keyword-area .media-container .post-media .wrap
-{
-    position: relative;
-}
-.keyword-area .media-container .post-media .wrap:before
+#transparent-container .post .media-container .media-photo:before
 {
     position: absolute;
     z-index: 2;
@@ -1796,156 +1672,154 @@ input
     content: '';
 
     border-radius: 6px;
-    box-shadow: inset 1px 1px 0 rgba(0, 0, 0, .05), inset -1px -1px 0 rgba(0, 0, 0, .05);
+    box-shadow: inset 1px 1px 0 rgba(255, 255, 255, .8), inset -1px -1px 0 rgba(255, 255, 255, .8);
 }
-.keyword-area .media-container .post-media .wrap .img
+#transparent-container .post .media-container .media-photo .img
 {
     position: relative;
     z-index: 1;
 
-    overflow: hidden;
-
     width: 100%;
-    height: auto;
-    max-height: 320px;
+    height: auto !important;
 
-    border-radius: 6px;
+    transition: all 200ms ease;
+    transform: translate(0, 50px);
 
-    object-fit: cover;
-    object-position: 50% 0;
+    opacity: 0;
+    background-color: #000;
+    box-shadow: 7px 7px 45px 5px rgba(0, 0, 0, .5);
 }
-.keyword-area .media-container .post-media .wrap .favicon
+#transparent-container .post .media-container .media-photo:nth-child(1) .img
+{
+    transition-delay: 80ms;
+}
+#transparent-container .post .media-container .media-photo:nth-child(2) .img
+{
+    transition-delay: 160ms;
+}
+#transparent-container .post .media-container .media-photo:nth-child(3) .img
+{
+    transition-delay: 240ms;
+}
+#transparent-container .post .media-container .media-photo:nth-child(4) .img
+{
+    transition-delay: 320ms;
+}
+#transparent-container .post .media-container .media-photo:nth-child(5) .img
+{
+    transition-delay: 400ms;
+}
+#transparent-container .post .media-container .media-photo:nth-child(6) .img
+{
+    transition-delay: 480ms;
+}
+#transparent-container .post .media-container .media-photo:nth-child(7) .img
+{
+    transition-delay: 560ms;
+}
+#transparent-container .post .media-container .media-photo:nth-child(8) .img
+{
+    transition-delay: 640ms;
+}
+#transparent-container .post .media-container .media-photo:nth-child(9) .img
+{
+    transition-delay: 720ms;
+}
+#transparent-container .post .media-container .media-photo:nth-child(10) .img
+{
+    transition-delay: 800ms;
+}
+#transparent-container .post .media-container .media-photo .favicon
 {
     position: absolute;
-    z-index: 3;
+    z-index: 1;
     right: 10px;
     bottom: 10px;
 
     width: auto;
-    height: 14px;
-}
-.keyword-area .media-container .post-media .txt
-{
-    font-size: 12px;
-    line-height: 1.4;
+    height: 30px;
 
-    padding: 10px 0 0 10px;
+    transition: all 200ms ease;
+    transition-delay: 500ms;
 
-    transition: opacity 200ms ease;
-    word-break: break-all;
-
-    color: #767676;
-}
-.keyword-area .media-container .post-media.hidden-text .txt
-{
     opacity: 0;
-    /* display: none; */
 }
-.keyword-area .media-container .post-media.is-active .img
+@media only screen and (min-width: 1280px)
 {
-    border: 2px solid #f9c03c;
+    #transparent-container .post .media-container .media-photo
+    {
+        transition: all 200ms ease;
+        /* transform: scale3d(1); */
+
+        opacity: .8;
+    }
+    #transparent-container .post .media-container .media-photo:hover
+    {
+        z-index: 15;
+
+        opacity: 1;
+    }
 }
-
-.detail-area
+#transparent-container .post.transit .comment
 {
-    position: relative;
-    z-index: 2;
+    transform: translate(0, 0);
 
-    display: none;
-    /* height: 640px; */
-
-    padding: 50px 0 50px 50px;
-
-    background-color: #dadada;
+    opacity: 1;
 }
-.detail-area.is-active
+#transparent-container .post.transit .media-container .media-photo .img
 {
-    display: block;
-}
-.detail-area .inner
-{
-    position: relative;
+    transform: translate(0, 0);
 
-    width: 90%;
+    opacity: 1;
+}
+#transparent-container .post.transit .media-container .media-photo .favicon
+{
+    opacity: 1;
+}
+#transparent-container .bg
+{
+    position: fixed;
+    z-index: 0;
+    top: 0;
+    left: 0;
+
+    width: 100%;
     height: 100%;
-}
-.detail-area .inner:after
-{
-    display: block;
-    clear: both;
 
-    content: '';
-}
-.detail-area .img
-{
-    display: block;
-    float: left;
-
-    width: 60%;
-    max-width: 540px;
-    height: 80%;
-    min-height: 360px;
-    /* background-color: #ccc; */
-
+    background-color: #000;
+    background-repeat: no-repeat;
     background-position: 50% 50%;
-    background-size: contain;
-    /* @include ratioResponsive(540, 360); */
+    background-size: cover;
 }
-.detail-area .info
+#transparent-container .bg.black
 {
-    float: right;
+    background-image: none;
+}
+#transparent-container .btn-add,
+#transparent-container .btn-bg-toggle
+{
+    position: fixed;
+    z-index: 100;
 
-    width: 35%;
-    padding: 50px 0;
-}
-.detail-area .info .title
-{
-    font-size: 18px;
-    line-height: 1.4;
+    width: 200px;
+    padding: 10px 20px;
 
-    margin-bottom: 1em;
+    text-align: center;
 
-    color: #767676;
+    opacity: .8;
+    color: #000;
+    border-radius: 30px;
+    background: #fff;
 }
-.detail-area .info .desc
+#transparent-container .btn-add
 {
-    font-size: 12px;
-
-    margin-bottom: 1em;
-
-    color: #767676;
+    top: 80px;
+    right: 10px;
 }
-.detail-area .btn-close01
+#transparent-container .btn-bg-toggle
 {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-}
-.detail-area .btn-arrow01
-{
-    position: absolute;
-    top: 50%;
-
-    margin-top: -12px;
-}
-.detail-area .btn-arrow01.right
-{
-    right: 20px;
-}
-.detail-area .btn-arrow01.left
-{
-    left: 20px;
-}
-
-.jp .detail-area .info .title
-{
-    font-family: 'Noto Sans JP', 'Yu Gothic', YuGothic, 'ヒラギノ角ゴシック Pro', 'Hiragino Kaku Gothic Pro', メイリオ, Meiryo, Osaka, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
-    font-weight: 100;
-}
-.jp .detail-area .info .desc
-{
-    font-family: 'Noto Sans JP', 'Yu Gothic', YuGothic, 'ヒラギノ角ゴシック Pro', 'Hiragino Kaku Gothic Pro', メイリオ, Meiryo, Osaka, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
-    font-weight: 100;
+    top: 10px;
+    right: 10px;
 }
 
 /* @import '_pages/underlayer'; */

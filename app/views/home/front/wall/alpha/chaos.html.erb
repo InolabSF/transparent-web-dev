@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ja" class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <title>Transparent</title>
+    <meta name="description" content="Transparent, the first audio recognition tool that serves a stream of content that follows your verbal conversation.">
+    <meta name="keywords" content="Transparent">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta property="og:title" content="Transparent">
+    <meta property="og:site_name" content="Transparent">
+    <meta property="og:description" content="Transparent, the first audio recognition tool that serves a stream of content that follows your verbal conversation.">
+    <meta property="og:url" content="http://trnspt.com/">
+    <meta property="og:image" content="http://res.cloudinary.com/negic/image/upload/v1520401274/og.png">
+    <meta property="og:type" content="website">
+    <link rel="shortcut icon" href="http://res.cloudinary.com/negic/image/upload/v1520401272/favicon.ico" type="image/x-icon">
+    <link rel="canonical" href="http://trnspt.com/">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <!-- <link rel="stylesheet" href="./assets/css/app.css"> -->
+    <%= stylesheet_link_tag    'front-a-chaos', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <style rel="stylesheet">
+      /* ここからiPad proのサイズ */
+
+      /* 背景画像 */
+      #transparent-container .bg {
+          background-image: url('https://res.cloudinary.com/dfa9u6mgh/image/upload/v1529440382/bg_kek3bp.jpg');
+      }
+
+      /* コメントボックスの背景色、文字色、フォントサイズ */
+      #transparent-container .post .comment {
+          background-color: rgba(234, 83, 80, 0.9);
+          color: #fff;
+          font-size: 16px;
+          width: 333px;
+          padding: 40px;
+      }
+
+      /* ユーザアイコンの背景色 */
+      #transparent-container .post .comment .comment-user-icon {
+          background-color: rgba(0, 61, 193, 0.3);
+      }
+
+      /* ここからパソコンサイズ */
+      @media only screen and (min-width: 1280px) {
+
+          /* コメントボックスの背景色、文字色、フォントサイズ */
+          #transparent-container .post .comment {
+              width: 250px;
+              padding: 30px;
+              font-size: 12px;
+          }
+      }
+    </style>
+  </head>
+  <body class="ja">
+    <div id="wrapper">
+      <button class="btn-menu01 tap is-active">
+        <div class="btn-inner"><span class="line line-1"></span><span class="line line-2"></span><span class="line line-3"></span></div>
+      </button>
+      <div id="global-menu" class="is-active">
+        <div class="inner">
+          <div class="setting-btn-area">
+            <p class="tit">Media</p>
+            <div id="on-switch-media" class="btn-toggle02 on-switch-media">
+              <div data-type="0" class="media photo is-active">Photo</div>
+              <div data-type="1" class="media news">News</div>
+              <div data-type="2" class="media movie">Movie</div>
+            </div>
+          </div>
+          <form class="form-keyword">
+            <p class="tit">Keyword Filtering</p>
+            <input type="text" placeholder="Input Keyword" class="input-keyword">
+            <button id="input-submit" class="input-submit">Submit</button>
+          </form>
+          <div class="keyword-list">
+          </div>
+          <div class="setting-btn-area">
+            <p class="tit">Text</p>
+            <div class="btn-toggle01 on-txt-hidden">
+              <div class="toggle"><span class="on">On</span><span class="off">Off</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="recording-area rec">
+        <div class="txt-recording"></div>
+        <div id="btn-recording"></div>
+      </div>
+      <div id="transparent-container">
+        <div class="bg"></div>
+        <div class="modal-layer">
+          <div class="modal-back"></div>
+          <div class="modal-inner"></div>
+          <button class="btn-close01"></button>
+        </div>
+      </div>
+    </div>
+    <script>
+      var TRANSCRIPTS = [];
+
+      TRANSCRIPTS.MEDIA_MAX_SIZE = 350; // ランダム配置される画像の最大サイズ
+      TRANSCRIPTS.MEDIA_MIN_SIZE = TRANSCRIPTS.MEDIA_MAX_SIZE / 3; // ランダム配置される画像の最小サイズ
+
+    </script>
+
+    <div id="warning">
+        <h2 style="display:none">Speech Recognition SDK not found.</h1>
+        <h2 style="display:none">Please execute <code>npm run bundle</code> and reload.</h2>
+    </div>
+    <div id="content" style="display:none">
+    </div>
+
+    <%= javascript_include_tag 'front-a-chaos-manifest', 'data-turbolinks-track': 'reload'  %>
+
+    <!-- load contents -->
+    <script>
+      var wallId = <%= @wall_id %>;
+      var menuHidden = false;
+      var textHidden = false;
+      var commentHidden = false;
+    </script>
+
+    <!-- handle recording -->
+    <script>
+      var recBtn = document.getElementById("btn-recording");
+      var uiVersion = 'demo';
+      languageCode = '<%= @language_code %>';
+      key = '<%= @MS_ASR_KEY %>';
+    </script>
+
+    <!-- legacy script -->
+
+    <script>
+    var initial_transcripts = [];
+    var index;
+
+    function fetchTranscripts(initial_transcripts, index){
+      var xmlHttp = new XMLHttpRequest();
+      xmlHttp.open("GET", "/demo/api/transcripts/" + <%= @wall_id %>, false);
+      xmlHttp.send();
+      data = JSON.parse(xmlHttp.response)
+      for(var i = 0; i < data.transcripts.length; i++) {
+          initial_transcripts.push(data.transcripts[i]);
+      }
+      index = data.index
+      console.log(index)
+      return initial_transcripts, index
+    }
+
+    initial_transcripts, index = fetchTranscripts(initial_transcripts, index);
+
+
+    // function loadTranscripts(initial_transcripts, index){
+    //   var instance = axios.create({
+    //     baseURL: '/demo',
+    //     headers: {
+    //       'ContentType': 'application/json'
+    //     },
+    //     responseType: 'json'
+    //   });
+    //   instance.get('/api/transcripts/' + <%= @wall_id %> + '/' + index).then(function (response){
+    //     transcripts = response.data.transcripts;
+    //     index = response.data.index;
+    //
+    //     for(var i = 0; i < transcripts.length; i++) {
+    //         initial_transcripts.unshift(transcripts[i]);
+    //     }
+    //     if (transcripts.length　!= 0){
+    //         console.log(response.data);
+    //         transcripts_add(transcripts);
+    //
+    //     }
+    //
+    //   }, function (error) {
+    //     console.log(error);
+    //   }).then(function (response){
+    //     loadTranscripts(initial_transcripts, index);
+    //   });
+    // }
+    // window.addEventListener('load', loadTranscripts(initial_transcripts, index))
+
+    </script>
+
+  </body>
+</html>

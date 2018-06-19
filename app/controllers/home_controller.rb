@@ -66,9 +66,9 @@ class HomeController < ApplicationController
 
 
       if params[:view] == 'chaos'
-        render :file => "home/front/wall/demo-sxsw/wall-demo"
+        render :file => "home/front/wall/alpha/chaos"
       else
-        render :file => "home/front/wall/alpha/wall-alpha"
+        render :file => "home/front/wall/alpha/grid"
       end
 
     end
@@ -77,25 +77,45 @@ class HomeController < ApplicationController
   def alpha_test_en
     @wall_id = 12
     @language_code = 'en-US'
-    render :file => "home/front/wall/alpha/wall-alpha"
+
+    if params[:view] == 'chaos'
+      render :file => "home/front/wall/alpha/chaos"
+    else
+      render :file => "home/front/wall/alpha/grid"
+    end
   end
 
   def alpha_test_ja
     @wall_id = 3
     @language_code = 'ja-JP'
-    render :file => "home/front/wall/alpha/wall-alpha"
+
+    if params[:view] == 'chaos'
+      render :file => "home/front/wall/alpha/chaos"
+    else
+      render :file => "home/front/wall/alpha/grid"
+    end
   end
 
   def amana_test_en
     @wall_id = 1
     @language_code = 'en-US'
-    render :file => "home/front/wall/alpha/wall-alpha"
+
+    if params[:view] == 'chaos'
+      render :file => "home/front/wall/alpha/chaos"
+    else
+      render :file => "home/front/wall/alpha/grid"
+    end
   end
 
   def amana_test_ja
     @wall_id = 9
     @language_code = 'ja-JP'
-    render :file => "home/front/wall/alpha/wall-alpha"
+    
+    if params[:view] == 'chaos'
+      render :file => "home/front/wall/alpha/chaos"
+    else
+      render :file => "home/front/wall/alpha/grid"
+    end
   end
 
   # demo at sxsw
