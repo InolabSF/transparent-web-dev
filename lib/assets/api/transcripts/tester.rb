@@ -1,39 +1,54 @@
 require './lib/assets/nlp/nlp_handler'
 require './lib/assets/search/search_handler'
-require './lib/assets/platform/messenger'
+# require './lib/assets/platform/messenger'
 
 def create_log(text, langcode)
 
-  log_nlp(text, langcode)
-  log_search()
+  results = test_nlp(text, langcode)
+  test_search()
 
 end
 
-def log_nlp(text, langcode)
+def test_nlp(text, langcode)
   is_test_mode = false
 
   nlp_type_list = [ 'MS', 'GCP' ]
+  results = []
 
   for nlp_type in nlp_type_list
     entities, sentiment = nlp_handler(nlp_type, text, langcode, is_test_mode)
     result = format_log_nlp(entities, nlp_type)
-    send_messenger(text)
+    results.push(result)
   end
+
+  return results
 end
 
 def format_log_nlp(entities, nlp_type)
 
+  json = {}
+  json.store('nlp_type', nlp_type)
+  json.store('entities', entities)
+
   plain_text = 'NLP : ' + nlp_type
   plain_text += '\n'
 
+
   for entity in entities
-    log = 'Entity Name : ' + entity.name  +  'Entity Type : ' + entity.category
+    if entity['category']
+      log = 'Entity Name : ' + entity['name']  +  'Entity Type : ' + entity['category']
+    elsif
+      log = 'Entity Name : ' + entity['name']  +  'Entity Type : '
+    end
     plain_text += log
     plain_text += '\n'
-
   end
 
-  return plain_text
+  result = {}
+  result.store('plain_text', plain_text)
+  result.store('json', json)
+
+  return result
 end
 
 def log_search()

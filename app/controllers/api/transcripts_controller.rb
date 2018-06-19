@@ -1,7 +1,7 @@
 require './lib/assets/api/transcripts/get_transcripts'
 require './lib/assets/api/transcripts/get_searches'
 require './lib/assets/api/transcripts/create_transcript'
-require './lib/assets/api/transcripts/create_log'
+require './lib/assets/api/transcripts/tester'
 
 class Api::TranscriptsController < ApplicationController
 

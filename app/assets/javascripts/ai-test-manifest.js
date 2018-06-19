@@ -12,5 +12,7 @@
 //
 //= require rails-ujs
 //= require turbolinks
+//= require front/alpha/js/axios.min.js
 //= require ms/speech.sdk.bundle.js
 //= require ms/sdk-usage.js
+//= require console/dev/nlp.js

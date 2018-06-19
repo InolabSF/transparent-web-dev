@@ -1,3 +1,5 @@
+require './lib/assets/api/transcripts/tester'
+
 class HomeController < ApplicationController
 
   before_action :get_keys
@@ -22,8 +24,14 @@ class HomeController < ApplicationController
     render :file => "home/media"
   end
 
-  def test_ai
+  def ai_tester
     render :file => "home/console/dev/test-ai"
+  end
+
+  def nlp_tester
+    results = test_nlp(params[:text], params[:langcode])
+
+    render json: { 'results' => results }
   end
 
   # alpha
