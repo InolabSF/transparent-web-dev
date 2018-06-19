@@ -38,9 +38,9 @@ process = () => {
           if(result.json.entities) {
             result.json.entities.forEach((entity) => {
               outputDiv.innerHTML += ('Entity : '+entity.name);
-              if(entity.category) { outputDiv.innerHTML += (' ( '+entity.category+' ) '+'\n' ) };
+              if(entity.category) { outputDiv.innerHTML += (' ( '+entity.category+' ) ') };
+              outputDiv.innerHTML += ('\n');
             })
-            outputDiv.innerHTML += ('\n');
           }
         })
 
