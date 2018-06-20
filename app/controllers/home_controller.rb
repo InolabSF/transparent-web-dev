@@ -10,18 +10,18 @@ class HomeController < ApplicationController
 
   def top
     if params[:lang] == 'jp'
-      render :file => "home/web/alpha/index-jp.php"
+      render :file => "home/promotion/alpha/index-jp.php"
     else
-      render :file => "home/web/alpha/index.php"
+      render :file => "home/promotion/alpha/index.php"
     end
   end
 
   def top_sxsw
-    render :file => "home/web/dest/top"
+    render :file => "home/promotion/dest/top"
   end
 
   def media
-    render :file => "home/media"
+    render :file => "home/promotion/media"
   end
 
   def ai_tester
@@ -110,7 +110,7 @@ class HomeController < ApplicationController
   def amana_test_ja
     @wall_id = 9
     @language_code = 'ja-JP'
-    
+
     if params[:view] == 'chaos'
       render :file => "home/front/wall/alpha/chaos"
     else

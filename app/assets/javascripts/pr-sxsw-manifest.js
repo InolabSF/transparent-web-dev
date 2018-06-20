@@ -12,5 +12,4 @@
 //
 //= require rails-ujs
 //= require turbolinks
-//= require web/alpha/modernizr.min.js
-//= require web/alpha/mods.js
+//= require promotion/sxsw/assets/js/bundle.js
