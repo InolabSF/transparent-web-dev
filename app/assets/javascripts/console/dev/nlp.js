@@ -15,6 +15,8 @@ process = () => {
 
   if(inputDiv.value){
 
+      outputDiv.innerHTML = 'Proccessing...';
+
       const req = {
         text: inputDiv.value,
         langcode: languageOptions.value
@@ -35,12 +37,15 @@ process = () => {
         const results = response.data.results
         results.forEach((result) => {
           outputDiv.innerHTML += (result.json.nlp_type+' NLP\n');
-          if(result.json.entities) {
+          if(result.json.entities.length == 0) {
+            outputDiv.innerHTML += ('No Entity.');
+            outputDiv.innerHTML += ('\n');
+          } else {
             result.json.entities.forEach((entity) => {
               outputDiv.innerHTML += ('Entity : '+entity.name);
               if(entity.category) { outputDiv.innerHTML += (' ( '+entity.category+' ) ') };
               outputDiv.innerHTML += ('\n');
-            })
+            });
           }
         })
 
