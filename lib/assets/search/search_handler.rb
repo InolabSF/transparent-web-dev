@@ -164,9 +164,10 @@ def ms_image_search(text, search, transcript, langcode, is_concurrent, num, cont
        req.url requrl
        req.headers['Content-Type'] = 'application/json'
        req.headers['Ocp-Apim-Subscription-Key'] = ms_search_key
+       req.headers['Accept-Language'] = langcode
        req.params['q'] = text
        req.params['count'] = num
-       req.params['mkt'] = langcode
+       req.params['cc'] = langcode
        req.params['license'] = 'All'
        req.params['safeSearch'] = 'Strict'
     end
