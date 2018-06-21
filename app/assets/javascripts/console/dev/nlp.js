@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
   resultsTable = document.getElementById("resultsTable");
   nlpBtn = document.getElementById("nlpBtn");
   inputDiv = document.getElementById("inputDiv");
+  langNLP = document.getElementById("langNLP");
   // entityDivMS = document.getElementById("entityDivMS");
   // typeDivMS = document.getElementById("typeDivMS");
   // entityDivGCP = document.getElementById("entityDivGCP");
@@ -28,7 +29,7 @@ process = ( input ) => {
 
   const req = {
     text: input,
-    langcode: languageOptions.value
+    langcode: langNLP.value
   }
   const instance = axios.create({
     baseURL: '/console',
