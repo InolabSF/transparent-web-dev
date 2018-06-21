@@ -19351,7 +19351,7 @@
 
 	        _this.transcripts = new Transcripts();
 
-	        $('#wrapper').on('click', '.btn-menu01', _this.menuToggle.bind(_this)).on('click', '.media-photo', _this.showModal.bind(_this)).on('click', '.modal-layer .btn-close01', _this.hideModal.bind(_this)).on('click', '.btn-bg-toggle', _this.toggleBackgroundStyle.bind(_this)).on('click', '.btn-add', _this.add.bind(_this));
+	        $('#wrapper').on('click', '.btn-menu01', _this.menuToggle.bind(_this)).on('click', '.media-photo', _this.showModal.bind(_this)).on('click', '.modal-layer .modal-back', _this.hideModal.bind(_this)).on('click', '.btn-bg-toggle', _this.toggleBackgroundStyle.bind(_this)).on('click', '.btn-add', _this.add.bind(_this));
 
 	        $(window).on('keydown', _this.keyDown.bind(_this)).on('keyup', _this.keyUp.bind(_this));
 
@@ -19387,6 +19387,10 @@
 	        value: function showModal(event) {
 	            event.preventDefault();
 
+	            if ($(event.target).hasClass('btn-close02')) {
+	                return false;
+	            }
+
 	            var modal = $('.modal-inner');
 	            var el = $(event.currentTarget);
 
@@ -19395,17 +19399,22 @@
 	            var desc = el.data('desc');
 	            var url = el.attr('href');
 
+	            var info = $('<div />', { class: 'info' }).appendTo(modal);
+
 	            if (src) {
-	                $('<img />', { src: src }).appendTo(modal);
+	                $('<div />', {
+	                    style: 'background-image: url(' + src + ');',
+	                    class: 'img'
+	                }).prependTo(modal);
 	            }
 	            if (title) {
-	                $('<p />', { class: 'title' }).text(title).appendTo(modal);
+	                $('<p />', { class: 'title' }).text(title).appendTo(info);
 	            }
 	            if (desc) {
-	                $('<p />', { class: 'desc' }).text(desc).appendTo(modal);
+	                $('<p />', { class: 'desc' }).text(desc).appendTo(info);
 	            }
 	            if (url) {
-	                $('<a />', { class: 'btn-style01', href: url, target: '_blank' }).text('Link').appendTo(modal);
+	                $('<a />', { class: 'btn-style01', href: url, target: '_blank' }).text('Link').appendTo(info);
 	            }
 
 	            $('.modal-layer').addClass('is-show');
@@ -19492,10 +19501,11 @@
 
 	        _this.init();
 
+	        _this.mediaText = true;
 	        _this.keywords = [];
 	        _this.recordingStatus = false;
 
-	        $('#wrapper').on('click', '.on-switch-media .media', _this.mediaSwitch.bind(_this)).on('click', '.input-submit', _this.addKeywordList.bind(_this)).on('click', '.keyword-list .list-item', _this.removeKeywordList.bind(_this));
+	        $('#wrapper').on('click', '.on-switch-media .media', _this.mediaSwitch.bind(_this)).on('click', '.input-submit', _this.addKeywordList.bind(_this)).on('click', '.on-txt-hidden', _this.mediaTextToggle.bind(_this)).on('click', '.keyword-list .list-item', _this.removeKeywordList.bind(_this)).on('click', '.media-photo .btn-close02', _this.removeMedia.bind(_this));
 	        return _this;
 	    }
 
@@ -19581,19 +19591,21 @@
 	    }, {
 	        key: 'createPost',
 	        value: function createPost(data) {
-	            var klass = '';
+	            var klass = '',
+	                klass2 = '';
 
-	            if (data.has_content) {
-	                klass = '';
-	            } else {
+	            if (!data.has_content) {
 	                klass = ' no-content';
 	            }
 
+	            if (!this.mediaText) {
+	                klass2 = ' is-hidden';
+	            }
+
 	            var post = $('<div />', { class: 'post' + klass });
-	            var comment = $('<div />', { class: 'comment' }).appendTo(post);
+	            var comment = $('<div />', { class: 'comment' + klass2 }).appendTo(post);
 	            var container = $('<div />', { class: 'media-container' }).appendTo(post);
 
-	            $('<div />', { class: 'comment-user-icon' }).appendTo(comment);
 	            $('<div />', { class: 'comment-text' }).text(data.text).appendTo(comment);
 
 	            return post;
@@ -19640,6 +19652,7 @@
 	                    });
 	                    $('<img />', { src: d.img_url, class: 'img' }).appendTo(h);
 	                    $('<img />', { src: 'http://www.google.com/s2/favicons?domain=' + d.source, class: 'favicon' }).appendTo(h);
+	                    $('<button />', { class: 'btn-close02' }).appendTo(h);
 	                } else {
 	                    h = $('<img />', { src: d.img_url, class: 'img' });
 	                }
@@ -19734,6 +19747,30 @@
 	        key: 'getKeywords',
 	        value: function getKeywords() {
 	            return this.keywords;
+	        }
+	    }, {
+	        key: 'mediaTextToggle',
+	        value: function mediaTextToggle(event) {
+	            if ($('.comment').hasClass('is-hidden')) {
+
+	                // テキスト表示
+	                this.mediaText = true;
+	                $('.comment').removeClass('is-hidden');
+	                $(event.currentTarget).removeClass('is-active');
+	            } else {
+
+	                // テキスト非表示
+	                this.mediaText = false;
+	                $('.comment').addClass('is-hidden');
+	                $(event.currentTarget).addClass('is-active');
+	            }
+	        }
+	    }, {
+	        key: 'removeMedia',
+	        value: function removeMedia(event) {
+	            event.preventDefault();
+
+	            $(event.currentTarget).closest('.media-photo').remove();
 	        }
 	    }]);
 
