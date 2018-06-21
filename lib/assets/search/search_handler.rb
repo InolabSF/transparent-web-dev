@@ -164,7 +164,7 @@ def ms_image_search(text, search, transcript, langcode, is_concurrent, num, cont
        req.url requrl
        req.headers['Content-Type'] = 'application/json'
        req.headers['Ocp-Apim-Subscription-Key'] = ms_search_key
-       req.headers['Accept-Language'] = langcode
+       req.headers['Accept-Language'] = langcode[0, 2]
        req.params['q'] = text
        req.params['count'] = num
        req.params['cc'] = langcode
@@ -603,7 +603,7 @@ def ms_news_search(text, search, transcript, langcode, is_concurrent, num, conte
     apiUrl = 'api.cognitive.microsoft.com'
     uri = "https://" + apiUrl
 
-    conn = Faraday::Connection.new(:url => uri) do |builder|
+    conn = Faraday::Connection.new(:url => apiUrl) do |builder|
      ## URLをエンコードする
       builder.use Faraday::Request::UrlEncoded
      ## ログを標準出力に出したい時(本番はコメントアウトでいいかも)
@@ -619,9 +619,10 @@ def ms_news_search(text, search, transcript, langcode, is_concurrent, num, conte
        req.url requrl
        req.headers['Content-Type'] = 'application/json'
        req.headers['Ocp-Apim-Subscription-Key'] = ms_search_key
+       req.headers['Accept-Language'] = langcode[0, 2]
        req.params['q'] = text
        req.params['count'] = num
-       req.params['mkt'] = langcode
+       req.params['cc'] = langcode
        req.params['license'] = 'All'
        req.params['safeSearch'] = 'Strict'
     end
