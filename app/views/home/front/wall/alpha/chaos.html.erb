@@ -149,34 +149,35 @@
     initial_transcripts, index = fetchTranscripts(initial_transcripts, index);
 
 
-    // function loadTranscripts(initial_transcripts, index){
-    //   var instance = axios.create({
-    //     baseURL: '/demo',
-    //     headers: {
-    //       'ContentType': 'application/json'
-    //     },
-    //     responseType: 'json'
-    //   });
-    //   instance.get('/api/transcripts/' + <%= @wall_id %> + '/' + index).then(function (response){
-    //     transcripts = response.data.transcripts;
-    //     index = response.data.index;
-    //
-    //     for(var i = 0; i < transcripts.length; i++) {
-    //         initial_transcripts.unshift(transcripts[i]);
-    //     }
-    //     if (transcripts.length　!= 0){
-    //         console.log(response.data);
-    //         transcripts_add(transcripts);
-    //
-    //     }
-    //
-    //   }, function (error) {
-    //     console.log(error);
-    //   }).then(function (response){
-    //     loadTranscripts(initial_transcripts, index);
-    //   });
-    // }
-    // window.addEventListener('load', loadTranscripts(initial_transcripts, index))
+    function loadTranscripts(initial_transcripts, index){
+      var instance = axios.create({
+        baseURL: '/demo',
+        headers: {
+          'ContentType': 'application/json'
+        },
+        responseType: 'json'
+      });
+      instance.get('/api/transcripts/' + <%= @wall_id %> + '/' + index).then(function (response){
+        transcripts = response.data.transcripts;
+        index = response.data.index;
+
+        for(var i = 0; i < transcripts.length; i++) {
+            initial_transcripts.unshift(transcripts[i]);
+        }
+        if (transcripts.length　!= 0){
+            console.log(response.data);
+            // transcripts_add(transcripts);
+            TRANSCRIPTS.add(transcripts);
+
+        }
+
+      }, function (error) {
+        console.log(error);
+      }).then(function (response){
+        loadTranscripts(initial_transcripts, index);
+      });
+    }
+    window.addEventListener('load', loadTranscripts(initial_transcripts, index))
 
     </script>
 
