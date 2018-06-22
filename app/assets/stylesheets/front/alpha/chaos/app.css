@@ -905,7 +905,7 @@ input
 }
 .btn-menu01.is-active
 {
-    background-color: transparent;
+    background-color: rgba(255, 255, 255, .2);
 }
 .btn-menu01.is-active .btn-inner
 {
@@ -1017,7 +1017,7 @@ input
     float: left;
 
     width: 33.33%;
-    height: 50px;
+    height: 60px;
 
     transition: background-color ease 400ms;
 
@@ -1046,7 +1046,7 @@ input
 }
 .btn-toggle02 div.photo
 {
-    background-color: #229aa7;
+    background-color: rgba(39, 189, 206, .8);
     background-image: url('https://res.cloudinary.com/negic/image/upload/v1529579853/ico09.png');
     background-size: 26px auto;
 }
@@ -1057,7 +1057,7 @@ input
 }
 .btn-toggle02 div.news
 {
-    background-color: #76a103;
+    background-color: rgba(144, 198, 0, .8);
     background-image: url('https://res.cloudinary.com/negic/image/upload/v1529579853/ico10.png');
     background-size: 23px auto;
 }
@@ -1068,7 +1068,7 @@ input
 }
 .btn-toggle02 div.movie
 {
-    background-color: #cf5747;
+    background-color: rgba(255, 106, 86, .8);
     background-image: url('https://res.cloudinary.com/negic/image/upload/v1529579854/ico11.png');
     background-size: 24px auto;
 }
@@ -1294,8 +1294,6 @@ input
     width: 66%;
     height: 85%;
     margin: auto;
-
-    background-color: rgba(0, 0, 0, .6);
 }
 .modal-layer .modal-inner:after
 {
@@ -1306,9 +1304,10 @@ input
 }
 .modal-layer .modal-inner .img
 {
-    width: 66%;
-    /* background-color: #000; */
+    width: 64%;
+    margin-right: 2%;
 
+    background-color: rgba(0, 0, 0, .6);
     background-position: 50% 50%;
     background-size: contain;
 }
@@ -1321,6 +1320,8 @@ input
     width: 34%;
     height: 100%;
     padding: 0 30px;
+
+    background-color: rgba(0, 0, 0, .6);
     /* 子要素をflexboxにより縦方向に揃える */
 
     justify-content: center;
@@ -1361,7 +1362,7 @@ input
         margin: 0 0 1em;
     }
 }
-.modal-layer .modal-inner .info .btn-style
+.modal-layer .modal-inner .info .btn-style01
 {
     width: 180px;
 }
@@ -1429,14 +1430,14 @@ input
     right: 0;
 
     width: 240px;
-    min-height: 640px;
-    padding: 0 30px;
+    /* min-height: 640px; */
+    padding: 0 30px 65px;
 
     transition: transform 400ms ease;
     transform: translate3d(240px, 0, 0);
 
     border-radius: 0 0 0 40px;
-    background-color: rgba(0, 0, 0, .8);
+    background-color: rgba(13, 13, 13, .8);
 }
 #global-menu.is-active
 {
@@ -1447,7 +1448,7 @@ input
     /* overflow-y: scroll; */
     width: 100%;
     height: 100%;
-    padding: 100px 0 0;
+    padding: 120px 0 0;
 }
 #global-menu .form-keyword
 {
@@ -1460,6 +1461,9 @@ input
     font-family: 'Roboto', 'Yu Gothic', YuGothic, 'ヒラギノ角ゴシック Pro', 'Hiragino Kaku Gothic Pro', メイリオ, Meiryo, Osaka, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
     font-size: 14px;
     font-weight: 700;
+    line-height: 1;
+
+    margin-bottom: 1em;
 
     color: #fff;
 }
@@ -1477,21 +1481,11 @@ input
 }
 #global-menu .form-keyword .input-submit
 {
-    font-size: 12px;
-    line-height: 1;
-
     width: 100%;
-    padding: 9px 0;
-
-    text-align: center;
-
-    color: #595959;
-    border-radius: 15px;
-    background-color: #fff;
 }
 #global-menu .keyword-list
 {
-    min-height: 100px;
+    min-height: 70px;
     margin-bottom: 30px;
 }
 #global-menu .keyword-list .list-item
@@ -1521,11 +1515,18 @@ input
 {
     margin-bottom: 30px;
 }
+#global-menu .setting-btn-area:last-child
+{
+    margin-bottom: 0;
+}
 #global-menu .setting-btn-area .tit
 {
     font-family: 'Roboto', 'Yu Gothic', YuGothic, 'ヒラギノ角ゴシック Pro', 'Hiragino Kaku Gothic Pro', メイリオ, Meiryo, Osaka, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
     font-size: 14px;
     font-weight: 700;
+    line-height: 1;
+
+    margin-bottom: 1em;
 
     color: #fff;
 }
@@ -1541,7 +1542,6 @@ input
     height: 80px;
 
     border-radius: 40px;
-    background-color: rgba(0, 0, 0, .8);
 }
 .recording-area.rec
 {
@@ -1554,6 +1554,8 @@ input
 .recording-area.recording
 {
     width: 480px;
+
+    background-color: rgba(0, 0, 0, .8);
 }
 .recording-area.recording .txt-recording
 {
@@ -1589,7 +1591,7 @@ input
     cursor: pointer;
 
     border-radius: 50%;
-    background-color: #24333c;
+    background-color: rgba(255, 255, 255, .1);
 }
 .recording-area #btn-recording:after
 {
@@ -1607,9 +1609,17 @@ input
     border-radius: 50%;
     background-color: #f13c33;
 }
+.recording-area.rec #btn-recording
+{
+    background-color: rgba(255, 255, 255, .1);
+}
 .recording-area.rec #btn-recording:after
 {
     background-color: #8fc31f;
+}
+.recording-area.recording #btn-recording
+{
+    background-color: #24333c;
 }
 .recording-area.recording #btn-recording:after
 {
@@ -1657,6 +1667,7 @@ input
     pointer-events: none;
 
     opacity: 0;
+    border: 4px solid rgba(255, 255, 255, .2);
     border-radius: 6px;
     background-color: rgba(202, 200, 197, .9);
     box-shadow: 7px 7px 45px 5px rgba(0, 0, 0, .5);
@@ -1722,6 +1733,7 @@ input
     height: auto !important;
 
     border-radius: 6px;
+    box-shadow: 7px 7px 45px 5px rgba(0, 0, 0, .5);
 }
 #transparent-container .post .media-container .media-photo:before
 {
@@ -1734,7 +1746,9 @@ input
     height: 100%;
 
     content: '';
+    transition: all 200ms ease 200ms;
 
+    opacity: 0;
     border-radius: 6px;
     box-shadow: inset 1px 1px 0 rgba(255, 255, 255, .8), inset -1px -1px 0 rgba(255, 255, 255, .8);
 }
@@ -1843,6 +1857,10 @@ input
 {
     transform: translate(0, 0);
 
+    opacity: 1;
+}
+#transparent-container .post.transit .media-container .media-photo:before
+{
     opacity: 1;
 }
 #transparent-container .post.transit .media-container .media-photo .img

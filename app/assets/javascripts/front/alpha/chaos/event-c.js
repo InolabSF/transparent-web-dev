@@ -101,35 +101,29 @@ document.getElementById('on-switch-media').addEventListener('click', function() 
     });
 }, false);
 
-// $('#wrapper').on('click', '#transparent-container .btn-close02', function(event) {
-//     setTimeout(function() {
-//
-//         search_id = $(event.currentTarget).closest('.grid-item').attr('data-searchId')
-//         related_content_id = $(event.currentTarget).closest('.grid-item').attr('data-relatedContentId')
-//
-//         if (related_content_id){
-//             deleteContents(related_content_id)
-//         } else {
-//             deleteSearch(search_id)
-//         }
-//
-//     }, 100);
-// });
+$('#wrapper').on('click', '#transparent-container .btn-close02', function(event) {
+    setTimeout(function() {
 
-// window.addEventListener('scroll', function() {
-//
-//     // スクロールが下部に来たらtrueを返します
-//     console.log(TRANSCRIPTS.getScrollBottomPosition());
-//
-//     if (TRANSCRIPTS.getScrollBottomPosition()) {
-//
-//       if (!is_loading) {
-//         loadPastContents();
-//       };
-//
-//     };
-//
-// }, false);
+        console.log("transcript_id: ", $(event.currentTarget).closest('.media-photo').attr('data-id'));
+        // if (related_content_id){
+        //     deleteContents(related_content_id)
+        // } else {
+        //     deleteSearch(search_id)
+        // }
+    }, 100);
+});
+
+window.addEventListener('scroll', function() {
+
+    // スクロールが下部に来たらtrueを返します
+    console.log(TRANSCRIPTS.getScrollBottomPosition());
+
+    if (TRANSCRIPTS.getScrollBottomPosition()) {
+        // if (!is_loading) {
+       //         loadPastContents();
+       //       };
+    }
+}, false);
 
 function getCookieArray(){
   var arr = new Array();

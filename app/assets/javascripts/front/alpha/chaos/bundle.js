@@ -19361,6 +19361,7 @@
 	        TRANSCRIPTS.getRecordingStatus = _this.transcripts.getRecordingStatus.bind(_this.transcripts);
 	        TRANSCRIPTS.getMediaType = _this.transcripts.getMediaType.bind(_this.transcripts);
 	        TRANSCRIPTS.getKeywords = _this.transcripts.getKeywords.bind(_this.transcripts);
+	        TRANSCRIPTS.getScrollBottomPosition = _this.transcripts.getScrollBottomPosition.bind(_this.transcripts);
 	        return _this;
 	    }
 
@@ -19501,11 +19502,14 @@
 
 	        _this.init();
 
+	        _this.scrollBottomPos = false;
 	        _this.mediaText = true;
 	        _this.keywords = [];
 	        _this.recordingStatus = false;
 
 	        $('#wrapper').on('click', '.on-switch-media .media', _this.mediaSwitch.bind(_this)).on('click', '.input-submit', _this.addKeywordList.bind(_this)).on('click', '.on-txt-hidden', _this.mediaTextToggle.bind(_this)).on('click', '.keyword-list .list-item', _this.removeKeywordList.bind(_this)).on('click', '.media-photo .btn-close02', _this.removeMedia.bind(_this));
+
+	        $(window).on('scroll', _this.onScroll.bind(_this));
 	        return _this;
 	    }
 
@@ -19648,6 +19652,7 @@
 	                        href: d.url,
 	                        'data-title': d.title,
 	                        'data-desc': d.desc,
+	                        'data-id': d.transcript_id,
 	                        target: '_blank'
 	                    });
 	                    $('<img />', { src: d.img_url, class: 'img' }).appendTo(h);
@@ -19771,6 +19776,25 @@
 	            event.preventDefault();
 
 	            $(event.currentTarget).closest('.media-photo').remove();
+	        }
+	    }, {
+	        key: 'onScroll',
+	        value: function onScroll() {
+	            var scrollHeight = $(document).height();
+	            var scrollPosition = $(window).height() + $(window).scrollTop();
+
+	            if ((scrollHeight - scrollPosition) / scrollHeight <= 0.05) {
+
+	                //スクロールの位置が下部5%の範囲に来た場合
+	                this.scrollBottomPos = true;
+	            } else {
+	                this.scrollBottomPos = false;
+	            }
+	        }
+	    }, {
+	        key: 'getScrollBottomPosition',
+	        value: function getScrollBottomPosition() {
+	            return this.scrollBottomPos;
 	        }
 	    }]);
 
