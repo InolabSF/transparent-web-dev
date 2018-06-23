@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // typeDivGCP = document.getElementById("typeDivGCP");
 
   nlpBtn.addEventListener("click", onPress)
+  inputDiv.maxLength  = 5000;
 
 });
 
@@ -26,6 +27,9 @@ onPress = () => {
 }
 
 process = ( input ) => {
+
+  input = input.replace(/\r?\n+/g,"");
+  console.log(input);
 
   const req = {
     text: input,

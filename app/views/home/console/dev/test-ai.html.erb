@@ -71,10 +71,14 @@
                 </td>
             </tr>
             <tr>
-                <td align="right">Input: </td>
+                <td align="right">Input:</td>
                 <td>
                     <textarea id="inputDiv" style="display: inline-block;width:750px;height:30px"></textarea>
                 </td>
+            </tr>
+            <tr>
+                <td align="right"></td>
+                <td align="left">( Max charaters: 5,000 )</td>
             </tr>
             <tr height=30>
                 <td></td>
@@ -86,7 +90,7 @@
         </table>
 
         <table
-          width="100%"
+          width="90%"
           id="resultsTable"
           border="1"
           borderColor="black"
@@ -152,15 +156,10 @@
 
             recBtn.addEventListener("click", function () {
 
-
               if (isActive){
-
                 killMic();
-
               } else {
-
                 activateMic();
-
               }
 
             });
@@ -250,7 +249,6 @@
           recBtn.innerHTML = offMicPhrase;
           RecognizerStop(SDK, recognizer);
           isActive = false;
-
         }
 
         function errorHandler() {
