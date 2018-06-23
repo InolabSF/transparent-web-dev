@@ -10,18 +10,30 @@ def create_log(text, langcode)
 end
 
 def test_nlp(text, langcode)
-  is_test_mode = false
 
   nlp_type_list = [ 'MS', 'GCP' ]
   results = []
 
   for nlp_type in nlp_type_list
-    entities, sentiment = nlp_handler(nlp_type, text, langcode, is_test_mode)
+    entities, sentiment = send_nlp_api(nlp_type, text, langcode)
     result = format_log_nlp(entities, nlp_type)
     results.push(result)
   end
 
   return results
+end
+
+def send_nlp_api(nlp_type, text, langcode)
+
+  if nlp_type == 'MS'
+    entities, sentiment = analyze_text_ms(text, langcode)
+  elsif nlp_type == 'GCP'
+    entities, sentiment = analyze_text_gcp(text, langcode)
+  else
+    entities, sentiment = analyze_text_ms(text, langcode)
+  end
+
+  return entities, sentiment
 end
 
 def format_log_nlp(entities, nlp_type)
