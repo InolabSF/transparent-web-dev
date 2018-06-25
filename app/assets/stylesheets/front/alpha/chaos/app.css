@@ -1701,7 +1701,7 @@ input
     transform: translate(0, 50px);
     pointer-events: none;
 
-    opacity: 0;
+    opacity: 1;
     border: 4px solid rgba(255, 255, 255, .2);
     border-radius: 6px;
     background-color: rgba(202, 200, 197, .9);
@@ -1766,25 +1766,49 @@ input
     width: 100%;
     height: auto !important;
 
+    border: 1px solid #dde1e6;
     border-radius: 6px;
     box-shadow: 7px 7px 45px 5px rgba(0, 0, 0, .5);
 }
-#transparent-container .post .media-container .media-photo:before
+#transparent-container .post .media-container .media-photo:nth-child(1)
 {
-    position: absolute;
-    z-index: 2;
-
-    display: block;
-
-    width: 100%;
-    height: 100%;
-
-    content: '';
-    transition: all 200ms ease 200ms;
-
-    opacity: 0;
-    border-radius: 6px;
-    box-shadow: inset 1px 1px 0 rgba(255, 255, 255, .8), inset -1px -1px 0 rgba(255, 255, 255, .8);
+    transition-delay: 80ms;
+}
+#transparent-container .post .media-container .media-photo:nth-child(2)
+{
+    transition-delay: 160ms;
+}
+#transparent-container .post .media-container .media-photo:nth-child(3)
+{
+    transition-delay: 240ms;
+}
+#transparent-container .post .media-container .media-photo:nth-child(4)
+{
+    transition-delay: 320ms;
+}
+#transparent-container .post .media-container .media-photo:nth-child(5)
+{
+    transition-delay: 400ms;
+}
+#transparent-container .post .media-container .media-photo:nth-child(6)
+{
+    transition-delay: 480ms;
+}
+#transparent-container .post .media-container .media-photo:nth-child(7)
+{
+    transition-delay: 560ms;
+}
+#transparent-container .post .media-container .media-photo:nth-child(8)
+{
+    transition-delay: 640ms;
+}
+#transparent-container .post .media-container .media-photo:nth-child(9)
+{
+    transition-delay: 720ms;
+}
+#transparent-container .post .media-container .media-photo:nth-child(10)
+{
+    transition-delay: 800ms;
 }
 #transparent-container .post .media-container .media-photo .img
 {
@@ -1794,52 +1818,7 @@ input
     width: 100%;
     height: auto !important;
 
-    transition: all 200ms ease;
-    transform: translate(0, 50px);
-
-    opacity: 0;
     background-color: #000;
-    box-shadow: 7px 7px 45px 5px rgba(0, 0, 0, .5);
-}
-#transparent-container .post .media-container .media-photo:nth-child(1) .img
-{
-    transition-delay: 80ms;
-}
-#transparent-container .post .media-container .media-photo:nth-child(2) .img
-{
-    transition-delay: 160ms;
-}
-#transparent-container .post .media-container .media-photo:nth-child(3) .img
-{
-    transition-delay: 240ms;
-}
-#transparent-container .post .media-container .media-photo:nth-child(4) .img
-{
-    transition-delay: 320ms;
-}
-#transparent-container .post .media-container .media-photo:nth-child(5) .img
-{
-    transition-delay: 400ms;
-}
-#transparent-container .post .media-container .media-photo:nth-child(6) .img
-{
-    transition-delay: 480ms;
-}
-#transparent-container .post .media-container .media-photo:nth-child(7) .img
-{
-    transition-delay: 560ms;
-}
-#transparent-container .post .media-container .media-photo:nth-child(8) .img
-{
-    transition-delay: 640ms;
-}
-#transparent-container .post .media-container .media-photo:nth-child(9) .img
-{
-    transition-delay: 720ms;
-}
-#transparent-container .post .media-container .media-photo:nth-child(10) .img
-{
-    transition-delay: 800ms;
 }
 #transparent-container .post .media-container .media-photo .favicon
 {
@@ -1850,11 +1829,6 @@ input
 
     width: auto;
     height: 30px;
-
-    transition: all 200ms ease;
-    transition-delay: 500ms;
-
-    opacity: 0;
 }
 #transparent-container .post .media-container .media-photo .btn-close02
 {
@@ -1886,26 +1860,6 @@ input
 
         opacity: 1;
     }
-}
-#transparent-container .post.transit .comment
-{
-    transform: translate(0, 0);
-
-    opacity: 1;
-}
-#transparent-container .post.transit .media-container .media-photo:before
-{
-    opacity: 1;
-}
-#transparent-container .post.transit .media-container .media-photo .img
-{
-    transform: translate(0, 0);
-
-    opacity: 1;
-}
-#transparent-container .post.transit .media-container .media-photo .favicon
-{
-    opacity: 1;
 }
 #transparent-container .bg
 {
