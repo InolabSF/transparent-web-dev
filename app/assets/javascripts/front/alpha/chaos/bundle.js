@@ -19671,7 +19671,7 @@
 	                // stageHeight: TRANSCRIPTS.MEDIA_MAX_SIZE / 2,
 	                min: TRANSCRIPTS.MEDIA_MIN_SIZE,
 	                className: 'media-photo',
-	                adjustment: TRANSCRIPTS.MEDIA_MAX_SIZE / 6,
+	                adjustment: 30,
 	                tryCount: TRY_COUNT
 	            });
 	        }

@@ -1638,15 +1638,50 @@ input
 #transparent-container .post
 {
     position: relative;
-    z-index: 1;
 
-    padding: 240px 0;
+    padding: 360px 0;
+}
+#transparent-container .post:nth-child(1)
+{
+    z-index: 9;
+}
+#transparent-container .post:nth-child(2)
+{
+    z-index: 8;
+}
+#transparent-container .post:nth-child(3)
+{
+    z-index: 7;
+}
+#transparent-container .post:nth-child(4)
+{
+    z-index: 6;
+}
+#transparent-container .post:nth-child(5)
+{
+    z-index: 5;
+}
+#transparent-container .post:nth-child(6)
+{
+    z-index: 4;
+}
+#transparent-container .post:nth-child(7)
+{
+    z-index: 3;
+}
+#transparent-container .post:nth-child(8)
+{
+    z-index: 2;
+}
+#transparent-container .post:nth-child(9)
+{
+    z-index: 1;
 }
 @media only screen and (min-width: 1280px)
 {
     #transparent-container .post
     {
-        padding: 180px 0;
+        padding: 300px 0;
     }
 }
 #transparent-container .post.no-content
@@ -1659,8 +1694,8 @@ input
     z-index: 10;
     left: 50%;
 
-    width: 333.33333px;
-    padding: 40px;
+    width: 120px;
+    padding: 120px;
 
     transition: all 200ms ease;
     transform: translate(0, 50px);
@@ -1676,10 +1711,9 @@ input
 {
     #transparent-container .post .comment
     {
+        /* width: 250px;
+    padding: 30px; */
         font-size: 12px;
-
-        width: 250px;
-        padding: 30px;
     }
 }
 #transparent-container .post .comment.is-hidden
