@@ -79,12 +79,10 @@ function postTranscript(text) {
   xmlHttp.open("POST", post_url);
   xmlHttp.setRequestHeader( 'Content-Type', 'application/json' )
   xmlHttp.onreadystatechange = async function() {
-
-      // await sleepByPromise(2)
-      if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-        TRANSCRIPTS.setRecordingText('');
-      }
-
+    // await sleepByPromise(2)
+    if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+      TRANSCRIPTS.setRecordingText('');
+    }
   };
   xmlHttp.send(JSON.stringify(body));
   console.log(xmlHttp.response);

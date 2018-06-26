@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   get '/api/transcripts/:wall_id', to: 'api/transcripts#index'
   post '/api/transcripts', to: 'api/transcripts#create'
   get '/api/transcripts/:wall_id/:search_last_index/:related_content_last_index', to: 'api/transcripts#show'
-  get '/api/transcripts/:wall_id/:search_first_index', to: 'api/transcripts#get_further'
+  get '/api/transcripts/:wall_id/:search_first_index', to: 'api/transcripts#load_past'
 
   get '/api/update/searches/:search_id',   to: 'api/transcripts#update_search'
   get '/api/update/contents/:related_content_id',   to: 'api/transcripts#update_related_content'
@@ -31,6 +31,8 @@ Rails.application.routes.draw do
   post '/post', to: 'api/transcripts#create_by_outer'
   get '/demo/api/transcripts/:wall_id', to: 'api/transcripts#index_sxsw_demo'
   get '/demo/api/transcripts/:wall_id/:index', to: 'api/transcripts#show_sxsw_demo'
+  get '/demo/api/transcripts/:wall_id/:index', to: 'api/transcripts#show_sxsw_demo'
+  get '/demo/api/transcripts/:wall_id/past/:first_index', to: 'api/transcripts#load_past_sxsw_demo'
 
   get '/wall/:wall_id/en',   to: 'home#demo_en'
   get '/wall/:wall_id/ja',   to: 'home#demo_ja'

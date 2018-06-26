@@ -27,7 +27,7 @@ class Api::TranscriptsController < ApplicationController
           }
   end
 
-  def get_further
+  def load_past
     further_load_num = 5
     searches, search_first_index, related_contents = get_further_searches(params[:wall_id], params[:search_first_index], further_load_num)
     render json: {
@@ -146,10 +146,15 @@ class Api::TranscriptsController < ApplicationController
   end
 
   def index_sxsw_demo
-    transcripts = Transcript.where(:wall_id => params[:wall_id]).order('id DESC')[0...20]
+    transcripts = Transcript.where(:wall_id => params[:wall_id]).order('id DESC')[0...15]
+    if transcripts.present?
+      first_index = transcripts.last.id if transcripts.present?
+    else
+      first_index = null
+    end
     transcripts_index = Transcript.where(:wall_id => params[:wall_id]).length
     data_list = format_transcripts(transcripts)
-    render json: {'transcripts' => data_list, 'index' => transcripts_index }
+    render json: {'transcripts' => data_list, 'index' => transcripts_index, 'first_index' => first_index }
   end
 
   def show_sxsw_demo
@@ -157,6 +162,17 @@ class Api::TranscriptsController < ApplicationController
     index = params[:index].to_i + new_transcripts.length
     new_data_list = format_transcripts(new_transcripts)
     render json: {'transcripts' => new_data_list, 'index' => index }
+  end
+
+  def load_past_sxsw_demo
+    wall_id = params[:wall_id]
+    first_index = params[:first_index]
+    transcripts = Transcript.where("wall_id" => wall_id, "has_content" => true)
+                      .where("id < ?", first_index.to_i)
+                      .order('id DESC')[0...5]
+    first_index = transcripts.last.id if transcripts.present?
+    data_list = format_transcripts(transcripts)
+    render json: {'transcripts' => data_list, 'first_index' => first_index }
   end
 
   # def index_sxsw_demo
