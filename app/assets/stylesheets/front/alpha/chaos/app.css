@@ -857,7 +857,7 @@ input
 
     transition: background-color ease 300ms;
 
-    border-radius: 0 0 0 10px;
+    border-radius: 0 0 0 4px;
     background-color: rgba(0, 0, 0, .2);
 }
 .btn-menu01 .btn-inner
@@ -868,7 +868,7 @@ input
 
     display: block;
 
-    width: 24px;
+    width: 20px;
     height: 8px;
     margin: auto;
     padding: 0;
@@ -884,7 +884,7 @@ input
 
     display: block;
 
-    width: 24px;
+    width: 20px;
     height: 2px;
 
     transition: all 0ms ease;
@@ -926,6 +926,8 @@ input
 
 .btn-toggle01
 {
+    position: relative;
+
     width: 100%;
 
     cursor: pointer;
@@ -934,6 +936,31 @@ input
 
     border-radius: 15px;
     background-color: #232323;
+}
+.btn-toggle01 .under
+{
+    text-align: center;
+}
+.btn-toggle01 .under span
+{
+    font-size: 12px;
+    line-height: 28px;
+
+    position: absolute;
+    top: 0;
+
+    width: 90px;
+    height: 30px;
+
+    color: #999;
+}
+.btn-toggle01 .under span.on
+{
+    left: 0;
+}
+.btn-toggle01 .under span.off
+{
+    left: 90px;
 }
 .btn-toggle01 .toggle
 {
@@ -1001,7 +1028,6 @@ input
     user-select: none;
 
     border-radius: 5px;
-    background-color: #fff;
 }
 .btn-toggle02:after
 {
@@ -1064,7 +1090,7 @@ input
 .btn-toggle02 div.news:hover,
 .btn-toggle02 div.news.is-active
 {
-    background-color: #8abc00;
+    background-color: #90c600;
 }
 .btn-toggle02 div.movie
 {
@@ -1476,7 +1502,7 @@ input
 
     color: #fff;
     border: 0;
-    border-bottom: 2px solid #d6d6d6;
+    border-bottom: 2px solid rgba(214, 214, 214, .2);
     background-color: transparent;
 }
 #global-menu .form-keyword .input-submit
@@ -1681,7 +1707,7 @@ input
 {
     #transparent-container .post
     {
-        padding: 300px 0;
+        padding: 400px 0;
     }
 }
 #transparent-container .post.no-content
@@ -1766,6 +1792,7 @@ input
     width: 100%;
     height: auto !important;
 
+    opacity: .8;
     border: 1px solid #dde1e6;
     border-radius: 6px;
     box-shadow: 7px 7px 45px 5px rgba(0, 0, 0, .5);
@@ -1828,7 +1855,7 @@ input
     bottom: 10px;
 
     width: auto;
-    height: 30px;
+    height: 15px;
 }
 #transparent-container .post .media-container .media-photo .btn-close02
 {
@@ -1845,21 +1872,11 @@ input
 {
     opacity: 1;
 }
-@media only screen and (min-width: 1280px)
+#transparent-container .post .media-container .media-photo:hover
 {
-    #transparent-container .post .media-container .media-photo
-    {
-        transition: all 200ms ease;
-        /* transform: scale3d(1); */
+    z-index: 15;
 
-        opacity: .8;
-    }
-    #transparent-container .post .media-container .media-photo:hover
-    {
-        z-index: 15;
-
-        opacity: 1;
-    }
+    opacity: 1;
 }
 #transparent-container .bg
 {

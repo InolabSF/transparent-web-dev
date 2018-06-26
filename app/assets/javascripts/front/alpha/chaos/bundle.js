@@ -19641,6 +19641,8 @@
 	    }, {
 	        key: 'mediaRandomPosition',
 	        value: function mediaRandomPosition(post, data) {
+	            var _this4 = this;
+
 	            var array = [];
 
 	            _.each(data.related_contents, function (d) {
@@ -19655,7 +19657,7 @@
 	                        'data-id': d.transcript_id,
 	                        target: '_blank'
 	                    });
-	                    $('<img />', { src: d.img_url, class: 'img' }).appendTo(h);
+	                    $('<img />', { src: d.img_url, class: 'img', onerror: _this4.imageNotFound }).appendTo(h);
 	                    $('<img />', { src: 'http://www.google.com/s2/favicons?domain=' + d.source, class: 'favicon' }).appendTo(h);
 	                    $('<button />', { class: 'btn-close02' }).appendTo(h);
 	                } else {
@@ -19795,6 +19797,18 @@
 	        key: 'getScrollBottomPosition',
 	        value: function getScrollBottomPosition() {
 	            return this.scrollBottomPos;
+	        }
+	    }, {
+	        key: 'imageNotFound',
+	        value: function imageNotFound(event) {
+	            var _this5 = this;
+
+	            var img = new Image();
+	            img.src = $(this).attr('src');
+
+	            img.onerror = function () {
+	                $(_this5).attr('src', 'https://res.cloudinary.com/negic/image/upload/v1528273682/img_notfound.png');
+	            };
 	        }
 	    }]);
 
