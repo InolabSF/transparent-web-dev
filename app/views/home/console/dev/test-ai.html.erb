@@ -3,6 +3,12 @@
 <head>
     <title>ASR Test</title>
     <meta charset="utf-8" />
+    <meta property="og:title" content="Transparent">
+    <meta property="og:site_name" content="Transparent">
+    <meta property="og:description" content="Transparent, the first audio recognition tool that serves a stream of content that follows your verbal conversation.">
+    <meta property="og:url" content="https://trnspt.com/">
+    <meta property="og:image" content="https://res.cloudinary.com/negic/image/upload/v1520401274/og.png">
+    <link rel="shortcut icon" href="https://res.cloudinary.com/negic/image/upload/v1520401272/favicon.ico" type="image/x-icon">
 </head>
 <body style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:13px;">
     <div id="warning">
@@ -114,6 +120,32 @@
     </div>
 
     <%= javascript_include_tag 'ai-test-manifest', 'data-turbolinks-track': 'reload'  %>
+
+    <!-- <iframe
+      width='80%'
+      height='50%'
+      class="sheet"
+      style="align-self:center;"
+      scrolling="auto"
+      src="https://docs.google.com/spreadsheets/d/e/2PACX-1vR9MXu3eO8GhIBgEjYzoctmNkSPBa0yijx-O981NvXn03f_6aTKdnTB7w4hp_6ocAhFGNoIGsufSwla/pubhtml?widget=true&amp;headers=false">
+    </iframe> -->
+
+    <style>
+      body {
+        /* background-color: pink */
+      }
+      iframe {
+        /* border-color: pink; */
+        /* border-width: 5; */
+        align-self: center;
+        display: block;
+        margin: auto;
+        margin-top: 50px;
+      }
+      .inputNLP{
+        white-space: nowrap;
+      }
+    </style>
 
     <!-- Browser Hooks -->
     <script>

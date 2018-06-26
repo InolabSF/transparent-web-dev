@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
   nlpBtn = document.getElementById("nlpBtn");
   inputDiv = document.getElementById("inputDiv");
   langNLP = document.getElementById("langNLP");
+
   // entityDivMS = document.getElementById("entityDivMS");
   // typeDivMS = document.getElementById("typeDivMS");
   // entityDivGCP = document.getElementById("entityDivGCP");
@@ -15,6 +16,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
   nlpBtn.addEventListener("click", onPress)
   inputDiv.maxLength  = 5000;
+  inputDiv.addEventListener("keypress", function(e) {
+    if (e.keyCode == 13) {
+      onPress();
+      return false;
+    }
+  });
+
 
 });
 
