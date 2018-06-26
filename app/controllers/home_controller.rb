@@ -34,6 +34,14 @@ class HomeController < ApplicationController
     render json: { 'results' => results }
   end
 
+  # config
+
+  def get_config
+    render json: {
+              'asr' => ENV['MS_ASR_KEY']
+            }
+  end
+
   # alpha
 
   def alpha

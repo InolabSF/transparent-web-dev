@@ -12,6 +12,8 @@ var isActive = false; // セッションアラート対策
 
 document.addEventListener("DOMContentLoaded", function () {
 
+    fetchConfig();
+
     // key = '<%= @MS_ASR_KEY %>';
     languageOptions = languageCode;
     formatOptions = "Simple";
@@ -50,6 +52,21 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
+
+function fetchConfig(){
+  var instance = axios.create({
+    baseURL: '/console',
+    headers: {
+      'ContentType': 'application/json'
+    },
+    responseType: 'json'
+  });
+  instance.get('/config').then(function (response){
+    key = response.data.asr;
+  }, function (error) {
+    console.log(error);
+  });
+}
 
 function sleepByPromise(sec) {
      return new Promise(resolve => setTimeout(resolve, sec*1000));

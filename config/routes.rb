@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   get '/dev',   to: 'home#index'
   get '/media',   to: 'home#media'
 
+  get '/console/config', to: 'home#get_config'
+
   # alpha
 
   # choas test
