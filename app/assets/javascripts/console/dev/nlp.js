@@ -19,9 +19,10 @@ document.addEventListener("DOMContentLoaded", function () {
   inputDiv.addEventListener("keypress", function(e) {
     if (e.keyCode == 13) {
       onPress();
-      return false;
     }
   });
+
+  // inputDiv.addEventListener("submit", onPress)
 
 
 });
