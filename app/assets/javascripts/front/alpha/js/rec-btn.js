@@ -80,7 +80,7 @@ function postTranscript(text) {
   xmlHttp.setRequestHeader( 'Content-Type', 'application/json' )
   xmlHttp.onreadystatechange = async function() {
 
-      await sleepByPromise(2)
+      // await sleepByPromise(2)
       if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
         TRANSCRIPTS.setRecordingText('');
       }
