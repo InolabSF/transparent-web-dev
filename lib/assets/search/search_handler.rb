@@ -338,7 +338,7 @@ def unsplash(text, search, transcript, langcode, is_concurrent, num, contents_li
         desc += tag['title'] + ', '
       end
 
-      img_url = result['urls']['thumb']
+      img_url = result['urls']['full']
       url = result['user']['links']['html'] +'?utm_source=Transparent&utm_medium=referral'
       source = 'unsplash.com'
 
