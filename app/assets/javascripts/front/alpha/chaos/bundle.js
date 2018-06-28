@@ -19487,7 +19487,7 @@
 	var data = __webpack_require__(9);
 
 	var COMMENT_BOX_SIZE = 500 / 1.5;
-	var RANGE = 200; // .commentボックスのズレ具合
+	var RANGE = 500; // .commentボックスのズレ具合
 	// const TRANSCRIPTS.MEDIA_MAX_SIZE = 350; // ランダム配置される画像の最大サイズ
 	// const TRANSCRIPTS.MEDIA_MIN_SIZE = TRANSCRIPTS.MEDIA_MAX_SIZE / 3; // ランダム配置される画像の最小サイズ
 	var TRY_COUNT = 999; // 配置が重なっていた時に再度ランダムをやり直す回数
@@ -19506,8 +19506,9 @@
 	        _this.mediaText = true;
 	        _this.keywords = [];
 	        _this.recordingStatus = false;
+	        _this.zIndex = 20;
 
-	        $('#wrapper').on('click', '.on-switch-media .media', _this.mediaSwitch.bind(_this)).on('click', '.input-submit', _this.addKeywordList.bind(_this)).on('click', '.on-txt-hidden', _this.mediaTextToggle.bind(_this)).on('click', '.keyword-list .list-item', _this.removeKeywordList.bind(_this)).on('click', '.media-photo .btn-close02', _this.removeMedia.bind(_this));
+	        $('#wrapper').on('click', '.on-switch-media .media', _this.mediaSwitch.bind(_this)).on('click', '.input-submit', _this.addKeywordList.bind(_this)).on('click', '.on-txt-hidden', _this.mediaTextToggle.bind(_this)).on('click', '.keyword-list .list-item', _this.removeKeywordList.bind(_this)).on('click', '.media-photo .btn-close02', _this.removeMedia.bind(_this)).on('click', '.comment .btn-close02', _this.removeMediaSection.bind(_this)).on('mouseenter', '.media-photo', _this.zIndexNumbering.bind(_this));
 
 	        $(window).on('scroll', _this.onScroll.bind(_this));
 	        return _this;
@@ -19611,6 +19612,7 @@
 	            var container = $('<div />', { class: 'media-container' }).appendTo(post);
 
 	            $('<div />', { class: 'comment-text' }).text(data.text).appendTo(comment);
+	            $('<button />', { class: 'btn-close02' }).appendTo(comment);
 
 	            return post;
 	        }
@@ -19780,6 +19782,17 @@
 	            $(event.currentTarget).closest('.media-photo').remove();
 	        }
 	    }, {
+	        key: 'removeMediaSection',
+	        value: function removeMediaSection(event) {
+	            event.preventDefault();
+
+	            var section = $(event.currentTarget).closest('.post');
+
+	            section.fadeOut(function () {
+	                section.remove();
+	            });
+	        }
+	    }, {
 	        key: 'onScroll',
 	        value: function onScroll() {
 	            var scrollHeight = $(document).height();
@@ -19809,6 +19822,12 @@
 	            img.onerror = function () {
 	                $(_this5).attr('src', 'https://res.cloudinary.com/negic/image/upload/v1528273682/img_notfound.png');
 	            };
+	        }
+	    }, {
+	        key: 'zIndexNumbering',
+	        value: function zIndexNumbering(event) {
+	            $(event.currentTarget).css('z-index', this.zIndex);
+	            this.zIndex++;
 	        }
 	    }]);
 
