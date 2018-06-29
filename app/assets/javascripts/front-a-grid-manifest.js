@@ -12,12 +12,12 @@
 //
 //= require rails-ujs
 //= require turbolinks
-//= require front/alpha/js/jquery.js
-//= require front/alpha/js/axios.min.js
-//= require front/alpha/js/masonry.pkgd.min.js
-//= require front/alpha/js/bundle.js
+//= require front/alpha/grid/jquery.js
+//= require front/alpha/grid/axios.min.js
+//= require front/alpha/grid/masonry.pkgd.min.js
+//= require front/alpha/grid/bundle.js
 //= require ms/speech.sdk.bundle.js
 //= require ms/sdk-usage.js
-//= require front/alpha/js/api.js
-//= require front/alpha/js/event.js
-//= require front/alpha/js/rec-btn.js
+//= require front/alpha/grid/api.js
+//= require front/alpha/grid/event.js
+//= require front/alpha/grid/rec-btn.js

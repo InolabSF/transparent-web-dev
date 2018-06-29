@@ -14,9 +14,9 @@
 //= require turbolinks
 //= require front/alpha/chaos/jquery.js
 //= require front/alpha/chaos/jquery.randomElements.js
-//= require front/alpha/js/axios.min.js
+//= require front/alpha/grid/axios.min.js
 //= require front/alpha/chaos/bundle.js
 //= require ms/speech.sdk.bundle.js
 //= require ms/sdk-usage.js
 //= require front/alpha/chaos/event-c.js
-//= require front/alpha/js/rec-btn.js
+//= require front/alpha/grid/rec-btn.js
