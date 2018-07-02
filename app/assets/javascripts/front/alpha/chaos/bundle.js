@@ -19614,6 +19614,28 @@
 	            $('<div />', { class: 'comment-text' }).text(data.text).appendTo(comment);
 	            $('<button />', { class: 'btn-close02' }).appendTo(comment);
 
+	            function dateFormat(date) {
+
+	                // UTC
+	                var h = date.getUTCHours();
+	                var m = date.getUTCMinutes();
+	                var s = date.getUTCSeconds();
+
+	                // UTCじゃない
+	                // var h = date.getHours();
+	                // var m = date.getMinutes();
+	                // var s = date.getSeconds();
+
+	                h = ('0' + h).slice(-2);
+	                m = ('0' + m).slice(-2);
+	                s = ('0' + s).slice(-2);
+
+	                // フォーマット整形済みの文字列を戻り値にする
+	                return h + ':' + m + ':' + s;
+	            }
+
+	            $('<div />', { class: 'time-stamp' }).text(dateFormat(new Date(data.created_at))).appendTo(post);
+
 	            return post;
 	        }
 
