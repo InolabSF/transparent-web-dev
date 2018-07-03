@@ -1649,9 +1649,27 @@ input
 }
 .recording-area.recording #btn-recording:after
 {
+    animation: recAnim 1300ms ease infinite;
+
     background-color: #f13c33;
 }
 
+@keyframes recAnim
+{
+    0%,
+    100%
+    {
+        transform: scale(1);
+
+        background-color: #f13c33;
+    }
+    50%
+    {
+        transform: scale(.9);
+
+        background-color: #c10c03;
+    }
+}
 #transparent-container
 {
     position: relative;
@@ -1669,7 +1687,6 @@ input
     padding: 400px 0;
 
     transition: all ease 200ms;
-    transform: translate3d(0, 30px, 0);
 
     opacity: 0;
 }
@@ -1725,8 +1742,7 @@ input
     /* height: 120px; */
     padding: 40px 0;
 
-    transition: all 200ms ease;
-    transform: translate(0, 50px);
+    transition: opacity 200ms ease;
     text-align: center;
 
     opacity: 1;
@@ -1745,6 +1761,10 @@ input
     transition: opacity 200ms ease;
 
     opacity: 0;
+}
+#transparent-container .post .comment:hover .btn-close02
+{
+    opacity: 1;
 }
 #transparent-container .post .comment.is-hidden
 {
@@ -1796,8 +1816,11 @@ input
     width: 100%;
     height: auto !important;
 
-    transition: all ease 200ms;
-    transform: translate3d(0, 30px, 0);
+    cursor: move;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+            user-select: none;
+    transition: transform ease 200ms, opacity ease 200ms;
 
     opacity: 0;
     border: 1px solid #dde1e6;
@@ -1806,43 +1829,43 @@ input
 }
 #transparent-container .post .media-container .media-photo:nth-child(1)
 {
-    transition-delay: 80ms;
+    transition-delay: 400ms;
 }
 #transparent-container .post .media-container .media-photo:nth-child(2)
 {
-    transition-delay: 160ms;
+    transition-delay: 600ms;
 }
 #transparent-container .post .media-container .media-photo:nth-child(3)
 {
-    transition-delay: 240ms;
+    transition-delay: 800ms;
 }
 #transparent-container .post .media-container .media-photo:nth-child(4)
 {
-    transition-delay: 320ms;
+    transition-delay: 1000ms;
 }
 #transparent-container .post .media-container .media-photo:nth-child(5)
 {
-    transition-delay: 400ms;
+    transition-delay: 1200ms;
 }
 #transparent-container .post .media-container .media-photo:nth-child(6)
 {
-    transition-delay: 480ms;
+    transition-delay: 1400ms;
 }
 #transparent-container .post .media-container .media-photo:nth-child(7)
 {
-    transition-delay: 560ms;
+    transition-delay: 1600ms;
 }
 #transparent-container .post .media-container .media-photo:nth-child(8)
 {
-    transition-delay: 640ms;
+    transition-delay: 1800ms;
 }
 #transparent-container .post .media-container .media-photo:nth-child(9)
 {
-    transition-delay: 720ms;
+    transition-delay: 2000ms;
 }
 #transparent-container .post .media-container .media-photo:nth-child(10)
 {
-    transition-delay: 800ms;
+    transition-delay: 2200ms;
 }
 #transparent-container .post .media-container .media-photo .img
 {
@@ -1852,7 +1875,11 @@ input
     width: 100%;
     height: auto !important;
 
+    -webkit-user-select: none;
+       -moz-user-select: none;
+            user-select: none;
     transition: opacity 200ms ease;
+    pointer-events: none;
 
     opacity: .8;
     background-color: #000;

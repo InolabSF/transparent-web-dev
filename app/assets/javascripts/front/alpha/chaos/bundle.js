@@ -19351,9 +19351,9 @@
 
 	        _this.transcripts = new Transcripts();
 
-	        $('#wrapper').on('click', '.btn-menu01', _this.menuToggle.bind(_this)).on('click', '.media-photo', _this.showModal.bind(_this)).on('click', '.modal-layer .modal-back', _this.hideModal.bind(_this)).on('click', '.btn-bg-toggle', _this.toggleBackgroundStyle.bind(_this)).on('click', '.btn-add', _this.add.bind(_this));
+	        $('#wrapper').on('click', '.btn-menu01', _this.menuToggle.bind(_this)).on('click', '.media-photo', _this.showModal.bind(_this)).on('click', '.modal-layer .modal-back', _this.hideModal.bind(_this)).on('click', '.btn-bg-toggle', _this.toggleBackgroundStyle.bind(_this)).on('click', '.btn-add', _this.add.bind(_this)).on('mousedown', '.media-photo', _this.onDragCatch.bind(_this));
 
-	        $(window).on('keydown', _this.keyDown.bind(_this)).on('keyup', _this.keyUp.bind(_this));
+	        $(window).on('keydown', _this.keyDown.bind(_this)).on('keyup', _this.keyUp.bind(_this)).on('mouseup', _this.onDragRelease.bind(_this)).on('mousemove', _this.onDragMove.bind(_this));
 
 	        TRANSCRIPTS.add = _this.transcripts.add.bind(_this.transcripts);
 	        TRANSCRIPTS.setRecordingText = _this.transcripts.setRecordingText.bind(_this.transcripts);
@@ -19387,6 +19387,12 @@
 	        key: 'showModal',
 	        value: function showModal(event) {
 	            event.preventDefault();
+
+	            console.log('this.move_flg', this.move_flg);
+
+	            if (this.move_flg) {
+	                return false;
+	            }
 
 	            if ($(event.target).hasClass('btn-close02')) {
 	                return false;
@@ -19460,6 +19466,33 @@
 	                event.preventDefault();
 	            }
 	        }
+	    }, {
+	        key: 'onDragCatch',
+	        value: function onDragCatch(event) {
+	            this.move_flg = true;
+	            this.el = event.currentTarget;
+	            this.move_start_x = event.clientX - parseInt(this.el.style.left.replace("px", ""));
+	            this.move_start_y = event.clientY - parseInt(this.el.style.top.replace("px", ""));
+	        }
+	    }, {
+	        key: 'onDragRelease',
+	        value: function onDragRelease(event) {
+	            event.preventDefault();
+	            this.el = {};
+
+	            this.move_flg = false;
+	        }
+	    }, {
+	        key: 'onDragMove',
+	        value: function onDragMove(event) {
+	            if (this.move_flg) {
+	                var left = event.clientX - this.move_start_x + "px";
+	                var top = event.clientY - this.move_start_y + "px";
+	                this.el.style.left = left;
+	                this.el.style.top = top;
+	            }
+	            return false;
+	        }
 	    }]);
 
 	    return TopScene;
@@ -19507,6 +19540,7 @@
 	        _this.keywords = [];
 	        _this.recordingStatus = false;
 	        _this.zIndex = 20;
+	        _this.move_flg = false;
 
 	        $('#wrapper').on('click', '.on-switch-media .media', _this.mediaSwitch.bind(_this)).on('click', '.input-submit', _this.addKeywordList.bind(_this)).on('click', '.on-txt-hidden', _this.mediaTextToggle.bind(_this)).on('click', '.keyword-list .list-item', _this.removeKeywordList.bind(_this)).on('click', '.media-photo .btn-close02', _this.removeMedia.bind(_this)).on('click', '.comment .btn-close02', _this.removeMediaSection.bind(_this)).on('mouseenter', '.media-photo', _this.zIndexNumbering.bind(_this));
 
