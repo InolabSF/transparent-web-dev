@@ -19351,27 +19351,47 @@
 
 	        _this.transcripts = new Transcripts();
 
-	        $('#wrapper').on('click', '.btn-menu01', _this.menuToggle.bind(_this)).on('click', '.media-photo', _this.showModal.bind(_this)).on('click', '.modal-layer .modal-back', _this.hideModal.bind(_this)).on('click', '.btn-bg-toggle', _this.toggleBackgroundStyle.bind(_this)).on('click', '.btn-add', _this.add.bind(_this)).on('mousedown', '.media-photo', _this.onDragCatch.bind(_this));
+	        _this.modalFlg = false;
+
+	        $('#wrapper').on('click', '.btn-menu01', _this.menuToggle.bind(_this)).on('click', '.media-photo', _this.clickDisable.bind(_this)).on('click', '.modal-layer .modal-back', _this.hideModal.bind(_this)).on('click', '.btn-bg-toggle', _this.toggleBackgroundStyle.bind(_this)).on('mousedown', '.media-photo', _this.onDragCatch.bind(_this));
 
 	        $(window).on('keydown', _this.keyDown.bind(_this)).on('keyup', _this.keyUp.bind(_this)).on('mouseup', _this.onDragRelease.bind(_this)).on('mousemove', _this.onDragMove.bind(_this));
 
-	        TRANSCRIPTS.add = _this.transcripts.add.bind(_this.transcripts);
+	        TRANSCRIPTS.prependContents = _this.transcripts.prependContents.bind(_this.transcripts);
+	        TRANSCRIPTS.appendContents = _this.transcripts.appendContents.bind(_this.transcripts);
 	        TRANSCRIPTS.setRecordingText = _this.transcripts.setRecordingText.bind(_this.transcripts);
 	        TRANSCRIPTS.toggleRecordhing = _this.transcripts.toggleRecordhing.bind(_this.transcripts);
 	        TRANSCRIPTS.getRecordingStatus = _this.transcripts.getRecordingStatus.bind(_this.transcripts);
 	        TRANSCRIPTS.getMediaType = _this.transcripts.getMediaType.bind(_this.transcripts);
 	        TRANSCRIPTS.getKeywords = _this.transcripts.getKeywords.bind(_this.transcripts);
 	        TRANSCRIPTS.getScrollBottomPosition = _this.transcripts.getScrollBottomPosition.bind(_this.transcripts);
+	        TRANSCRIPTS.setMediaText = _this.transcripts.setMediaText.bind(_this.transcripts);
+	        TRANSCRIPTS.setMediaType = _this.transcripts.setMediaType.bind(_this.transcripts);
+	        TRANSCRIPTS.setMediaType = _this.transcripts.setMediaType.bind(_this.transcripts);
+
+	        TRANSCRIPTS.setMenu = _this.setMenu.bind(_this);
 	        return _this;
 	    }
 
 	    _createClass(TopScene, [{
-	        key: 'add',
-	        value: function add() {}
-	    }, {
 	        key: 'menuToggle',
 	        value: function menuToggle() {
 	            if ($('.btn-menu01').hasClass('is-active')) {
+
+	                // 閉じる
+	                $('.btn-menu01').removeClass('is-active');
+	                $('#global-menu').removeClass('is-active');
+	            } else {
+
+	                // 開く
+	                $('.btn-menu01').addClass('is-active');
+	                $('#global-menu').addClass('is-active');
+	            }
+	        }
+	    }, {
+	        key: 'setMenu',
+	        value: function setMenu(flg) {
+	            if (flg) {
 
 	                // 閉じる
 	                $('.btn-menu01').removeClass('is-active');
@@ -19388,15 +19408,15 @@
 	        value: function showModal(event) {
 	            event.preventDefault();
 
-	            console.log('this.move_flg', this.move_flg);
-
-	            if (this.move_flg) {
-	                return false;
-	            }
-
 	            if ($(event.target).hasClass('btn-close02')) {
 	                return false;
 	            }
+
+	            if (this.modalFlg) {
+	                return false;
+	            }
+
+	            this.modalFlg = true;
 
 	            var modal = $('.modal-inner');
 	            var el = $(event.currentTarget);
@@ -19435,6 +19455,8 @@
 	            $('.modal-inner').empty();
 
 	            $('.modal-layer').removeClass('is-show');
+
+	            this.modalFlg = false;
 	        }
 	    }, {
 	        key: 'toggleBackgroundStyle',
@@ -19469,18 +19491,16 @@
 	    }, {
 	        key: 'onDragCatch',
 	        value: function onDragCatch(event) {
+	            event.preventDefault();
 	            this.move_flg = true;
 	            this.el = event.currentTarget;
 	            this.move_start_x = event.clientX - parseInt(this.el.style.left.replace("px", ""));
 	            this.move_start_y = event.clientY - parseInt(this.el.style.top.replace("px", ""));
-	        }
-	    }, {
-	        key: 'onDragRelease',
-	        value: function onDragRelease(event) {
-	            event.preventDefault();
-	            this.el = {};
 
-	            this.move_flg = false;
+	            this.downTime = new Date().getTime();
+	            this.event = event;
+
+	            return false;
 	        }
 	    }, {
 	        key: 'onDragMove',
@@ -19491,6 +19511,30 @@
 	                this.el.style.left = left;
 	                this.el.style.top = top;
 	            }
+	            return false;
+	        }
+	    }, {
+	        key: 'onDragRelease',
+	        value: function onDragRelease(event) {
+	            event.preventDefault();
+
+	            var upTime = new Date().getTime();
+
+	            if (upTime - this.downTime < 200) {
+	                this.showModal(this.event);
+	            }
+
+	            this.el = {};
+	            this.move_flg = false;
+	            return false;
+	        }
+
+	        // クリックイベントの削除用
+
+	    }, {
+	        key: 'clickDisable',
+	        value: function clickDisable(event) {
+	            event.preventDefault();
 	            return false;
 	        }
 	    }]);
@@ -19542,7 +19586,7 @@
 	        _this.zIndex = 20;
 	        _this.move_flg = false;
 
-	        $('#wrapper').on('click', '.on-switch-media .media', _this.mediaSwitch.bind(_this)).on('click', '.input-submit', _this.addKeywordList.bind(_this)).on('click', '.on-txt-hidden', _this.mediaTextToggle.bind(_this)).on('click', '.keyword-list .list-item', _this.removeKeywordList.bind(_this)).on('click', '.media-photo .btn-close02', _this.removeMedia.bind(_this)).on('click', '.comment .btn-close02', _this.removeMediaSection.bind(_this)).on('mouseenter', '.media-photo', _this.zIndexNumbering.bind(_this));
+	        $('#wrapper').on('click', '.on-switch-media .media', _this.switchMediaType.bind(_this)).on('click', '.input-submit', _this.addKeywordList.bind(_this)).on('click', '.on-txt-hidden', _this.toggleMediaText.bind(_this)).on('click', '.keyword-list .list-item', _this.removeKeywordList.bind(_this)).on('click', '.media-photo .btn-close02', _this.removeMedia.bind(_this)).on('click', '.comment .btn-close02', _this.removeMediaSection.bind(_this)).on('mouseenter', '.media-photo', _this.zIndexNumbering.bind(_this));
 
 	        $(window).on('scroll', _this.onScroll.bind(_this));
 	        return _this;
@@ -19594,8 +19638,8 @@
 	         */
 
 	    }, {
-	        key: 'add',
-	        value: function add(addData) {
+	        key: 'prependContents',
+	        value: function prependContents(addData) {
 	            var _this3 = this;
 
 	            var length = addData.length - 1;
@@ -19603,7 +19647,7 @@
 
 	            // ポストの数だけループ
 	            var loop = function loop() {
-	                var data = initial_transcripts[index];
+	                var data = addData[index];
 	                var post = _this3.createPost(data);
 
 	                // ポストのDOMを追加
@@ -19617,6 +19661,40 @@
 
 	                setTimeout(function () {
 	                    _this3.transit(post);
+	                }, 100);
+
+	                if (index < length) {
+	                    index++;
+	                    setTimeout(loop, 200);
+	                }
+	            };
+
+	            setTimeout(loop, 1000);
+	        }
+	    }, {
+	        key: 'appendContents',
+	        value: function appendContents(addData) {
+	            var _this4 = this;
+
+	            var length = addData.length - 1;
+	            var index = 0;
+
+	            // ポストの数だけループ
+	            var loop = function loop() {
+	                var data = addData[index];
+	                var post = _this4.createPost(data);
+
+	                // ポストのDOMを追加
+	                $('#transparent-container').append(post);
+
+	                _this4.postPosition(post);
+
+	                if (data.has_content) {
+	                    _this4.mediaRandomPosition(post, data);
+	                }
+
+	                setTimeout(function () {
+	                    _this4.transit(post);
 	                }, 100);
 
 	                if (index < length) {
@@ -19699,7 +19777,7 @@
 	    }, {
 	        key: 'mediaRandomPosition',
 	        value: function mediaRandomPosition(post, data) {
-	            var _this4 = this;
+	            var _this5 = this;
 
 	            var array = [];
 
@@ -19715,7 +19793,7 @@
 	                        'data-id': d.transcript_id,
 	                        target: '_blank'
 	                    });
-	                    $('<img />', { src: d.img_url, class: 'img', onerror: _this4.imageNotFound }).appendTo(h);
+	                    $('<img />', { src: d.img_url, class: 'img', onerror: _this5.imageNotFound }).appendTo(h);
 	                    $('<img />', { src: 'http://www.google.com/s2/favicons?domain=' + d.source, class: 'favicon' }).appendTo(h);
 	                    $('<button />', { class: 'btn-close02' }).appendTo(h);
 	                } else {
@@ -19795,13 +19873,32 @@
 	            return this.keywords;
 	        }
 	    }, {
-	        key: 'mediaSwitch',
-	        value: function mediaSwitch(event) {
+	        key: 'switchMediaType',
+	        value: function switchMediaType(event) {
 	            var el = $(event.currentTarget);
 	            el.closest('.btn-toggle02').find('.media').removeClass('is-active');
 	            el.addClass('is-active');
 
 	            this.mediaType = parseInt(el.data('type'), 10);
+	        }
+	    }, {
+	        key: 'setMediaType',
+	        value: function setMediaType(type) {
+
+	            var el = $('.on-switch-media').find('.media');
+	            el.removeClass('is-active');
+
+	            if (type === 0) {
+	                el.eq(0).removeClass('is-active');
+	            } else if (type === 1) {
+	                el.eq(1).removeClass('is-active');
+	            } else if (type === 2) {
+	                el.eq(2).removeClass('is-active');
+	            } else {
+	                return false;
+	            }
+
+	            this.mediaType = type;
 	        }
 	    }, {
 	        key: 'getMediaType',
@@ -19814,9 +19911,26 @@
 	            return this.keywords;
 	        }
 	    }, {
-	        key: 'mediaTextToggle',
-	        value: function mediaTextToggle(event) {
+	        key: 'toggleMediaText',
+	        value: function toggleMediaText(event) {
 	            if ($('.comment').hasClass('is-hidden')) {
+
+	                // テキスト表示
+	                this.mediaText = true;
+	                $('.comment').removeClass('is-hidden');
+	                $(event.currentTarget).removeClass('is-active');
+	            } else {
+
+	                // テキスト非表示
+	                this.mediaText = false;
+	                $('.comment').addClass('is-hidden');
+	                $(event.currentTarget).addClass('is-active');
+	            }
+	        }
+	    }, {
+	        key: 'setMediaText',
+	        value: function setMediaText(flg) {
+	            if (flg) {
 
 	                // テキスト表示
 	                this.mediaText = true;
@@ -19870,13 +19984,13 @@
 	    }, {
 	        key: 'imageNotFound',
 	        value: function imageNotFound(event) {
-	            var _this5 = this;
+	            var _this6 = this;
 
 	            var img = new Image();
 	            img.src = $(this).attr('src');
 
 	            img.onerror = function () {
-	                $(_this5).attr('src', 'https://res.cloudinary.com/negic/image/upload/v1528273682/img_notfound.png');
+	                $(_this6).attr('src', 'https://res.cloudinary.com/negic/image/upload/v1528273682/img_notfound.png');
 	            };
 	        }
 	    }, {

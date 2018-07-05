@@ -113,17 +113,22 @@ $('#wrapper').on('click', '#transparent-container .btn-close02', function(event)
     }, 100);
 });
 
-window.addEventListener('scroll', function() {
+// window.addEventListener('scroll', function() {
+//
+//     // スクロールが下部に来たらtrueを返します
+//     console.log(TRANSCRIPTS.getScrollBottomPosition());
+//
+//     if (TRANSCRIPTS.getScrollBottomPosition()) {
+//
+//       if (!isLoading) {
+//         loadPastContents();
+//       };
+//         //
+//         // スクロール下部に来たら実行
+//         // TRANSCRIPTS.appendContents(additional_transcripts1);
+//     }
+// }, false);
 
-    // スクロールが下部に来たらtrueを返します
-    console.log(TRANSCRIPTS.getScrollBottomPosition());
-
-    if (TRANSCRIPTS.getScrollBottomPosition()) {
-        // if (!is_loading) {
-       //         loadPastContents();
-       //       };
-    }
-}, false);
 
 function getCookieArray(){
   var arr = new Array();

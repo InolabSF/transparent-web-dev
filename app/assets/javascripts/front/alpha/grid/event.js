@@ -123,7 +123,7 @@ window.addEventListener('scroll', function() {
 
     if (TRANSCRIPTS.getScrollBottomPosition()) {
 
-      if (!is_loading) {
+      if (!isLoading) {
         loadPastContents();
       };
 
