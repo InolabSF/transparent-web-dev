@@ -7,7 +7,112 @@
 ## Set up
 $ bundle install
 
-## Transparent α データオブジェクト構造　(5/1/2018)
+## Transparent Home データオブジェクト構造　(β ver, 7/5/2018)
+
+#### Projectオブジェクト ： プロジェクト情報の取得に使用します。
+
+    Project = {
+
+      id : NUM,
+
+      custom_id : STRING,
+
+      name : STRING, // wall name
+
+      url : STRING, // project home url link
+
+      default_langcode : STRING, // default language code
+
+      <!-- member : List[ object( user ) ], // list of project member -->
+
+      created_at : DATETIME, // time when created
+
+      updated_at : DATETIME // time when updated
+
+    }
+
+#### Userオブジェクト ： ユーザーの情報を保持したオブジェクトです。
+
+    User = {
+
+      id : NUM,
+
+      uid : STRING,
+
+      name : STRING, // wall name
+
+      title : STRING, // job title
+
+      photo_url : STRING, // user icon image link
+
+      primary_langcode : STRING, // primary language code
+
+      is_admin : BOOLEAN, // if is admin member of the project
+
+      created_at : DATETIME, // time when created
+
+      updated_at : DATETIME // time when updated
+
+    }
+
+#### Wallオブジェクト ： Wallのサムネイル生成に必要なデータオブジェクトです。
+
+    Wall = {
+
+      id : NUM,
+
+      project_id : NUM, // project id  
+
+      name : STRING, // wall name
+
+      url : STRING, // wall url link
+
+      default_langcode : STRING, // default language code
+
+      image_url_list :  List[ STRING ], // list of image url
+
+      created_at : DATETIME, // time when created
+
+      updated_at : DATETIME // time when updated
+
+    }
+
+## Transparent Home API データオブジェクト構造　(β ver, 7/5/2018)
+
+#### プロジェクト情報の取得 ： プロジェクト情報をサーバーから取得します。
+
+"GET", "/api/project/" + project_id
+
+    responseBody = {
+
+        project : object( project ),
+
+    }
+
+#### プロジェクトメンバーリストの取得 ： プロジェクトに紐づくユーザーの情報をサーバーから取得します。
+
+"GET", "/api/project/" + project_id + "/users/"
+
+    responseBody = {
+
+        users :  List[ object( User ) ]
+
+    }
+
+
+#### Wallリストの取得 ： プロジェクトに紐づくWallのリストを取得します。
+
+レイテンシ最適化のためにWallの一覧を取得したいと思います。
+
+"GET", "/api/project/" + project_id + "/walls/" + limit（wallデータ取得上限）
+
+    responseBody = {
+
+        walls : List[ object( Wall ) ]
+
+    }
+
+## Transparent Wall データオブジェクト構造　(α ver, 5/1/2018)
 
 <!-- 主にユーザーに提供するのはユーザー発言（Transcript）が持つテキスト情報（Transcript.text）とそれに付随した関連情報（Transcript.related_contents）になります。 -->
 
@@ -135,7 +240,7 @@ $ bundle install
     } -->
 
 
-## Transparent α API　(5/1/2018)
+## Transparent Wall API　(a ver, 5/1/2018)
 
 α版Transparentに必要なAPI群をまとめています.
 
