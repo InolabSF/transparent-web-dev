@@ -7,7 +7,7 @@
 ## Set up
 $ bundle install
 
-## Transparent Home データオブジェクト構造　(β ver, 7/5/2018)
+## Transparent Home画面 データオブジェクト構造　(β ver, 7/5/2018)
 
 #### Projectオブジェクト ： プロジェクト情報の取得に使用します。
 
@@ -77,7 +77,7 @@ $ bundle install
 
     }
 
-## Transparent Home API データオブジェクト構造　(β ver, 7/5/2018)
+## Transparent Home画面 API データオブジェクト構造　(β ver, 7/5/2018)
 
 #### プロジェクト情報の取得 ： プロジェクト情報をサーバーから取得します。
 
@@ -112,7 +112,7 @@ $ bundle install
 
     }
 
-## Transparent Wall データオブジェクト構造　(α ver, 5/1/2018)
+## Transparent Wall画面 データオブジェクト構造　(α ver, 5/1/2018)
 
 <!-- 主にユーザーに提供するのはユーザー発言（Transcript）が持つテキスト情報（Transcript.text）とそれに付随した関連情報（Transcript.related_contents）になります。 -->
 
@@ -240,7 +240,7 @@ $ bundle install
     } -->
 
 
-## Transparent Wall API　(a ver, 5/1/2018)
+## Transparent Wall画面 API　(a ver, 5/1/2018)
 
 α版Transparentに必要なAPI群をまとめています.
 
