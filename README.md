@@ -15,15 +15,13 @@ $ bundle install
 
       id : NUM,
 
-      custom_id : STRING,
+      custom_id : STRING, // custom id
 
       name : STRING, // wall name
 
       url : STRING, // project home url link
 
       default_langcode : STRING, // default language code
-
-      <!-- member : List[ object( user ) ], // list of project member -->
 
       created_at : DATETIME, // time when created
 
