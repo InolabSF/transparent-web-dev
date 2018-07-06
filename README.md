@@ -7,7 +7,7 @@
 ## Set up
 $ bundle install
 
-## Transparent Home画面 データオブジェクト構造　(β ver, 7/5/2018)
+## Transparent Home画面 データオブジェクト　(β ver, 7/5/2018)
 
 #### Projectオブジェクト ： プロジェクト情報の取得に使用します。
 
@@ -75,7 +75,9 @@ $ bundle install
 
     }
 
-## Transparent Home画面 API データオブジェクト構造　(β ver, 7/5/2018)
+## Transparent Home画面 API (β ver, 7/5/2018)
+
+取得するデータのサンプルは"/src-front/beta/DataSampleHome.js"を参考にしてください。
 
 #### プロジェクト情報の取得 ： プロジェクト情報をサーバーから取得します。
 
@@ -110,7 +112,7 @@ $ bundle install
 
     }
 
-## Transparent Wall画面 データオブジェクト構造　(α ver, 5/1/2018)
+## Transparent Wall画面 データオブジェクト　(α ver, 5/1/2018)
 
 <!-- 主にユーザーに提供するのはユーザー発言（Transcript）が持つテキスト情報（Transcript.text）とそれに付随した関連情報（Transcript.related_contents）になります。 -->
 
@@ -242,7 +244,7 @@ $ bundle install
 
 α版Transparentに必要なAPI群をまとめています.
 
-- データ取得方法に関しては"/app/views/home/front/wall/alpha/wall-alpha.html.erb"を参考にしてください.
+- データ取得方法に関しては"/app/assets/javascripts/front/alpha/grid/api.js"を参考にしてください.
 - 全てのAPIエンドポイントはtrnspt.comドメインにて動作しています.
 
   APIエンドポイント例）<https://trnspt.com/api/transcripts/2>
