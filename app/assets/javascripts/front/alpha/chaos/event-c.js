@@ -170,3 +170,19 @@ function init_setting(){
 };
 
 // window.addEventListener('load', init_setting, false);
+
+window.addEventListener('scroll', function() {
+
+    // スクロールが下部に来たらtrueを返します
+    console.log(TRANSCRIPTS.getScrollBottomPosition());
+
+    if (TRANSCRIPTS.getScrollBottomPosition()) {
+
+      if (!isLoading) {
+        loadPastContents();
+      };
+        //
+        // スクロール下部に来たら実行
+        // TRANSCRIPTS.appendContents(additional_transcripts1);
+    }
+}, false);

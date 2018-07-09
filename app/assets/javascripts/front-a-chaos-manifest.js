@@ -18,5 +18,6 @@
 //= require front/alpha/chaos/bundle.js
 //= require ms/speech.sdk.bundle.js
 //= require ms/sdk-usage.js
+//= require front/alpha/grid/api.js
 //= require front/alpha/chaos/event-c.js
 //= require front/alpha/grid/rec-btn.js

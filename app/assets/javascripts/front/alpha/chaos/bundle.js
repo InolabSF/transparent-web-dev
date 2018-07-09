@@ -19367,7 +19367,9 @@
 	        TRANSCRIPTS.getScrollBottomPosition = _this.transcripts.getScrollBottomPosition.bind(_this.transcripts);
 	        TRANSCRIPTS.setMediaText = _this.transcripts.setMediaText.bind(_this.transcripts);
 	        TRANSCRIPTS.setMediaType = _this.transcripts.setMediaType.bind(_this.transcripts);
-	        TRANSCRIPTS.setMediaType = _this.transcripts.setMediaType.bind(_this.transcripts);
+	        TRANSCRIPTS.addContents = _this.transcripts.addContents.bind(_this.transcripts);
+	        TRANSCRIPTS.addKeywordList = _this.transcripts.addKeywordList.bind(_this.transcripts);
+	        TRANSCRIPTS.removeKeywordList = _this.transcripts.removeKeywordList.bind(_this.transcripts);
 
 	        TRANSCRIPTS.setMenu = _this.setMenu.bind(_this);
 	        return _this;
@@ -19586,7 +19588,7 @@
 	        _this.zIndex = 20;
 	        _this.move_flg = false;
 
-	        $('#wrapper').on('click', '.on-switch-media .media', _this.switchMediaType.bind(_this)).on('click', '.input-submit', _this.addKeywordList.bind(_this)).on('click', '.on-txt-hidden', _this.toggleMediaText.bind(_this)).on('click', '.keyword-list .list-item', _this.removeKeywordList.bind(_this)).on('click', '.media-photo .btn-close02', _this.removeMedia.bind(_this)).on('click', '.comment .btn-close02', _this.removeMediaSection.bind(_this)).on('mouseenter', '.media-photo', _this.zIndexNumbering.bind(_this));
+	        $('#wrapper').on('click', '.on-switch-media .media', _this.switchMediaType.bind(_this)).on('click', '.input-submit', _this.onSubmitKeyword.bind(_this)).on('click', '.keyword-list .list-item', _this.onRemoveKeywordList.bind(_this)).on('click', '.on-txt-hidden', _this.toggleMediaText.bind(_this)).on('click', '.media-photo .btn-close02', _this.removeMedia.bind(_this)).on('click', '.comment .btn-close02', _this.removeMediaSection.bind(_this)).on('mouseenter', '.media-photo', _this.zIndexNumbering.bind(_this));
 
 	        $(window).on('scroll', _this.onScroll.bind(_this));
 	        return _this;
@@ -19602,34 +19604,31 @@
 	        value: function init() {
 	            var _this2 = this;
 
-	            var length = initial_transcripts.length - 1;
-	            var index = 0;
+	            $.get(TRANSCRIPTS.API_URI, function (data) {
+	                var length = data.searches.length - 1;
+	                var index = 0;
 
-	            // ポストの数だけループ
-	            var loop = function loop() {
-	                var data = initial_transcripts[index];
-	                var post = _this2.createPost(data);
+	                var loop = function loop() {
+	                    var post = _this2.createPost(data, index);
 
-	                // ポストのDOMを追加
-	                $('#transparent-container').append(post);
+	                    // ポストのDOMを追加
+	                    $('#transparent-container').append(post);
 
-	                _this2.postPosition(post);
+	                    _this2.postPosition(post);
+	                    _this2.mediaRandomPosition(post, data, index);
 
-	                if (data.has_content) {
-	                    _this2.mediaRandomPosition(post, data);
-	                }
+	                    setTimeout(function () {
+	                        _this2.transit(post);
+	                    }, 100);
 
-	                setTimeout(function () {
-	                    _this2.transit(post);
-	                }, 100);
+	                    if (index < length) {
+	                        index++;
+	                        setTimeout(loop, 100);
+	                    }
+	                };
 
-	                if (index < length) {
-	                    index++;
-	                    setTimeout(loop, 200);
-	                }
-	            };
-
-	            setTimeout(loop, 1000);
+	                setTimeout(loop, 2000);
+	            });
 	        }
 
 	        /**
@@ -19639,25 +19638,21 @@
 
 	    }, {
 	        key: 'prependContents',
-	        value: function prependContents(addData) {
+	        value: function prependContents(data) {
 	            var _this3 = this;
 
-	            var length = addData.length - 1;
+	            var length = data.searches.length - 1;
 	            var index = 0;
 
 	            // ポストの数だけループ
 	            var loop = function loop() {
-	                var data = addData[index];
-	                var post = _this3.createPost(data);
+	                var post = _this3.createPost(data, index);
 
 	                // ポストのDOMを追加
 	                $('#transparent-container').prepend(post);
 
 	                _this3.postPosition(post);
-
-	                if (data.has_content) {
-	                    _this3.mediaRandomPosition(post, data);
-	                }
+	                _this3.mediaRandomPosition(post, data, index);
 
 	                setTimeout(function () {
 	                    _this3.transit(post);
@@ -19669,29 +19664,25 @@
 	                }
 	            };
 
-	            setTimeout(loop, 1000);
+	            setTimeout(loop, 100);
 	        }
 	    }, {
 	        key: 'appendContents',
-	        value: function appendContents(addData) {
+	        value: function appendContents(data) {
 	            var _this4 = this;
 
-	            var length = addData.length - 1;
+	            var length = data.searches.length - 1;
 	            var index = 0;
 
 	            // ポストの数だけループ
 	            var loop = function loop() {
-	                var data = addData[index];
-	                var post = _this4.createPost(data);
+	                var post = _this4.createPost(data, index);
 
 	                // ポストのDOMを追加
 	                $('#transparent-container').append(post);
 
 	                _this4.postPosition(post);
-
-	                if (data.has_content) {
-	                    _this4.mediaRandomPosition(post, data);
-	                }
+	                _this4.mediaRandomPosition(post, data, index);
 
 	                setTimeout(function () {
 	                    _this4.transit(post);
@@ -19703,27 +19694,91 @@
 	                }
 	            };
 
-	            setTimeout(loop, 1000);
+	            setTimeout(loop, 100);
+	        }
+
+	        // related_contentsだけ追加
+
+	    }, {
+	        key: 'addContents',
+	        value: function addContents(related_contents) {
+	            var _this5 = this;
+
+	            var length = related_contents.length;
+
+	            _.each(related_contents, function (data1) {
+	                var id1 = parseInt(data1.search_id, 10);
+
+	                _.each($('.comment'), function (data2, i) {
+
+	                    var id2 = parseInt($(data2).data('searchid'), 10);
+	                    var container = $(data2).closest('.post').find('.media-container');
+
+	                    if (id1 === id2) {
+
+	                        // テキスト表示の出しわけ
+	                        var klass = '';
+	                        if (!_this5.mediaText) {
+	                            klass = ' is-hidden';
+	                        }
+
+	                        // webpageだったらリンクを貼る
+	                        var h = $('<a />', {
+	                            href: data1.url,
+	                            class: 'media-photo',
+	                            'data-title': data1.title,
+	                            'data-desc': data1.desc,
+	                            'data-id': data1.transcript_id,
+	                            target: '_blank',
+	                            'data-searchId': data1.search_id,
+	                            'data-relatedContentId': data.id
+	                        }).css({
+	                            width: _.random(TRANSCRIPTS.MEDIA_MAX_SIZE, TRANSCRIPTS.MEDIA_MIN_SIZE),
+	                            left: _.random(50, 700),
+	                            top: _.random(50, 700)
+	                        });
+	                        $('<img />', { src: data1.img_url, class: 'img', onerror: _this5.imageNotFound }).appendTo(h);
+	                        $('<img />', { src: 'http://www.google.com/s2/favicons?domain=' + data1.source, class: 'favicon' }).appendTo(h);
+	                        $('<button />', { class: 'btn-close02' }).appendTo(h);
+
+	                        container.append(h[0]);
+	                    }
+	                });
+	            });
 	        }
 	    }, {
 	        key: 'createPost',
-	        value: function createPost(data) {
+	        value: function createPost(data, index) {
+	            var searches = data.searches[index];
+	            var searcheId1 = searches.id;
 	            var klass = '',
 	                klass2 = '';
 
-	            if (!data.has_content) {
-	                klass = ' no-content';
-	            }
+	            // if (!data.has_content) {
+	            //     klass = ' no-content';
+	            // }
 
 	            if (!this.mediaText) {
 	                klass2 = ' is-hidden';
 	            }
 
+	            // エリア作成
 	            var post = $('<div />', { class: 'post' + klass });
-	            var comment = $('<div />', { class: 'comment' + klass2 }).appendTo(post);
 	            var container = $('<div />', { class: 'media-container' }).appendTo(post);
 
-	            $('<div />', { class: 'comment-text' }).text(data.text).appendTo(comment);
+	            // キーワードの連結
+	            var words = [];
+	            for (var i = 0, l = searches.words.length; i < l; i++) {
+	                words += searches.words[i];
+
+	                if (i !== l - 1) {
+	                    words += ' + ';
+	                }
+	            }
+
+	            // コメントカード作成
+	            var comment = $('<div />', { class: 'comment' + klass2, 'data-searchId': searcheId1 }).appendTo(post);
+	            $('<div />', { class: 'comment-text' }).text(words).appendTo(comment);
 	            $('<button />', { class: 'btn-close02' }).appendTo(comment);
 
 	            function dateFormat(date) {
@@ -19746,7 +19801,8 @@
 	                return h + ':' + m + ':' + s;
 	            }
 
-	            $('<div />', { class: 'time-stamp' }).text(dateFormat(new Date(data.created_at))).appendTo(post);
+	            // タイムスタンプ作成
+	            $('<div />', { class: 'time-stamp' }).text(dateFormat(new Date(searches.created_at))).appendTo(post);
 
 	            return post;
 	        }
@@ -19776,31 +19832,34 @@
 
 	    }, {
 	        key: 'mediaRandomPosition',
-	        value: function mediaRandomPosition(post, data) {
-	            var _this5 = this;
+	        value: function mediaRandomPosition(post, data, index) {
+	            var _this6 = this;
 
+	            var searches = data.searches[index];
+	            var searcheId1 = searches.id;
 	            var array = [];
 
-	            _.each(data.related_contents, function (d) {
+	            _.each(data.related_contents, function (d, i) {
 	                var h = {};
 
-	                // webpageだったらリンクを貼る
-	                if (d.content_type === 'webpage') {
+	                // search_idが一致したら
+	                if (d.search_id === searcheId1) {
+
 	                    var h = $('<a />', {
 	                        href: d.url,
 	                        'data-title': d.title,
 	                        'data-desc': d.desc,
 	                        'data-id': d.transcript_id,
-	                        target: '_blank'
+	                        target: '_blank',
+	                        'data-searchId': d.search_id,
+	                        'data-relatedContentId': data.related_contents[i].id
 	                    });
-	                    $('<img />', { src: d.img_url, class: 'img', onerror: _this5.imageNotFound }).appendTo(h);
+	                    $('<img />', { src: d.img_url, class: 'img', onerror: _this6.imageNotFound }).appendTo(h);
 	                    $('<img />', { src: 'http://www.google.com/s2/favicons?domain=' + d.source, class: 'favicon' }).appendTo(h);
 	                    $('<button />', { class: 'btn-close02' }).appendTo(h);
-	                } else {
-	                    h = $('<img />', { src: d.img_url, class: 'img' });
-	                }
 
-	                array.push(h);
+	                    array.push(h);
+	                }
 	            });
 
 	            // arrayに入れたDOM配列をランダム配置
@@ -19845,11 +19904,16 @@
 	            return this.recordingStatus;
 	        }
 	    }, {
-	        key: 'addKeywordList',
-	        value: function addKeywordList(event) {
+	        key: 'onSubmitKeyword',
+	        value: function onSubmitKeyword(event) {
 	            event.preventDefault();
-
 	            var val = $('.input-keyword').val();
+
+	            this.addKeywordList(val);
+	        }
+	    }, {
+	        key: 'addKeywordList',
+	        value: function addKeywordList(val) {
 
 	            if (val) {
 	                this.keywords.push(val);
@@ -19859,13 +19923,28 @@
 	            $('.input-keyword').val('');
 	        }
 	    }, {
-	        key: 'removeKeywordList',
-	        value: function removeKeywordList(event) {
+	        key: 'onRemoveKeywordList',
+	        value: function onRemoveKeywordList(event) {
 	            event.preventDefault();
 
-	            var index = this.keywords.indexOf($(event.currentTarget).text());
+	            this.removeKeywordList($(event.currentTarget).text());
+	        }
+	    }, {
+	        key: 'removeKeywordList',
+	        value: function removeKeywordList(text) {
+
+	            // キーワードリスト内から内部的に削除
+	            var index = this.keywords.indexOf(text);
 	            this.keywords.splice(index, 1);
-	            $(event.currentTarget).remove();
+
+	            _.each($('.keyword-list').find('.list-item'), function (el) {
+	                console.log('音', $(el).text(), text);
+	                if ($(el).text() === text) {
+	                    $(el).remove();
+
+	                    return false;
+	                }
+	            });
 	        }
 	    }, {
 	        key: 'getKeywords',
@@ -19884,16 +19963,17 @@
 	    }, {
 	        key: 'setMediaType',
 	        value: function setMediaType(type) {
+	            console.log('setMediaType', type);
 
 	            var el = $('.on-switch-media').find('.media');
 	            el.removeClass('is-active');
 
 	            if (type === 0) {
-	                el.eq(0).removeClass('is-active');
+	                el.eq(0).addClass('is-active');
 	            } else if (type === 1) {
-	                el.eq(1).removeClass('is-active');
+	                el.eq(1).addClass('is-active');
 	            } else if (type === 2) {
-	                el.eq(2).removeClass('is-active');
+	                el.eq(2).addClass('is-active');
 	            } else {
 	                return false;
 	            }
@@ -19984,13 +20064,13 @@
 	    }, {
 	        key: 'imageNotFound',
 	        value: function imageNotFound(event) {
-	            var _this6 = this;
+	            var _this7 = this;
 
 	            var img = new Image();
 	            img.src = $(this).attr('src');
 
 	            img.onerror = function () {
-	                $(_this6).attr('src', 'https://res.cloudinary.com/negic/image/upload/v1528273682/img_notfound.png');
+	                $(_this7).attr('src', 'https://res.cloudinary.com/negic/image/upload/v1528273682/img_notfound.png');
 	            };
 	        }
 	    }, {
