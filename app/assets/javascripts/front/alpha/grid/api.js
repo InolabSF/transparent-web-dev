@@ -57,7 +57,7 @@ function fetchContents(){
   }, function (error) {
     console.log(error);
   }).then(function (response){
-    loadContents();
+    // loadContents();
   });
 }
 
@@ -123,33 +123,55 @@ function loadPastContents(){
 }
 
 function deleteSearch(search_id){
-
   var instance = axios.create({
     baseURL: '/api',
     headers: {'ContentType': 'application/json'},
     responseType: 'json'
   });
-  instance.get('/update/searches/' + search_id).then(function (response){
-    console.log("relatedContentId: ", search_id);
+  instance.get('/update/searches/' + search_id + '/archive').then(function (response){
+    console.log("Deleted searchId: ", search_id);
   }, function (error) {
     console.log(error);
   });
-
 }
 
 function deleteContents(related_content_id){
-
   var instance = axios.create({
     baseURL: '/api',
     headers: {'ContentType': 'application/json'},
     responseType: 'json'
   });
-  instance.get('/update/contents/' + related_content_id).then(function (response){
-    console.log("relatedContentId: ", related_content_id);
+  instance.get('/update/contents/' + related_content_id + '/archive').then(function (response){
+    console.log("Deleted relatedContentId: ", related_content_id);
   }, function (error) {
     console.log(error);
   });
+}
 
+function viewContents(related_content_id){
+  var instance = axios.create({
+    baseURL: '/api',
+    headers: {'ContentType': 'application/json'},
+    responseType: 'json'
+  });
+  instance.get('/update/contents/' + related_content_id + '/view').then(function (response){
+    console.log("viewed relatedContentId: ", related_content_id);
+  }, function (error) {
+    console.log(error);
+  });
+}
+
+function openContents(related_content_id){
+  var instance = axios.create({
+    baseURL: '/api',
+    headers: {'ContentType': 'application/json'},
+    responseType: 'json'
+  });
+  instance.get('/update/contents/' + related_content_id + '/open').then(function (response){
+    console.log("Opened relatedContentId: ", related_content_id);
+  }, function (error) {
+    console.log(error);
+  });
 }
 //
 // window.addEventListener('load', function() {

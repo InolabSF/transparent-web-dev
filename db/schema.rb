@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180530225018) do
+ActiveRecord::Schema.define(version: 20180710230129) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -99,6 +99,8 @@ ActiveRecord::Schema.define(version: 20180530225018) do
     t.integer "awesome", default: 0
     t.integer "search_id"
     t.boolean "is_archived", default: false
+    t.integer "viewed", default: 0
+    t.integer "opened", default: 0
   end
 
   create_table "searches", force: :cascade do |t|
@@ -139,6 +141,8 @@ ActiveRecord::Schema.define(version: 20180530225018) do
     t.datetime "updated_at", null: false
     t.string "name"
     t.integer "manager_id"
+    t.string "url"
+    t.integer "default_langcode"
   end
 
   create_table "with_word_searches", force: :cascade do |t|

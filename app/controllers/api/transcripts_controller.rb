@@ -77,7 +77,7 @@ class Api::TranscriptsController < ApplicationController
 
   end
 
-  def update_search
+  def archive_search
     search_id = params[:search_id]
     @search = Search.find(search_id)
     @search.is_visible = false
@@ -92,7 +92,7 @@ class Api::TranscriptsController < ApplicationController
     end
   end
 
-  def update_related_content
+  def archive_related_content
     related_content_id = params[:related_content_id]
     @related_content = RelatedContent.find(related_content_id)
     @related_content.is_visible = false
@@ -103,7 +103,30 @@ class Api::TranscriptsController < ApplicationController
     else
       render json: @related_content.errors, status: :unprocessable_entity
     end
+  end
 
+  def view_related_content
+    related_content_id = params[:related_content_id]
+    @related_content = RelatedContent.find(related_content_id)
+    @related_content.viewed += 1
+
+    if @related_content.save
+      render json: @related_content
+    else
+      render json: @related_content.errors, status: :unprocessable_entity
+    end
+  end
+
+  def open_related_content
+    related_content_id = params[:related_content_id]
+    @related_content = RelatedContent.find(related_content_id)
+    @related_content.opened += 1
+
+    if @related_content.save
+      render json: @related_content
+    else
+      render json: @related_content.errors, status: :unprocessable_entity
+    end
   end
 
   def create_by_outer

@@ -55,22 +55,13 @@ rails g migration AddManageridToWall manager_id:integer
 
 rails g migration AddKeysToUser ms_key:string google_key:string
 
-Config.create(:cse_id => "014983619042086533707:sf88exwzxmu", :name => "general media Tech Ja", :number => 5)
-
-Config.create(:cse_id => "014983619042086533707:yowg6mvvpf8", :name => "general media Finantial Ja", :number => 5)
-
 ConfigGroup.create(:config_id => 1, :wall_id => 2)
-
-ConfigGroup.create(:config_id => 2, :wall_id => 2)
 
 rails generate model NoGoodWord word:string:unique langcode:string
 
  rails g migration AddIndexToNoGoodWord
 
  rails g migration ChangeLangcodeToNoGoodWord
-
- export MS_IMAGE_SEARCH_KEY=""
- export MS_TEXT_KEY=""
 
  heroku config:set MS_IMAGE_SEARCH_KEY=
 
@@ -90,12 +81,15 @@ rails generate model NoGoodWord word:string:unique langcode:string
 
  bundle exec rake db:migrate
 
-
 rails g migration AddIsarchivedToSearch is_archived:boolean
 
 rails g migration AddIsarchivedToRelatedContent is_archived:boolean
 
 rails g migration AddIsarchivedToTranscript is_archived:boolean
+
+rails g migration AddViewedToRelatedContent viewed:integer
+
+rails g migration AddOpenedToRelatedContent opened:integer
 
  w = Wall.all
  w.each {|w|w.new_url}

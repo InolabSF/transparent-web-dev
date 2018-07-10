@@ -25,8 +25,10 @@ Rails.application.routes.draw do
   get '/api/transcripts/:wall_id/:search_last_index/:related_content_last_index', to: 'api/transcripts#show'
   get '/api/transcripts/:wall_id/:search_first_index', to: 'api/transcripts#load_past'
 
-  get '/api/update/searches/:search_id',   to: 'api/transcripts#update_search'
-  get '/api/update/contents/:related_content_id',   to: 'api/transcripts#update_related_content'
+  get '/api/update/searches/:search_id/archive',   to: 'api/transcripts#archive_search'
+  get '/api/update/contents/:related_content_id/archive',   to: 'api/transcripts#archive_related_content'
+  get '/api/update/contents/:related_content_id/view',   to: 'api/transcripts#view_related_content'
+  get '/api/update/contents/:related_content_id/open',   to: 'api/transcripts#open_related_content'
 
   # demo sxsw
 
