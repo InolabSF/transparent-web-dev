@@ -186,3 +186,91 @@ window.addEventListener('scroll', function() {
         // TRANSCRIPTS.appendContents(additional_transcripts1);
     }
 }, false);
+
+
+// メニュー開閉ボタン
+$('#wrapper').on('click', '.btn-menu01', function(event) {
+    console.log('メニュー開閉ボタン');
+});
+
+//  表示テキストONOFFボタン
+$('#wrapper').on('click', '.on-txt-hidden', function(event) {
+    console.log('表示テキストONOFFボタン');
+});
+
+// コメントカード / テキストの表示非表示の切り替え
+//- TRANSCRIPTS.setMediaText(true);
+
+// セッティングメニューの表示非表示の切り替え
+// TRANSCRIPTS.setMenu(true);
+
+// メディアタイプの切り替え 0/1/2
+//- TRANSCRIPTS.setMediaType(2);
+
+
+//キーワード追加
+//- TRANSCRIPTS.addKeywordList('hogehoge');
+
+// キーワード削除
+//- TRANSCRIPTS.removeKeywordList('hogehoge');
+
+
+$('#wrapper').on('click', '#transparent-container .btn-close02', function(event) {
+    setTimeout(function() {
+
+        console.log("deleted");
+
+        // メディアのタイプの取得
+        console.log("transcript_id: ", $(event.currentTarget).closest('.media-photo').attr('data-id'));
+
+        console.log("search id: ", $(event.currentTarget).closest('.media-photo').attr('data-searchid'));
+        // related content id の取得
+        console.log("related content id: ", $(event.currentTarget).closest('.media-photo').attr('data-relatedcontentid'));
+
+        search_id = $(event.currentTarget).closest('.media-photo').attr('data-searchid')
+        related_content_id = $(event.currentTarget).closest('.media-photo').attr('data-relatedcontentid')
+
+        if (related_content_id){
+            deleteContents(related_content_id)
+        } else {
+            // deleteSearch(search_id)
+        }
+
+    }, 100);
+});
+
+$('#wrapper').on('click', '#transparent-container .media-photo', function(event) {
+    setTimeout(function() {
+
+        console.log("photo");
+
+        // transcript_id の取得
+        console.log("transcript_id: ", $(event.currentTarget).closest('.media-photo').attr('data-id'));
+        // search id の取得
+        console.log("search id: ", $(event.currentTarget).closest('.media-photo').attr('data-searchid'));
+        // related content id の取得
+        console.log("related content id: ", $(event.currentTarget).closest('.media-photo').attr('data-relatedcontentid'));
+    }, 100);
+});
+
+$('#wrapper').on('click', '#transparent-container .modal-inner .btn-style01', function(event) {
+    setTimeout(function() {
+
+        console.log("link");
+
+        // transcript_id の取得
+        console.log("transcript_id: ", $(event.currentTarget).closest('.modal-inner').attr('data-id'));
+        // search id の取得
+        console.log("search id: ", $(event.currentTarget).closest('.modal-inner').attr('data-searchid'));
+        // related content id の取得
+        console.log("related content id: ", $(event.currentTarget).closest('.modal-inner').attr('data-relatedcontentid'));
+    }, 100);
+});
+
+window.addEventListener('load', function() {
+  // ドラッグON
+  TRANSCRIPTS.onDraggable();
+
+  // ドラッグOFF
+  //- TRANSCRIPTS.onDraggable();
+}, false);

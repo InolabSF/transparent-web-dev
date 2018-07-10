@@ -19352,6 +19352,7 @@
 	        _this.transcripts = new Transcripts();
 
 	        _this.modalFlg = false;
+	        _this.isDraggable = false;
 
 	        $('#wrapper').on('click', '.btn-menu01', _this.menuToggle.bind(_this)).on('click', '.media-photo', _this.clickDisable.bind(_this)).on('click', '.modal-layer .modal-back', _this.hideModal.bind(_this)).on('click', '.btn-bg-toggle', _this.toggleBackgroundStyle.bind(_this)).on('mousedown', '.media-photo', _this.onDragCatch.bind(_this));
 
@@ -19372,6 +19373,8 @@
 	        TRANSCRIPTS.removeKeywordList = _this.transcripts.removeKeywordList.bind(_this.transcripts);
 
 	        TRANSCRIPTS.setMenu = _this.setMenu.bind(_this);
+	        TRANSCRIPTS.onDraggable = _this.onDraggable.bind(_this);
+	        TRANSCRIPTS.offDraggable = _this.offDraggable.bind(_this);
 	        return _this;
 	    }
 
@@ -19446,6 +19449,12 @@
 	                $('<a />', { class: 'btn-style01', href: url, target: '_blank' }).text('Link').appendTo(info);
 	            }
 
+	            modal.attr({
+	                'data-id': $(el).attr('data-id'),
+	                'data-searchId': $(el).attr('data-searchid'),
+	                'data-relatedContentId': $(el).attr('data-relatedcontentid')
+	            });
+
 	            $('.modal-layer').addClass('is-show');
 	        }
 	    }, {
@@ -19454,7 +19463,11 @@
 	            event.preventDefault();
 
 	            // モーダルの中身削除
-	            $('.modal-inner').empty();
+	            $('.modal-inner').empty().attr({
+	                'data-id': '',
+	                'data-searchId': '',
+	                'data-relatedContentId': ''
+	            });
 
 	            $('.modal-layer').removeClass('is-show');
 
@@ -19494,6 +19507,7 @@
 	        key: 'onDragCatch',
 	        value: function onDragCatch(event) {
 	            event.preventDefault();
+
 	            this.move_flg = true;
 	            this.el = event.currentTarget;
 	            this.move_start_x = event.clientX - parseInt(this.el.style.left.replace("px", ""));
@@ -19507,6 +19521,10 @@
 	    }, {
 	        key: 'onDragMove',
 	        value: function onDragMove(event) {
+	            if (!this.isDraggable) {
+	                return false;
+	            }
+
 	            if (this.move_flg) {
 	                var left = event.clientX - this.move_start_x + "px";
 	                var top = event.clientY - this.move_start_y + "px";
@@ -19529,6 +19547,20 @@
 	            this.el = {};
 	            this.move_flg = false;
 	            return false;
+	        }
+	    }, {
+	        key: 'onDraggable',
+	        value: function onDraggable() {
+	            this.isDraggable = true;
+	            $('.media-photo').css('cursor', 'move');
+	            return this.isDraggable;
+	        }
+	    }, {
+	        key: 'offDraggable',
+	        value: function offDraggable() {
+	            this.isDraggable = false;
+	            $('.media-photo').css('cursor', 'pointer');
+	            return this.isDraggable;
 	        }
 
 	        // クリックイベントの削除用
@@ -19603,6 +19635,10 @@
 	        key: 'init',
 	        value: function init() {
 	            var _this2 = this;
+
+	            if (!TRANSCRIPTS.API_URI) {
+	                return false;
+	            }
 
 	            $.get(TRANSCRIPTS.API_URI, function (data) {
 	                var length = data.searches.length - 1;
@@ -19849,8 +19885,8 @@
 	                        href: d.url,
 	                        'data-title': d.title,
 	                        'data-desc': d.desc,
-	                        'data-id': d.transcript_id,
 	                        target: '_blank',
+	                        'data-id': d.transcript_id,
 	                        'data-searchId': d.search_id,
 	                        'data-relatedContentId': data.related_contents[i].id
 	                    });
@@ -19938,7 +19974,6 @@
 	            this.keywords.splice(index, 1);
 
 	            _.each($('.keyword-list').find('.list-item'), function (el) {
-	                console.log('音', $(el).text(), text);
 	                if ($(el).text() === text) {
 	                    $(el).remove();
 
@@ -19963,7 +19998,6 @@
 	    }, {
 	        key: 'setMediaType',
 	        value: function setMediaType(type) {
-	            console.log('setMediaType', type);
 
 	            var el = $('.on-switch-media').find('.media');
 	            el.removeClass('is-active');

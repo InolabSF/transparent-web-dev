@@ -1816,7 +1816,6 @@ input
     width: 100%;
     height: auto !important;
 
-    cursor: move;
     -webkit-user-select: none;
        -moz-user-select: none;
             user-select: none;
