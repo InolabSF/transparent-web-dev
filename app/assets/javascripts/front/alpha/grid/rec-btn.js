@@ -27,19 +27,19 @@ document.addEventListener("DOMContentLoaded", function () {
         if (TRANSCRIPTS.getRecordingStatus()){
 
           killMic();
-          var dimensionValue = 'off';
+          dimensionValue4 = 'off';
 
         } else {
 
           activateMic();
-          var dimensionValue = 'on';
+          dimensionValue4 = 'on';
 
         }
 
         if(ga === undefined) {
           console.log('undefined');
         }else {
-          ga('set', 'dimension4', dimensionValue);
+          ga('set', 'dimension4', dimensionValue4);
         };
         // TRANSCRIPTS.toggleRecordhing();
 

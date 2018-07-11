@@ -1,25 +1,52 @@
-// document.getElementById('btn-menu').addEventListener('click', function() {
-//
-//     setTimeout(function() {
-//
-//         menuHidden = !menuHidden;
-//         if(menuHidden) {
-//           var dimensionValue = 'off';
-//         }else {
-//           var dimensionValue = 'on';
-//         }
-//
-//         document.cookie = 'menuHidden=' + menuHidden
-//
-//         if(ga === undefined) {
-//           console.log('undefined');
-//         }else {
-//           ga('set', 'dimension5', dimensionValue);
-//         };
-//
-//     }, 100);
-//
-// }, false);
+// メニュー開閉ボタン
+$('#wrapper').on('click', '.btn-menu01', function(event) {
+    console.log('メニュー開閉ボタン');
+    console.log(menuHidden);
+
+    menuHidden = !menuHidden;
+    if (menuHidden) {
+      dimensionValue5 = 'off';
+    }else {
+      dimensionValue5 = 'on';
+    }
+
+    document.cookie = 'menuHidden=' + menuHidden
+
+    console.log(dimensionValue5);
+
+    if(ga === undefined) {
+      console.log('undefined');
+    } else {
+      console.log('not undefined');
+      ga('set', 'dimension5', dimensionValue5);
+
+      console.log(dimensionValue5);
+    };
+});
+
+//  表示テキストONOFFボタン
+$('#wrapper').on('click', '.on-txt-hidden', function(event) {
+    console.log('表示テキストONOFFボタン');
+
+    textHidden = !textHidden;
+    if(textHidden) {
+      dimensionValue1 = 'off';
+    }else {
+      dimensionValue1 = 'on';
+    }
+
+    console.log('textHidden')
+    console.log(textHidden)
+    document.cookie = 'textHidden=' + textHidden
+
+    if(ga === undefined) {
+      console.log('undefined');
+    }else {
+      ga('set', 'dimension1', dimensionValue1);
+      ga('set', 'dimension2', dimensionValue1);
+    };
+});
+
 
 document.getElementById('input-submit').addEventListener('click', function() {
     setTimeout(function() {
@@ -29,52 +56,6 @@ document.getElementById('input-submit').addEventListener('click', function() {
     });
 }, false);
 
-// document.getElementById('txt-toggle').addEventListener('click', function() {
-//     setTimeout(function() {
-//
-//         textHidden = !textHidden;
-//         if(textHidden) {
-//           var dimensionValue = 'off';
-//         }else {
-//           var dimensionValue = 'on';
-//         }
-//
-//         console.log('textHidden')
-//         console.log(textHidden)
-//         document.cookie = 'textHidden=' + textHidden
-//
-//         if(ga === undefined) {
-//           console.log('undefined');
-//         }else {
-//           ga('set', 'dimension1', dimensionValue);
-//         };
-//
-//     }, 150);
-// }, false);
-//
-// document.getElementById('comment-toggle').addEventListener('click', function() {
-//     setTimeout(function() {
-//
-//         commentHidden = !commentHidden;
-//         if(commentHidden) {
-//           var dimensionValue = 'off';
-//         }else {
-//           var dimensionValue = 'on';
-//         }
-//
-//         console.log('commentHidden')
-//         console.log(commentHidden)
-//
-//         document.cookie = 'commentHidden=' + commentHidden
-//
-//         if(ga === undefined) {
-//           console.log('undefined');
-//         }else {
-//           ga('set', 'dimension2', dimensionValue);
-//         };
-//
-//     }, 200);
-// }, false);
 
 document.getElementById('on-switch-media').addEventListener('click', function() {
     setTimeout(function() {
@@ -84,51 +65,38 @@ document.getElementById('on-switch-media').addEventListener('click', function() 
         console.log(mediaType);
         document.cookie = 'mediaType=' + mediaType
 
-        if(mediaType==0) {
-          var dimensionValue = 'image';
-        }else if (mediaType==1) {
-          var dimensionValue = 'webpage';
-        }else if (mediaType==2) {
-          var dimensionValue = 'video';
+        if (mediaType==0) {
+          dimensionValue3 = 'image';
+        } else if (mediaType==1) {
+          dimensionValue3 = 'webpage';
+        } else if (mediaType==2) {
+          dimensionValue3 = 'video';
         };
 
-        if(ga === undefined) {
+        if (ga === undefined) {
           console.log('undefined');
-        }else {
-          ga('set', 'dimension3', dimensionValue);
+        } else {
+          ga('set', 'dimension3', dimensionValue3);
         };
 
     });
 }, false);
 
-$('#wrapper').on('click', '#transparent-container .btn-close02', function(event) {
-    setTimeout(function() {
+// コメントカード / テキストの表示非表示の切り替え
+//- TRANSCRIPTS.setMediaText(true);
 
-        console.log("transcript_id: ", $(event.currentTarget).closest('.media-photo').attr('data-id'));
-        // if (related_content_id){
-        //     deleteContents(related_content_id)
-        // } else {
-        //     deleteSearch(search_id)
-        // }
-    }, 100);
-});
+// セッティングメニューの表示非表示の切り替え
+// TRANSCRIPTS.setMenu(true);
 
-// window.addEventListener('scroll', function() {
-//
-//     // スクロールが下部に来たらtrueを返します
-//     console.log(TRANSCRIPTS.getScrollBottomPosition());
-//
-//     if (TRANSCRIPTS.getScrollBottomPosition()) {
-//
-//       if (!isLoading) {
-//         loadPastContents();
-//       };
-//         //
-//         // スクロール下部に来たら実行
-//         // TRANSCRIPTS.appendContents(additional_transcripts1);
-//     }
-// }, false);
+// メディアタイプの切り替え 0/1/2
+//- TRANSCRIPTS.setMediaType(2);
 
+
+//キーワード追加
+//- TRANSCRIPTS.addKeywordList('hogehoge');
+
+// キーワード削除
+//- TRANSCRIPTS.removeKeywordList('hogehoge');
 
 function getCookieArray(){
   var arr = new Array();
@@ -141,8 +109,6 @@ function getCookieArray(){
   }
   return arr;
 }
-
-// var txt_toggle = document.getElementById('txt-toggle')
 
 function init_setting(){
   console.log( 'cookies' );
@@ -161,11 +127,11 @@ function init_setting(){
     document.getElementById('comment-toggle').click();
   }
 
-  if (cookies['mediaType'] == '1'){
-    document.getElementById('btn-webpage').click();
-  }else if (cookies['mediaType'] == '2') {
-    document.getElementById('btn-video').click();
-  }
+  // if (cookies['mediaType'] == 'webpage'){
+  //   document.getElementById('btn-webpage').click();
+  // }else if (cookies['mediaType'] == 'video') {
+  //   document.getElementById('btn-video').click();
+  // }
 
 };
 
@@ -186,49 +152,6 @@ window.addEventListener('scroll', function() {
         // TRANSCRIPTS.appendContents(additional_transcripts1);
     }
 }, false);
-
-
-// メニュー開閉ボタン
-$('#wrapper').on('click', '.btn-menu01', function(event) {
-    console.log('メニュー開閉ボタン');
-    // console.log(menuHidden);
-    //
-    // menuHidden = !menuHidden;
-    // if (menuHidden) {
-    //   var dimensionValue = 'off';
-    // }else {
-    //   var dimensionValue = 'on';
-    // }
-    //
-    // document.cookie = 'menuHidden=' + menuHidden
-    //
-    // if(ga === undefined) {
-    //   console.log('undefined');
-    // } else {
-    //   ga('set', 'dimension5', dimensionValue);
-    // };
-});
-
-//  表示テキストONOFFボタン
-$('#wrapper').on('click', '.on-txt-hidden', function(event) {
-    console.log('表示テキストONOFFボタン');
-});
-
-// コメントカード / テキストの表示非表示の切り替え
-//- TRANSCRIPTS.setMediaText(true);
-
-// セッティングメニューの表示非表示の切り替え
-// TRANSCRIPTS.setMenu(true);
-
-// メディアタイプの切り替え 0/1/2
-//- TRANSCRIPTS.setMediaType(2);
-
-
-//キーワード追加
-//- TRANSCRIPTS.addKeywordList('hogehoge');
-
-// キーワード削除
-//- TRANSCRIPTS.removeKeywordList('hogehoge');
 
 
 $('#wrapper').on('click', '#transparent-container .btn-close02', function(event) {
