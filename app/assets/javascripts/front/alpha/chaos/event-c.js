@@ -191,6 +191,22 @@ window.addEventListener('scroll', function() {
 // メニュー開閉ボタン
 $('#wrapper').on('click', '.btn-menu01', function(event) {
     console.log('メニュー開閉ボタン');
+    // console.log(menuHidden);
+    //
+    // menuHidden = !menuHidden;
+    // if (menuHidden) {
+    //   var dimensionValue = 'off';
+    // }else {
+    //   var dimensionValue = 'on';
+    // }
+    //
+    // document.cookie = 'menuHidden=' + menuHidden
+    //
+    // if(ga === undefined) {
+    //   console.log('undefined');
+    // } else {
+    //   ga('set', 'dimension5', dimensionValue);
+    // };
 });
 
 //  表示テキストONOFFボタン
