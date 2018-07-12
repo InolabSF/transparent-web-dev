@@ -4,11 +4,36 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-116199978-1"></script>
     <script>
-     window.dataLayer = window.dataLayer || [];
-     function gtag(){dataLayer.push(arguments);}
-     gtag('js', new Date());
 
-     gtag('config', 'UA-116199978-1');
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-116199978-1');
+      gtag('config', 'UA-116199978-1', {
+        'custom_map': {
+          'dimension1': 'text'
+        }
+      });
+
+      gtag('config', 'UA-116199978-1', {
+        'custom_map': {
+          'dimension3': 'media'
+        }
+      });
+
+      gtag('config', 'UA-116199978-1', {
+        'custom_map': {
+          'dimension4': 'recording'
+        }
+      });
+
+      gtag('config', 'UA-116199978-1', {
+        'custom_map': {
+          'dimension5': 'menu'
+        }
+      });
+
     </script>
   </head>
 

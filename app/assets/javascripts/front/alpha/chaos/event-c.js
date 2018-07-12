@@ -1,7 +1,6 @@
 // メニュー開閉ボタン
 $('#wrapper').on('click', '.btn-menu01', function(event) {
     console.log('メニュー開閉ボタン');
-    console.log(menuHidden);
 
     menuHidden = !menuHidden;
     if (menuHidden) {
@@ -12,13 +11,9 @@ $('#wrapper').on('click', '.btn-menu01', function(event) {
 
     document.cookie = 'menuHidden=' + menuHidden
 
-    console.log(dimensionValue5);
-
     if(ga === undefined) {
-      console.log('undefined');
     } else {
-      console.log('not undefined');
-      ga('set', 'dimension5', dimensionValue5);
+      gtag('event', 'menu_dimension', {'menu': dimensionValue5});
 
       console.log(dimensionValue5);
     };
@@ -42,8 +37,7 @@ $('#wrapper').on('click', '.on-txt-hidden', function(event) {
     if(ga === undefined) {
       console.log('undefined');
     }else {
-      ga('set', 'dimension1', dimensionValue1);
-      ga('set', 'dimension2', dimensionValue1);
+      gtag('event', 'text_dimension', {'text': dimensionValue1});
     };
 });
 
@@ -76,7 +70,7 @@ document.getElementById('on-switch-media').addEventListener('click', function() 
         if (ga === undefined) {
           console.log('undefined');
         } else {
-          ga('set', 'dimension3', dimensionValue3);
+          gtag('event', 'media_dimension', {'media': dimensionValue3});
         };
 
     });

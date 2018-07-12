@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if(ga === undefined) {
           console.log('undefined');
         }else {
-          ga('set', 'dimension4', dimensionValue4);
+          gtag('event', 'recording_dimension', {'recording': dimensionValue4});
         };
         // TRANSCRIPTS.toggleRecordhing();
 
