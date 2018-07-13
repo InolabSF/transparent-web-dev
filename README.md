@@ -69,6 +69,8 @@ $ bundle install
 
       image_url_list :  List[ STRING ], // list of image url
 
+      is_live : BOOLEAN, // is live
+
       created_at : DATETIME, // time when created
 
       updated_at : DATETIME // time when updated

@@ -92,6 +92,8 @@
       'https://images.unsplash.com/photo-1516624102263-0ec412afe191?ixlib=rb-0.3.5&q=85&fm=jpg&crop=entropy&cs=srgb&ixid=eyJhcHBfaWQiOjI1MTU3fQ&s=fe94e7813f9804e0d6f927950e28507f'
     ],
 
+    is_live: false, // is live
+
     created_at: datetimeSample, // time when created
 
     updated_at: datetimeSample // time when updated
@@ -111,6 +113,8 @@
     default_langcode: 'en', // default language code
 
     image_url_list: null,
+
+    is_live: true, // is live
 
     created_at: datetimeSample, // time when created
 
