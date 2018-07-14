@@ -73,10 +73,10 @@ class HomeController < ApplicationController
       end
 
 
-      if params[:view] == 'chaos'
-        render :file => "home/front/wall/alpha/chaos"
-      else
+      if params[:view] == 'grid'
         render :file => "home/front/wall/alpha/grid"
+      else
+        render :file => "home/front/wall/alpha/chaos"
       end
 
     end
@@ -86,10 +86,10 @@ class HomeController < ApplicationController
     @wall_id = 12
     @language_code = 'en-US'
 
-    if params[:view] == 'chaos'
-      render :file => "home/front/wall/alpha/chaos"
-    else
+    if params[:view] == 'grid'
       render :file => "home/front/wall/alpha/grid"
+    else
+      render :file => "home/front/wall/alpha/chaos"
     end
   end
 
@@ -97,10 +97,10 @@ class HomeController < ApplicationController
     @wall_id = 3
     @language_code = 'ja-JP'
 
-    if params[:view] == 'chaos'
-      render :file => "home/front/wall/alpha/chaos"
-    else
+    if params[:view] == 'grid'
       render :file => "home/front/wall/alpha/grid"
+    else
+      render :file => "home/front/wall/alpha/chaos"
     end
   end
 
