@@ -1,6 +1,6 @@
 // Transparent Home Data Sample
 
-  const datetimeSample = Date.now();
+  const datetimeSample = Date();
 
     // Project Object
   const project = {
