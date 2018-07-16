@@ -1,6 +1,7 @@
 // Transparent Home Data Sample
 
-  const datetimeSample = Date();
+    // const datetimeSample = new Date().toISOString();
+  const datetimeSample = "2018-07-16T17:50:00.034Z":
 
     // Project Object
   const project = {

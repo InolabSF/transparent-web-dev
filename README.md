@@ -1,4 +1,4 @@
-# README
+ISOString# README
 
 ## Versions
 - Rails - 5.1.6
@@ -23,9 +23,9 @@ $ bundle install
 
       default_langcode : STRING, // default language code
 
-      created_at : DATETIME, // time when created
+      created_at : ISOString, // time when created
 
-      updated_at : DATETIME // time when updated
+      updated_at : ISOString // time when updated
 
     }
 
@@ -47,9 +47,9 @@ $ bundle install
 
       is_admin : BOOLEAN, // if is admin member of the project
 
-      created_at : DATETIME, // time when created
+      created_at : ISOString, // time when created
 
-      updated_at : DATETIME // time when updated
+      updated_at : ISOString // time when updated
 
     }
 
@@ -71,9 +71,9 @@ $ bundle install
 
       is_live : BOOLEAN, // is live
 
-      created_at : DATETIME, // time when created
+      created_at : ISOString, // time when created
 
-      updated_at : DATETIME // time when updated
+      updated_at : ISOString // time when updated
 
     }
 
@@ -138,9 +138,9 @@ $ bundle install
 
       is_visible : BOOLEAN, // if is visible
 
-      created_at : DATETIME // time when created
+      created_at : ISOString // time when created
 
-      updated_at : DATETIME // time when updated
+      updated_at : ISOString // time when updated
 
     } -->
 
@@ -191,9 +191,9 @@ $ bundle install
 
       mode : STRING, // search type ( image, webpage, video )
 
-      created_at : DATETIME, // time when created
+      created_at : ISOString, // time when created
 
-      updated_at : DATETIME // time when updated
+      updated_at : ISOString // time when updated
 
     }
 
@@ -223,9 +223,9 @@ $ bundle install
 
       is_visible : BOOLEAN, // if is visible
 
-      created_at : DATETIME, // time when created
+      created_at : ISOString, // time when created
 
-      updated_at : DATETIME // time when updated
+      updated_at : ISOString // time when updated
 
     }
 
