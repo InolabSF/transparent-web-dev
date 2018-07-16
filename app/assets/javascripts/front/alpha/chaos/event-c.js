@@ -47,6 +47,13 @@ document.getElementById('input-submit').addEventListener('click', function() {
 
         // 検索キーワードの取得
         console.log(TRANSCRIPTS.getKeywords());
+        console.log(TRANSCRIPTS.getKeywords().length.toString());
+        dimensionValue2 = TRANSCRIPTS.getKeywords().length.toString();
+        if (ga === undefined) {
+          console.log('undefined');
+        } else {
+          gtag('event', 'keywordSum_dimension', {'keywordSum': dimensionValue2});
+        };
     });
 }, false);
 
@@ -104,28 +111,37 @@ function getCookieArray(){
   return arr;
 }
 
-function init_setting(){
-  console.log( 'cookies' );
-  var cookies = getCookieArray();
-  console.log( cookies );
+function init_setting (){
+  console.log( 'init setting' );
 
-  if (cookies['menuHidden'] == 'true') {
-    document.getElementById('btn-menu').click();
-  }
-
-  if (cookies['textHidden'] == 'true') {
-    document.getElementById('txt-toggle').click();
-  }
-
-  if (cookies['commentHidden'] == 'true') {
-    document.getElementById('comment-toggle').click();
-  }
-
-  // if (cookies['mediaType'] == 'webpage'){
-  //   document.getElementById('btn-webpage').click();
-  // }else if (cookies['mediaType'] == 'video') {
-  //   document.getElementById('btn-video').click();
+  // console.log( 'cookies' );
+  // var cookies = getCookieArray();
+  // console.log( cookies );
+  //
+  // if (cookies['menuHidden'] == 'true') {
+  //   document.getElementById('btn-menu').click();
   // }
+  //
+  // if (cookies['textHidden'] == 'true') {
+  //   document.getElementById('txt-toggle').click();
+  // }
+  //
+  // if (cookies['commentHidden'] == 'true') {
+  //   document.getElementById('comment-toggle').click();
+  // }
+
+  dimensionValue1 = 'on';
+  console.log(TRANSCRIPTS.getKeywords().length.toString());
+  dimensionValue2 = TRANSCRIPTS.getKeywords().length.toString();
+  dimensionValue3 = 'image';
+  dimensionValue4 = 'off';
+  dimensionValue5 = 'off';
+
+  gtag('event', 'text_dimension', {'text': dimensionValue1});
+  gtag('event', 'keywordSum_dimension', {'keywordSum': dimensionValue2});
+  gtag('event', 'media_dimension', {'media': dimensionValue3});
+  gtag('event', 'recording_dimension', {'recording': dimensionValue4});
+  gtag('event', 'menu_dimension', {'menu': dimensionValue5});
 
 };
 
@@ -201,6 +217,7 @@ $('#wrapper').on('click', '#transparent-container .modal-inner .btn-style01', fu
 window.addEventListener('load', function() {
   // ドラッグON
   TRANSCRIPTS.onDraggable();
+  init_setting();
 
   // ドラッグOFF
   //- TRANSCRIPTS.offDraggable();
