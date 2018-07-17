@@ -21,3 +21,4 @@
 //= require front/alpha/grid/api.js
 //= require front/alpha/chaos/event-c.js
 //= require front/alpha/grid/rec-btn.js
+//= require front/alpha/chaos/screenshot.js

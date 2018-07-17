@@ -11,12 +11,13 @@ $('#wrapper').on('click', '.btn-menu01', function(event) {
 
     document.cookie = 'menuHidden=' + menuHidden
 
-    if(ga === undefined) {
-    } else {
+    try {
       gtag('event', 'menu_dimension', {'menu': dimensionValue5});
-
-      console.log(dimensionValue5);
-    };
+    }
+    catch(error) {
+      console.error('ga blocked');
+      console.error(error);
+    }
 });
 
 //  表示テキストONOFFボタン
@@ -34,11 +35,13 @@ $('#wrapper').on('click', '.on-txt-hidden', function(event) {
     console.log(textHidden)
     document.cookie = 'textHidden=' + textHidden
 
-    if(ga === undefined) {
-      console.log('undefined');
-    }else {
+    try {
       gtag('event', 'text_dimension', {'text': dimensionValue1});
-    };
+    }
+    catch(error) {
+      console.error('ga blocked');
+      console.error(error);
+    }
 });
 
 
@@ -49,11 +52,14 @@ document.getElementById('input-submit').addEventListener('click', function() {
         console.log(TRANSCRIPTS.getKeywords());
         console.log(TRANSCRIPTS.getKeywords().length.toString());
         dimensionValue2 = TRANSCRIPTS.getKeywords().length.toString();
-        if (ga === undefined) {
-          console.log('undefined');
-        } else {
+
+        try {
           gtag('event', 'keywordSum_dimension', {'keywordSum': dimensionValue2});
-        };
+        }
+        catch(error) {
+          console.error('ga blocked');
+          console.error(error);
+        }
     });
 }, false);
 
@@ -74,11 +80,14 @@ document.getElementById('on-switch-media').addEventListener('click', function() 
           dimensionValue3 = 'video';
         };
 
-        if (ga === undefined) {
-          console.log('undefined');
-        } else {
+        try {
           gtag('event', 'media_dimension', {'media': dimensionValue3});
-        };
+        }
+        catch(error) {
+          console.error('ga blocked');
+          console.error(error);
+        }
+
 
     });
 }, false);
@@ -131,17 +140,22 @@ function init_setting (){
   // }
 
   dimensionValue1 = 'on';
-  console.log(TRANSCRIPTS.getKeywords().length.toString());
   dimensionValue2 = TRANSCRIPTS.getKeywords().length.toString();
   dimensionValue3 = 'image';
   dimensionValue4 = 'off';
   dimensionValue5 = 'off';
 
-  gtag('event', 'text_dimension', {'text': dimensionValue1});
-  gtag('event', 'keywordSum_dimension', {'keywordSum': dimensionValue2});
-  gtag('event', 'media_dimension', {'media': dimensionValue3});
-  gtag('event', 'recording_dimension', {'recording': dimensionValue4});
-  gtag('event', 'menu_dimension', {'menu': dimensionValue5});
+  try {
+    gtag('event', 'text_dimension', {'text': dimensionValue1});
+    gtag('event', 'keywordSum_dimension', {'keywordSum': dimensionValue2});
+    gtag('event', 'media_dimension', {'media': dimensionValue3});
+    gtag('event', 'recording_dimension', {'recording': dimensionValue4});
+    gtag('event', 'menu_dimension', {'menu': dimensionValue5});
+  }
+  catch(error) {
+    console.error('ga blocked');
+    console.error(error);
+  }
 
 };
 

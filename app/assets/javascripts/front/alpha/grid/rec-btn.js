@@ -25,22 +25,20 @@ document.addEventListener("DOMContentLoaded", function () {
       setTimeout(function() {
 
         if (TRANSCRIPTS.getRecordingStatus()){
-
           killMic();
           dimensionValue4 = 'off';
-
         } else {
-
           activateMic();
           dimensionValue4 = 'on';
-
         }
 
-        if(ga === undefined) {
-          console.log('undefined');
-        }else {
+        try {
           gtag('event', 'recording_dimension', {'recording': dimensionValue4});
-        };
+        }
+        catch(error) {
+          console.error('ga blocked');
+          console.error(error);
+        }
         // TRANSCRIPTS.toggleRecordhing();
 
       });
