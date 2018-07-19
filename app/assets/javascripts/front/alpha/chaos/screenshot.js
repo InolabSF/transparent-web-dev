@@ -10,15 +10,31 @@
 //   //     window.open(base64image , "_blank");
 //   // });
 //
-//   html2canvas(document.body).then(function(canvas) {
-//     // Export canvas as a blob
-//     canvas.toBlob(function(blob) {
-//         // Generate file download
-//         // window.saveAs(blob, "yourwebsite_screenshot.png");
-//         saveBlob(blob, "yourwebsite_screenshot.png")
+//   // html2canvas(document.body, { letterRendering: 1, allowTaint : true, onrendered : function (canvas) { } }).then(function(canvas) {
+//   //   // Export canvas as a blob
+//   //   canvas.toBlob(function(blob) {
+//   //       // Generate file download
+//   //       // window.saveAs(blob, "yourwebsite_screenshot.png");
+//   //       saveBlob(blob, "yourwebsite_screenshot.png")
+//   //
+//   //   });
+//   // });
 //
-//     });
-// });
+//   html2canvas(document.body, { letterRendering: 1, allowTaint : true, onrendered : function (canvas) { } }).then(function(canvas) {
+//     // Export the canvas to its data URI representation
+//     var base64image = canvas.toDataURL("image/png");
+//     // Open the image in a new window
+//     window.open(base64image , "_blank");
+//   });
+//
+//
+// }, false);
+
+// document.getElementById('input-submit').addEventListener('click', function() {
+//
+//   console.log('screenshot');
+//
+//   window.print({ 'shouldPrintBackgrounds': true });
 //
 // }, false);
 
