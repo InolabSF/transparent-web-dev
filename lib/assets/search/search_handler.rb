@@ -189,7 +189,8 @@ def ms_image_search(text, search, transcript, langcode, is_concurrent, num, cont
 
         title = value['name']
         desc = 'The result by MS Bing Search Image with " ' + text + '"'
-        img_url = value['contentUrl']
+        img_url = value['thumbnailUrl']
+        # img_url = value['contentUrl']
         url = value['hostPageUrl']
         source = value['hostPageDisplayUrl']
 
