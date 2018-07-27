@@ -8,6 +8,10 @@ Rails.application.routes.draw do
 
   get '/console/config', to: 'home#get_config'
 
+  # config
+
+  # post '/walls', to: 'walls#create'
+
   # alpha
 
   # choas test
