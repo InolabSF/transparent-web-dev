@@ -1,4 +1,4 @@
-ISOString# README
+# README
 
 ## Versions
 - Rails - 5.1.6
@@ -6,6 +6,28 @@ ISOString# README
 
 ## Set up
 $ bundle install
+
+## 3rd Party Services
+
+#### Google Cloud Platform
+
+  Transparentデモ用アカウント（本プロジェクトGoogle Driveの"Cloud Service Account"のドキュメントに詳細があります。）
+
+#### Microsoft Azure
+
+  DOKIDOKIさんのアカウントです
+
+#### Microsoft Azure
+
+  DOKIDOKIさんに作成して頂いたアカウントです
+
+#### Heroku
+
+  DOKIDOKIさんに作成して頂いたアカウントです
+
+#### DNSimple
+
+  DOKIDOKIさんに作成して頂いたアカウントです
 
 ## Transparent Home画面 データオブジェクト　(β ver, 7/5/2018)
 
