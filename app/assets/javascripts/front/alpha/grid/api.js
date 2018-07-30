@@ -91,6 +91,7 @@ function loadContents(){
 
   }, function (error) {
     console.log(error);
+    alert("Something went wrong. Please refresh.");
   }).then(function (response){
     loadContents();
   });
@@ -116,6 +117,7 @@ function loadPastContents(){
 
   }, function (error) {
     console.log(error);
+    alert("Something went wrong. Please refresh.");
   }).then(function (response){
     isLoading = false;
   });
