@@ -44,7 +44,7 @@ function fetchContents(){
     },
     responseType: 'json'
   });
-  instance.get('/transcripts/' + wallId ).then(function (response){
+  instance.get('/transcripts/' + wallId ).then(function (response) {
 
     searches = response.data.searches;
     related_contents = response.data.related_contents;
@@ -56,72 +56,71 @@ function fetchContents(){
 
   }, function (error) {
     console.log(error);
-  }).then(function (response){
+  }).then(function (response) {
     loadContents();
   });
 }
 
 function loadContents(){
-  var instance = axios.create({
-    baseURL: '/api',
-    headers: {
-      'ContentType': 'application/json'
-    },
-    responseType: 'json'
-  });
-  // console.log('send req with index : ' + search_last_index + ', ' + related_content_last_index);
-  instance.get('/transcripts/' + wallId + '/' + search_last_index + '/' + related_content_last_index ).then(function (response){
-    // console.log(response.data);
+  setTimeout(function() {
+    var instance = axios.create({
+      baseURL: '/api',
+      headers: {
+        'ContentType': 'application/json'
+      },
+      responseType: 'json'
+    });
+    instance.get('/transcripts/' + wallId + '/' + search_last_index + '/' + related_content_last_index ).then(function (response) {
+      search_last_index = response.data.search_last_index;
+      related_content_last_index = response.data.related_content_last_index;
 
-    search_last_index = response.data.search_last_index;
-    related_content_last_index = response.data.related_content_last_index;
+      searches = response.data.searches;
+      if (searches.length){
+        console.log(searches);
+        related_contents = [];
+        TRANSCRIPTS.prependContents({ searches, related_contents });
+      }
 
-    searches = response.data.searches;
-    if (searches.length){
-      console.log(searches);
-      related_contents = [];
-      TRANSCRIPTS.prependContents({ searches, related_contents });
-    }
-
-    related_contents = response.data.related_contents;
-    if (related_contents.length){
-      console.log(related_contents);
-      TRANSCRIPTS.addContents(related_contents);
-    }
-
-  }, function (error) {
-    console.log(error);
-    alert("Something went wrong. Please refresh.");
-  }).then(function (response){
-    loadContents();
-  });
-
+      related_contents = response.data.related_contents;
+      if (related_contents.length){
+        console.log(related_contents);
+        TRANSCRIPTS.addContents(related_contents);
+      }
+    }).then(function (response) {
+      loadContents();
+    }, function (error) {
+      console.log(error);
+      alert("Something went wrong. Please refresh.");
+    });
+  }, 100);
 }
 
 function loadPastContents(){
   isLoading = true;
-  var instance = axios.create({
-    baseURL: '/api',
-    headers: {
-      'ContentType': 'application/json'
-    },
-    responseType: 'json'
-  });
-  instance.get('/transcripts/' + wallId + '/' + search_first_index).then(function (response){
 
-    searches = response.data.searches;
-    related_contents = response.data.related_contents;
-    search_first_index = response.data.search_first_index;
+  setTimeout(function() {
+    var instance = axios.create({
+      baseURL: '/api',
+      headers: {
+        'ContentType': 'application/json'
+      },
+      responseType: 'json'
+    });
+    instance.get('/transcripts/' + wallId + '/' + search_first_index).then(function (response){
 
-    TRANSCRIPTS.appendContents({ searches, related_contents });
+      searches = response.data.searches;
+      related_contents = response.data.related_contents;
+      search_first_index = response.data.search_first_index;
 
-  }, function (error) {
-    console.log(error);
-    alert("Something went wrong. Please refresh.");
-  }).then(function (response){
-    isLoading = false;
-  });
+      TRANSCRIPTS.appendContents({ searches, related_contents });
 
+    }, function (error) {
+      console.log(error);
+      alert("Something went wrong. Please refresh.");
+    }).then(function (response) {
+      isLoading = false;
+    });
+  }, 100);
 }
 
 function deleteSearch(search_id){
@@ -130,7 +129,7 @@ function deleteSearch(search_id){
     headers: {'ContentType': 'application/json'},
     responseType: 'json'
   });
-  instance.get('/update/searches/' + search_id + '/archive').then(function (response){
+  instance.get('/update/searches/' + search_id + '/archive').then(function (response) {
     console.log("Deleted searchId: ", search_id);
   }, function (error) {
     console.log(error);
@@ -157,7 +156,7 @@ function viewContents(related_content_id){
     responseType: 'json'
   });
   instance.get('/update/contents/' + related_content_id + '/view').then(function (response){
-    console.log("viewed relatedContentId: ", related_content_id);
+    console.log("Viewed relatedContentId: ", related_content_id);
   }, function (error) {
     console.log(error);
   });
