@@ -53,6 +53,8 @@ Rails.application.routes.draw do
   get '/console/dev/test', to: 'home#ai_tester'
   post '/console/dev/test/nlp', to: 'home#nlp_tester'
 
+  get '/test/dev/domain', to: 'home#get_domain'
+
   post '/api/transcripts/debug', to: 'api/transcripts#log_messenger'
 
   get '/demo/ms',   to: 'home#demo_ms'
