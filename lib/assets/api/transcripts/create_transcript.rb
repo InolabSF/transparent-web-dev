@@ -1,3 +1,5 @@
+require "google/cloud/firestore"
+
 require './lib/assets/nlp/nlp_handler'
 require './lib/assets/search/search_handler'
 
@@ -22,9 +24,7 @@ def create_transcript(api_req, nlp_type, is_test_mode, is_word_only, is_concurre
   end
 
   if api_req[:UI_version]
-
     is_concurrent = false if api_req[:UI_version] == 'demo'
-
   end
 
   text = api_req[:transcript]
@@ -80,7 +80,6 @@ def create_transcript(api_req, nlp_type, is_test_mode, is_word_only, is_concurre
         puts(search.entities)
 
         search.is_visible = false unless is_different_search?(search, limited_entities, with_words, 15)
-
       end
 
     else
@@ -119,6 +118,10 @@ def create_transcript(api_req, nlp_type, is_test_mode, is_word_only, is_concurre
 
       search = transcript.searches[i]
 
+      ## firestore
+      collection = 'searches'
+      # create_document_firestore(wall_id, collection, search)
+
       if search.is_visible
 
         word = word_list[i]
@@ -127,12 +130,17 @@ def create_transcript(api_req, nlp_type, is_test_mode, is_word_only, is_concurre
         unless is_concurrent
 
           if contents_list.length == 0
+            ## ここにDBにhas_contentsをtrueにするように更新するのが理想か
+
             puts('no contents')
           else
             transcript.has_content = true
             for content in contents_list
               related_content = search.related_contents.build(:transcript => transcript, :title => content['title'], :desc => content['desc'], :url => content['url'], :img_url => content['img_url'], :content_type => content['content_type'], :source => content['source'], :is_visible => true)
               condition = related_content.build_condition(:service => content['condition']['service'], :word => content['condition']['word'])
+
+                ## firestore
+
             end
           end
         end
@@ -190,5 +198,10 @@ def is_different_search?(search, entities, with_words, num)
   puts(result)
 
   return result
+
+end
+
+def create_document_firestore(wall_id, collection, hash)
+
 
 end

@@ -180,3 +180,17 @@ function openContents(related_content_id){
 // }, false);
 
 window.addEventListener('load',　fetchContents, false);
+
+// var instance = axios.create({
+//   baseURL: '/test',
+//   headers: {
+//     'ContentType': 'application/json'
+//   },
+//   responseType: 'json'
+// });
+// instance.get('/dev/domain').then(function (response){
+//   console.log(response.data);
+//
+// }, function (error) {
+//   console.log(error);
+// });

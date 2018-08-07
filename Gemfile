@@ -78,3 +78,5 @@ gem 'newrelic_rpm'
 gem "puma_worker_killer"
 
 gem 'sprockets', '~> 3.7.2'
+
+gem 'google-cloud-firestore'

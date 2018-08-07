@@ -37,10 +37,14 @@ class HomeController < ApplicationController
   # config
 
   def get_config
+    # api_key = ''
     render json: {
-      'asr' => ENV['MS_ASR_KEY']
+      'asr' => ENV['MS_ASR_KEY'],
+      'api_key' => ENV['MS_ASR_KEY']
     }
   end
+
+  # test
 
   def get_domain
     fullpath = request.fullpath

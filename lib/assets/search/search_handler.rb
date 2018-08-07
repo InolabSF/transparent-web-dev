@@ -766,11 +766,11 @@ def google_translate(langcode, targetcode, text)
 
     requrl = '/language/translate/v2?key=' + google_api_key
     req_body = {
-                  'q': text,
-                  'source': langcode,
-                  'target': targetcode,
-                  'format': 'text'
-                }
+      'q': text,
+      'source': langcode,
+      'target': targetcode,
+      'format': 'text'
+    }
 
     res = conn.post do |req|
        req.url requrl

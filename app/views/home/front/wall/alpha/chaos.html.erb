@@ -114,25 +114,7 @@
         var recBtn = document.getElementById("btn-recording");
         var uiVersion = 'alpha';
         languageCode = '<%= @language_code %>';
-      </script>
-
-      <script>
-      var instance = axios.create({
-        baseURL: '/test',
-        headers: {
-          'ContentType': 'application/json'
-        },
-        responseType: 'json'
-      });
-      instance.get('/dev/domain').then(function (response){
-        console.log(response.data);
-
-      }, function (error) {
-        console.log(error);
-        alert("Something went wrong. Please refresh.");
-      });
     </script>
-
 
   </body>
 </html>
