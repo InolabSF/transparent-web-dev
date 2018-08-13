@@ -1,7 +1,6 @@
-require "google/cloud/firestore"
-
 require './lib/assets/nlp/nlp_handler'
 require './lib/assets/search/search_handler'
+require './lib/assets/platform/firestore'
 
 def create_transcript(api_req, nlp_type, is_test_mode, is_word_only, is_concurrent, multiple_search)
 
@@ -36,6 +35,8 @@ def create_transcript(api_req, nlp_type, is_test_mode, is_word_only, is_concurre
   entities_list, sentiment = nlp_handler(nlp_type, text, langcode, is_test_mode)
 
   transcript = Transcript.new(:text => text, :wall_id => wall_id, :user_id => user_id, :has_content => false, :is_visible => true, :langcode => langcode, :sentiment => sentiment)
+  transcript.save if is_concurrent
+
   entities_list.each {|entity_hash| entity = transcript.entities.build(:category => entity_hash['category'], :name => entity_hash['name']) }
 
   for word in with_words
@@ -58,12 +59,15 @@ def create_transcript(api_req, nlp_type, is_test_mode, is_word_only, is_concurre
         search = transcript.searches.new(:mode => search_mode, :is_visible => true)
 
         word = ''
+        words = []
+
         for entity in limited_entities
 
           entity_search = search.entity_searches.build(:entity => entity)
 
           word += entity.name
           word += ' '
+          words.push(entity.name)
         end
 
         for with_word in transcript.with_words
@@ -72,6 +76,7 @@ def create_transcript(api_req, nlp_type, is_test_mode, is_word_only, is_concurre
 
           word += with_word.text
           word += ' '
+          words.push(with_word.text)
         end
 
         word_list.push(word)
@@ -80,6 +85,11 @@ def create_transcript(api_req, nlp_type, is_test_mode, is_word_only, is_concurre
         puts(search.entities)
 
         search.is_visible = false unless is_different_search?(search, limited_entities, with_words, 15)
+        search.save if is_concurrent
+
+        ## firestore
+        index_search_firestore(wall_id, search, words)
+
       end
 
     else
@@ -90,8 +100,11 @@ def create_transcript(api_req, nlp_type, is_test_mode, is_word_only, is_concurre
         entity_search = search.entity_searches.build(:entity => entity)
 
         word = ''
+        words = []
+
         word += entity.name
         word += ' '
+        words.push(entity.name)
 
         for with_word in transcript.with_words
 
@@ -99,6 +112,7 @@ def create_transcript(api_req, nlp_type, is_test_mode, is_word_only, is_concurre
 
           word += with_word.text
           word += ' '
+          words.push(with_word.text)
         end
 
         word_list.push(word)
@@ -107,20 +121,20 @@ def create_transcript(api_req, nlp_type, is_test_mode, is_word_only, is_concurre
         search.entity_searches.each {|entity_search| puts(entity_search.entity.attributes) }
 
         search.is_visible = false unless is_different_search?(search, entities_list, with_words, 15)
+        search.save if is_concurrent
+
+        ## firestore
+        index_search_firestore(wall_id, search, words)
 
       end
 
     end
 
-    transcript.save if is_concurrent
+    # transcript.save if is_concurrent
 
     transcript.searches.length.times do |i|
 
       search = transcript.searches[i]
-
-      ## firestore
-      collection = 'searches'
-      # create_document_firestore(wall_id, collection, search)
 
       if search.is_visible
 
@@ -194,14 +208,5 @@ def is_different_search?(search, entities, with_words, num)
     break unless result
 
   end
-
-  puts(result)
-
   return result
-
-end
-
-def create_document_firestore(wall_id, collection, hash)
-
-
 end
