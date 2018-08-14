@@ -36,7 +36,7 @@ var isLoading = false;
 //   });
 // }
 
-function fetchContents(){
+function fetchContents() {
   var instance = axios.create({
     baseURL: '/api',
     headers: {
@@ -61,7 +61,7 @@ function fetchContents(){
   });
 }
 
-function loadContents(){
+function loadContents() {
   setTimeout(function() {
     var instance = axios.create({
       baseURL: '/api',
@@ -95,7 +95,7 @@ function loadContents(){
   }, 100);
 }
 
-function loadPastContents(){
+function loadPastContents() {
   isLoading = true;
 
   setTimeout(function() {
@@ -114,16 +114,16 @@ function loadPastContents(){
 
       TRANSCRIPTS.appendContents({ searches, related_contents });
 
-    }, function (error) {
+    }, function(error) {
       console.log(error);
       alert("Something went wrong. Please refresh.");
-    }).then(function (response) {
+    }).then(function(response) {
       isLoading = false;
     });
   }, 100);
 }
 
-function deleteSearch(search_id){
+function deleteSearch(search_id) {
   var instance = axios.create({
     baseURL: '/api',
     headers: {'ContentType': 'application/json'},
@@ -136,7 +136,7 @@ function deleteSearch(search_id){
   });
 }
 
-function deleteContents(related_content_id){
+function deleteContents(related_content_id) {
   var instance = axios.create({
     baseURL: '/api',
     headers: {'ContentType': 'application/json'},
@@ -149,7 +149,7 @@ function deleteContents(related_content_id){
   });
 }
 
-function viewContents(related_content_id){
+function viewContents(related_content_id) {
   var instance = axios.create({
     baseURL: '/api',
     headers: {'ContentType': 'application/json'},
@@ -162,7 +162,7 @@ function viewContents(related_content_id){
   });
 }
 
-function openContents(related_content_id){
+function openContents(related_content_id) {
   var instance = axios.create({
     baseURL: '/api',
     headers: {'ContentType': 'application/json'},
