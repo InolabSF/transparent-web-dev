@@ -48,7 +48,6 @@ def create_transcript(api_req, nlp_type, is_test_mode, is_word_only, is_concurre
   if entities_list.length == 0
     puts('no entities')
   else
-
     word_list = []
     limited_entities_list  = transcript.entities.each_slice(max_words_number).to_a
 
@@ -62,18 +61,14 @@ def create_transcript(api_req, nlp_type, is_test_mode, is_word_only, is_concurre
         words = []
 
         for entity in limited_entities
-
           entity_search = search.entity_searches.build(:entity => entity)
-
           word += entity.name
           word += ' '
           words.push(entity.name)
         end
 
         for with_word in transcript.with_words
-
           with_word_search = search.with_word_searches.build(:with_word => with_word)
-
           word += with_word.text
           word += ' '
           words.push(with_word.text)
@@ -107,9 +102,7 @@ def create_transcript(api_req, nlp_type, is_test_mode, is_word_only, is_concurre
         words.push(entity.name)
 
         for with_word in transcript.with_words
-
           with_word_search = search.with_word_searches.build(:with_word => with_word)
-
           word += with_word.text
           word += ' '
           words.push(with_word.text)
@@ -179,34 +172,27 @@ def is_different_search?(search, entities, with_words, num)
   # with_words.each {|with_word| current_words.push(with_word.text) }
 
   past_searches = Search.joins(:transcript).where("transcripts.wall_id" => search.transcript.wall_id, "searches.is_visible" => true).order('id DESC')[0...num]
-
   result = true if past_searches.blank?
 
   for past_search in past_searches
-
     next if search.id == past_search.id
-
     past_words = []
     past_search.entities.each {|entity| past_words.push(entity.name) }
     past_search.with_words.each {|with_word| past_words.push(with_word.text) if with_word.present? }
-
     result = false
 
     if current_words.length != past_words.length
       result = true
       next
     end
-
     for current_word in current_words
-
       unless past_words.include?(current_word)
         result = true
         break
       end
     end
-
+    
     break unless result
-
   end
   return result
 end

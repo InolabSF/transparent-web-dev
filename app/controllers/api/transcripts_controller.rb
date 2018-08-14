@@ -49,6 +49,7 @@ class Api::TranscriptsController < ApplicationController
     dev_wall = [3, 12]
     if dev_wall.include?(params[:wallID])
       nlp_type = 'GCP'
+      multiple_search = false
     else
       nlp_type = default_nlp
     end

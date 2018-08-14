@@ -1,5 +1,4 @@
 def nlp_handler(nlp_type, text, langcode, is_test_mode)
-
   if nlp_type == 'MS'
     entities, sentiment = analyze_text_ms(text, langcode)
   elsif nlp_type == 'GCP'
@@ -9,7 +8,6 @@ def nlp_handler(nlp_type, text, langcode, is_test_mode)
   end
 
   entities_list = []
-
   for entity in entities
     if NoGoodWord.exists?(word: entity['name'])
       puts('No Good Entity')
@@ -21,132 +19,103 @@ def nlp_handler(nlp_type, text, langcode, is_test_mode)
       entities_list.push(entity)
     end
   end
-
   return entities_list, sentiment
 end
 
 def analyze_text_ms(text, langcode)
+  apiUrl = "eastasia.api.cognitive.microsoft.com"
+  uri = "https://" + apiUrl
 
-    apiUrl = "eastasia.api.cognitive.microsoft.com"
-    uri = "https://" + apiUrl
+  conn = Faraday::Connection.new(:url => uri) do |builder|
+    builder.use Faraday::Request::UrlEncoded
+    builder.use Faraday::Response::Logger
+    builder.use Faraday::Adapter::NetHttp
+  end
 
-    conn = Faraday::Connection.new(:url => uri) do |builder|
-     ## URLをエンコードする
-      builder.use Faraday::Request::UrlEncoded
-     ## ログを標準出力に出したい時(本番はコメントアウトでいいかも)
-      builder.use Faraday::Response::Logger
-     ## アダプター選択（選択肢は他にもあり）
-      builder.use Faraday::Adapter::NetHttp
+  requrl = "/text/analytics/v2.0/keyPhrases"
+  req_body = {
+    :documents => [{
+      :language => langcode,
+      :id => 1,
+      :text => text
+    }]
+  }
+  res = conn.post do |req|
+    req.url requrl
+    req.headers['Content-Type'] = 'application/json'
+    req.headers['Ocp-Apim-Subscription-Key'] = ENV['MS_TEXT_KEY']
+    req.body = req_body.to_json
+  end
 
-    end
+  body = JSON.parse(res.body)
+  # entry.content = body["responses"][0]["textAnnotations"][0]["description"]
+  puts(body)
+  sentiment = 'N/A'
+  entities = body['documents'][0]['keyPhrases']
+  entities_hash = []
 
-    requrl = "/text/analytics/v2.0/keyPhrases"
-
-    req_body = {
-      :documents => [
-        {
-          :language => langcode,
-          :id => 1,
-          :text => text
-        }
-      ]
-    }
-
-    res = conn.post do |req|
-      req.url requrl
-      req.headers['Content-Type'] = 'application/json'
-      req.headers['Ocp-Apim-Subscription-Key'] = ENV['MS_TEXT_KEY']
-      req.body = req_body.to_json
-    end
-
-    body = JSON.parse(res.body)
-    # entry.content = body["responses"][0]["textAnnotations"][0]["description"]
-
-    puts(body)
-
-    sentiment = 'N/A'
-
-    entities = body['documents'][0]['keyPhrases']
-
-    entities_hash = []
-
-    for entity in entities
-      entity_hash = {}
-      entity_hash.store('name', entity)
-      entity_hash.store('category', nil)
-      entities_hash.push(entity_hash)
-    end
-
-    return entities_hash, sentiment
-
+  for entity in entities
+    entity_hash = {}
+    entity_hash.store('name', entity)
+    entity_hash.store('category', nil)
+    entities_hash.push(entity_hash)
+  end
+  return entities_hash, sentiment
 end
 
 def analyze_text_gcp(text, langcode)
+  apiUrl = "language.googleapis.com"
+  uri = "https://" + apiUrl
 
-    apiUrl = "language.googleapis.com"
-    uri = "https://" + apiUrl
+  conn = Faraday::Connection.new(:url => uri) do |builder|
+    builder.use Faraday::Request::UrlEncoded
+    builder.use Faraday::Response::Logger
+    builder.use Faraday::Adapter::NetHttp
+  end
 
-    conn = Faraday::Connection.new(:url => uri) do |builder|
-     ## URLをエンコードする
-      builder.use Faraday::Request::UrlEncoded
-     ## ログを標準出力に出したい時(本番はコメントアウトでいいかも)
-      builder.use Faraday::Response::Logger
-     ## アダプター選択（選択肢は他にもあり）
-      builder.use Faraday::Adapter::NetHttp
+  requrl = "/v1beta2/documents:analyzeEntities"
 
-    end
-
-    requrl = "/v1beta2/documents:analyzeEntities"
-
-    req_body = {
-      :document => {
-        :language => langcode[0, 2],
-        :type => "PLAIN_TEXT",
-        :content => text
-      }
+  req_body = {
+    :document => {
+      :language => langcode[0, 2],
+      :type => "PLAIN_TEXT",
+      :content => text
     }
+  }
 
-    res = conn.post do |req|
-      req.url requrl
-      req.headers['Content-Type'] = 'application/json'
-      req.params['key'] = ENV['GCP_API_KEY']
-      req.body = req_body.to_json
-    end
+  res = conn.post do |req|
+    req.url requrl
+    req.headers['Content-Type'] = 'application/json'
+    req.params['key'] = ENV['GCP_API_KEY']
+    req.body = req_body.to_json
+  end
 
-    body = JSON.parse(res.body)
-    # entry.content = body["responses"][0]["textAnnotations"][0]["description"]
+  body = JSON.parse(res.body)
+  # entry.content = body["responses"][0]["textAnnotations"][0]["description"]
+  puts('google text analytics')
+  puts(body)
 
-    puts(body)
+  sentiment = 'N/A'
+  entities = body['entities']
+  entities_hash = []
 
-    sentiment = 'N/A'
-
-    entities = body['entities']
-
-    entities_hash = []
-
-    for entity in entities
-
-      # extract only proper
-      
-      # if entity['mentions'][0]['type'] == 'PROPER'
-      #   entity_hash = {}
-      #   entity_hash.store('name', entity['name'])
-      #   entity_hash.store('category', entity['type'])
-      #   entities_hash.push(entity_hash)
-      # else
-      #   puts('common entity')
-      #   puts(entity)
-      # end
-
+  for entity in entities
+     ## extract only proper
+    if entity['mentions'][0]['type'] == 'PROPER'
       entity_hash = {}
       entity_hash.store('name', entity['name'])
       entity_hash.store('category', entity['type'])
       entities_hash.push(entity_hash)
-
+    else
+      puts('common entity')
+      puts(entity)
     end
-
-    return entities_hash, sentiment
-
+    # entity_hash = {}
+    # entity_hash.store('name', entity['name'])
+    # entity_hash.store('category', entity['type'])
+    # entities_hash.push(entity_hash)
+  end
+  return entities_hash, sentiment
 end
 
 def is_moderate?(term)

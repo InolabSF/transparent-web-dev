@@ -11,44 +11,36 @@ var recognize_counter = 0;
 var isActive = false; // セッションアラート対策
 
 document.addEventListener("DOMContentLoaded", function () {
+  fetchConfig();
+  languageOptions = languageCode;
+  formatOptions = "Simple";
+  inputSource = "Mic";
+  recognitionMode = "Conversation";
 
-    fetchConfig();
+  recBtn.addEventListener("click", function () {
+    setTimeout(function() {
+      if (TRANSCRIPTS.getRecordingStatus()) {
+        killMic();
+        dimensionValue4 = 'off';
+      } else {
+        activateMic();
+        dimensionValue4 = 'on';
+      }
 
-    // key = '<%= @MS_ASR_KEY %>';
-    languageOptions = languageCode;
-    formatOptions = "Simple";
-    inputSource = "Mic";
-    recognitionMode = "Conversation";
-
-    recBtn.addEventListener("click", function () {
-
-      setTimeout(function() {
-
-        if (TRANSCRIPTS.getRecordingStatus()){
-          killMic();
-          dimensionValue4 = 'off';
-        } else {
-          activateMic();
-          dimensionValue4 = 'on';
-        }
-
-        try {
-          gtag('event', 'recording_dimension', {'recording': dimensionValue4});
-        }
-        catch(error) {
-          console.error('ga blocked');
-          console.error(error);
-        }
-        // TRANSCRIPTS.toggleRecordhing();
-
-      });
-
+      try {
+        gtag('event', 'recording_dimension', {'recording': dimensionValue4});
+      }
+      catch(error) {
+        console.error('ga blocked');
+        console.error(error);
+      }
+      // TRANSCRIPTS.toggleRecordhing();
     });
+  });
 
-    Initialize(function (speechSdk) {
-        SDK = speechSdk;
-    });
-
+  Initialize(function (speechSdk) {
+      SDK = speechSdk;
+  });
 });
 
 function fetchConfig(){
@@ -67,8 +59,8 @@ function fetchConfig(){
 }
 
 function sleepByPromise(sec) {
-     return new Promise(resolve => setTimeout(resolve, sec*1000));
- }
+  return new Promise(resolve => setTimeout(resolve, sec*1000));
+}
 
 function postTranscript(text) {
   var FacebookID = 'guest_x';
@@ -77,17 +69,15 @@ function postTranscript(text) {
   var search_type = TRANSCRIPTS.getMediaType();
 
   var body = {
-          'transcript' : text,
-          'FacebookID' :  FacebookID,
-          'langcode' : languageCode,
-          'wallID' : wallId,
-          'clientID' : FacebookID,
-          'search_type' : search_type,
-          'with_words' : with_words,
-          'UI_version' : uiVersion
-      };
-
-  console.log(body)
+    'transcript' : text,
+    'FacebookID' :  FacebookID,
+    'langcode' : languageCode,
+    'wallID' : wallId,
+    'clientID' : FacebookID,
+    'search_type' : search_type,
+    'with_words' : with_words,
+    'UI_version' : uiVersion
+  };
 
   var xmlHttp = new XMLHttpRequest();
 
@@ -100,15 +90,13 @@ function postTranscript(text) {
     }
   };
   xmlHttp.send(JSON.stringify(body));
-  console.log(xmlHttp.response);
-
 }
 
 function Setup() {
-    if (recognizer != null) {
-        RecognizerStop(SDK, recognizer);
-    }
-    recognizer = RecognizerSetup(SDK, recognitionMode, languageOptions, SDK.SpeechResultFormat[formatOptions], key);
+  if (recognizer != null) {
+    RecognizerStop(SDK, recognizer);
+  }
+  recognizer = RecognizerSetup(SDK, recognitionMode, languageOptions, SDK.SpeechResultFormat[formatOptions], key);
 }
 
 function UpdateStatus(status) {
@@ -123,46 +111,35 @@ function UpdateRecognizedPhrase(json) {
   console.log('UpdateRecognizedPhrase');
   console.log(json)
 
-    if(json.RecognitionStatus == "Success"){
+  if(json.RecognitionStatus == "Success"){
+    result = json.DisplayText;
+    TRANSCRIPTS.setRecordingText(result);
 
-      result = json.DisplayText;
-      TRANSCRIPTS.setRecordingText(result);
-
-      postTranscript(json.DisplayText)
-      console.log(JSON.stringify(json));
-      timeout_counter = 0;
-      recognize_counter += 1;
-      if (recognize_counter == 240){
-
-        errorHandler();
-        killMic();
-
-      }
-
-    } else if(json.RecognitionStatus == "InitialSilenceTimeout"){
-
-      timeout_counter += 1;
-      recognize_counter += 1;
-      console.log('15 seconds silense Timeout');
-      console.log('Timeout Counter : '+timeout_counter);
-      console.log('Timeout Counter : '+recognize_counter);
-
-      if (timeout_counter == 24){
-
-        errorHandler();
-
-      } else {
-
-        if (TRANSCRIPTS.getRecordingStatus()){ activateMic(); }
-
-      }
-
-    } else {
-
-      console.log('No transcript');
-      console.log(JSON.stringify(json));
-
+    postTranscript(json.DisplayText)
+    console.log(JSON.stringify(json));
+    timeout_counter = 0;
+    recognize_counter += 1;
+    if (recognize_counter == 240){
+      errorHandler();
+      killMic();
     }
+  } else if (json.RecognitionStatus == "InitialSilenceTimeout") {
+    timeout_counter += 1;
+    recognize_counter += 1;
+    console.log('15 seconds silense Timeout');
+    console.log('Timeout Counter : '+timeout_counter);
+    console.log('Timeout Counter : '+recognize_counter);
+
+    if (timeout_counter == 24) {
+      errorHandler();
+    } else {
+      if (TRANSCRIPTS.getRecordingStatus()){ activateMic(); }
+    }
+
+  } else {
+    console.log('No transcript');
+    console.log(JSON.stringify(json));
+  }
 }
 
 function OnComplete() {
