@@ -39,20 +39,18 @@ head
 
     link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto")
     link(rel="stylesheet" href="#{path}/assets/css/app.css")
+
+
     style(rel="stylesheet").
 
-        /* コメントカード */
-        #transparent-container .keyword-area .media-container .post-keyword {
-            border: 4px solid #f9c03c;
-            background-color: #fff;
-            color: #f9c03c;
-            font-size: 30px;
-            line-height: 1.4;
-        }
+          /* ここからiPad proのサイズ */
 
-        /* 画像コンテンツ */
-        #transparent-container .keyword-area .media-container .post-media .txt {
-            font-size: 12px;
-            line-height: 1.4;
-            color: #767676;
-        }
+          /* 背景画像 */
+          #transparent-container .bg {
+              background-image: url('https://res.cloudinary.com/dfa9u6mgh/image/upload/v1529440382/bg_kek3bp.jpg');
+          }
+
+          /* ここからパソコンサイズ */
+          @media only screen and (min-width: 1280px) {
+
+          }

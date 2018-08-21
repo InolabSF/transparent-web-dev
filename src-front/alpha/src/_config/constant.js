@@ -2,7 +2,7 @@
 "use strict"
 
 const BASE_DIR = '';
-const BASE_URL = 'http://trnspt.com/';
+const BASE_URL = 'https://trnspt.com/';
 const BASE_TITLE = 'Transparent';
 const BASE_DESCRIPTION = "Transparent, the first audio recognition tool that serves a stream of content that follows your verbal conversation.";
 const BASE_KEYWORD = 'Transparent';
@@ -38,7 +38,7 @@ module.exports = {
         title: BASE_TITLE,
         site_name: BASE_TITLE,
         description: BASE_DESCRIPTION,
-        image: `http://res.cloudinary.com/negic/image/upload/v1520401274/og.png`,
+        image: `https://res.cloudinary.com/negic/image/upload/v1520401274/og.png`,
         locale: 'ja_JP',
         type: 'website'
     }

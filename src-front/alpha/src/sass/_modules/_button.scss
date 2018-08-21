@@ -10,24 +10,26 @@
     padding: 9px 30px;
     border-radius: 15px;
 
-    background-color: #f9c03c;
+    background-color: rgba(#fff, 0.2);
 
 }
 
 
 .btn-menu01 {
-    $width-line: 24px;
+    $width-line: 20px;
     $height-line: 2px;
-    $height-icon: 16px;
+    $height-icon: 8px;
     $rotation: -45deg;
     $translateY: ($height-icon / 2);
     $translateX: 0;
-    $line-color: #333;
-    $transition-speed: 400ms;
-    width: 80px;
-    height: 80px;
+    $line-color: #fff;
+    $transition-speed: 0ms;
+    width: 60px;
+    height: 60px;
 
-    background: no-repeat;
+    background-color: rgba(#000, 0.2);
+    border-radius: 0 0 0 4px;
+    transition: background-color ease 300ms;
 
     .btn-inner {
         position: relative;
@@ -58,6 +60,8 @@
     }
 
     &.is-active {
+        background-color: rgba(#fff, 0.2);
+
         .btn-inner {
             transform: rotate($rotation * 6);
 
@@ -70,16 +74,42 @@
 
 
 .btn-toggle01 {
+    position: relative;
+
     width: 100%;
 
     border-radius: 15px;
 
-    background-color: rgba(#f9c03c, 0.2);
+    background-color: rgba(#313131, 0.6);
     transition: all 200ms ease;
 
     cursor: pointer;
 
     user-select: none;
+
+    .under {
+        text-align: center;
+
+        span {
+            width: 90px;
+            height: 30px;
+
+            font-size: 12px;
+            line-height: 28px;
+            color: #999;
+
+            position: absolute;
+            top: 0;
+
+            &.on {
+                left: 0;
+            }
+
+            &.off {
+                left: 90px;
+            }
+        }
+    }
 
     .toggle {
         position: relative;
@@ -90,14 +120,13 @@
         width: 90px;
         height: 30px;
 
-        background: #fff;
-
+        background-color: rgba(#fff, 0.2);
         border-radius: 15px;
 
         transition: all 200ms ease;
 
         span {
-            color: #f9c03c;
+            color: #fff;
             font-size: 12px;
             line-height: 28px;
 
@@ -114,7 +143,7 @@
 
 
     &.is-active {
-        background-color: #dadada;
+        /* background-color: #dadada; */
 
         .toggle {
             left: 90px;
@@ -135,8 +164,6 @@
     border-radius: 5px;
     overflow: hidden;
 
-    background-color: #fff;
-
     cursor: pointer;
 
     user-select: none;
@@ -144,41 +171,71 @@
     @include clearfix;
 
     div {
+        position: relative;
+
         width: 33.33%;
-        height: 50px;
+        height: 60px;
         float: left;
         background-repeat: no-repeat;
         background-position: 50% 50%;
 
         color: transparent;
-        transition: background-color ease 200ms;
+        transition: background-color ease 400ms;
 
+        &:after {
+            content: '';
+            display: block;
+
+            position: absolute;
+            left: 50%;
+            bottom: 4px;
+            margin-left: -25px;
+
+            width: 50px;
+            height: 4px;
+
+            border-radius: 2px;
+
+            background-color: #fff;
+
+            opacity: 0;
+            transition: opacity 400ms ease;
+        }
 
         &.photo {
-            background-image: url("https://res.cloudinary.com/negic/image/upload/v1528136023/ico05.png");
+            background-image: url("https://res.cloudinary.com/negic/image/upload/v1529579853/ico09.png");
             background-size: 26px auto;
+            background-color: rgba(#27bdce, 0.8);
 
+            &:hover,
             &.is-active {
-                background-image: url("https://res.cloudinary.com/negic/image/upload/v1528136024/ico05_on.png");
-                background-color: #2dadff;
+                background-color: #27bdce;
             }
         }
         &.news {
-            background-image: url("https://res.cloudinary.com/negic/image/upload/v1528136023/ico06.png");
-            background-size: 24px auto;
+            background-image: url("https://res.cloudinary.com/negic/image/upload/v1529579853/ico10.png");
+            background-size: 23px auto;
+            background-color: rgba(#90c600, 0.8);
 
+            &:hover,
             &.is-active {
-                background-image: url("https://res.cloudinary.com/negic/image/upload/v1528136024/ico06_on.png");
-                background-color: #92e023;
+                background-color: #90c600;
             }
         }
         &.movie {
-            background-image: url("https://res.cloudinary.com/negic/image/upload/v1528136023/ico07.png");
-            background-size: 27px auto;
+            background-image: url("https://res.cloudinary.com/negic/image/upload/v1529579854/ico11.png");
+            background-size: 24px auto;
+            background-color: rgba(#ff6a56, 0.8);
 
+            &:hover,
             &.is-active {
-                background-image: url("https://res.cloudinary.com/negic/image/upload/v1528136024/ico07_on.png");
-                background-color: #f13c33;
+                background-color: #ff6a56;
+            }
+        }
+
+        &.is-active {
+            &:after {
+                opacity: 1;
             }
         }
     }
@@ -201,10 +258,10 @@
 
     background-image: url('https://res.cloudinary.com/negic/image/upload/v1527732494/ico02.png');
     background-position: 50% 50%;
-    background-color: #f9c03c;
-    background-size: 12px auto;
+    background-color: #81807e;
+    background-size: 10px auto;
 
-    border-radius: 50%;
+    border-radius: 0 0 0 4px;
 }
 
 

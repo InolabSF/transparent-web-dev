@@ -1,8 +1,9 @@
 script.
     var TRANSCRIPTS = [];
-    //- TRANSCRIPTS.WALL_ID = 1;
-    //- TRANSCRIPTS.API_URI = "/api/transcripts/" + TRANSCRIPTS.WALL_ID;
-    TRANSCRIPTS.API_URI = '/assets/js/initial_transcripts.json';
+
+    TRANSCRIPTS.MEDIA_MAX_SIZE = 300*1.4; // ランダム配置される画像の最大サイズ
+    TRANSCRIPTS.MEDIA_MIN_SIZE = 150*1.3; // ランダム配置される画像の最小サイズ
+    TRANSCRIPTS.API_URI = './assets/js/initial_transcripts.json';
 
     var searches = [
       {
@@ -26,7 +27,7 @@ script.
     var related_contents = [
         {
             "id": 100,
-            "search_id": 20,
+            "search_id": 13160,
             "title": "sample 1",
             "desc": "You Tube - Smasher - ",
             "url": "https://www.youtube.com/watch?v=22cdBDK-8hk",
@@ -86,18 +87,12 @@ script.
         }
     ];
 
-
-
-
+script(src='#{path}/assets/js/sample-data.js')
 script(src='#{path}/assets/js/jquery.js')
-script(src='#{path}/assets/js/masonry.pkgd.min.js')
+script(src='#{path}/assets/js/jquery.randomElements.js')
 script(src='#{path}/assets/js/bundle.js')
 
 script.
-
-    document.getElementById('logo').addEventListener('click', function() {
-        TRANSCRIPTS.prependContents({ searches, related_contents });
-    }, false);
 
     document.getElementById('btn-recording').addEventListener('click', function() {
 
@@ -111,6 +106,14 @@ script.
         console.log(TRANSCRIPTS.getRecordingStatus());
     }, false);
 
+    document.getElementById('on-switch-media').addEventListener('click', function() {
+        setTimeout(function() {
+
+            // メディアのタイプの取得
+            console.log(TRANSCRIPTS.getMediaType());
+        }, 100);
+    }, false);
+
     document.getElementById('input-submit').addEventListener('click', function() {
         setTimeout(function() {
 
@@ -119,41 +122,85 @@ script.
         }, 100);
     }, false);
 
-    document.getElementById('on-switch-media').addEventListener('click', function() {
-        setTimeout(function() {
-
-            // メディアのタイプの取得
-            console.log(TRANSCRIPTS.getMediaType());
-        }, 100);
-    }, false);
-
-    document.getElementById('on-switch-media').addEventListener('click', function() {
-        setTimeout(function() {
-
-            // メディアのタイプの取得
-            console.log(TRANSCRIPTS.getMediaType());
-        }, 100);
-    }, false);
-
-    $('#wrapper').on('click', '#transparent-container .btn-close02', function(event) {
-        setTimeout(function() {
-
-            // メディアのタイプの取得
-            console.log("searchId: ", $(event.currentTarget).closest('.grid-item').attr('data-searchId'));
-            console.log("relatedContentId: ", $(event.currentTarget).closest('.grid-item').attr('data-relatedContentId'));
-        }, 100);
-    });
-
     window.addEventListener('scroll', function() {
 
         // スクロールが下部に来たらtrueを返します
         console.log(TRANSCRIPTS.getScrollBottomPosition());
 
         if (TRANSCRIPTS.getScrollBottomPosition()) {
+
+            // スクロール下部に来たら実行
             TRANSCRIPTS.appendContents({ searches, related_contents });
+            //- TRANSCRIPTS.prependContents({ searches, related_contents });
         }
     }, false);
 
+    // メニュー開閉ボタン
+    $('#wrapper').on('click', '.btn-menu01', function(event) {
+        console.log('メニュー開閉ボタン');
+    });
+
+    //  表示テキストONOFFボタン
+    $('#wrapper').on('click', '.on-txt-hidden', function(event) {
+        console.log('表示テキストONOFFボタン');
+    });
+
     document.getElementById('btn-recording').addEventListener('click', function() {
-        TRANSCRIPTS.addContents(related_contents);
+
+        // コメントカード / テキストの表示非表示の切り替え
+        //- TRANSCRIPTS.setMediaText(true);
+
+        // セッティングメニューの表示非表示の切り替え
+        // TRANSCRIPTS.setMenu(true);
+
+        // メディアタイプの切り替え 0/1/2
+        //- TRANSCRIPTS.setMediaType(2);
+
+        // related_contentsだけ追加
+        //- TRANSCRIPTS.addContents(related_contents);
+
+        //キーワード追加
+        //- TRANSCRIPTS.addKeywordList('hogehoge');
+
+        // キーワード削除
+        //- TRANSCRIPTS.removeKeywordList('hogehoge');
+
+        // ドラッグON
+        TRANSCRIPTS.onDraggable();
+
+        // ドラッグOFF
+        //- TRANSCRIPTS.onDraggable();
+
     }, false);
+
+    $('#wrapper').on('click', '#transparent-container .btn-close02', function(event) {
+        setTimeout(function() {
+
+            // メディアのタイプの取得
+            console.log("transcript_id: ", $(event.currentTarget).closest('.media-photo').attr('data-id'));
+        }, 100);
+    });
+
+    $('#wrapper').on('click', '#transparent-container .media-photo', function(event) {
+        setTimeout(function() {
+
+            // transcript_id の取得
+            console.log("transcript_id: ", $(event.currentTarget).closest('.media-photo').attr('data-id'));
+            // search id の取得
+            console.log("search id: ", $(event.currentTarget).closest('.media-photo').attr('data-searchid'));
+            // related content id の取得
+            console.log("related content id: ", $(event.currentTarget).closest('.media-photo').attr('data-relatedcontentid'));
+        }, 100);
+    });
+
+    $('#wrapper').on('click', '#transparent-container .modal-inner .btn-style01', function(event) {
+        setTimeout(function() {
+
+            // transcript_id の取得
+            console.log("transcript_id: ", $(event.currentTarget).closest('.modal-inner').attr('data-id'));
+            // search id の取得
+            console.log("search id: ", $(event.currentTarget).closest('.modal-inner').attr('data-searchid'));
+            // related content id の取得
+            console.log("related content id: ", $(event.currentTarget).closest('.modal-inner').attr('data-relatedcontentid'));
+        }, 100);
+    });

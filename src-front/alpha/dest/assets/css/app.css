@@ -731,25 +731,25 @@ input
 ::-webkit-input-placeholder
 {
     /* Chrome/Opera/Safari */
-    color: #ccc;
+    color: #999;
 }
 
 ::-moz-placeholder
 {
     /* Firefox 19+ */
-    color: #ccc;
+    color: #999;
 }
 
 :-ms-input-placeholder
 {
     /* IE 10+ */
-    color: #ccc;
+    color: #999;
 }
 
 :-moz-placeholder
 {
     /* Firefox 18- */
-    color: #ccc;
+    color: #999;
 }
 
 /* ==========================================================================
@@ -847,15 +847,18 @@ input
 
     color: #fff;
     border-radius: 15px;
-    background-color: #f9c03c;
+    background-color: rgba(255, 255, 255, .2);
 }
 
 .btn-menu01
 {
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
 
-    background: no-repeat;
+    transition: background-color ease 300ms;
+
+    border-radius: 0 0 0 4px;
+    background-color: rgba(0, 0, 0, .2);
 }
 .btn-menu01 .btn-inner
 {
@@ -865,12 +868,12 @@ input
 
     display: block;
 
-    width: 24px;
-    height: 16px;
+    width: 20px;
+    height: 8px;
     margin: auto;
     padding: 0;
 
-    transition: transform 400ms ease;
+    transition: transform 0ms ease;
 
     background: no-repeat;
 }
@@ -881,12 +884,12 @@ input
 
     display: block;
 
-    width: 24px;
+    width: 20px;
     height: 2px;
 
-    transition: all 400ms ease;
+    transition: all 0ms ease;
 
-    background-color: #333;
+    background-color: #fff;
 }
 .btn-menu01 .line.line-1
 {
@@ -900,13 +903,17 @@ input
 {
     top: 100%;
 }
+.btn-menu01.is-active
+{
+    background-color: rgba(255, 255, 255, .2);
+}
 .btn-menu01.is-active .btn-inner
 {
     transform: rotate(-270deg);
 }
 .btn-menu01.is-active .btn-inner .line-1
 {
-    transform: translate(0, 8px) rotate(-135deg);
+    transform: translate(0, 4px) rotate(-135deg);
 }
 .btn-menu01.is-active .btn-inner .line-2
 {
@@ -914,11 +921,13 @@ input
 }
 .btn-menu01.is-active .btn-inner .line-3
 {
-    transform: translate(0, -8px) rotate(-45deg);
+    transform: translate(0, -4px) rotate(-45deg);
 }
 
 .btn-toggle01
 {
+    position: relative;
+
     width: 100%;
 
     cursor: pointer;
@@ -926,7 +935,32 @@ input
     transition: all 200ms ease;
 
     border-radius: 15px;
-    background-color: rgba(249, 192, 60, .2);
+    background-color: rgba(49, 49, 49, .6);
+}
+.btn-toggle01 .under
+{
+    text-align: center;
+}
+.btn-toggle01 .under span
+{
+    font-size: 12px;
+    line-height: 28px;
+
+    position: absolute;
+    top: 0;
+
+    width: 90px;
+    height: 30px;
+
+    color: #999;
+}
+.btn-toggle01 .under span.on
+{
+    left: 0;
+}
+.btn-toggle01 .under span.off
+{
+    left: 90px;
 }
 .btn-toggle01 .toggle
 {
@@ -940,7 +974,7 @@ input
     text-align: center;
 
     border-radius: 15px;
-    background: #fff;
+    background-color: rgba(255, 255, 255, .2);
 }
 .btn-toggle01 .toggle span
 {
@@ -953,7 +987,7 @@ input
 
     transition: all 200ms ease;
 
-    color: #f9c03c;
+    color: #fff;
 }
 .btn-toggle01 .toggle span.on
 {
@@ -965,7 +999,7 @@ input
 }
 .btn-toggle01.is-active
 {
-    background-color: #dadada;
+    /* background-color: #dadada; */
 }
 .btn-toggle01.is-active .toggle
 {
@@ -994,7 +1028,6 @@ input
     user-select: none;
 
     border-radius: 5px;
-    background-color: #fff;
 }
 .btn-toggle02:after
 {
@@ -1005,46 +1038,74 @@ input
 }
 .btn-toggle02 div
 {
+    position: relative;
+
     float: left;
 
     width: 33.33%;
-    height: 50px;
+    height: 60px;
 
-    transition: background-color ease 200ms;
+    transition: background-color ease 400ms;
 
     color: transparent;
     background-repeat: no-repeat;
     background-position: 50% 50%;
 }
+.btn-toggle02 div:after
+{
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+
+    display: block;
+
+    width: 50px;
+    height: 4px;
+    margin-left: -25px;
+
+    content: '';
+    transition: opacity 400ms ease;
+
+    opacity: 0;
+    border-radius: 2px;
+    background-color: #fff;
+}
 .btn-toggle02 div.photo
 {
-    background-image: url('https://res.cloudinary.com/negic/image/upload/v1528136023/ico05.png');
+    background-color: rgba(39, 189, 206, .8);
+    background-image: url('https://res.cloudinary.com/negic/image/upload/v1529579853/ico09.png');
     background-size: 26px auto;
 }
+.btn-toggle02 div.photo:hover,
 .btn-toggle02 div.photo.is-active
 {
-    background-color: #2dadff;
-    background-image: url('https://res.cloudinary.com/negic/image/upload/v1528136024/ico05_on.png');
+    background-color: #27bdce;
 }
 .btn-toggle02 div.news
 {
-    background-image: url('https://res.cloudinary.com/negic/image/upload/v1528136023/ico06.png');
-    background-size: 24px auto;
+    background-color: rgba(144, 198, 0, .8);
+    background-image: url('https://res.cloudinary.com/negic/image/upload/v1529579853/ico10.png');
+    background-size: 23px auto;
 }
+.btn-toggle02 div.news:hover,
 .btn-toggle02 div.news.is-active
 {
-    background-color: #92e023;
-    background-image: url('https://res.cloudinary.com/negic/image/upload/v1528136024/ico06_on.png');
+    background-color: #90c600;
 }
 .btn-toggle02 div.movie
 {
-    background-image: url('https://res.cloudinary.com/negic/image/upload/v1528136023/ico07.png');
-    background-size: 27px auto;
+    background-color: rgba(255, 106, 86, .8);
+    background-image: url('https://res.cloudinary.com/negic/image/upload/v1529579854/ico11.png');
+    background-size: 24px auto;
 }
+.btn-toggle02 div.movie:hover,
 .btn-toggle02 div.movie.is-active
 {
-    background-color: #f13c33;
-    background-image: url('https://res.cloudinary.com/negic/image/upload/v1528136024/ico07_on.png');
+    background-color: #ff6a56;
+}
+.btn-toggle02 div.is-active:after
+{
+    opacity: 1;
 }
 
 .btn-close01
@@ -1063,11 +1124,11 @@ input
     width: 30px;
     height: 30px;
 
-    border-radius: 50%;
-    background-color: #f9c03c;
+    border-radius: 0 0 0 4px;
+    background-color: #81807e;
     background-image: url('https://res.cloudinary.com/negic/image/upload/v1527732494/ico02.png');
     background-position: 50% 50%;
-    background-size: 12px auto;
+    background-size: 10px auto;
 }
 
 .btn-arrow01
@@ -1233,7 +1294,7 @@ input
     transition: all ease 200ms;
 
     opacity: 0;
-    background-color: rgba(0, 0, 0, .8);
+    background-color: rgba(0, 0, 0, .6);
 }
 .modal-layer .modal-back
 {
@@ -1254,27 +1315,47 @@ input
     bottom: 0;
     left: 0;
 
-    width: 48%;
+    display: flex;
+
+    width: 66%;
+    height: 85%;
     margin: auto;
-    padding: 15% 0 0;
 }
-@media only screen and (min-width: 1280px)
+.modal-layer .modal-inner:after
 {
-    .modal-layer .modal-inner
-    {
-        width: 400px;
-        padding: 3% 0 0;
-    }
+    display: block;
+    clear: both;
+
+    content: '';
 }
-.modal-layer .modal-inner img
+.modal-layer .modal-inner .img
 {
-    width: 100%;
-    height: auto;
-    margin: 0 0 1em;
+    width: 64%;
+    margin-right: 2%;
+
+    background-color: rgba(0, 0, 0, .6);
+    background-position: 50% 50%;
+    background-size: contain;
 }
-.modal-layer .modal-inner .title
+.modal-layer .modal-inner .info
 {
-    font-size: 32px;
+    display: flex;
+    /* 子要素をflexboxで揃える */
+    flex-direction: column;
+
+    width: 34%;
+    height: 100%;
+    padding: 0 30px;
+
+    background-color: rgba(0, 0, 0, .6);
+    /* 子要素をflexboxにより縦方向に揃える */
+
+    justify-content: center;
+    /* 子要素をflexboxにより中央に配置する */
+}
+.modal-layer .modal-inner .info .title
+{
+    font-size: 18px;
     line-height: 1.4;
 
     margin: 0 0 1em;
@@ -1283,16 +1364,16 @@ input
 }
 @media only screen and (min-width: 1280px)
 {
-    .modal-layer .modal-inner .title
+    .modal-layer .modal-inner .info .title
     {
-        font-size: 24px;
+        font-size: 18px;
 
         margin: 0 0 .5em;
     }
 }
-.modal-layer .modal-inner .desc
+.modal-layer .modal-inner .info .desc
 {
-    font-size: 16px;
+    font-size: 12px;
 
     margin: 0 0 2em;
 
@@ -1300,12 +1381,16 @@ input
 }
 @media only screen and (min-width: 1280px)
 {
-    .modal-layer .modal-inner .desc
+    .modal-layer .modal-inner .info .desc
     {
         font-size: 12px;
 
         margin: 0 0 1em;
     }
+}
+.modal-layer .modal-inner .info .btn-style01
+{
+    width: 180px;
 }
 .modal-layer .btn-close01
 {
@@ -1355,214 +1440,30 @@ input
     transition: all 10ms ease;
 }
 
-#global-header
+.btn-menu01
 {
     position: fixed;
-    z-index: 10;
+    z-index: 11;
     top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 80px;
-
-    background-color: #f9f8f8;
-}
-#global-header:after
-{
-    display: block;
-    clear: both;
-
-    content: '';
-}
-#global-header .logo01
-{
-    position: relative;
-
-    float: left;
-    overflow: visible;
-
-    margin-top: 14px;
-    margin-left: 50px;
-}
-#global-header .logo01:after
-{
-    position: absolute;
-    top: 10px;
-    right: -20px;
-
-    width: 1px;
-    height: 36px;
-
-    content: '';
-
-    background-color: #d6d6d6;
-}
-#global-header .txt-recording
-{
-    font-size: 12px;
-
-    display: flex;
-    float: right;
-    /* 子要素をflexboxで揃える */
-    flex-direction: column;
-
-    width: 55%;
-    height: 100%;
-    /* 子要素をflexboxにより中央に配置する */
-    padding: 0 24px;
-
-    color: #999;
-    /* 子要素をflexboxにより縦方向に揃える */
-
-    justify-content: center;
-}
-#global-header .btn-recording
-{
-    position: relative;
-
-    float: right;
-
-    width: 160px;
-    height: 80px;
-
-    cursor: pointer;
-    user-select: none;
-
-    background-repeat: no-repeat;
-    background-position: 30px 50%, 0 50%;
-}
-#global-header .btn-recording span
-{
-    font-family: 'Roboto', 'Yu Gothic', YuGothic, 'ヒラギノ角ゴシック Pro', 'Hiragino Kaku Gothic Pro', メイリオ, Meiryo, Osaka, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 1;
-
-    position: absolute;
-
-    color: #fff;
-}
-#global-header .btn-recording.rec
-{
-    background-color: #dadada;
-    background-image: url('https://res.cloudinary.com/negic/image/upload/v1528136024/ico01.png');
-    background-size: 20px auto;
-}
-#global-header .btn-recording.rec span
-{
-    top: 34px;
-    left: 72px;
-}
-#global-header .btn-recording.rec .r1
-{
-    display: none;
-}
-#global-header .btn-recording.rec .r2
-{
-    display: block;
-}
-#global-header .btn-recording.recording
-{
-    background-color: #f13c33;
-    background-image: url('https://res.cloudinary.com/negic/image/upload/v1528136024/ico01.png'), url('https://res.cloudinary.com/negic/image/upload/v1528136023/ico04.png');
-    background-size: 20px auto, 8px auto;
-}
-#global-header .btn-recording.recording span
-{
-    top: 30px;
-    left: 60px;
-}
-#global-header .btn-recording.recording .r1
-{
-    display: block;
-}
-#global-header .btn-recording.recording .r2
-{
-    display: none;
-}
-#global-header .btn-recording.recording .loader
-{
-    display: block;
-}
-#global-header .btn-recording .loader,
-#global-header .btn-recording .loader:before,
-#global-header .btn-recording .loader:after
-{
-    width: 9px;
-    height: 9px;
-
-    animation: load7 1s infinite ease-in-out;
-
-    border-radius: 50%;
-
-    animation-fill-mode: both;
-}
-#global-header .btn-recording .loader
-{
-    position: absolute;
-    top: 45px;
-    left: 55%;
-
-    display: none;
-
-    transform: translateZ(0);
-    animation-delay: -.16s;
-
-    color: #fff;
-}
-#global-header .btn-recording .loader:before,
-#global-header .btn-recording .loader:after
-{
-    position: absolute;
-    top: 0;
-
-    content: '';
-}
-#global-header .btn-recording .loader:before
-{
-    left: -10px;
-
-    -webkit-animation-delay: -.32s;
-            animation-delay: -.32s;
-}
-#global-header .btn-recording .loader:after
-{
-    left: 10px;
-}
-@keyframes load7
-{
-    0%,
-    80%,
-    100%
-    {
-        box-shadow: 0 9px 0 -2px;
-    }
-    40%
-    {
-        box-shadow: 0 9px 0 0;
-    }
-}
-#global-header .btn-menu01
-{
-    float: right;
+    right: 0;
 }
 
 #global-menu
 {
     position: fixed;
     z-index: 10;
-    top: 80px;
+    top: 0;
     right: 0;
 
     width: 240px;
-    height: 100%;
-    padding: 0 30px 50px;
-    /* display: none; */
+    /* min-height: 640px; */
+    padding: 0 30px 65px;
 
     transition: transform 400ms ease;
     transform: translate3d(240px, 0, 0);
 
-    background-color: #eee;
+    border-radius: 0 0 0 40px;
+    background-color: rgba(13, 13, 13, .8);
 }
 #global-menu.is-active
 {
@@ -1573,7 +1474,7 @@ input
     /* overflow-y: scroll; */
     width: 100%;
     height: 100%;
-    padding: 50px 0;
+    padding: 120px 0 0;
 }
 #global-menu .form-keyword
 {
@@ -1586,36 +1487,31 @@ input
     font-family: 'Roboto', 'Yu Gothic', YuGothic, 'ヒラギノ角ゴシック Pro', 'Hiragino Kaku Gothic Pro', メイリオ, Meiryo, Osaka, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
     font-size: 14px;
     font-weight: 700;
+    line-height: 1;
 
-    color: #555;
+    margin-bottom: 1em;
+
+    color: #fff;
 }
 #global-menu .form-keyword .input-keyword
 {
+    font-size: 14px;
+
     width: 100%;
     margin: 0 0 15px;
 
-    color: #000;
+    color: #fff;
     border: 0;
-    border-bottom: 2px solid #d6d6d6;
+    border-bottom: 2px solid rgba(214, 214, 214, .2);
     background-color: transparent;
 }
 #global-menu .form-keyword .input-submit
 {
-    font-size: 12px;
-    line-height: 1;
-
     width: 100%;
-    padding: 9px 0;
-
-    text-align: center;
-
-    color: #595959;
-    border-radius: 15px;
-    background-color: #fff;
 }
 #global-menu .keyword-list
 {
-    min-height: 100px;
+    min-height: 70px;
     margin-bottom: 30px;
 }
 #global-menu .keyword-list .list-item
@@ -1634,9 +1530,9 @@ input
     cursor: pointer;
     user-select: none;
 
-    color: #333;
+    color: #999;
     border-radius: 15px;
-    background-color: #f9c03c;
+    background-color: #232323;
     background-image: url('https://res.cloudinary.com/negic/image/upload/v1528136023/ico02.png');
     background-position: right 10px top 50%;
     background-size: 12px auto;
@@ -1645,307 +1541,463 @@ input
 {
     margin-bottom: 30px;
 }
+#global-menu .setting-btn-area:last-child
+{
+    margin-bottom: 0;
+}
 #global-menu .setting-btn-area .tit
 {
     font-family: 'Roboto', 'Yu Gothic', YuGothic, 'ヒラギノ角ゴシック Pro', 'Hiragino Kaku Gothic Pro', メイリオ, Meiryo, Osaka, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
     font-size: 14px;
     font-weight: 700;
+    line-height: 1;
 
-    color: #555;
+    margin-bottom: 1em;
+
+    color: #fff;
 }
 
+.recording-area
+{
+    position: fixed;
+    z-index: 11;
+    right: 20px;
+    bottom: 20px;
+
+    width: 480px;
+    height: 80px;
+
+    border-radius: 40px;
+}
+.recording-area.rec
+{
+    width: 80px;
+}
+.recording-area.rec .txt-recording
+{
+    display: none;
+}
+.recording-area.recording
+{
+    width: 480px;
+
+    background-color: rgba(0, 0, 0, .8);
+}
+.recording-area.recording .txt-recording
+{
+    display: flex;
+}
+.recording-area .txt-recording
+{
+    font-size: 12px;
+
+    display: flex;
+    /* 子要素をflexboxで揃える */
+    flex-direction: column;
+    /* 子要素をflexboxにより中央に配置する */
+
+    width: 400px;
+    height: 100%;
+    padding: 0 24px;
+
+    color: #999;
+    /* 子要素をflexboxにより縦方向に揃える */
+
+    justify-content: center;
+}
+.recording-area #btn-recording
+{
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    width: 80px;
+    height: 80px;
+
+    cursor: pointer;
+
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, .1);
+}
+.recording-area #btn-recording:after
+{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+
+    display: block;
+
+    width: 40px;
+    height: 40px;
+
+    content: '';
+
+    border-radius: 50%;
+    background-color: #f13c33;
+}
+.recording-area.rec #btn-recording
+{
+    background-color: rgba(255, 255, 255, .1);
+}
+.recording-area.rec #btn-recording:after
+{
+    background-color: #8fc31f;
+}
+.recording-area.recording #btn-recording
+{
+    background-color: #24333c;
+}
+.recording-area.recording #btn-recording:after
+{
+    animation: recAnim 1300ms ease infinite;
+
+    background-color: #f13c33;
+}
+
+@keyframes recAnim
+{
+    0%,
+    100%
+    {
+        transform: scale(1);
+
+        background-color: #f13c33;
+    }
+    50%
+    {
+        transform: scale(.9);
+
+        background-color: #c10c03;
+    }
+}
 #transparent-container
-{
-    padding: 80px 0 0;
-
-    background-image: url('https://res.cloudinary.com/negic/image/upload/v1528187834/bg01.png');
-    background-repeat: repeat;
-    background-position: 43px 0;
-}
-#transparent-container.menu-is-active
-{
-    padding-right: 240px;
-}
-
-.keyword-area
 {
     position: relative;
 
-    overflow: hidden;
-
-    min-height: 300px;
-    padding: 50px 0 0;
-
-    border-bottom: 10px solid #eee;
-
-    -webkit-perspective: 100px;
-            perspective: 100px;
+    width: 100%;
+    min-height: 96vh;
+    margin: 0 auto;
+    padding: 2% 0;
 }
-.keyword-area:last-child
+#transparent-container .post
 {
-    border-bottom: 0;
+    position: relative;
+
+    margin-bottom: 100px;
+    padding: 400px 0;
+
+    transition: all ease 200ms;
+
+    opacity: 0;
 }
-.keyword-area:after
+#transparent-container .post:nth-child(1)
+{
+    z-index: 9;
+}
+#transparent-container .post:nth-child(2)
+{
+    z-index: 8;
+}
+#transparent-container .post:nth-child(3)
+{
+    z-index: 7;
+}
+#transparent-container .post:nth-child(4)
+{
+    z-index: 6;
+}
+#transparent-container .post:nth-child(5)
+{
+    z-index: 5;
+}
+#transparent-container .post:nth-child(6)
+{
+    z-index: 4;
+}
+#transparent-container .post:nth-child(7)
+{
+    z-index: 3;
+}
+#transparent-container .post:nth-child(8)
+{
+    z-index: 2;
+}
+#transparent-container .post:nth-child(9)
+{
+    z-index: 1;
+}
+#transparent-container .post.no-content
+{
+    padding: 40px 0;
+}
+#transparent-container .post .comment
+{
+    font-size: 14px;
+
+    position: relative;
+    z-index: 10;
+    left: 50%;
+
+    width: 120px;
+    /* height: 120px; */
+    padding: 40px 0;
+
+    transition: opacity 200ms ease;
+    text-align: center;
+
+    opacity: 1;
+    border: 4px solid rgba(255, 255, 255, .2);
+    border-radius: 6px;
+    background-color: rgba(202, 200, 197, .9);
+    box-shadow: 7px 7px 45px 5px rgba(0, 0, 0, .5);
+}
+#transparent-container .post .comment .btn-close02
+{
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    right: 0;
+
+    transition: opacity 200ms ease;
+
+    opacity: 0;
+}
+#transparent-container .post .comment:hover .btn-close02
+{
+    opacity: 1;
+}
+#transparent-container .post .comment.is-hidden
+{
+    opacity: 0 !important;
+}
+#transparent-container .post .comment .comment-user-icon
+{
+    width: 53.33333px;
+    height: 53.33333px;
+    margin: 0 0 23.33333px;
+
+    border-radius: 50%;
+    background-color: rgba(0, 61, 193, .3);
+    background-image: url('http://res.cloudinary.com/negic/image/upload/v1519805067/img_user_default01.png');
+    background-position: 50% 50%;
+    background-size: 50% auto;
+}
+@media only screen and (min-width: 1280px)
+{
+    #transparent-container .post .comment .comment-user-icon
+    {
+        width: 40px;
+        height: 40px;
+        margin: 0 0 16px;
+    }
+}
+#transparent-container .post .comment .comment-text
+{
+    color: #fff;
+}
+#transparent-container .post .media-container
+{
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+}
+#transparent-container .post .media-container .media-photo
 {
     position: absolute;
     top: 0;
     left: 0;
 
-    width: 50px;
-    height: 100%;
-
-    content: '';
-
-    background-color: #fff;
-}
-.keyword-area .media-container
-{
-    position: relative;
-
-    padding: 0 0 0 50px;
-
-    transition: height ease 400ms;
-    transform: translate3d(0, 0, 0);
-
-    opacity: 1;
-}
-.keyword-area .media-container:after
-{
-    display: block;
-    clear: both;
-
-    content: '';
-}
-.keyword-area .media-container .grid
-{
-    position: relative;
-
-    transform: translate3d(0, 0, 0);
-
-    opacity: 1;
-}
-.keyword-area .media-container .grid-item .btn-close02
-{
-    position: absolute;
-    z-index: 4;
-    top: -10px;
-    right: -10px;
-
-    transition: opacity 200ms ease;
-
-    opacity: 0;
-}
-.keyword-area .media-container .grid-item:hover .btn-close02
-{
-    opacity: 1;
-}
-.keyword-area .media-container .post-keyword
-{
-    font-size: 30px;
-    line-height: 1.4;
-
-    position: absolute;
-    top: 0;
-    left: 50px;
-
-    display: block;
-    float: left;
-
-    width: 180px;
-    min-height: 180px;
-    margin: 0 15px 15px 0;
-    padding: 20px;
-
-    color: #f9c03c;
-    border: 4px solid #f9c03c;
-    border-radius: 6px;
-    background-color: #fff;
-    /* transition: opacity 300ms 300ms ease; */
-}
-.keyword-area .media-container .post-keyword.is-active
-{
-    /* transition: opacity 300ms ease; */
-    /* opacity: 0; */
-    /* display: none; */
-}
-.keyword-area .media-container .post-media
-{
-    position: relative;
-
-    display: block;
-    float: left;
-
-    width: 180px;
-    height: auto;
-    margin: 0 15px 15px 0;
-}
-.keyword-area .media-container .post-media .wrap
-{
-    position: relative;
-}
-.keyword-area .media-container .post-media .wrap:before
-{
-    position: absolute;
-    z-index: 2;
-
-    display: block;
+    overflow: hidden;
 
     width: 100%;
-    height: 100%;
+    height: auto !important;
 
-    content: '';
+    -webkit-user-select: none;
+       -moz-user-select: none;
+            user-select: none;
+    transition: transform ease 200ms, opacity ease 200ms;
 
+    opacity: 0;
+    border: 1px solid #dde1e6;
     border-radius: 6px;
-    box-shadow: inset 1px 1px 0 rgba(0, 0, 0, .05), inset -1px -1px 0 rgba(0, 0, 0, .05);
+    box-shadow: 7px 7px 45px 5px rgba(0, 0, 0, .5);
 }
-.keyword-area .media-container .post-media .wrap .img
+#transparent-container .post .media-container .media-photo:nth-child(1)
+{
+    transition-delay: 400ms;
+}
+#transparent-container .post .media-container .media-photo:nth-child(2)
+{
+    transition-delay: 600ms;
+}
+#transparent-container .post .media-container .media-photo:nth-child(3)
+{
+    transition-delay: 800ms;
+}
+#transparent-container .post .media-container .media-photo:nth-child(4)
+{
+    transition-delay: 1000ms;
+}
+#transparent-container .post .media-container .media-photo:nth-child(5)
+{
+    transition-delay: 1200ms;
+}
+#transparent-container .post .media-container .media-photo:nth-child(6)
+{
+    transition-delay: 1400ms;
+}
+#transparent-container .post .media-container .media-photo:nth-child(7)
+{
+    transition-delay: 1600ms;
+}
+#transparent-container .post .media-container .media-photo:nth-child(8)
+{
+    transition-delay: 1800ms;
+}
+#transparent-container .post .media-container .media-photo:nth-child(9)
+{
+    transition-delay: 2000ms;
+}
+#transparent-container .post .media-container .media-photo:nth-child(10)
+{
+    transition-delay: 2200ms;
+}
+#transparent-container .post .media-container .media-photo .img
 {
     position: relative;
     z-index: 1;
 
-    overflow: hidden;
-
     width: 100%;
-    height: auto;
-    max-height: 320px;
+    height: auto !important;
 
-    border-radius: 6px;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+            user-select: none;
+    transition: opacity 200ms ease;
+    pointer-events: none;
 
-    object-fit: cover;
-    object-position: 50% 0;
+    opacity: .8;
+    background-color: #000;
 }
-.keyword-area .media-container .post-media .wrap .favicon
+#transparent-container .post .media-container .media-photo .favicon
 {
     position: absolute;
-    z-index: 3;
+    z-index: 1;
     right: 10px;
     bottom: 10px;
 
     width: auto;
-    height: 14px;
+    height: 15px;
 }
-.keyword-area .media-container .post-media .txt
-{
-    font-size: 12px;
-    line-height: 1.4;
-
-    padding: 10px 0 0 10px;
-
-    transition: opacity 200ms ease;
-    word-break: break-all;
-
-    color: #767676;
-}
-.keyword-area .media-container .post-media.hidden-text .txt
-{
-    opacity: 0;
-    /* display: none; */
-}
-.keyword-area .media-container .post-media.is-active .img
-{
-    border: 2px solid #f9c03c;
-}
-
-.detail-area
-{
-    position: relative;
-    z-index: 2;
-
-    display: none;
-    /* height: 640px; */
-
-    padding: 50px 0 50px 50px;
-
-    background-color: #dadada;
-}
-.detail-area.is-active
-{
-    display: block;
-}
-.detail-area .inner
-{
-    position: relative;
-
-    width: 90%;
-    height: 100%;
-}
-.detail-area .inner:after
-{
-    display: block;
-    clear: both;
-
-    content: '';
-}
-.detail-area .img
-{
-    display: block;
-    float: left;
-
-    width: 60%;
-    max-width: 540px;
-    height: 80%;
-    min-height: 360px;
-    /* background-color: #ccc; */
-
-    background-position: 50% 50%;
-    background-size: contain;
-    /* @include ratioResponsive(540, 360); */
-}
-.detail-area .info
-{
-    float: right;
-
-    width: 35%;
-    padding: 50px 0;
-}
-.detail-area .info .title
-{
-    font-size: 18px;
-    line-height: 1.4;
-
-    margin-bottom: 1em;
-
-    color: #767676;
-}
-.detail-area .info .desc
-{
-    font-size: 12px;
-
-    margin-bottom: 1em;
-
-    color: #767676;
-}
-.detail-area .btn-close01
+#transparent-container .post .media-container .media-photo .btn-close02
 {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    z-index: 3;
+    top: 0;
+    right: 0;
+
+    transition: opacity 200ms ease;
+
+    opacity: 0;
 }
-.detail-area .btn-arrow01
+#transparent-container .post .media-container .media-photo:hover .img
+{
+    opacity: 1;
+}
+#transparent-container .post .media-container .media-photo:hover .btn-close02
+{
+    opacity: 1;
+}
+#transparent-container .post .time-stamp
+{
+    font-size: 14px;
+    line-height: 1;
+
+    position: absolute;
+    z-index: 20;
+    top: 50%;
+    left: 0;
+
+    padding-left: 25px;
+
+    color: #fffefe;
+}
+#transparent-container .post .time-stamp:after
 {
     position: absolute;
     top: 50%;
+    left: 0;
 
-    margin-top: -12px;
-}
-.detail-area .btn-arrow01.right
-{
-    right: 20px;
-}
-.detail-area .btn-arrow01.left
-{
-    left: 20px;
-}
+    display: block;
 
-.jp .detail-area .info .title
-{
-    font-family: 'Noto Sans JP', 'Yu Gothic', YuGothic, 'ヒラギノ角ゴシック Pro', 'Hiragino Kaku Gothic Pro', メイリオ, Meiryo, Osaka, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
-    font-weight: 100;
+    width: 20px;
+    height: 1px;
+
+    content: '';
+
+    background-color: #fff;
 }
-.jp .detail-area .info .desc
+#transparent-container .transit
 {
-    font-family: 'Noto Sans JP', 'Yu Gothic', YuGothic, 'ヒラギノ角ゴシック Pro', 'Hiragino Kaku Gothic Pro', メイリオ, Meiryo, Osaka, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
-    font-weight: 100;
+    transform: translate3d(0, 0, 0);
+
+    opacity: 1;
+}
+#transparent-container .transit .media-container .media-photo
+{
+    transform: translate3d(0, 0, 0);
+
+    opacity: 1;
+}
+#transparent-container .bg
+{
+    position: fixed;
+    z-index: 0;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    border-left: 1px solid #fff;
+    background-color: #000;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: cover;
+}
+#transparent-container .bg.black
+{
+    background-image: none;
+}
+#transparent-container .btn-add,
+#transparent-container .btn-bg-toggle
+{
+    position: fixed;
+    z-index: 100;
+
+    width: 200px;
+    padding: 10px 20px;
+
+    text-align: center;
+
+    opacity: .8;
+    color: #000;
+    border-radius: 30px;
+    background: #fff;
+}
+#transparent-container .btn-add
+{
+    top: 80px;
+    right: 10px;
+}
+#transparent-container .btn-bg-toggle
+{
+    top: 10px;
+    right: 10px;
 }
 
 /* @import '_pages/underlayer'; */

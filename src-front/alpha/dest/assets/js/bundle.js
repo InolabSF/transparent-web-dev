@@ -19339,150 +19339,468 @@
 	// var {hasClass, getDOM, addClass, removeClass} = require('../utils/BaseUtils').utils
 	var data = __webpack_require__(9);
 
+	var Transcripts = __webpack_require__(11);
+
 	var TopScene = function (_BaseApp) {
 	    _inherits(TopScene, _BaseApp);
 
 	    function TopScene() {
 	        _classCallCheck(this, TopScene);
 
-	        // this.init();
-
 	        var _this = _possibleConstructorReturn(this, (TopScene.__proto__ || Object.getPrototypeOf(TopScene)).call(this));
 
-	        _this.firstFlg = true;
-	        _this.keywords = [];
-	        _this.scrollBottomPos = false;
-	        _this.recordingStatus = false;
-	        _this.commentCard = true;
-	        _this.mediaText = true;
-	        _this.masonryOpt = {
-	            itemSelector: '.grid',
-	            stamp: '.post-keyword'
-	        };
+	        _this.transcripts = new Transcripts();
 
-	        $('#wrapper').on('click', '.btn-menu01', _this.menuToggle.bind(_this)).on('click', '.on-txt-hidden', _this.mediaTextToggle.bind(_this)).on('click', '.on-card-hidden', _this.mediaCardToggle.bind(_this)).on('click', '.on-switch-media .media', _this.mediaSwitch.bind(_this)).on('click', '.input-submit', _this.addKeywordList.bind(_this)).on('click', '.keyword-list .list-item', _this.removeKeywordList.bind(_this)).on('click', '#transparent-container .post-media   .btn-close02', _this.removeMedia.bind(_this)).on('click', '#transparent-container .post-keyword .btn-close02', _this.removeMediaSection.bind(_this)).on('click', '.post-media', _this.showDetail.bind(_this)).on('click', '.btn-close01', _this.hideDetail.bind(_this)).on('click', '.btn-arrow01.right', _this.next.bind(_this)).on('click', '.btn-arrow01.left', _this.prev.bind(_this));
+	        _this.modalFlg = false;
+	        _this.isDraggable = false;
 
-	        $(window).on('scroll', _this.onScroll.bind(_this));
+	        $('#wrapper').on('click', '.btn-menu01', _this.menuToggle.bind(_this)).on('click', '.media-photo', _this.clickDisable.bind(_this)).on('click', '.modal-layer .modal-back', _this.hideModal.bind(_this)).on('click', '.btn-bg-toggle', _this.toggleBackgroundStyle.bind(_this)).on('mousedown', '.media-photo', _this.onDragCatch.bind(_this));
 
-	        TRANSCRIPTS.appendContents = _this.appendContents.bind(_this);
-	        TRANSCRIPTS.prependContents = _this.prependContents.bind(_this);
-	        TRANSCRIPTS.setRecordingText = _this.setRecordingText.bind(_this);
-	        TRANSCRIPTS.getKeywords = _this.getKeywords.bind(_this);
-	        TRANSCRIPTS.toggleRecordhing = _this.toggleRecordhing.bind(_this);
-	        TRANSCRIPTS.getMediaType = _this.getMediaType.bind(_this);
-	        TRANSCRIPTS.getScrollBottomPosition = _this.getScrollBottomPosition.bind(_this);
-	        TRANSCRIPTS.getRecordingStatus = _this.getRecordingStatus.bind(_this);
-	        TRANSCRIPTS.addContents = _this.addContents.bind(_this);
-	        // TRANSCRIPTS.imageNotFound = this.imageNotFound.bind(this);
+	        $(window).on('keydown', _this.keyDown.bind(_this)).on('keyup', _this.keyUp.bind(_this)).on('mouseup', _this.onDragRelease.bind(_this)).on('mousemove', _this.onDragMove.bind(_this));
+
+	        TRANSCRIPTS.prependContents = _this.transcripts.prependContents.bind(_this.transcripts);
+	        TRANSCRIPTS.appendContents = _this.transcripts.appendContents.bind(_this.transcripts);
+	        TRANSCRIPTS.setRecordingText = _this.transcripts.setRecordingText.bind(_this.transcripts);
+	        TRANSCRIPTS.toggleRecordhing = _this.transcripts.toggleRecordhing.bind(_this.transcripts);
+	        TRANSCRIPTS.getRecordingStatus = _this.transcripts.getRecordingStatus.bind(_this.transcripts);
+	        TRANSCRIPTS.getMediaType = _this.transcripts.getMediaType.bind(_this.transcripts);
+	        TRANSCRIPTS.getKeywords = _this.transcripts.getKeywords.bind(_this.transcripts);
+	        TRANSCRIPTS.getScrollBottomPosition = _this.transcripts.getScrollBottomPosition.bind(_this.transcripts);
+	        TRANSCRIPTS.setMediaText = _this.transcripts.setMediaText.bind(_this.transcripts);
+	        TRANSCRIPTS.setMediaType = _this.transcripts.setMediaType.bind(_this.transcripts);
+	        TRANSCRIPTS.addContents = _this.transcripts.addContents.bind(_this.transcripts);
+	        TRANSCRIPTS.addKeywordList = _this.transcripts.addKeywordList.bind(_this.transcripts);
+	        TRANSCRIPTS.removeKeywordList = _this.transcripts.removeKeywordList.bind(_this.transcripts);
+
+	        TRANSCRIPTS.setMenu = _this.setMenu.bind(_this);
+	        TRANSCRIPTS.onDraggable = _this.onDraggable.bind(_this);
+	        TRANSCRIPTS.offDraggable = _this.offDraggable.bind(_this);
 	        return _this;
 	    }
 
 	    _createClass(TopScene, [{
+	        key: 'menuToggle',
+	        value: function menuToggle() {
+	            if ($('.btn-menu01').hasClass('is-active')) {
+
+	                // 閉じる
+	                $('.btn-menu01').removeClass('is-active');
+	                $('#global-menu').removeClass('is-active');
+	            } else {
+
+	                // 開く
+	                $('.btn-menu01').addClass('is-active');
+	                $('#global-menu').addClass('is-active');
+	            }
+	        }
+	    }, {
+	        key: 'setMenu',
+	        value: function setMenu(flg) {
+	            if (flg) {
+
+	                // 閉じる
+	                $('.btn-menu01').removeClass('is-active');
+	                $('#global-menu').removeClass('is-active');
+	            } else {
+
+	                // 開く
+	                $('.btn-menu01').addClass('is-active');
+	                $('#global-menu').addClass('is-active');
+	            }
+	        }
+	    }, {
+	        key: 'showModal',
+	        value: function showModal(event) {
+	            event.preventDefault();
+
+	            if ($(event.target).hasClass('btn-close02')) {
+	                return false;
+	            }
+
+	            if (this.modalFlg) {
+	                return false;
+	            }
+
+	            this.modalFlg = true;
+
+	            var modal = $('.modal-inner');
+	            var el = $(event.currentTarget);
+
+	            var src = el.find('img').attr('src');
+	            var title = el.data('title');
+	            var desc = el.data('desc');
+	            var url = el.attr('href');
+
+	            var info = $('<div />', { class: 'info' }).appendTo(modal);
+
+	            if (src) {
+	                $('<div />', {
+	                    style: 'background-image: url(' + src + ');',
+	                    class: 'img'
+	                }).prependTo(modal);
+	            }
+	            if (title) {
+	                $('<p />', { class: 'title' }).text(title).appendTo(info);
+	            }
+	            if (desc) {
+	                $('<p />', { class: 'desc' }).text(desc).appendTo(info);
+	            }
+	            if (url) {
+	                $('<a />', { class: 'btn-style01', href: url, target: '_blank' }).text('Link').appendTo(info);
+	            }
+
+	            modal.attr({
+	                'data-id': $(el).attr('data-id'),
+	                'data-searchId': $(el).attr('data-searchid'),
+	                'data-relatedContentId': $(el).attr('data-relatedcontentid')
+	            });
+
+	            $('.modal-layer').addClass('is-show');
+	        }
+	    }, {
+	        key: 'hideModal',
+	        value: function hideModal(event) {
+	            event.preventDefault();
+
+	            // モーダルの中身削除
+	            $('.modal-inner').empty().attr({
+	                'data-id': '',
+	                'data-searchId': '',
+	                'data-relatedContentId': ''
+	            });
+
+	            $('.modal-layer').removeClass('is-show');
+
+	            this.modalFlg = false;
+	        }
+	    }, {
+	        key: 'toggleBackgroundStyle',
+	        value: function toggleBackgroundStyle(event) {
+	            event.preventDefault();
+
+	            if ($('.bg').hasClass('black')) {
+	                $('.bg').removeClass('black');
+	            } else {
+	                $('.bg').addClass('black');
+	            }
+	        }
+	    }, {
+	        key: 'keyUp',
+	        value: function keyUp(event) {
+
+	            // キーボードのスペースが押されたら
+	            if (event.keyCode === 32) {
+	                this.toggleBackgroundStyle(event);
+	            }
+	        }
+	    }, {
+	        key: 'keyDown',
+	        value: function keyDown(event) {
+
+	            // キーボードのスペースが押されたら
+	            // スクロールするのを無効
+	            if (event.keyCode === 32) {
+	                event.preventDefault();
+	            }
+	        }
+	    }, {
+	        key: 'onDragCatch',
+	        value: function onDragCatch(event) {
+	            event.preventDefault();
+
+	            this.move_flg = true;
+	            this.el = event.currentTarget;
+	            this.move_start_x = event.clientX - parseInt(this.el.style.left.replace("px", ""));
+	            this.move_start_y = event.clientY - parseInt(this.el.style.top.replace("px", ""));
+
+	            this.downTime = new Date().getTime();
+	            this.event = event;
+
+	            return false;
+	        }
+	    }, {
+	        key: 'onDragMove',
+	        value: function onDragMove(event) {
+	            if (!this.isDraggable) {
+	                return false;
+	            }
+
+	            if (this.move_flg) {
+	                var left = event.clientX - this.move_start_x + "px";
+	                var top = event.clientY - this.move_start_y + "px";
+	                this.el.style.left = left;
+	                this.el.style.top = top;
+	            }
+	            return false;
+	        }
+	    }, {
+	        key: 'onDragRelease',
+	        value: function onDragRelease(event) {
+	            event.preventDefault();
+
+	            var upTime = new Date().getTime();
+
+	            if (upTime - this.downTime < 200) {
+	                this.showModal(this.event);
+	            }
+
+	            this.el = {};
+	            this.move_flg = false;
+	            return false;
+	        }
+	    }, {
+	        key: 'onDraggable',
+	        value: function onDraggable() {
+	            this.isDraggable = true;
+	            $('.media-photo').css('cursor', 'move');
+	            return this.isDraggable;
+	        }
+	    }, {
+	        key: 'offDraggable',
+	        value: function offDraggable() {
+	            this.isDraggable = false;
+	            $('.media-photo').css('cursor', 'pointer');
+	            return this.isDraggable;
+	        }
+
+	        // クリックイベントの削除用
+
+	    }, {
+	        key: 'clickDisable',
+	        value: function clickDisable(event) {
+	            event.preventDefault();
+	            return false;
+	        }
+	    }]);
+
+	    return TopScene;
+	}(BaseApp);
+
+	module.exports = TopScene;
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _ = __webpack_require__(2);
+	var BaseApp = __webpack_require__(4);
+	// var {hasClass, getDOM, addClass, removeClass} = require('../utils/BaseUtils').utils
+	var data = __webpack_require__(9);
+
+	var COMMENT_BOX_SIZE = 500 / 1.5;
+	var RANGE = 500; // .commentボックスのズレ具合
+	// const TRANSCRIPTS.MEDIA_MAX_SIZE = 350; // ランダム配置される画像の最大サイズ
+	// const TRANSCRIPTS.MEDIA_MIN_SIZE = TRANSCRIPTS.MEDIA_MAX_SIZE / 3; // ランダム配置される画像の最小サイズ
+	var TRY_COUNT = 999; // 配置が重なっていた時に再度ランダムをやり直す回数
+
+	var Transcripts = function (_BaseApp) {
+	    _inherits(Transcripts, _BaseApp);
+
+	    function Transcripts() {
+	        _classCallCheck(this, Transcripts);
+
+	        var _this = _possibleConstructorReturn(this, (Transcripts.__proto__ || Object.getPrototypeOf(Transcripts)).call(this));
+
+	        _this.init();
+
+	        _this.scrollBottomPos = false;
+	        _this.mediaText = true;
+	        _this.keywords = [];
+	        _this.recordingStatus = false;
+	        _this.zIndex = 20;
+	        _this.move_flg = false;
+
+	        $('#wrapper').on('click', '.on-switch-media .media', _this.switchMediaType.bind(_this)).on('click', '.input-submit', _this.onSubmitKeyword.bind(_this)).on('click', '.keyword-list .list-item', _this.onRemoveKeywordList.bind(_this)).on('click', '.on-txt-hidden', _this.toggleMediaText.bind(_this)).on('click', '.media-photo .btn-close02', _this.removeMedia.bind(_this)).on('click', '.comment .btn-close02', _this.removeMediaSection.bind(_this)).on('mouseenter', '.media-photo', _this.zIndexNumbering.bind(_this));
+
+	        $(window).on('scroll', _this.onScroll.bind(_this));
+	        return _this;
+	    }
+
+	    /**
+	     * 最初のトランスクリプト生成
+	     */
+
+
+	    _createClass(Transcripts, [{
 	        key: 'init',
 	        value: function init() {
 	            var _this2 = this;
+
+	            if (!TRANSCRIPTS.API_URI) {
+	                return false;
+	            }
 
 	            $.get(TRANSCRIPTS.API_URI, function (data) {
 	                var length = data.searches.length - 1;
 	                var index = 0;
 
-	                for (var i = 0; i < length; i++) {
+	                var loop = function loop() {
+	                    var post = _this2.createPost(data, index);
 
-	                    var post = _this2.createKeywordArea(data, i);
+	                    // ポストのDOMを追加
 	                    $('#transparent-container').append(post);
-	                }
 
-	                _this2.isStamped = false;
-	                _this2.initMasonry();
+	                    _this2.postPosition(post);
+	                    _this2.mediaRandomPosition(post, data, index);
+
+	                    setTimeout(function () {
+	                        _this2.transit(post);
+	                    }, 100);
+
+	                    if (index < length) {
+	                        index++;
+	                        setTimeout(loop, 100);
+	                    }
+	                };
+
+	                setTimeout(loop, 2000);
 	            });
+	        }
+
+	        /**
+	         * トランスクリプト追加
+	         * @param [array] data: 追加用オブジェクト配列
+	         */
+
+	    }, {
+	        key: 'prependContents',
+	        value: function prependContents(data) {
+	            var _this3 = this;
+
+	            var length = data.searches.length - 1;
+	            var index = 0;
+
+	            // ポストの数だけループ
+	            var loop = function loop() {
+	                var post = _this3.createPost(data, index);
+
+	                // ポストのDOMを追加
+	                $('#transparent-container').prepend(post);
+
+	                _this3.postPosition(post);
+	                _this3.mediaRandomPosition(post, data, index);
+
+	                setTimeout(function () {
+	                    _this3.transit(post);
+	                }, 100);
+
+	                if (index < length) {
+	                    index++;
+	                    setTimeout(loop, 200);
+	                }
+	            };
+
+	            setTimeout(loop, 100);
 	        }
 	    }, {
 	        key: 'appendContents',
 	        value: function appendContents(data) {
-	            var length = data.searches.length;
+	            var _this4 = this;
+
+	            var length = data.searches.length - 1;
 	            var index = 0;
 
-	            for (var i = 0; i < length; i++) {
+	            // ポストの数だけループ
+	            var loop = function loop() {
+	                var post = _this4.createPost(data, index);
 
-	                var post = this.createKeywordArea(data, i);
+	                // ポストのDOMを追加
 	                $('#transparent-container').append(post);
-	            }
 
-	            this.isStamped = false;
+	                _this4.postPosition(post);
+	                _this4.mediaRandomPosition(post, data, index);
 
-	            this.initMasonry();
-	            this.masonry.masonry('reloadItems');
+	                setTimeout(function () {
+	                    _this4.transit(post);
+	                }, 100);
+
+	                if (index < length) {
+	                    index++;
+	                    setTimeout(loop, 200);
+	                }
+	            };
+
+	            setTimeout(loop, 100);
 	        }
-	    }, {
-	        key: 'prependContents',
-	        value: function prependContents(data) {
-	            var length = data.searches.length;
-	            var index = 0;
 
-	            for (var i = 0; i < length; i++) {
+	        // related_contentsだけ追加
 
-	                var post = this.createKeywordArea(data, i);
-	                $('#transparent-container').prepend(post);
-	            }
-
-	            this.isStamped = false;
-
-	            this.initMasonry();
-	            this.masonry.masonry('reloadItems');
-	        }
 	    }, {
 	        key: 'addContents',
 	        value: function addContents(related_contents) {
-	            var _this3 = this;
+	            var _this5 = this;
 
 	            var length = related_contents.length;
 
 	            _.each(related_contents, function (data1) {
 	                var id1 = parseInt(data1.search_id, 10);
 
-	                _.each($('.post-keyword'), function (data2) {
+	                _.each($('.comment'), function (data2, i) {
 
 	                    var id2 = parseInt($(data2).data('searchid'), 10);
-	                    var container = $(data2).closest('.media-container');
+	                    var container = $(data2).closest('.post').find('.media-container');
 
 	                    if (id1 === id2) {
 
 	                        // テキスト表示の出しわけ
 	                        var klass = '';
-	                        if (!_this3.mediaText) {
-	                            klass = ' hidden-text';
+	                        if (!_this5.mediaText) {
+	                            klass = ' is-hidden';
 	                        }
 
-	                        var post = $('<a />').attr({ href: data1.url, class: 'grid post-media grid-item' + klass, target: '_blank', 'data-searchId': data1.search_id, 'data-relatedContentId': data1.id });
+	                        // webpageだったらリンクを貼る
+	                        var h = $('<a />', {
+	                            href: data1.url,
+	                            class: 'media-photo',
+	                            'data-title': data1.title,
+	                            'data-desc': data1.desc,
+	                            'data-id': data1.transcript_id,
+	                            target: '_blank',
+	                            'data-searchId': data1.search_id,
+	                            'data-relatedContentId': data.id
+	                        }).css({
+	                            width: _.random(TRANSCRIPTS.MEDIA_MAX_SIZE, TRANSCRIPTS.MEDIA_MIN_SIZE),
+	                            left: _.random(50, 700),
+	                            top: _.random(50, 700)
+	                        });
+	                        $('<img />', { src: data1.img_url, class: 'img', onerror: _this5.imageNotFound }).appendTo(h);
+	                        $('<img />', { src: 'http://www.google.com/s2/favicons?domain=' + data1.source, class: 'favicon' }).appendTo(h);
+	                        $('<button />', { class: 'btn-close02' }).appendTo(h);
 
-	                        var img = $('<div />', { class: 'wrap' }).appendTo(post);
-	                        $('<img />', { src: data1.img_url, class: 'img', alt: data1.desc }).appendTo(img);
-	                        $('<img />', { src: 'http://www.google.com/s2/favicons?domain=' + data1.source, class: 'favicon' }).appendTo(img);
-
-	                        $('<p />', { class: 'txt' }).text(data1.title).appendTo(post);
-
-	                        $('<button />', { class: 'btn-close02' }).appendTo(post);
-
-	                        container.append(post).masonry('appended', post);
-	                        _this3.masonry.masonry('reloadItems');
+	                        container.append(h[0]);
 	                    }
 	                });
 	            });
-
-	            this.reLayout();
 	        }
 	    }, {
-	        key: 'createKeywordArea',
-	        value: function createKeywordArea(data, index) {
+	        key: 'createPost',
+	        value: function createPost(data, index) {
 	            var searches = data.searches[index];
 	            var searcheId1 = searches.id;
+	            var klass = '',
+	                klass2 = '';
 
-	            var area = $('<div />', { class: 'keyword-area' });
-	            var container = $('<div />', { class: 'media-container' }).appendTo(area);
-	            var detail = $('<div />', { class: 'detail-area' }).appendTo(area);
-	            $('<button />', { class: 'btn-close01' }).appendTo(detail);
-	            $('<button />', { class: 'btn-arrow01 right' }).appendTo(detail);
-	            $('<button />', { class: 'btn-arrow01 left' }).appendTo(detail);
+	            // if (!data.has_content) {
+	            //     klass = ' no-content';
+	            // }
+
+	            if (!this.mediaText) {
+	                klass2 = ' is-hidden';
+	            }
+
+	            // エリア作成
+	            var post = $('<div />', { class: 'post' + klass });
+	            var container = $('<div />', { class: 'media-container' }).appendTo(post);
 
 	            // キーワードの連結
 	            var words = [];
@@ -19494,242 +19812,144 @@
 	                }
 	            }
 
-	            // コメントカード
-	            var cardStyle;
-	            if (!this.commentCard) {
-	                cardStyle = { display: 'none' };
-	            } else {
-	                cardStyle = { display: 'block' };
+	            // コメントカード作成
+	            var comment = $('<div />', { class: 'comment' + klass2, 'data-searchId': searcheId1 }).appendTo(post);
+	            $('<div />', { class: 'comment-text' }).text(words).appendTo(comment);
+	            $('<button />', { class: 'btn-close02' }).appendTo(comment);
+
+	            function dateFormat(date) {
+
+	                // UTC
+	                var h = date.getUTCHours();
+	                var m = date.getUTCMinutes();
+	                var s = date.getUTCSeconds();
+
+	                // UTCじゃない
+	                // var h = date.getHours();
+	                // var m = date.getMinutes();
+	                // var s = date.getSeconds();
+
+	                h = ('0' + h).slice(-2);
+	                m = ('0' + m).slice(-2);
+	                s = ('0' + s).slice(-2);
+
+	                // フォーマット整形済みの文字列を戻り値にする
+	                return h + ':' + m + ':' + s;
 	            }
 
-	            var postKeyword = $('<p />', { class: 'post-keyword grid-item', 'data-searchId': searcheId1 }).css(cardStyle).text(words).appendTo(container);
-	            $('<button />', { class: 'btn-close02' }).appendTo(postKeyword);
+	            // タイムスタンプ作成
+	            $('<div />', { class: 'time-stamp' }).text(dateFormat(new Date(searches.created_at))).appendTo(post);
 
-	            // 画像コンテンツ
-	            for (var i = 0, l = data.related_contents.length; i < l; i++) {
-	                var d = data.related_contents[i];
+	            return post;
+	        }
+
+	        /**
+	         * .commentのポジションを設定
+	         * @param [DOM object] el: postのDOM
+	         */
+
+	    }, {
+	        key: 'postPosition',
+	        value: function postPosition(post) {
+	            var x = 0;
+	            var y = 0;
+	            var range = _.random(-RANGE, RANGE);
+
+	            x = -COMMENT_BOX_SIZE / 2 + range;
+	            y = 0; //_.random(30, 40) - 20 + 'vh';
+
+	            $(post).find('.comment').css({ marginTop: y, marginLeft: x });
+	        }
+
+	        /**
+	         * メディアのポジションをランダムに配置
+	         * @param [DOM object] el: postのDOM
+	         */
+
+	    }, {
+	        key: 'mediaRandomPosition',
+	        value: function mediaRandomPosition(post, data, index) {
+	            var _this6 = this;
+
+	            var searches = data.searches[index];
+	            var searcheId1 = searches.id;
+	            var array = [];
+
+	            _.each(data.related_contents, function (d, i) {
+	                var h = {};
 
 	                // search_idが一致したら
 	                if (d.search_id === searcheId1) {
 
-	                    // テキスト表示の出しわけ
-	                    var klass = '';
-	                    if (!this.mediaText) {
-	                        klass = ' hidden-text';
-	                    }
+	                    var h = $('<a />', {
+	                        href: d.url,
+	                        'data-title': d.title,
+	                        'data-desc': d.desc,
+	                        target: '_blank',
+	                        'data-id': d.transcript_id,
+	                        'data-searchId': d.search_id,
+	                        'data-relatedContentId': data.related_contents[i].id
+	                    });
+	                    $('<img />', { src: d.img_url, class: 'img', onerror: _this6.imageNotFound }).appendTo(h);
+	                    $('<img />', { src: 'http://www.google.com/s2/favicons?domain=' + d.source, class: 'favicon' }).appendTo(h);
+	                    $('<button />', { class: 'btn-close02' }).appendTo(h);
 
-	                    var post = $('<a />').attr({ href: d.url, class: 'grid post-media grid-item' + klass, target: '_blank', 'data-searchId': d.search_id, 'data-relatedContentId': data.related_contents[i].id }).appendTo(container);
-
-	                    var img = $('<div />', { class: 'wrap' }).appendTo(post);
-	                    $('<img />', { src: d.img_url, class: 'img', alt: d.desc, onerror: this.imageNotFound }).appendTo(img);
-	                    $('<img />', { src: 'http://www.google.com/s2/favicons?domain=' + d.source, class: 'favicon' }).appendTo(img);
-
-	                    var title = d.title;
-	                    var count = 60;
-
-	                    if (title.length > count) {
-	                        title = title.substr(0, count);
-	                        title += "...";
-	                    }
-
-	                    $('<p />', { class: 'txt' }).text(title).appendTo(post);
-
-	                    $('<button />', { class: 'btn-close02' }).appendTo(post);
+	                    array.push(h);
 	                }
-	            }
-
-	            return area;
-	        }
-	    }, {
-	        key: 'showDetail',
-	        value: function showDetail(event) {
-	            event.preventDefault();
-
-	            // クローズボタンだったら抜ける
-	            if ($(event.target).hasClass('btn-close02')) {
-	                return false;
-	            }
-
-	            var post = $(event.currentTarget).closest('.post-media');
-
-	            this.detailChange(event, post);
-	        }
-	    }, {
-	        key: 'detailChange',
-	        value: function detailChange(event, post) {
-
-	            // $(event.currentTarget).closest('.keyword-area').find('.detail-area').removeClass('is-active');
-	            $(event.currentTarget).closest('.keyword-area').find('.detail-area').find('.inner').remove();
-
-	            var img = post.find('.img').attr('src');
-	            var url = post.attr('href');
-	            var desc = post.find('.img').attr('alt');
-	            var title = post.find('.txt').text();
-
-	            $(event.currentTarget).closest('.keyword-area').find('.post-media').removeClass('is-active');
-	            post.addClass('is-active');
-
-	            var detail = $(event.currentTarget).closest('.keyword-area').find('.detail-area');
-	            var inner = $('<div />', { class: 'inner' }).appendTo(detail);
-	            $('<div />', { class: 'img', style: 'background-image: url(' + img + ')' }).appendTo(inner);
-
-	            var info = $('<div />', { class: 'info' }).appendTo(inner);
-	            $('<p />', { class: 'title' }).text(title).appendTo(info);
-	            $('<p />', { class: 'desc' }).text(desc).appendTo(info);
-	            $('<a />', { class: 'link btn-style01', target: '_blank', href: url }).text('LINK').appendTo(info);
-
-	            detail.addClass('is-active');
-
-	            $('body, html').stop().animate({ scrollTop: detail.offset().top - 100 }, 500, 'swing');
-	        }
-	    }, {
-	        key: 'hideDetail',
-	        value: function hideDetail(event) {
-	            event.preventDefault();
-
-	            $(event.currentTarget).closest('.detail-area').removeClass('is-active');
-	            $('body, html').stop().animate({ scrollTop: $(event.currentTarget).closest('.keyword-area').offset().top - 100 }, 500, 'swing');
-	        }
-	    }, {
-	        key: 'next',
-	        value: function next(event) {
-	            event.preventDefault();
-
-	            var area = $(event.target).closest('.keyword-area');
-	            var post = area.find('.post-media.is-active').next('.post-media');
-
-	            if (!post.attr('href')) {
-	                post = area.find('.post-media').eq(0);
-	            }
-
-	            this.detailChange(event, post);
-	        }
-	    }, {
-	        key: 'prev',
-	        value: function prev(event) {
-	            event.preventDefault();
-
-	            var area = $(event.target).closest('.keyword-area');
-	            var post = area.find('.post-media.is-active').prev('.post-media');
-
-	            var len = area.find('.post-media').length - 1;
-
-	            if (!post.attr('href')) {
-	                post = area.find('.post-media').eq(len);
-	            }
-
-	            this.detailChange(event, post);
-	        }
-	    }, {
-	        key: 'removeMedia',
-	        value: function removeMedia(event) {
-	            event.preventDefault();
-
-	            // $(event.currentTarget).closest('.grid-item').remove();
-	            this.masonry.masonry('remove', $(event.currentTarget).closest('.grid-item'));
-	            this.reLayout();
-	        }
-	    }, {
-	        key: 'removeMediaSection',
-	        value: function removeMediaSection(event) {
-	            event.preventDefault();
-
-	            var section = $(event.currentTarget).closest('.keyword-area');
-
-	            section.fadeOut(function () {
-	                section.remove();
 	            });
-	            this.reLayout();
+
+	            // arrayに入れたDOM配列をランダム配置
+	            $(post).find('.media-container').randomElements(array, {
+	                width: TRANSCRIPTS.MEDIA_MAX_SIZE,
+	                // stageHeight: TRANSCRIPTS.MEDIA_MAX_SIZE / 2,
+	                min: TRANSCRIPTS.MEDIA_MIN_SIZE,
+	                className: 'media-photo',
+	                adjustment: 30,
+	                tryCount: TRY_COUNT
+	            });
 	        }
 	    }, {
-	        key: 'initMasonry',
-	        value: function initMasonry() {
-	            var _this4 = this;
-
-	            this.firstFlg = false;
-
-	            this.masonry = $('.media-container').masonry(this.masonryOpt);
-
-	            setInterval(function () {
-	                _this4.reLayout();
-	            }, 1500);
+	        key: 'transit',
+	        value: function transit(post) {
+	            $(post).addClass('transit');
 	        }
 	    }, {
-	        key: 'reLayout',
-	        value: function reLayout(stamp) {
-	            this.masonry.masonry('reloadItems');
-	            this.masonry.masonry('layout');
+	        key: 'setRecordingText',
+	        value: function setRecordingText(text) {
+	            $('.txt-recording').text(text);
 	        }
 	    }, {
-	        key: 'mediaTextToggle',
-	        value: function mediaTextToggle(event) {
-	            var _this5 = this;
+	        key: 'toggleRecordhing',
+	        value: function toggleRecordhing() {
 
-	            if ($('.post-media').hasClass('hidden-text')) {
+	            if ($('.recording-area').hasClass('rec')) {
+	                $('.recording-area').removeClass('rec');
+	                $('.recording-area').addClass('recording');
 
-	                // テキスト表示
-	                this.mediaText = true;
-	                $('.post-media').removeClass('hidden-text');
-	                $(event.currentTarget).removeClass('is-active');
+	                this.recordingStatus = true;
 	            } else {
+	                $('.recording-area').addClass('rec');
+	                $('.recording-area').removeClass('recording');
 
-	                // テキスト非表示
-	                this.mediaText = false;
-	                $('.post-media').addClass('hidden-text');
-	                $(event.currentTarget).addClass('is-active');
-	            }
-
-	            setTimeout(function () {
-	                _this5.reLayout();
-	            }, 100);
-	        }
-	    }, {
-	        key: 'mediaCardToggle',
-	        value: function mediaCardToggle(event) {
-	            var _this6 = this;
-
-	            if ($('.post-keyword').hasClass('is-active')) {
-
-	                // 閉じる
-	                $(event.currentTarget).removeClass('is-active');
-
-	                $('.post-keyword').fadeIn(200, function () {
-	                    $('.post-keyword').removeClass('is-active');
-	                    _this6.commentCard = true;
-	                    _this6.reLayout(true);
-	                });
-	            } else {
-
-	                // 開く
-	                $('.post-keyword').addClass('is-active');
-	                $(event.currentTarget).addClass('is-active');
-
-	                $('.post-keyword').fadeOut(200, function () {
-	                    _this6.reLayout(true);
-	                    _this6.commentCard = false;
-	                });
+	                this.recordingStatus = false;
 	            }
 	        }
 	    }, {
-	        key: 'mediaSwitch',
-	        value: function mediaSwitch(event) {
-	            var el = $(event.currentTarget);
-	            el.closest('.btn-toggle02').find('.media').removeClass('is-active');
-	            el.addClass('is-active');
-
-	            this.mediaType = parseInt(el.data('type'), 10);
+	        key: 'getRecordingStatus',
+	        value: function getRecordingStatus() {
+	            return this.recordingStatus;
 	        }
 	    }, {
-	        key: 'getMediaType',
-	        value: function getMediaType() {
-	            return this.mediaType;
+	        key: 'onSubmitKeyword',
+	        value: function onSubmitKeyword(event) {
+	            event.preventDefault();
+	            var val = $('.input-keyword').val();
+
+	            this.addKeywordList(val);
 	        }
 	    }, {
 	        key: 'addKeywordList',
-	        value: function addKeywordList(event) {
-	            event.preventDefault();
-
-	            var val = $('.input-keyword').val();
+	        value: function addKeywordList(val) {
 
 	            if (val) {
 	                this.keywords.push(val);
@@ -19739,13 +19959,27 @@
 	            $('.input-keyword').val('');
 	        }
 	    }, {
-	        key: 'removeKeywordList',
-	        value: function removeKeywordList(event) {
+	        key: 'onRemoveKeywordList',
+	        value: function onRemoveKeywordList(event) {
 	            event.preventDefault();
 
-	            var index = this.keywords.indexOf($(event.currentTarget).text());
+	            this.removeKeywordList($(event.currentTarget).text());
+	        }
+	    }, {
+	        key: 'removeKeywordList',
+	        value: function removeKeywordList(text) {
+
+	            // キーワードリスト内から内部的に削除
+	            var index = this.keywords.indexOf(text);
 	            this.keywords.splice(index, 1);
-	            $(event.currentTarget).remove();
+
+	            _.each($('.keyword-list').find('.list-item'), function (el) {
+	                if ($(el).text() === text) {
+	                    $(el).remove();
+
+	                    return false;
+	                }
+	            });
 	        }
 	    }, {
 	        key: 'getKeywords',
@@ -19753,53 +19987,94 @@
 	            return this.keywords;
 	        }
 	    }, {
-	        key: 'menuToggle',
-	        value: function menuToggle() {
-	            var _this7 = this;
+	        key: 'switchMediaType',
+	        value: function switchMediaType(event) {
+	            var el = $(event.currentTarget);
+	            el.closest('.btn-toggle02').find('.media').removeClass('is-active');
+	            el.addClass('is-active');
 
-	            if ($('.btn-menu01').hasClass('is-active')) {
+	            this.mediaType = parseInt(el.data('type'), 10);
+	        }
+	    }, {
+	        key: 'setMediaType',
+	        value: function setMediaType(type) {
 
-	                // 閉じる
-	                $('.btn-menu01').removeClass('is-active');
-	                $('#global-menu').removeClass('is-active');
-	                $('#transparent-container').removeClass('menu-is-active');
+	            var el = $('.on-switch-media').find('.media');
+	            el.removeClass('is-active');
+
+	            if (type === 0) {
+	                el.eq(0).addClass('is-active');
+	            } else if (type === 1) {
+	                el.eq(1).addClass('is-active');
+	            } else if (type === 2) {
+	                el.eq(2).addClass('is-active');
 	            } else {
-
-	                // 開く
-	                $('.btn-menu01').addClass('is-active');
-	                $('#global-menu').addClass('is-active');
-	                $('#transparent-container').addClass('menu-is-active');
+	                return false;
 	            }
 
-	            setTimeout(function () {
-	                _this7.reLayout();
-	            }, 100);
+	            this.mediaType = type;
 	        }
 	    }, {
-	        key: 'toggleRecordhing',
-	        value: function toggleRecordhing() {
+	        key: 'getMediaType',
+	        value: function getMediaType() {
+	            return this.mediaType;
+	        }
+	    }, {
+	        key: 'getKeywords',
+	        value: function getKeywords() {
+	            return this.keywords;
+	        }
+	    }, {
+	        key: 'toggleMediaText',
+	        value: function toggleMediaText(event) {
+	            if ($('.comment').hasClass('is-hidden')) {
 
-	            if ($('.btn-recording').hasClass('rec')) {
-	                $('.btn-recording').removeClass('rec');
-	                $('.btn-recording').addClass('recording');
-
-	                this.recordingStatus = true;
+	                // テキスト表示
+	                this.mediaText = true;
+	                $('.comment').removeClass('is-hidden');
+	                $(event.currentTarget).removeClass('is-active');
 	            } else {
-	                $('.btn-recording').addClass('rec');
-	                $('.btn-recording').removeClass('recording');
 
-	                this.recordingStatus = false;
+	                // テキスト非表示
+	                this.mediaText = false;
+	                $('.comment').addClass('is-hidden');
+	                $(event.currentTarget).addClass('is-active');
 	            }
 	        }
 	    }, {
-	        key: 'setRecordingText',
-	        value: function setRecordingText(text) {
-	            $('.txt-recording').text(text);
+	        key: 'setMediaText',
+	        value: function setMediaText(flg) {
+	            if (flg) {
+
+	                // テキスト表示
+	                this.mediaText = true;
+	                $('.comment').removeClass('is-hidden');
+	                $(event.currentTarget).removeClass('is-active');
+	            } else {
+
+	                // テキスト非表示
+	                this.mediaText = false;
+	                $('.comment').addClass('is-hidden');
+	                $(event.currentTarget).addClass('is-active');
+	            }
 	        }
 	    }, {
-	        key: 'getRecordingStatus',
-	        value: function getRecordingStatus() {
-	            return this.recordingStatus;
+	        key: 'removeMedia',
+	        value: function removeMedia(event) {
+	            event.preventDefault();
+
+	            $(event.currentTarget).closest('.media-photo').remove();
+	        }
+	    }, {
+	        key: 'removeMediaSection',
+	        value: function removeMediaSection(event) {
+	            event.preventDefault();
+
+	            var section = $(event.currentTarget).closest('.post');
+
+	            section.fadeOut(function () {
+	                section.remove();
+	            });
 	        }
 	    }, {
 	        key: 'onScroll',
@@ -19823,21 +20098,27 @@
 	    }, {
 	        key: 'imageNotFound',
 	        value: function imageNotFound(event) {
-	            var _this8 = this;
+	            var _this7 = this;
 
 	            var img = new Image();
 	            img.src = $(this).attr('src');
 
 	            img.onerror = function () {
-	                $(_this8).attr('src', 'https://res.cloudinary.com/negic/image/upload/v1528273682/img_notfound.png');
+	                $(_this7).attr('src', 'https://res.cloudinary.com/negic/image/upload/v1528273682/img_notfound.png');
 	            };
+	        }
+	    }, {
+	        key: 'zIndexNumbering',
+	        value: function zIndexNumbering(event) {
+	            $(event.currentTarget).css('z-index', this.zIndex);
+	            this.zIndex++;
 	        }
 	    }]);
 
-	    return TopScene;
+	    return Transcripts;
 	}(BaseApp);
 
-	module.exports = TopScene;
+	module.exports = Transcripts;
 
 /***/ })
 /******/ ]);

@@ -8,30 +8,26 @@ block variable
 
 block content
 
-    header#global-header
-        h1.logo01#logo transparent
+    button.btn-menu01.tap
+        div.btn-inner
+            span.line.line-1
+            span.line.line-2
+            span.line.line-3
 
-        button.btn-menu01.tap.is-active
-            div.btn-inner
-                span.line.line-1
-                span.line.line-2
-                span.line.line-3
-
-        div.btn-recording.rec#btn-recording
-            span.r1 Recording
-            span.r2 REC
-            div.loader
-
-        p.txt-recording
-
-
-    div#global-menu.is-active
+    div#global-menu
         .inner
+
+            div.setting-btn-area
+                p.tit Media Source
+                div.btn-toggle02.on-switch-media#on-switch-media
+                    div(data-type="0").media.photo.is-active Photo
+                    div(data-type="1").media.news News
+                    div(data-type="2").media.movie Movie
 
             form.form-keyword
                 p.tit Keyword Filtering
                 input.input-keyword(type="text" placeholder="Input Keyword")
-                button.input-submit#input-submit Submit
+                button.input-submit.btn-style01#input-submit Submit
 
             div.keyword-list
                 //- div.list-item Keyword 01
@@ -39,41 +35,25 @@ block content
                 //- div.list-item Short
 
             div.setting-btn-area
-                p.tit Title / Description
+                p.tit Text
                 div.btn-toggle01.on-txt-hidden
+                    div.under
+                        span.on On
+                        span.off Off
                     div.toggle
                         span.on On
                         span.off Off
 
-            div.setting-btn-area
-                p.tit Comment Card
-                div.btn-toggle01.on-card-hidden
-                    div.toggle
-                        span.on On
-                        span.off Off
+    div.recording-area.rec
+        div.txt-recording Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+        div#btn-recording
 
-            div.setting-btn-area
-                p.tit Media
-                div.btn-toggle02.on-switch-media#on-switch-media
-                    div(data-type="0").media.photo.is-active Photo
-                    div(data-type="1").media.news News
-                    div(data-type="2").media.movie Movie
+    div#transparent-container
+        div.bg
 
-    div#transparent-container.menu-is-active
+        //- button.btn-bg-toggle Switch
+        //- button.btn-add#add Add
 
-        //- div.keyword-area
-        //-     div.media-container
-        //-         p.post-keyword Sporken Keywords 02
-        //-         - for (var i = 0, l = 9; i < l; i++) {
-        //-             a.grid.post-media(href="#")
-        //-                 img.img(src="https://placehold.jp/180x150.png" alt="")
-        //-                 p.txt Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
-        //-         - }
-        //-     div.detail-area
-        //-         button.btn-close01
-        //-         .inner
-        //-             div.img(style="background-image: url(https://placehold.jp/180x150.png)" alt="")
-        //-             div.info
-        //-                 p.title Lorem ipsum dolor sit amet
-        //-                 p.desc Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-        //-                 a.btn-style01.link(href="#" target="_blank") LINK
+        div.modal-layer
+            .modal-back
+            .modal-inner

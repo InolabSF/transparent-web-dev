@@ -11,82 +11,76 @@
     <meta property="og:title" content="Transparent">
     <meta property="og:site_name" content="Transparent">
     <meta property="og:description" content="Transparent, the first audio recognition tool that serves a stream of content that follows your verbal conversation.">
-    <meta property="og:url" content="http://trnspt.com/">
-    <meta property="og:image" content="http://res.cloudinary.com/negic/image/upload/v1520401274/og.png">
+    <meta property="og:url" content="https://trnspt.com/">
+    <meta property="og:image" content="https://res.cloudinary.com/negic/image/upload/v1520401274/og.png">
     <meta property="og:type" content="website">
     <link rel="shortcut icon" href="http://res.cloudinary.com/negic/image/upload/v1520401272/favicon.ico" type="image/x-icon">
-    <link rel="canonical" href="http://trnspt.com/">
+    <link rel="canonical" href="https://trnspt.com/">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <link rel="stylesheet" href="./assets/css/app.css">
     <style rel="stylesheet">
-      /* コメントカード */
-      #transparent-container .keyword-area .media-container .post-keyword {
-          border: 4px solid #f9c03c;
-          background-color: #fff;
-          color: #f9c03c;
-          font-size: 30px;
-          line-height: 1.4;
+      /* ここからiPad proのサイズ */
+      
+      /* 背景画像 */
+      #transparent-container .bg {
+          background-image: url('https://res.cloudinary.com/dfa9u6mgh/image/upload/v1529440382/bg_kek3bp.jpg');
       }
       
-      /* 画像コンテンツ */
-      #transparent-container .keyword-area .media-container .post-media .txt {
-          font-size: 12px;
-          line-height: 1.4;
-          color: #767676;
+      /* ここからパソコンサイズ */
+      @media only screen and (min-width: 1280px) {
+      
       }
     </style>
   </head>
   <body class="ja">
     <div id="wrapper">
-      <header id="global-header">
-        <h1 id="logo" class="logo01">transparent</h1>
-        <button class="btn-menu01 tap is-active">
-          <div class="btn-inner"><span class="line line-1"></span><span class="line line-2"></span><span class="line line-3"></span></div>
-        </button>
-        <div id="btn-recording" class="btn-recording rec"><span class="r1">Recording</span><span class="r2">REC</span>
-          <div class="loader"></div>
-        </div>
-        <p class="txt-recording"></p>
-      </header>
-      <div id="global-menu" class="is-active">
+      <button class="btn-menu01 tap">
+        <div class="btn-inner"><span class="line line-1"></span><span class="line line-2"></span><span class="line line-3"></span></div>
+      </button>
+      <div id="global-menu">
         <div class="inner">
-          <form class="form-keyword">
-            <p class="tit">Keyword Filtering</p>
-            <input type="text" placeholder="Input Keyword" class="input-keyword">
-            <button id="input-submit" class="input-submit">Submit</button>
-          </form>
-          <div class="keyword-list">
-          </div>
           <div class="setting-btn-area">
-            <p class="tit">Title / Description</p>
-            <div class="btn-toggle01 on-txt-hidden">
-              <div class="toggle"><span class="on">On</span><span class="off">Off</span></div>
-            </div>
-          </div>
-          <div class="setting-btn-area">
-            <p class="tit">Comment Card</p>
-            <div class="btn-toggle01 on-card-hidden">
-              <div class="toggle"><span class="on">On</span><span class="off">Off</span></div>
-            </div>
-          </div>
-          <div class="setting-btn-area">
-            <p class="tit">Media</p>
+            <p class="tit">Media Source</p>
             <div id="on-switch-media" class="btn-toggle02 on-switch-media">
               <div data-type="0" class="media photo is-active">Photo</div>
               <div data-type="1" class="media news">News</div>
               <div data-type="2" class="media movie">Movie</div>
             </div>
           </div>
+          <form class="form-keyword">
+            <p class="tit">Keyword Filtering</p>
+            <input type="text" placeholder="Input Keyword" class="input-keyword">
+            <button id="input-submit" class="input-submit btn-style01">Submit</button>
+          </form>
+          <div class="keyword-list">
+          </div>
+          <div class="setting-btn-area">
+            <p class="tit">Text</p>
+            <div class="btn-toggle01 on-txt-hidden">
+              <div class="under"><span class="on">On</span><span class="off">Off</span></div>
+              <div class="toggle"><span class="on">On</span><span class="off">Off</span></div>
+            </div>
+          </div>
         </div>
       </div>
-      <div id="transparent-container" class="menu-is-active">
+      <div class="recording-area rec">
+        <div class="txt-recording">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore</div>
+        <div id="btn-recording"></div>
+      </div>
+      <div id="transparent-container">
+        <div class="bg"></div>
+        <div class="modal-layer">
+          <div class="modal-back"></div>
+          <div class="modal-inner"></div>
+        </div>
       </div>
     </div>
     <script>
       var TRANSCRIPTS = [];
-      //- TRANSCRIPTS.WALL_ID = 1;
-      //- TRANSCRIPTS.API_URI = "/api/transcripts/" + TRANSCRIPTS.WALL_ID;
-      TRANSCRIPTS.API_URI = '/assets/js/initial_transcripts.json';
+      
+      TRANSCRIPTS.MEDIA_MAX_SIZE = 300*1.4; // ランダム配置される画像の最大サイズ
+      TRANSCRIPTS.MEDIA_MIN_SIZE = 150*1.3; // ランダム配置される画像の最小サイズ
+      TRANSCRIPTS.API_URI = './assets/js/initial_transcripts.json';
       
       var searches = [
         {
@@ -110,7 +104,7 @@
       var related_contents = [
           {
               "id": 100,
-              "search_id": 20,
+              "search_id": 13160,
               "title": "sample 1",
               "desc": "You Tube - Smasher - ",
               "url": "https://www.youtube.com/watch?v=22cdBDK-8hk",
@@ -170,18 +164,12 @@
           }
       ];
       
-      
-      
-      
     </script>
+    <script src="./assets/js/sample-data.js"></script>
     <script src="./assets/js/jquery.js"></script>
-    <script src="./assets/js/masonry.pkgd.min.js"></script>
+    <script src="./assets/js/jquery.randomElements.js"></script>
     <script src="./assets/js/bundle.js"></script>
     <script>
-      document.getElementById('logo').addEventListener('click', function() {
-          TRANSCRIPTS.prependContents({ searches, related_contents });
-      }, false);
-      
       document.getElementById('btn-recording').addEventListener('click', function() {
       
           // テキストの設定
@@ -194,6 +182,14 @@
           console.log(TRANSCRIPTS.getRecordingStatus());
       }, false);
       
+      document.getElementById('on-switch-media').addEventListener('click', function() {
+          setTimeout(function() {
+      
+              // メディアのタイプの取得
+              console.log(TRANSCRIPTS.getMediaType());
+          }, 100);
+      }, false);
+      
       document.getElementById('input-submit').addEventListener('click', function() {
           setTimeout(function() {
       
@@ -202,44 +198,88 @@
           }, 100);
       }, false);
       
-      document.getElementById('on-switch-media').addEventListener('click', function() {
-          setTimeout(function() {
-      
-              // メディアのタイプの取得
-              console.log(TRANSCRIPTS.getMediaType());
-          }, 100);
-      }, false);
-      
-      document.getElementById('on-switch-media').addEventListener('click', function() {
-          setTimeout(function() {
-      
-              // メディアのタイプの取得
-              console.log(TRANSCRIPTS.getMediaType());
-          }, 100);
-      }, false);
-      
-      $('#wrapper').on('click', '#transparent-container .btn-close02', function(event) {
-          setTimeout(function() {
-      
-              // メディアのタイプの取得
-              console.log("searchId: ", $(event.currentTarget).closest('.grid-item').attr('data-searchId'));
-              console.log("relatedContentId: ", $(event.currentTarget).closest('.grid-item').attr('data-relatedContentId'));
-          }, 100);
-      });
-      
       window.addEventListener('scroll', function() {
       
           // スクロールが下部に来たらtrueを返します
           console.log(TRANSCRIPTS.getScrollBottomPosition());
       
           if (TRANSCRIPTS.getScrollBottomPosition()) {
+      
+              // スクロール下部に来たら実行
               TRANSCRIPTS.appendContents({ searches, related_contents });
+              //- TRANSCRIPTS.prependContents({ searches, related_contents });
           }
       }, false);
       
+      // メニュー開閉ボタン
+      $('#wrapper').on('click', '.btn-menu01', function(event) {
+          console.log('メニュー開閉ボタン');
+      });
+      
+      //  表示テキストONOFFボタン
+      $('#wrapper').on('click', '.on-txt-hidden', function(event) {
+          console.log('表示テキストONOFFボタン');
+      });
+      
       document.getElementById('btn-recording').addEventListener('click', function() {
-          TRANSCRIPTS.addContents(related_contents);
+      
+          // コメントカード / テキストの表示非表示の切り替え
+          //- TRANSCRIPTS.setMediaText(true);
+      
+          // セッティングメニューの表示非表示の切り替え
+          // TRANSCRIPTS.setMenu(true);
+      
+          // メディアタイプの切り替え 0/1/2
+          //- TRANSCRIPTS.setMediaType(2);
+      
+          // related_contentsだけ追加
+          //- TRANSCRIPTS.addContents(related_contents);
+      
+          //キーワード追加
+          //- TRANSCRIPTS.addKeywordList('hogehoge');
+      
+          // キーワード削除
+          //- TRANSCRIPTS.removeKeywordList('hogehoge');
+      
+          // ドラッグON
+          TRANSCRIPTS.onDraggable();
+      
+          // ドラッグOFF
+          //- TRANSCRIPTS.onDraggable();
+      
       }, false);
+      
+      $('#wrapper').on('click', '#transparent-container .btn-close02', function(event) {
+          setTimeout(function() {
+      
+              // メディアのタイプの取得
+              console.log("transcript_id: ", $(event.currentTarget).closest('.media-photo').attr('data-id'));
+          }, 100);
+      });
+      
+      $('#wrapper').on('click', '#transparent-container .media-photo', function(event) {
+          setTimeout(function() {
+      
+              // transcript_id の取得
+              console.log("transcript_id: ", $(event.currentTarget).closest('.media-photo').attr('data-id'));
+              // search id の取得
+              console.log("search id: ", $(event.currentTarget).closest('.media-photo').attr('data-searchid'));
+              // related content id の取得
+              console.log("related content id: ", $(event.currentTarget).closest('.media-photo').attr('data-relatedcontentid'));
+          }, 100);
+      });
+      
+      $('#wrapper').on('click', '#transparent-container .modal-inner .btn-style01', function(event) {
+          setTimeout(function() {
+      
+              // transcript_id の取得
+              console.log("transcript_id: ", $(event.currentTarget).closest('.modal-inner').attr('data-id'));
+              // search id の取得
+              console.log("search id: ", $(event.currentTarget).closest('.modal-inner').attr('data-searchid'));
+              // related content id の取得
+              console.log("related content id: ", $(event.currentTarget).closest('.modal-inner').attr('data-relatedcontentid'));
+          }, 100);
+      });
     </script>
   </body>
 </html>
