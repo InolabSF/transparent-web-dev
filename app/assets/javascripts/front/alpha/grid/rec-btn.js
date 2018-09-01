@@ -63,17 +63,17 @@ function sleepByPromise(sec) {
 }
 
 function postTranscript(text) {
-  var FacebookID = 'guest_x';
+  // var FacebookID = 'guest_x';
   var post_url = '/api/transcripts';
   var with_words = TRANSCRIPTS.getKeywords();
   var search_type = TRANSCRIPTS.getMediaType();
 
   var body = {
     'transcript' : text,
-    'FacebookID' :  FacebookID,
+    // 'FacebookID' :  FacebookID,
+    // 'clientID' : FacebookID,
     'langcode' : languageCode,
     'wallID' : wallId,
-    'clientID' : FacebookID,
     'search_type' : search_type,
     'with_words' : with_words,
     'UI_version' : uiVersion

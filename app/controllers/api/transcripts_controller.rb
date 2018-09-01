@@ -1,44 +1,58 @@
+# frozen_string_literal: true
+
 require './lib/assets/api/transcripts/get_transcripts'
 require './lib/assets/api/transcripts/get_searches'
 require './lib/assets/api/transcripts/create_transcript'
 require './lib/assets/api/transcripts/tester'
 
 class Api::TranscriptsController < ApplicationController
-
   def index
     initial_load_num = 5
-    searches, search_last_index, search_first_index, related_contents, related_content_last_index = get_initial_searches(params[:wall_id], initial_load_num)
+    searches, search_last_index, search_first_index, related_contents, related_content_last_index = get_initial_searches(
+      params[:wall_id],
+      initial_load_num
+    )
+
     render json: {
-              'searches' => searches,
-              'search_last_index' => search_last_index,
-              'search_first_index' => search_first_index,
-              'related_contents' => related_contents,
-              'related_content_last_index' => related_content_last_index
-            }
+      searches:                   searches,
+      search_last_index:          search_last_index,
+      search_first_index:         search_first_index,
+      related_contents:           related_contents,
+      related_content_last_index: related_content_last_index
+    }
   end
 
   def show
-    searches, search_last_index, related_contents, related_content_last_index = get_new_searches(params[:wall_id], params[:search_last_index], params[:related_content_last_index])
+    searches, search_last_index, related_contents, related_content_last_index = get_new_searches(
+      params[:wall_id],
+      params[:search_last_index],
+      params[:related_content_last_index]
+    )
+
     render json: {
-            'searches' => searches,
-            'search_last_index' => search_last_index,
-            'related_contents' => related_contents,
-            'related_content_last_index' => related_content_last_index
-          }
+      searches:                   searches,
+      search_last_index:          search_last_index,
+      related_contents:           related_contents,
+      related_content_last_index: related_content_last_index
+    }
   end
 
   def load_past
     further_load_num = 5
-    searches, search_first_index, related_contents = get_further_searches(params[:wall_id], params[:search_first_index], further_load_num)
+    searches, search_first_index, related_contents = get_further_searches(
+      params[:wall_id],
+      params[:search_first_index],
+      further_load_num
+    )
+
     render json: {
-              'searches' => searches,
-              'search_first_index' => search_first_index,
-              'related_contents' => related_contents
-            }
+      searches:           searches,
+      search_first_index: search_first_index,
+      related_contents:   related_contents
+    }
   end
 
   def create
-
     default_nlp = 'MS'
     is_word_only = true
     is_concurrent = true
@@ -58,24 +72,27 @@ class Api::TranscriptsController < ApplicationController
     amana_test_wall = [1, 9, 15, 16]
     is_test_mode = true if amana_test_wall.include?(params[:wallID])
 
-    @transcript = create_transcript(params, nlp_type, is_test_mode, is_word_only, is_concurrent, multiple_search)
+    @transcript = create_transcript(
+      params,
+      nlp_type,
+      is_test_mode,
+      is_word_only,
+      is_concurrent,
+      multiple_search
+    )
 
     if @transcript.save
-      render :json => @transcript
+      render json: @transcript
     else
       puts('error')
       render json: @transcript.errors, status: :unprocessable_entity
     end
-
   end
 
   def log_messenger
     langcode = 'ja-JP'
-
     create_log(text, langcode)
-
-    render json: {'transcripts' => 'formated_transcripts'}
-
+    render json: { transcripts: 'formated_transcripts' }
   end
 
   def archive_search
@@ -83,8 +100,8 @@ class Api::TranscriptsController < ApplicationController
     @search = Search.find(search_id)
     @search.is_visible = false
     @search.is_archived = true
-    @search.related_contents.each {|related_content| related_content.is_visible = false }
-    @search.related_contents.each {|related_content| related_content.is_archived = true }
+    @search.related_contents.each { |related_content| related_content.is_visible = false }
+    @search.related_contents.each { |related_content| related_content.is_archived = true }
 
     if @search.save
       render json: @search
@@ -136,13 +153,33 @@ class Api::TranscriptsController < ApplicationController
     user_id = User.find_by(facebook_id: transcript_hash[:user][:user_id]).id
     has_content = transcript_hash[:has_content]
     wall_id = transcript_hash[:wall_id]
-    @transcript = Transcript.new(:text => transcript_hash[:text], :wall_id => wall_id, :user_id => user_id, :has_content => has_content, :is_visible => true, :langcode => transcript_hash[:langcode], :sentiment => transcript_hash[:sentiment])
+    @transcript = Transcript.new(
+      text:        transcript_hash[:text],
+      wall_id:     wall_id,
+      user_id:     user_id,
+      has_content: has_content,
+      is_visible:  true,
+      langcode:    transcript_hash[:langcode],
+      sentiment:   transcript_hash[:sentiment]
+    )
 
     if has_content
       related_contents_hash = transcript_hash[:related_contents]
       for related_content_hash in related_contents_hash
-        related_content = @transcript.related_contents.build(:title => related_content_hash[:title], :desc => related_content_hash[:desc], :url => related_content_hash[:url], :img_url => related_content_hash[:img_url], :content_type => related_content_hash[:content_type], :source => related_content_hash[:source], :is_visible => [:is_visible])
-        condition = related_content.build_condition(:service => related_content_hash[:condition][:service], :word => related_content_hash[:condition][:word])
+        related_content = @transcript.related_contents.build(
+          title:        related_content_hash[:title],
+          desc:         related_content_hash[:desc],
+          url:          related_content_hash[:url],
+          img_url:      related_content_hash[:img_url],
+          content_type: related_content_hash[:content_type],
+          source:       related_content_hash[:source],
+          is_visible:   [:is_visible]
+        )
+
+        condition = related_content.build_condition(
+          service: related_content_hash[:condition][:service],
+          word:    related_content_hash[:condition][:word]
+        )
       end
     end
 
@@ -150,53 +187,68 @@ class Api::TranscriptsController < ApplicationController
 
     entities = transcript_hash[:entities]
     for entity_hash in entities
-      entity = @transcript.entities.build(:category => entity_hash[:category], :name => entity_hash[:name])
+      entity = @transcript.entities.build(
+        category: entity_hash[:category],
+        name:     entity_hash[:name]
+      )
     end
 
     if @transcript.save
 
       if transcript_hash[:context][:reaction] == 'AWESOME'
-        awesome_contents = Transcript.find(@transcript.id-1).related_contents
+        awesome_contents = Transcript.find(@transcript.id - 1).related_contents
         for awesome_content in awesome_contents
           awesome_content.awesome += 1
           awesome_content.save
         end
       end
 
-      render :json => @transcript
+      render json: @transcript
     else
       render json: @transcript.errors, status: :unprocessable_entity
     end
   end
 
   def index_sxsw_demo
-    transcripts = Transcript.where(:wall_id => params[:wall_id]).order('id DESC')[0...15]
+    transcripts = Transcript.where(wall_id: params[:wall_id]).order('id DESC')[0...15]
+
     if transcripts.present?
       first_index = transcripts.last.id if transcripts.present?
     else
       first_index = null
     end
-    transcripts_index = Transcript.where(:wall_id => params[:wall_id]).length
+    transcripts_index = Transcript.where(wall_id: params[:wall_id]).length
     data_list = format_transcripts(transcripts)
-    render json: {'transcripts' => data_list, 'index' => transcripts_index, 'first_index' => first_index }
+
+    render json: {
+      transcripts: data_list,
+      index: transcripts_index,
+      first_index: first_index
+    }
   end
 
   def show_sxsw_demo
-    new_transcripts = Transcript.where(:wall_id => params[:wall_id]).order(:id).offset(params[:index].to_i)
+    new_transcripts = Transcript.where(wall_id: params[:wall_id]).order(:id).offset(params[:index].to_i)
     index = params[:index].to_i + new_transcripts.length
     new_data_list = format_transcripts(new_transcripts)
-    render json: {'transcripts' => new_data_list, 'index' => index }
+    render json: {
+      transcripts: new_data_list,
+      index: index
+    }
   end
 
   def load_past_sxsw_demo
     wall_id = params[:wall_id]
     first_index = params[:first_index]
-    transcripts = Transcript.where("wall_id" => wall_id, "has_content" => true)
-                      .where("id < ?", first_index.to_i)
-                      .order('id DESC')[0...5]
+    transcripts = Transcript.where('wall_id' => wall_id, 'has_content' => true)
+                    .where('id < ?', first_index.to_i)
+                    .order('id DESC')[0...5]
     first_index = transcripts.last.id if transcripts.present?
     data_list = format_transcripts(transcripts)
-    render json: {'transcripts' => data_list, 'first_index' => first_index }
+    render json: {
+      transcripts: data_list,
+      first_index: first_index
+    }
   end
 
   # def index_sxsw_demo
@@ -214,7 +266,6 @@ class Api::TranscriptsController < ApplicationController
   #   new_data_list = format_multi_search(new_transcripts, show_dummy)
   #   render json: {'transcripts' => new_data_list, 'index' => index }
   # end
-
 
   # # PATCH/PUT /tasks/1
   # def update

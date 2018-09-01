@@ -52,12 +52,14 @@ function fetchContents() {
     search_first_index = response.data.search_first_index;
     related_content_last_index = response.data.related_content_last_index;
 
-    TRANSCRIPTS.appendContents({ searches, related_contents });
+    if (searches.length) {
+      TRANSCRIPTS.appendContents({ searches, related_contents });
+    }
 
   }, function (error) {
     console.log(error);
   }).then(function (response) {
-    loadContents();
+    // loadContents();
   });
 }
 
@@ -174,10 +176,6 @@ function openContents(related_content_id) {
     console.log(error);
   });
 }
-//
-// window.addEventListener('load', function() {
-//     fetchContents();
-// }, false);
 
 window.addEventListener('load',　fetchContents, false);
 

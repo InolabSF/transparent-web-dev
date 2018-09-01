@@ -2,12 +2,10 @@ def format_transcripts(transcripts_list)
   formated_transcripts = []
 
   for transcript in transcripts_list do
-
     if transcript.searches.present?
 
       for search in transcript.searches
-
-        next if !search.is_visible
+        next unless search.is_visible
 
         transcript_hash = transcript.attributes
         transcript_hash.store('user', transcript.user)
@@ -28,7 +26,6 @@ def format_transcripts(transcripts_list)
         transcript_hash.store('related_contents', search.related_contents)
 
         formated_transcripts.push(transcript_hash)
-
       end
 
     elsif transcript.entities.present?
@@ -48,11 +45,8 @@ def format_transcripts(transcripts_list)
       transcript_hash.store('related_contents', transcript.related_contents)
 
       formated_transcripts.push(transcript_hash)
-
     end
-
   end
 
-  return formated_transcripts
-
+  formated_transcripts
 end

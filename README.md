@@ -6,6 +6,12 @@
 
 ## Set up
 $ bundle install
+$ bin/rails db:migrate RAILS_ENV=development
+$ rails db:seed
+
+admin_usersをつくらないといけない
+
+## Environment Variables
 
 ## 3rd Party Services
 
