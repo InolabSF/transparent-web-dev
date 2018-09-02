@@ -9,9 +9,21 @@ $ bundle install
 $ bin/rails db:migrate RAILS_ENV=development
 $ rails db:seed
 
-admin_usersをつくらないといけない
+<!-- admin_usersをつくらないといけない -->
 
 ## Environment Variables
+
+  export MS_TEXT_KEY=""
+  export MS_IMAGE_SEARCH_KEY=""
+  export UNSPLASH_KEY=""
+  export FLICKR_KEY=""
+  export GCP_API_KEY=""
+  export GETTY_IMAGES_KEY=""
+  export MS_CONTENT_MODERATOR_KEY=""
+  export MS_ASR_KEY=""
+  export MS_NEWS_SEARCH_KEY=""
+  export MS_TEXT_KEY=""
+  export AMANA_KEY=""
 
 ## 3rd Party Services
 
@@ -35,7 +47,7 @@ admin_usersをつくらないといけない
 
   DOKIDOKIさんに作成して頂いたアカウントです
 
-## Transparent Home画面 データオブジェクト　(β ver, 7/5/2018)
+<!-- ## Transparent Home画面 データオブジェクト　(β ver, 7/5/2018)
 
 #### Projectオブジェクト ： プロジェクト情報の取得に使用します。
 
@@ -103,9 +115,9 @@ admin_usersをつくらないといけない
 
       updated_at : ISOString // time when updated
 
-    }
+    } -->
 
-## Transparent Home画面 API (β ver, 7/5/2018)
+<!-- ## Transparent Home画面 API (β ver, 7/5/2018)
 
 取得するデータのサンプルは"/src-front/beta/DataSampleHome.js"を参考にしてください。
 
@@ -140,11 +152,9 @@ admin_usersをつくらないといけない
 
         walls : List[ object( Wall ) ]
 
-    }
+    } -->
 
 ## Transparent Wall画面 データオブジェクト　(α ver, 5/1/2018)
-
-<!-- 主にユーザーに提供するのはユーザー発言（Transcript）が持つテキスト情報（Transcript.text）とそれに付随した関連情報（Transcript.related_contents）になります。 -->
 
 主にウェブアプリに表示するのは検索に使用したワード（Searchオブジェクト）とそれに付随した関連コンテンツ（RelatedContentオブジェクト）になります.
 
@@ -651,7 +661,7 @@ admin_usersをつくらないといけない
 ## フロント開発者のための各種設定値サンプル
 
 フロントコーディング時は下記の値を使用してください. バックエンドと統合時に動的なものに変更します.
-統合時のために各種設定値はbundle.jsの外に出して頂くようにお願いします.
+統合時のために各種設定値は"bundle.js"の外に出して頂くようにお願いします.
 
     wall_id = 3
 
