@@ -6,7 +6,9 @@
 
 ## Set up
 $ bundle install
+
 $ bin/rails db:migrate RAILS_ENV=development
+
 $ rails db:seed
 
 <!-- admin_usersをつくらないといけない -->
@@ -14,15 +16,25 @@ $ rails db:seed
 ## Environment Variables
 
   export MS_TEXT_KEY=""
+
   export MS_IMAGE_SEARCH_KEY=""
+
   export UNSPLASH_KEY=""
+
   export FLICKR_KEY=""
+
   export GCP_API_KEY=""
+
   export GETTY_IMAGES_KEY=""
+
   export MS_CONTENT_MODERATOR_KEY=""
+
   export MS_ASR_KEY=""
+
   export MS_NEWS_SEARCH_KEY=""
+
   export MS_TEXT_KEY=""
+  
   export AMANA_KEY=""
 
 ## 3rd Party Services
