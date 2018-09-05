@@ -121,16 +121,16 @@ Transparent webアプリのアーキテクチャFirestoreを活用するには�
 
 ## Environment Variables
 
-    * MS_TEXT_KEY (Microsoft Text Analytics API)
-    * MS_IMAGE_SEARCH_KEY (Bing Image Search API)
-    * MS_CONTENT_MODERATOR_KEY (Microsoft Content Moderator API)
-    * MS_ASR_KEY  (Bing Speech API)
-    * MS_NEWS_SEARCH_KEY  (Bing News Search API)
-    * GCP_API_KEY=  (Google Cloud Platform API)
-    * UNSPLASH_KEY  (Unsplash API)
-    * FLICKR_KEY  (Flickr API)
-    * GETTY_IMAGES_KEY  (Getty Images API)
-    * AMANA_KEY  (Amana images API)
+  * MS_TEXT_KEY (Microsoft Text Analytics API)
+  * MS_IMAGE_SEARCH_KEY (Bing Image Search API)
+  * MS_CONTENT_MODERATOR_KEY (Microsoft Content Moderator API)
+  * MS_ASR_KEY  (Bing Speech API)
+  * MS_NEWS_SEARCH_KEY  (Bing News Search API)
+  * GCP_API_KEY=  (Google Cloud Platform API)
+  * UNSPLASH_KEY  (Unsplash API)
+  * FLICKR_KEY  (Flickr API)
+  * GETTY_IMAGES_KEY  (Getty Images API)
+  * AMANA_KEY  (Amana images API)
 
 <!-- ## Transparent Home画面 データオブジェクト　(β ver, 7/5/2018)
 
