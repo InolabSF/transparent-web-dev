@@ -77,17 +77,28 @@ Transparent webアプリのアーキテクチャFirestoreを活用するには�
 
   Transparentデモ用アカウントです。（本プロジェクトGoogle Driveの"Cloud Service Account"のドキュメントに詳細があります。）
 
+  使用しているAPIサービスリスト
+  * Cloud Natural language API
+  * Cluod Translation API
+
 #### Microsoft Azure
 
   DOKIDOKIさん所有のアカウントです。
 
+  使用しているAPIサービスリスト
+  * Microsoft Text Analytics API
+  * Bing Image Search API
+  * Microsoft Content Moderator API
+  * Bing Speech API
+  * Bing News Search API
+
 #### Heroku
 
-  DOKIDOKIさん所有のアカウントです。
+  DOKIDOKIさん所有のアカウントです。本番環境のサーバー運用に使用しています。
 
 #### DNSimple
 
-  DOKIDOKIさん所有のアカウントです。
+  DOKIDOKIさん所有のアカウントです。カスタムドメインの割り当てに使用しています。
 
 #### Unsplash API
 
@@ -107,7 +118,7 @@ Transparent webアプリのアーキテクチャFirestoreを活用するには�
 #### Amana Images API
 
   Amanaさんに用意していただいたAPIキーを環境変数"AMANA_KEY"に設定してください。
-  
+
 ## Environment Variables
 
     * MS_TEXT_KEY (Microsoft Text Analytics API)
