@@ -43,25 +43,6 @@ class HomeController < ApplicationController
     }
   end
 
-  # test
-
-  def get_domain
-    fullpath = request.fullpath
-    original_fullpath = request.original_fullpath
-    original_url = request.original_url
-    ip = request.ip
-    remote_ip = request.remote_ip
-    local = request.local?
-    render json: {
-      fullpath:          fullpath,
-      original_fullpath: original_fullpath,
-      original_url:      original_url,
-      ip:                ip,
-      remote_ip:         remote_ip,
-      local:             local
-    }
-  end
-
   # alpha
 
   def alpha
@@ -168,14 +149,6 @@ class HomeController < ApplicationController
     @wall_id = 3
     @language_code = 'ja-JP'
     render file: 'home/front/wall/demo-sxsw/wall-demo'
-  end
-
-  def demo_ms
-    render file: 'home/sample-ms'
-  end
-
-  def demo_google
-    render file: 'home/sample-google'
   end
 
   # def callback

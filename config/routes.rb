@@ -35,15 +35,12 @@ Rails.application.routes.draw do
 
   ## demo sxsw (deprecated)
 
-  post '/post', to: 'api/transcripts#create_by_outer'
   get '/demo/api/transcripts/:wall_id', to: 'api/transcripts#index_sxsw_demo'
-  get '/demo/api/transcripts/:wall_id/:index', to: 'api/transcripts#show_sxsw_demo'
   get '/demo/api/transcripts/:wall_id/:index', to: 'api/transcripts#show_sxsw_demo'
   get '/demo/api/transcripts/:wall_id/past/:first_index', to: 'api/transcripts#load_past_sxsw_demo'
 
   get '/wall/:wall_id/en', to: 'home#demo_en'
   get '/wall/:wall_id/ja', to: 'home#demo_ja'
-
   get '/demo/en', to: 'home#demo_sxsw_en'
   get '/demo/ja', to: 'home#demo_sxsw_ja'
 
@@ -51,13 +48,7 @@ Rails.application.routes.draw do
 
   get '/console/dev/test', to: 'home#ai_tester'
   post '/console/dev/test/nlp', to: 'home#nlp_tester'
-
-  get '/test/dev/domain', to: 'home#get_domain'
-
   post '/api/transcripts/debug', to: 'api/transcripts#log_messenger'
-
-  get '/demo/ms', to: 'home#demo_ms'
-  get '/demo/google', to: 'home#demo_google'
 
   # get '/callback',   to: 'home#callback'
 

@@ -5,37 +5,31 @@
 - Ruby - 2.3.1
 
 ## Set up
-$ bundle install
+`$ bundle install`
 
-$ bin/rails db:migrate RAILS_ENV=development
+`$ bin/rails db:migrate RAILS_ENV=development`
 
-$ rails db:seed
+`$ rails db:seed`
 
 ## Transparent Web Appに関する説明（2018年9月5日現在）
 
 ### テスト版Wallへのアクセスの方法
 
-Transparentアプリでは日本語のテストウォール(wall_id: 3)を用意しています。
-テスト版Wallにアクセスするためにはローカル環境で"$ rails db:seed"を実行した後にルート"/alpha/test/ja"にアクセスしてください。
+Transparentアプリでは日本語のテストウォール(wall_id: 3)を用意しています。  
+テスト版Wallにアクセスするためにはローカル環境で`$ rails db:seed`を実行した後にルート"/alpha/test/ja"にアクセスしてください。  
 
 ローカルサーバーへのアクセスurl例：http://localhost:3000/alpha/test/ja
 
 ### 通常のWallアクセスの方法
 
-DBのWallテーブルに新しくwallレコードが作成される際にそのwallのアクセスのためのランダムキーを含むurlが自動発行されます。
-
-そのurlをrails consoleかrails adminによりDBのwallsテーブルにアクセスすることで取得できます。アクセスすることでwallを起動することが可能です。
-
-取得できるurlは自動的にDOKIDOKI様カスタムドメインtrnspt.comを適用した状態で発行されますので、実行環境にあわせてurlを編集してください。
-
+DBのWallテーブルに新しくwallレコードが作成される際にそのwallのアクセスのためのランダムキーを含むurlが自動発行されます。そのurlをrails consoleかrails adminによりDBのwallsテーブルのurlカラムから取得できます。そのurlにアクセスすることでwallを起動することが可能です。  
+取得できるurlは自動的にDOKIDOKI様カスタムドメインtrnspt.comを適用した状態で発行されますので、実行環境にあわせてurlを編集してください。  
 
 例えば、ローカル環境で実行する場合は以下のようにurlを変更してアクセスする必要があります。
 
-https://trnspt.com/alpha/wall/1ni3k8eD/dev
-
-↓
-
-http://localhost:3000/alpha/wall/1ni3k8eD/dev
+~~https://trnspt.com/alpha/wall/1ni3k8eD/dev~~  
+↓  
+http://localhost:3000/alpha/wall/1ni3k8eD/dev  
 
 ### カスタムの仕様が実装されているWallに関して
 
@@ -51,49 +45,92 @@ wall_id: 3, 12 (開発検証用)
 wall_id: 1, 9, 15, 16 (Amanaさん向けの実装)
 - 画像取得先をamanaさんのAPIに限定
 
-<!-- admin_usersをつくらないといけない -->
+### 本番環境運用オペレーション
 
-## Environment Variables
+本番用のサーバーはHerokuで運用しています。最新のコードのサーバー環境への反映方法は下記Heroku公式ドキュメントを参照してください。HerokuアカウントはDOKIDOKIさんのものを使用しております。（2018年9月5日現在）
 
-  export MS_TEXT_KEY=""
+ [Heroku -Deploying with Git-](https://devcenter.heroku.com/articles/git)
 
-  export MS_IMAGE_SEARCH_KEY=""
+### Beta版にむけてのバックエンド改善案
 
-  export UNSPLASH_KEY=""
+クライアント間のストリミーミング技術にはFirebase FirestoreのonSnapshot APIを使用する方針がいいと思います。以下の利点があると思います。
 
-  export FLICKR_KEY=""
+Firestore活用メリット
+* Googleの提供する通信技術により安定性向上
+* オフライン補正機能
+* No SQL DBの特性によるレイテンシー向上
 
-  export GCP_API_KEY=""
+Transparent webアプリのアーキテクチャFirestoreを活用するには以下の変更点が必要です。
 
-  export GETTY_IMAGES_KEY=""
+* バックエンド
+  * クライアントで取得するデータをFirestoreに反映するロジック
+  * https://github.com/InolabSF/transparent-web-dev/blob/master/lib/assets/platform/firestore.rb
+* フロントエンド
+  * Firestoreからリアルタイムアップデートを取得する仕組み
+  * https://github.com/InolabSF/transparent-web-dev/blob/master/app/assets/javascripts/front/beta/wall/loadContents.js
 
-  export MS_CONTENT_MODERATOR_KEY=""
-
-  export MS_ASR_KEY=""
-
-  export MS_NEWS_SEARCH_KEY=""
-
-  export MS_TEXT_KEY=""
-
-  export AMANA_KEY=""
+参考 [Cloud Firestore でリアルタイム アップデートを入手する](https://firebase.google.com/docs/firestore/query-data/listen)
 
 ## 3rd Party Services
 
 #### Google Cloud Platform
 
-  Transparentデモ用アカウント（本プロジェクトGoogle Driveの"Cloud Service Account"のドキュメントに詳細があります。）
+  Transparentデモ用アカウントです。（本プロジェクトGoogle Driveの"Cloud Service Account"のドキュメントに詳細があります。）
+
+  使用しているAPIサービスリスト
+  * Cloud Natural language API
+  * Cluod Translation API
 
 #### Microsoft Azure
 
-  DOKIDOKIさんのアカウントです
+  DOKIDOKIさん所有のアカウントです。
+
+  使用しているAPIサービスリスト
+  * Microsoft Text Analytics API
+  * Bing Image Search API
+  * Microsoft Content Moderator API
+  * Bing Speech API
+  * Bing News Search API
 
 #### Heroku
 
-  DOKIDOKIさんに作成して頂いたアカウントです
+  DOKIDOKIさん所有のアカウントです。本番環境のサーバー運用に使用しています。
 
 #### DNSimple
 
-  DOKIDOKIさんに作成して頂いたアカウントです
+  DOKIDOKIさん所有のアカウントです。カスタムドメインの割り当てに使用しています。
+
+#### Unsplash API
+
+  Unsplash APIの使用には開発者用のAPIキーを用意してください。Transparent α版本番環境においてはフリーアカウントを使用しています。Unsplash APIを使用するには環境変数"UNSPLASH_KEY"を設定する必要があります。
+  <https://unsplash.com/documentation>
+
+#### Getty Images API
+
+  Getty Images APIの使用には開発者用のAPIキーを用意してください。Transparent α版本番環境においてはフリーアカウントを使用しています。Getty Images APIを使用するには環境変数"GETTY_IMAGES_KEY"を設定する必要があります。
+  <https://developers.gettyimages.com/api/>
+
+#### Flickr API
+
+  Flickr APIの使用には開発者用のAPIキーを用意してください。Transparent α版本番環境においてはフリーアカウントを使用しています。Flickr APIを使用するには環境変数"FLICKR_KEY"を設定する必要があります。
+  <https://www.flickr.com/services/api/>
+
+#### Amana Images API
+
+  Amanaさんに用意していただいたAPIキーを環境変数"AMANA_KEY"に設定してください。
+
+## Environment Variables
+
+  * MS_TEXT_KEY (Microsoft Text Analytics API)
+  * MS_IMAGE_SEARCH_KEY (Bing Image Search API)
+  * MS_CONTENT_MODERATOR_KEY (Microsoft Content Moderator API)
+  * MS_ASR_KEY  (Bing Speech API)
+  * MS_NEWS_SEARCH_KEY  (Bing News Search API)
+  * GCP_API_KEY=  (Google Cloud Platform API)
+  * UNSPLASH_KEY  (Unsplash API)
+  * FLICKR_KEY  (Flickr API)
+  * GETTY_IMAGES_KEY  (Getty Images API)
+  * AMANA_KEY  (Amana images API)
 
 <!-- ## Transparent Home画面 データオブジェクト　(β ver, 7/5/2018)
 
@@ -205,6 +242,11 @@ wall_id: 1, 9, 15, 16 (Amanaさん向けの実装)
 ## Transparent Wall画面 データオブジェクト　(α ver, 5/1/2018)
 
 主にウェブアプリに表示するのは検索に使用したワード（Searchオブジェクト）とそれに付随した関連コンテンツ（RelatedContentオブジェクト）になります.
+
+### ERD図
+
+![Transparent Domain Model](https://github.com/InolabSF/transparent-web-dev/blob/refactoring/erd.pdf)
+
 
 <!-- #### Transcript オブジェクト ： ユーザーの声から取得した発言情報
 
@@ -701,27 +743,3 @@ wall_id: 1, 9, 15, 16 (Amanaさん向けの実装)
 ### 画像の削除
 
 "GET", "/api/update/contents/" + related_content_id
-
-## フロント開発者のための各種設定値サンプル
-
-フロントコーディング時は下記の値を使用してください. バックエンドと統合時に動的なものに変更します.
-統合時のために各種設定値は"bundle.js"の外に出して頂くようにお願いします.
-
-    wall_id = 3
-
-    langcode = 'ja-JP'
-
-    FacebookID = 'guest_x'
-
-
-<!-- ## &検索ワードの設定
-
-"GET", "/set/context/" + wall_id
-
-params['query'] = &検索ワード -->
-
-<!-- ## &検索ワードの削除
-
-"GET", "/delete/context/" + wall_id
-
-params['query'] = &検索ワード -->

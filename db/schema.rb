@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180710230129) do
+ActiveRecord::Schema.define(version: 20180905191156) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -32,32 +32,6 @@ ActiveRecord::Schema.define(version: 20180710230129) do
     t.string "word", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "config_groups", force: :cascade do |t|
-    t.integer "config_id"
-    t.integer "wall_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["config_id"], name: "index_config_groups_on_config_id"
-    t.index ["wall_id"], name: "index_config_groups_on_wall_id"
-  end
-
-  create_table "configs", force: :cascade do |t|
-    t.string "name"
-    t.string "cse_id"
-    t.integer "number"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "contexts", force: :cascade do |t|
-    t.integer "transcript_id", null: false
-    t.string "state", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.boolean "feedback", default: false
-    t.string "reaction"
   end
 
   create_table "entities", force: :cascade do |t|
@@ -124,15 +98,6 @@ ActiveRecord::Schema.define(version: 20180710230129) do
     t.integer "awesome", default: 0
     t.string "langcode"
     t.boolean "is_archived", default: false
-  end
-
-  create_table "users", force: :cascade do |t|
-    t.string "facebook_id"
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "ms_key", default: "ebdf6b84bf604091ad354a65c49775c0"
-    t.string "google_key", default: "ebdf6b84bf604091ad354a65c49775c0"
   end
 
   create_table "walls", force: :cascade do |t|
