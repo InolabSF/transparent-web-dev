@@ -13,8 +13,7 @@ $ rails db:seed
 
 ## Transparent Web Appに関する説明
 
-
-###テスト版Wallへのアクセスの方法（2018年9月5日現在）
+### テスト版Wallへのアクセスの方法（2018年9月5日現在）
 
 Transparentアプリでは日本語のテストウォール(wall_id: 3)を用意しています。
 テスト版Wallにアクセスするためにはローカル環境で"$ rails db:seed"を実行した後にルート"/alpha/test/ja"にアクセスして頂ければと思います。
