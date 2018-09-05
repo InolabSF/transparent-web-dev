@@ -13,6 +13,7 @@ $ rails db:seed
 
 ## Transparent Web Appに関する説明
 
+
 ###テスト版Wallへのアクセスの方法（2018年9月5日現在）
 
 Transparentアプリでは日本語のテストウォール(wall_id: 3)を用意しています。
@@ -23,12 +24,17 @@ Transparentアプリでは日本語のテストウォール(wall_id: 3)を用意
 ### 通常のWallアクセスの方法
 
 DBのWallテーブルに新しくwallレコードが作成される際にそのwallのアクセスのためのランダムキーを含むurlが自動発行されます。
+
 そのurlをrails consoleかrails adminによりDBのwallsテーブルにアクセスすることで取得できます。アクセスすることでwallを起動することが可能です。
+
 取得できるurlは自動的にDOKIDOKI様カスタムドメインtrnspt.comを適用した状態で発行されますので、実行環境にあわせてurlを編集してください。
+
 
 例えば、ローカル環境で実行する場合は以下のようにurlを変更してアクセスする必要があります。
 https://trnspt.com/alpha/wall/1ni3k8eD/dev
+
 ↓
+
 http://localhost:3000/alpha/wall/1ni3k8eD/dev
 
 ### カスタムの仕様が実装されているWallに関して
