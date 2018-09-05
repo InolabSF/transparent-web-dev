@@ -11,7 +11,7 @@
 
 `$ rails db:seed`
 
-## Transparent Web Appに関する説明（9/5/2018）
+## Getting Started（9/5/2018）
 
 ### テスト版Wallへのアクセスの方法
 
@@ -25,7 +25,7 @@ Transparentアプリでは日本語のテストウォール(wall_id: 3)を用意
 DBのWallテーブルに新しくwallレコードが作成される際にそのwallのアクセスのためのランダムキーを含むurlが自動発行されます。そのurlをrails consoleかrails adminによりDBのwallsテーブルのurlカラムから取得できます。そのurlにアクセスすることでwallを起動することが可能です。  
 取得できるurlは自動的にDOKIDOKI様カスタムドメインtrnspt.comを適用した状態で発行されますので、実行環境にあわせてurlを編集してください。  
 
-例えば、ローカル環境で実行する場合は以下のようにurlを変更してアクセスする必要があります。
+例として、ローカル環境で実行する場合は以下のようにurlを変更してアクセスする必要があります。
 
 ~~https://trnspt.com/alpha/wall/1ni3k8eD/dev~~  
 ↓  
@@ -55,7 +55,6 @@ wall_id: 1, 9, 15, 16 (Amanaさん向けの実装)
 
 クライアント間のストリミーミング技術にはFirebase FirestoreのonSnapshot APIを使用する方針がいいと思います。以下の利点があると思います。
 
-Firestore活用メリット
 * Googleの提供する通信技術により安定性向上
 * オフライン補正機能
 * No SQL DBの特性によるレイテンシー向上
