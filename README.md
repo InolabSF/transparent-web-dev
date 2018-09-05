@@ -11,12 +11,12 @@ $ bin/rails db:migrate RAILS_ENV=development
 
 $ rails db:seed
 
-## Transparent Web Appに関する説明
+## Transparent Web Appに関する説明（2018年9月5日現在）
 
-### テスト版Wallへのアクセスの方法（2018年9月5日現在）
+### テスト版Wallへのアクセスの方法
 
 Transparentアプリでは日本語のテストウォール(wall_id: 3)を用意しています。
-テスト版Wallにアクセスするためにはローカル環境で"$ rails db:seed"を実行した後にルート"/alpha/test/ja"にアクセスして頂ければと思います。
+テスト版Wallにアクセスするためにはローカル環境で"$ rails db:seed"を実行した後にルート"/alpha/test/ja"にアクセスしてください。
 
 ローカルサーバーへのアクセスurl例：http://localhost:3000/alpha/test/ja
 
@@ -30,6 +30,7 @@ DBのWallテーブルに新しくwallレコードが作成される際にそのw
 
 
 例えば、ローカル環境で実行する場合は以下のようにurlを変更してアクセスする必要があります。
+
 https://trnspt.com/alpha/wall/1ni3k8eD/dev
 
 ↓
@@ -42,7 +43,7 @@ http://localhost:3000/alpha/wall/1ni3k8eD/dev
 
 wall_id: 3, 12 (開発検証用)
 
-- NLPモデルをGoogle Cloud Platformを使用
+- NLPモデルをGoogle Cloud Platformを使用（通常はMS Keyword API）
 - 抽出名刺を固有名刺のみへ絞り込み
 - 検索ワードを単数に制限
 
