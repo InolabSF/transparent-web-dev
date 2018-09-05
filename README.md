@@ -22,8 +22,7 @@ Transparentアプリでは日本語のテストウォール(wall_id: 3)を用意
 
 ### 通常のWallアクセスの方法
 
-DBのWallテーブルに新しくwallレコードが作成される際にそのwallのアクセスのためのランダムキーを含むurlが自動発行されます。  
-そのurlをrails consoleかrails adminによりDBのwallsテーブルにアクセスすることで取得できます。アクセスすることでwallを起動することが可能です。  
+DBのWallテーブルに新しくwallレコードが作成される際にそのwallのアクセスのためのランダムキーを含むurlが自動発行されます。そのurlをrails consoleかrails adminによりDBのwallsテーブルのurlカラムから取得できます。そのurlにアクセスすることでwallを起動することが可能です。  
 取得できるurlは自動的にDOKIDOKI様カスタムドメインtrnspt.comを適用した状態で発行されますので、実行環境にあわせてurlを編集してください。  
 
 例えば、ローカル環境で実行する場合は以下のようにurlを変更してアクセスする必要があります。
@@ -50,7 +49,7 @@ wall_id: 1, 9, 15, 16 (Amanaさん向けの実装)
 
 本番用のサーバーはHerokuで運用しています。最新のコードのサーバー環境への反映方法は下記Heroku公式ドキュメントを参照してください。HerokuアカウントはDOKIDOKIさんのものを使用しております。（2018年9月5日現在）
 
- [Heroku](https://devcenter.heroku.com/articles/git "Deploying with Git")
+ [Heroku -Deploying with Git-](https://devcenter.heroku.com/articles/git)
 
 ### Beta版にむけてバックエンド改善案
 
@@ -70,20 +69,20 @@ Transparent webアプリのアーキテクチャFirestoreを活用するには�
   * Firestoreからリアルタイムアップデートを取得する仕組み
   * https://github.com/InolabSF/transparent-web-dev/blob/master/app/assets/javascripts/front/beta/wall/loadContents.js
 
-参考 [Cloud Firestore](https://firebase.google.com/docs/firestore/query-data/listen "Cloud Firestore でリアルタイム アップデートを入手する")
+参考 [Cloud Firestore でリアルタイム アップデートを入手する](https://firebase.google.com/docs/firestore/query-data/listen)
 
 ## Environment Variables
 
   export MS_TEXT_KEY=""  
   export MS_IMAGE_SEARCH_KEY=""  
-  export UNSPLASH_KEY=""  
-  export FLICKR_KEY=""  
-  export GCP_API_KEY=""  
-  export GETTY_IMAGES_KEY=""  
   export MS_CONTENT_MODERATOR_KEY=""  
   export MS_ASR_KEY=""  
   export MS_NEWS_SEARCH_KEY=""  
   export MS_TEXT_KEY=""  
+  export GCP_API_KEY=""  
+  export UNSPLASH_KEY=""  
+  export FLICKR_KEY=""  
+  export GETTY_IMAGES_KEY=""  
   export AMANA_KEY=""  
 
 ## 3rd Party Services
@@ -94,15 +93,35 @@ Transparent webアプリのアーキテクチャFirestoreを活用するには�
 
 #### Microsoft Azure
 
-  DOKIDOKIさんのアカウントです
+  DOKIDOKIさん所有のアカウント
 
 #### Heroku
 
-  DOKIDOKIさんに作成して頂いたアカウントです
+  DOKIDOKIさん所有のアカウント
 
 #### DNSimple
 
-  DOKIDOKIさんに作成して頂いたアカウントです
+  DOKIDOKIさん所有のアカウント
+
+#### Unsplash API
+
+  Unsplash APIの使用にはdev用フリーアカウントを使用しています。アップグレードなどのメンテナンスが必要な場合はアカウントを一から作成しアップグレードしてください。Unsplash APIを使用するには環境変数"UNSPLASH_KEY"を設定する必要があります。
+  <https://unsplash.com/documentation>
+
+#### Getty Images API
+
+  Getty Images APIの使用にはdev用フリーアカウントを使用しています。アップグレードなどのメンテナンスが必要な場合はアカウントを一から作成しアップグレードしてください。Getty Images APIを使用するには環境変数"GETTY_IMAGES_KEY"を設定する必要があります。
+  <https://developers.gettyimages.com/api/>
+
+#### Flickr API
+
+  Flickr APIの使用にはdev用フリーアカウントを使用しています。アップグレードなどのメンテナンスが必要な場合はアカウントを一から作成しアップグレードしてください。Flickr APIを使用するには環境変数"FLICKR_KEY"を設定する必要があります。
+  <https://www.flickr.com/services/api/>
+
+#### Amana Images API
+
+  Amanaさんに用意していただいたAPI Keyを環境変数"AMANA_KEY"に設定してください。
+
 
 <!-- ## Transparent Home画面 データオブジェクト　(β ver, 7/5/2018)
 
