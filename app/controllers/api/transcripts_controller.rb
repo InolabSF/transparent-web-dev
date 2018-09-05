@@ -91,12 +91,6 @@ class Api::TranscriptsController < ApplicationController
     end
   end
 
-  def log_messenger
-    langcode = 'ja-JP'
-    create_log(text, langcode)
-    render json: { transcripts: 'formated_transcripts' }
-  end
-
   def archive_search
     search_id = params[:search_id]
     @search = Search.find(search_id)
@@ -149,66 +143,10 @@ class Api::TranscriptsController < ApplicationController
     end
   end
 
-  def create_by_outer
-    transcript_hash = params
-
-    user_id = User.find_by(facebook_id: transcript_hash[:user][:user_id]).id
-    has_content = transcript_hash[:has_content]
-    wall_id = transcript_hash[:wall_id]
-    @transcript = Transcript.new(
-      text:        transcript_hash[:text],
-      wall_id:     wall_id,
-      user_id:     user_id,
-      has_content: has_content,
-      is_visible:  true,
-      langcode:    transcript_hash[:langcode],
-      sentiment:   transcript_hash[:sentiment]
-    )
-
-    if has_content
-      related_contents_hash = transcript_hash[:related_contents]
-      for related_content_hash in related_contents_hash
-        related_content = @transcript.related_contents.build(
-          title:        related_content_hash[:title],
-          desc:         related_content_hash[:desc],
-          url:          related_content_hash[:url],
-          img_url:      related_content_hash[:img_url],
-          content_type: related_content_hash[:content_type],
-          source:       related_content_hash[:source],
-          is_visible:   [:is_visible]
-        )
-
-        condition = related_content.build_condition(
-          service: related_content_hash[:condition][:service],
-          word:    related_content_hash[:condition][:word]
-        )
-      end
-    end
-
-    context = @transcript.build_context(:state => transcript_hash[:context][:state], :reaction => transcript_hash[:context][:reaction], :feedback => transcript_hash[:context][:feedback])
-
-    entities = transcript_hash[:entities]
-    for entity_hash in entities
-      entity = @transcript.entities.build(
-        category: entity_hash[:category],
-        name:     entity_hash[:name]
-      )
-    end
-
-    if @transcript.save
-
-      if transcript_hash[:context][:reaction] == 'AWESOME'
-        awesome_contents = Transcript.find(@transcript.id - 1).related_contents
-        for awesome_content in awesome_contents
-          awesome_content.awesome += 1
-          awesome_content.save
-        end
-      end
-
-      render json: @transcript
-    else
-      render json: @transcript.errors, status: :unprocessable_entity
-    end
+  def log_messenger
+    langcode = 'ja-JP'
+    create_log(text, langcode)
+    render json: { transcripts: 'formated_transcripts' }
   end
 
   def index_sxsw_demo
@@ -224,7 +162,7 @@ class Api::TranscriptsController < ApplicationController
 
     render json: {
       transcripts: data_list,
-      index: transcripts_index,
+      index:       transcripts_index,
       first_index: first_index
     }
   end
@@ -235,7 +173,7 @@ class Api::TranscriptsController < ApplicationController
     new_data_list = format_transcripts(new_transcripts)
     render json: {
       transcripts: new_data_list,
-      index: index
+      index:       index
     }
   end
 
@@ -252,22 +190,6 @@ class Api::TranscriptsController < ApplicationController
       first_index: first_index
     }
   end
-
-  # def index_sxsw_demo
-  #   show_dummy = false
-  #   transcripts = Transcript.where(:wall_id => params[:wall_id]).order('id DESC')[0...20]
-  #   transcripts_index = Transcript.where(:wall_id => params[:wall_id]).length
-  #   data_list = format_multi_search(transcripts, show_dummy)
-  #   render json: {'transcripts' => data_list, 'index' => transcripts_index }
-  # end
-  #
-  # def show_sxsw_demo
-  #   show_dummy = true
-  #   new_transcripts = Transcript.where(:wall_id => params[:wall_id]).order(:id).offset(params[:index].to_i)
-  #   index = params[:index].to_i + new_transcripts.length
-  #   new_data_list = format_multi_search(new_transcripts, show_dummy)
-  #   render json: {'transcripts' => new_data_list, 'index' => index }
-  # end
 
   # # PATCH/PUT /tasks/1
   # def update

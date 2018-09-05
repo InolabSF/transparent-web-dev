@@ -82,3 +82,5 @@ gem 'sprockets', '~> 3.7.2'
 gem 'google-cloud-firestore'
 
 # gem 'babel-transpiler'
+
+gem 'rails-erd', group: :development
