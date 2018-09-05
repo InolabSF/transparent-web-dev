@@ -11,7 +11,7 @@
 
 `$ rails db:seed`
 
-## Getting Started（9/5/2018）
+## Getting Started
 
 ### テスト版Wallへのアクセスの方法
 
@@ -33,7 +33,7 @@ http://localhost:3000/alpha/wall/1ni3k8eD/dev
 
 ### カスタムの仕様が実装されているWallに関して
 
-本番環境では以下のidをもつwallにカスタムの仕様を実装しています。
+本番環境では以下のidをもつwallにカスタムの仕様を実装しています。（9/5/2018現在）
 
 wall_id: 3, 12 (開発検証用)
 
@@ -47,7 +47,7 @@ wall_id: 1, 9, 15, 16 (Amanaさん向けの実装)
 
 ### 本番環境運用オペレーション
 
-本番用のサーバーはHerokuで運用しています。最新のコードのサーバー環境への反映方法は下記Heroku公式ドキュメントを参照してください。HerokuアカウントはDOKIDOKIさんのものを使用しております。（2018年9月5日現在）
+本番用のサーバーはHerokuで運用しています。最新のコードのサーバー環境への反映方法は下記Heroku公式ドキュメントを参照してください。HerokuアカウントはDOKIDOKIさんのものを使用しております。
 
  [Heroku -Deploying with Git-](https://devcenter.heroku.com/articles/git)
 
