@@ -5,18 +5,18 @@
 - Ruby - 2.3.1
 
 ## Set up
-$ bundle install
+`$ bundle install`
 
-$ bin/rails db:migrate RAILS_ENV=development
+`$ bin/rails db:migrate RAILS_ENV=development`
 
-$ rails db:seed
+`$ rails db:seed`
 
 ## Transparent Web Appに関する説明（2018年9月5日現在）
 
 ### テスト版Wallへのアクセスの方法
 
 Transparentアプリでは日本語のテストウォール(wall_id: 3)を用意しています。  
-テスト版Wallにアクセスするためにはローカル環境で"$ rails db:seed"を実行した後にルート"/alpha/test/ja"にアクセスしてください。  
+テスト版Wallにアクセスするためにはローカル環境で`$ rails db:seed`を実行した後にルート"/alpha/test/ja"にアクセスしてください。  
 
 ローカルサーバーへのアクセスurl例：http://localhost:3000/alpha/test/ja
 
@@ -27,7 +27,7 @@ DBのWallテーブルに新しくwallレコードが作成される際にそのw
 
 例えば、ローカル環境で実行する場合は以下のようにurlを変更してアクセスする必要があります。
 
-https://trnspt.com/alpha/wall/1ni3k8eD/dev  
+~~https://trnspt.com/alpha/wall/1ni3k8eD/dev~~  
 ↓  
 http://localhost:3000/alpha/wall/1ni3k8eD/dev  
 
@@ -51,7 +51,7 @@ wall_id: 1, 9, 15, 16 (Amanaさん向けの実装)
 
  [Heroku -Deploying with Git-](https://devcenter.heroku.com/articles/git)
 
-### Beta版にむけてバックエンド改善案
+### Beta版にむけてのバックエンド改善案
 
 クライアント間のストリミーミング技術にはFirebase FirestoreのonSnapshot APIを使用する方針がいいと思います。以下の利点があると思います。
 
@@ -71,57 +71,55 @@ Transparent webアプリのアーキテクチャFirestoreを活用するには�
 
 参考 [Cloud Firestore でリアルタイム アップデートを入手する](https://firebase.google.com/docs/firestore/query-data/listen)
 
-## Environment Variables
-
-  export MS_TEXT_KEY=""  
-  export MS_IMAGE_SEARCH_KEY=""  
-  export MS_CONTENT_MODERATOR_KEY=""  
-  export MS_ASR_KEY=""  
-  export MS_NEWS_SEARCH_KEY=""  
-  export MS_TEXT_KEY=""  
-  export GCP_API_KEY=""  
-  export UNSPLASH_KEY=""  
-  export FLICKR_KEY=""  
-  export GETTY_IMAGES_KEY=""  
-  export AMANA_KEY=""  
-
 ## 3rd Party Services
 
 #### Google Cloud Platform
 
-  Transparentデモ用アカウント（本プロジェクトGoogle Driveの"Cloud Service Account"のドキュメントに詳細があります。）
+  Transparentデモ用アカウントです。（本プロジェクトGoogle Driveの"Cloud Service Account"のドキュメントに詳細があります。）
 
 #### Microsoft Azure
 
-  DOKIDOKIさん所有のアカウント
+  DOKIDOKIさん所有のアカウントです。
 
 #### Heroku
 
-  DOKIDOKIさん所有のアカウント
+  DOKIDOKIさん所有のアカウントです。
 
 #### DNSimple
 
-  DOKIDOKIさん所有のアカウント
+  DOKIDOKIさん所有のアカウントです。
 
 #### Unsplash API
 
-  Unsplash APIの使用にはdev用フリーアカウントを使用しています。アップグレードなどのメンテナンスが必要な場合はアカウントを一から作成しアップグレードしてください。Unsplash APIを使用するには環境変数"UNSPLASH_KEY"を設定する必要があります。
+  Unsplash APIの使用には開発者用のAPIキーを用意してください。Transparent α版本番環境においてはフリーアカウントを使用しています。Unsplash APIを使用するには環境変数"UNSPLASH_KEY"を設定する必要があります。
   <https://unsplash.com/documentation>
 
 #### Getty Images API
 
-  Getty Images APIの使用にはdev用フリーアカウントを使用しています。アップグレードなどのメンテナンスが必要な場合はアカウントを一から作成しアップグレードしてください。Getty Images APIを使用するには環境変数"GETTY_IMAGES_KEY"を設定する必要があります。
+  Getty Images APIの使用には開発者用のAPIキーを用意してください。Transparent α版本番環境においてはフリーアカウントを使用しています。Getty Images APIを使用するには環境変数"GETTY_IMAGES_KEY"を設定する必要があります。
   <https://developers.gettyimages.com/api/>
 
 #### Flickr API
 
-  Flickr APIの使用にはdev用フリーアカウントを使用しています。アップグレードなどのメンテナンスが必要な場合はアカウントを一から作成しアップグレードしてください。Flickr APIを使用するには環境変数"FLICKR_KEY"を設定する必要があります。
+  Flickr APIの使用には開発者用のAPIキーを用意してください。Transparent α版本番環境においてはフリーアカウントを使用しています。Flickr APIを使用するには環境変数"FLICKR_KEY"を設定する必要があります。
   <https://www.flickr.com/services/api/>
 
 #### Amana Images API
 
-  Amanaさんに用意していただいたAPI Keyを環境変数"AMANA_KEY"に設定してください。
+  Amanaさんに用意していただいたAPIキーを環境変数"AMANA_KEY"に設定してください。
+  
+## Environment Variables
 
+    * MS_TEXT_KEY (Microsoft Text Analytics API)
+    * MS_IMAGE_SEARCH_KEY (Bing Image Search API)
+    * MS_CONTENT_MODERATOR_KEY (Microsoft Content Moderator API)
+    * MS_ASR_KEY  (Bing Speech API)
+    * MS_NEWS_SEARCH_KEY  (Bing News Search API)
+    * GCP_API_KEY=  (Google Cloud Platform API)
+    * UNSPLASH_KEY  (Unsplash API)
+    * FLICKR_KEY  (Flickr API)
+    * GETTY_IMAGES_KEY  (Getty Images API)
+    * AMANA_KEY  (Amana images API)
 
 <!-- ## Transparent Home画面 データオブジェクト　(β ver, 7/5/2018)
 
