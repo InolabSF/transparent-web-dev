@@ -11,7 +11,7 @@
 
 `$ rails db:seed`
 
-## Transparent Web Appに関する説明（2018年9月5日現在）
+## Transparent Web Appに関する説明（9/5/2018）
 
 ### テスト版Wallへのアクセスの方法
 
@@ -102,17 +102,17 @@ Transparent webアプリのアーキテクチャFirestoreを活用するには�
 
 #### Unsplash API
 
-  Unsplash APIの使用には開発者用のAPIキーを用意してください。Transparent α版本番環境においてはフリーアカウントを使用しています。Unsplash APIを使用するには環境変数"UNSPLASH_KEY"を設定する必要があります。
+  Unsplash APIの使用には開発者用のAPIキーを用意してください。Transparent α版本番環境においてはフリーアカウントを使用しています。Unsplash APIを使用するには環境変数"UNSPLASH_KEY"を設定する必要があります。  
   <https://unsplash.com/documentation>
 
 #### Getty Images API
 
-  Getty Images APIの使用には開発者用のAPIキーを用意してください。Transparent α版本番環境においてはフリーアカウントを使用しています。Getty Images APIを使用するには環境変数"GETTY_IMAGES_KEY"を設定する必要があります。
+  Getty Images APIの使用には開発者用のAPIキーを用意してください。Transparent α版本番環境においてはフリーアカウントを使用しています。Getty Images APIを使用するには環境変数"GETTY_IMAGES_KEY"を設定する必要があります。  
   <https://developers.gettyimages.com/api/>
 
 #### Flickr API
 
-  Flickr APIの使用には開発者用のAPIキーを用意してください。Transparent α版本番環境においてはフリーアカウントを使用しています。Flickr APIを使用するには環境変数"FLICKR_KEY"を設定する必要があります。
+  Flickr APIの使用には開発者用のAPIキーを用意してください。Transparent α版本番環境においてはフリーアカウントを使用しています。Flickr APIを使用するには環境変数"FLICKR_KEY"を設定する必要があります。  
   <https://www.flickr.com/services/api/>
 
 #### Amana Images API
