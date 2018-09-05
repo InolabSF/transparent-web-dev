@@ -11,29 +11,27 @@
 
 `$ rails db:seed`
 
-## Transparent Web Appに関する説明（2018年9月5日現在）
-
-### テスト版Wallへのアクセスの方法
+## テスト版Wallへのアクセスの方法
 
 Transparentアプリでは日本語のテストウォール(wall_id: 3)を用意しています。  
 テスト版Wallにアクセスするためにはローカル環境で`$ rails db:seed`を実行した後にルート"/alpha/test/ja"にアクセスしてください。  
 
 ローカルサーバーへのアクセスurl例：http://localhost:3000/alpha/test/ja
 
-### 通常のWallアクセスの方法
+## 通常のWallアクセスの方法
 
 DBのWallテーブルに新しくwallレコードが作成される際にそのwallのアクセスのためのランダムキーを含むurlが自動発行されます。そのurlをrails consoleかrails adminによりDBのwallsテーブルのurlカラムから取得できます。そのurlにアクセスすることでwallを起動することが可能です。  
 取得できるurlは自動的にDOKIDOKI様カスタムドメインtrnspt.comを適用した状態で発行されますので、実行環境にあわせてurlを編集してください。  
 
-例えば、ローカル環境で実行する場合は以下のようにurlを変更してアクセスする必要があります。
+例として、ローカル環境で実行する場合は以下のようにurlを変更してアクセスする必要があります。
 
 ~~https://trnspt.com/alpha/wall/1ni3k8eD/dev~~  
 ↓  
 http://localhost:3000/alpha/wall/1ni3k8eD/dev  
 
-### カスタムの仕様が実装されているWallに関して
+## カスタムの仕様が実装されているWallに関して
 
-本番環境では以下のidをもつwallにカスタムの仕様を実装しています。
+本番環境では以下のidをもつwallにカスタムの仕様を実装しています。（9/5/2018現在）
 
 wall_id: 3, 12 (開発検証用)
 
@@ -45,17 +43,16 @@ wall_id: 3, 12 (開発検証用)
 wall_id: 1, 9, 15, 16 (Amanaさん向けの実装)
 - 画像取得先をamanaさんのAPIに限定
 
-### 本番環境運用オペレーション
+## 本番環境運用オペレーション
 
-本番用のサーバーはHerokuで運用しています。最新のコードのサーバー環境への反映方法は下記Heroku公式ドキュメントを参照してください。HerokuアカウントはDOKIDOKIさんのものを使用しております。（2018年9月5日現在）
+本番用のサーバーはHerokuで運用しています。最新のコードのサーバー環境への反映方法は下記Heroku公式ドキュメントを参照してください。HerokuアカウントはDOKIDOKIさんのものを使用しております。
 
  [Heroku -Deploying with Git-](https://devcenter.heroku.com/articles/git)
 
-### Beta版にむけてのバックエンド改善案
+## Beta版にむけてのバックエンド改善案
 
 クライアント間のストリミーミング技術にはFirebase FirestoreのonSnapshot APIを使用する方針がいいと思います。以下の利点があると思います。
 
-Firestore活用メリット
 * Googleの提供する通信技術により安定性向上
 * オフライン補正機能
 * No SQL DBの特性によるレイテンシー向上
@@ -102,17 +99,17 @@ Transparent webアプリのアーキテクチャFirestoreを活用するには�
 
 #### Unsplash API
 
-  Unsplash APIの使用には開発者用のAPIキーを用意してください。Transparent α版本番環境においてはフリーアカウントを使用しています。Unsplash APIを使用するには環境変数"UNSPLASH_KEY"を設定する必要があります。
+  Unsplash APIの使用には開発者用のAPIキーを用意してください。Transparent α版本番環境においてはフリーアカウントを使用しています。Unsplash APIを使用するには環境変数"UNSPLASH_KEY"を設定する必要があります。  
   <https://unsplash.com/documentation>
 
 #### Getty Images API
 
-  Getty Images APIの使用には開発者用のAPIキーを用意してください。Transparent α版本番環境においてはフリーアカウントを使用しています。Getty Images APIを使用するには環境変数"GETTY_IMAGES_KEY"を設定する必要があります。
+  Getty Images APIの使用には開発者用のAPIキーを用意してください。Transparent α版本番環境においてはフリーアカウントを使用しています。Getty Images APIを使用するには環境変数"GETTY_IMAGES_KEY"を設定する必要があります。  
   <https://developers.gettyimages.com/api/>
 
 #### Flickr API
 
-  Flickr APIの使用には開発者用のAPIキーを用意してください。Transparent α版本番環境においてはフリーアカウントを使用しています。Flickr APIを使用するには環境変数"FLICKR_KEY"を設定する必要があります。
+  Flickr APIの使用には開発者用のAPIキーを用意してください。Transparent α版本番環境においてはフリーアカウントを使用しています。Flickr APIを使用するには環境変数"FLICKR_KEY"を設定する必要があります。  
   <https://www.flickr.com/services/api/>
 
 #### Amana Images API
