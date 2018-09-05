@@ -59,7 +59,7 @@ function fetchContents() {
   }, function (error) {
     console.log(error);
   }).then(function (response) {
-    // loadContents();
+    loadContents();
   });
 }
 

@@ -55,11 +55,12 @@ class Api::TranscriptsController < ApplicationController
   def create
     default_nlp = 'MS'
     is_word_only = true
-    is_concurrent = true
+    is_concurrent = true # trueにするとtranscript, search, related_contentを非同期的にDB登録します。alpha版以前の仕様でアプリを実行する場合にはfalseにしてください。
     multiple_search = true
     is_test_mode = false
 
     # nlp switcher
+    # 内部向けテストwallでは試験的にnlpをgoogleに切り替えています
     dev_wall = [3, 12]
     if dev_wall.include?(params[:wallID])
       nlp_type = 'GCP'
@@ -69,6 +70,7 @@ class Api::TranscriptsController < ApplicationController
     end
 
     # amana test
+    # amanaさん用のwallでは試験的にコンテンツを切り替えて運用しています
     amana_test_wall = [1, 9, 15, 16]
     is_test_mode = true if amana_test_wall.include?(params[:wallID])
 

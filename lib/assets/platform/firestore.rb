@@ -51,24 +51,24 @@ def index_content_firestore(wall_id, content)
   walls = [wall_id.to_s]
   req_object = {
     fields: {
-      walls: { mapValue: get_map_value_from_array(walls) }, # firestoreのカスタムインデックスが作成できないため現状では使用していない
-      wall_id: { stringValue: wall_id.to_s },
-      user_id: { nullValue: nil },
+      walls:         { mapValue: get_map_value_from_array(walls) }, # firestoreのカスタムインデックスが作成できないため現状では使用していない
+      wall_id:       { stringValue: wall_id.to_s },
+      user_id:       { nullValue: nil },
       transcript_id: { stringValue: content.transcript_id.to_s },
-      search_id: { stringValue: content.search_id.to_s },
-      title: { stringValue: content.title },
-      desc: { stringValue: content.desc },
-      url: { stringValue: content.url },
-      img_url: { stringValue: content.img_url },
-      content_type: { stringValue: content.content_type },
-      source: { stringValue: content.source },
-      viewed: { mapValue: get_map_value_from_array([]) },
-      opened: { mapValue: get_map_value_from_array([]) },
-      awesome: { mapValue: get_map_value_from_array([]) },
-      is_visible: { booleanValue: content.is_visible },
-      is_archived: { booleanValue: content.is_archived },
-      created_at: { timestampValue: content.created_at },
-      updated_at: { timestampValue: content.updated_at }
+      search_id:     { stringValue: content.search_id.to_s },
+      title:         { stringValue: content.title },
+      desc:          { stringValue: content.desc },
+      url:           { stringValue: content.url },
+      img_url:       { stringValue: content.img_url },
+      content_type:  { stringValue: content.content_type },
+      source:        { stringValue: content.source },
+      viewed:        { mapValue: get_map_value_from_array([]) },
+      opened:        { mapValue: get_map_value_from_array([]) },
+      awesome:       { mapValue: get_map_value_from_array([]) },
+      is_visible:    { booleanValue: content.is_visible },
+      is_archived:   { booleanValue: content.is_archived },
+      created_at:    { timestampValue: content.created_at },
+      updated_at:    { timestampValue: content.updated_at }
     }
   }
 
@@ -94,7 +94,7 @@ end
 
 def get_array_value(array)
   values = []
-  array.each {|prop| values.push({ stringValue: prop })}
+  array.each { |prop| values.push({ stringValue: prop })}
   array_value = {
     values: values
   }
@@ -103,7 +103,7 @@ end
 
 def get_map_value_from_array(array)
   fields = {}
-  array.each {|prop| fields.store(prop, { booleanValue: true })}
+  array.each { |prop| fields.store(prop, { booleanValue: true })}
   map_value = {
     fields: fields
   }

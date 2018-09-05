@@ -11,6 +11,40 @@ $ bin/rails db:migrate RAILS_ENV=development
 
 $ rails db:seed
 
+## Transparent Web Appに関する説明
+
+###テスト版Wallへのアクセスの方法（2018年9月5日現在）
+
+Transparentアプリでは日本語のテストウォール(wall_id: 3)を用意しています。
+テスト版Wallにアクセスするためにはローカル環境で"$ rails db:seed"を実行した後にルート"/alpha/test/ja"にアクセスして頂ければと思います。
+
+ローカルサーバーへのアクセスurl例：http://localhost:3000/alpha/test/ja
+
+### 通常のWallアクセスの方法
+
+DBのWallテーブルに新しくwallレコードが作成される際にそのwallのアクセスのためのランダムキーを含むurlが自動発行されます。
+そのurlをrails consoleかrails adminによりDBのwallsテーブルにアクセスすることで取得できます。アクセスすることでwallを起動することが可能です。
+取得できるurlは自動的にDOKIDOKI様カスタムドメインtrnspt.comを適用した状態で発行されますので、実行環境にあわせてurlを編集してください。
+
+例えば、ローカル環境で実行する場合は以下のようにurlを変更してアクセスする必要があります。
+https://trnspt.com/alpha/wall/1ni3k8eD/dev
+↓
+http://localhost:3000/alpha/wall/1ni3k8eD/dev
+
+### カスタムの仕様が実装されているWallに関して
+
+本番環境では以下のidをもつwallにカスタムの仕様を実装しています。
+
+wall_id: 3, 12 (開発検証用)
+
+- NLPモデルをGoogle Cloud Platformを使用
+- 抽出名刺を固有名刺のみへ絞り込み
+- 検索ワードを単数に制限
+
+
+wall_id: 1, 9, 15, 16 (Amanaさん向けの実装)
+- 画像取得先をamanaさんのAPIに限定
+
 <!-- admin_usersをつくらないといけない -->
 
 ## Environment Variables
@@ -34,7 +68,7 @@ $ rails db:seed
   export MS_NEWS_SEARCH_KEY=""
 
   export MS_TEXT_KEY=""
-  
+
   export AMANA_KEY=""
 
 ## 3rd Party Services
@@ -46,10 +80,6 @@ $ rails db:seed
 #### Microsoft Azure
 
   DOKIDOKIさんのアカウントです
-
-#### Microsoft Azure
-
-  DOKIDOKIさんに作成して頂いたアカウントです
 
 #### Heroku
 
@@ -620,7 +650,7 @@ $ rails db:seed
     }
 
 
-### 認識テキストのPOST（transcript(テキスト), langcode, wallID, facebook_id, search_type, with_words(&検索ワード), UI_version）
+### 認識テキストのPOST（transcript(テキスト), langcode, wallID, search_type, with_words(&検索ワード), UI_version）
 
 "POST", "/api/transcripts/"
 
@@ -630,9 +660,7 @@ $ rails db:seed
 
         langcode: "en-US" or "ja-JP",
 
-        wallID : NUM,
-
-        FacebookID : STRING, ("guest_x"に固定してください)
+        wallID : NUM,  
 
         search_type : NUM, (0:image, 1:webpage, 2:video)
 
@@ -652,8 +680,6 @@ $ rails db:seed
         "langcode": "ja-JP",
 
         "wallID": 3,
-
-        "FacebookID": "guest_x",
 
         "search_type": 1,
 
