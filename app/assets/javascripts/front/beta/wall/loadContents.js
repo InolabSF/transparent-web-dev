@@ -7,12 +7,12 @@ let isLoading = false;
 
 initFirebase = () => {
   const config = {
-    apiKey: "AIzaSyB6Gg62HkcugdPJXbpnGwznlZQDB76JSdE",
-    authDomain: "transparent-sxsw.firebaseapp.com",
-    databaseURL: "https://transparent-sxsw.firebaseio.com",
-    projectId: "transparent-sxsw",
-    storageBucket: "transparent-sxsw.appspot.com",
-    messagingSenderId: "297128550455"
+    apiKey: "",
+    authDomain: "",
+    databaseURL: "",
+    projectId: "",
+    storageBucket: "",
+    messagingSenderId: ""
   };
   firebase.initializeApp(config);
 }

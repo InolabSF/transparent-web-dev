@@ -15,27 +15,22 @@ $ rails db:seed
 
 ### テスト版Wallへのアクセスの方法
 
-Transparentアプリでは日本語のテストウォール(wall_id: 3)を用意しています。
-テスト版Wallにアクセスするためにはローカル環境で"$ rails db:seed"を実行した後にルート"/alpha/test/ja"にアクセスしてください。
+Transparentアプリでは日本語のテストウォール(wall_id: 3)を用意しています。  
+テスト版Wallにアクセスするためにはローカル環境で"$ rails db:seed"を実行した後にルート"/alpha/test/ja"にアクセスしてください。  
 
 ローカルサーバーへのアクセスurl例：http://localhost:3000/alpha/test/ja
 
 ### 通常のWallアクセスの方法
 
-DBのWallテーブルに新しくwallレコードが作成される際にそのwallのアクセスのためのランダムキーを含むurlが自動発行されます。
-
-そのurlをrails consoleかrails adminによりDBのwallsテーブルにアクセスすることで取得できます。アクセスすることでwallを起動することが可能です。
-
-取得できるurlは自動的にDOKIDOKI様カスタムドメインtrnspt.comを適用した状態で発行されますので、実行環境にあわせてurlを編集してください。
-
+DBのWallテーブルに新しくwallレコードが作成される際にそのwallのアクセスのためのランダムキーを含むurlが自動発行されます。  
+そのurlをrails consoleかrails adminによりDBのwallsテーブルにアクセスすることで取得できます。アクセスすることでwallを起動することが可能です。  
+取得できるurlは自動的にDOKIDOKI様カスタムドメインtrnspt.comを適用した状態で発行されますので、実行環境にあわせてurlを編集してください。  
 
 例えば、ローカル環境で実行する場合は以下のようにurlを変更してアクセスする必要があります。
 
-https://trnspt.com/alpha/wall/1ni3k8eD/dev
-
-↓
-
-http://localhost:3000/alpha/wall/1ni3k8eD/dev
+https://trnspt.com/alpha/wall/1ni3k8eD/dev  
+↓  
+http://localhost:3000/alpha/wall/1ni3k8eD/dev  
 
 ### カスタムの仕様が実装されているWallに関して
 
@@ -51,31 +46,45 @@ wall_id: 3, 12 (開発検証用)
 wall_id: 1, 9, 15, 16 (Amanaさん向けの実装)
 - 画像取得先をamanaさんのAPIに限定
 
-<!-- admin_usersをつくらないといけない -->
+### 本番環境運用オペレーション
+
+本番用のサーバーはHerokuで運用しています。最新のコードのサーバー環境への反映方法は下記Heroku公式ドキュメントを参照してください。HerokuアカウントはDOKIDOKIさんのものを使用しております。（2018年9月5日現在）
+
+ [Heroku](https://devcenter.heroku.com/articles/git "Deploying with Git")
+
+### Beta版にむけてバックエンド改善案
+
+クライアント間のストリミーミング技術にはFirebase FirestoreのonSnapshot APIを使用する方針がいいと思います。以下の利点があると思います。
+
+Firestore活用メリット
+* Googleの提供する通信技術により安定性向上
+* オフライン補正機能
+* No SQL DBの特性によるレイテンシー向上
+
+Transparent webアプリのアーキテクチャFirestoreを活用するには以下の変更点が必要です。
+
+* バックエンド
+  * クライアントで取得するデータをFirestoreに反映するロジック
+  * https://github.com/InolabSF/transparent-web-dev/blob/master/lib/assets/platform/firestore.rb
+* フロントエンド
+  * Firestoreからリアルタイムアップデートを取得する仕組み
+  * https://github.com/InolabSF/transparent-web-dev/blob/master/app/assets/javascripts/front/beta/wall/loadContents.js
+
+参考 [Cloud Firestore](https://firebase.google.com/docs/firestore/query-data/listen "Cloud Firestore でリアルタイム アップデートを入手する")
 
 ## Environment Variables
 
-  export MS_TEXT_KEY=""
-
-  export MS_IMAGE_SEARCH_KEY=""
-
-  export UNSPLASH_KEY=""
-
-  export FLICKR_KEY=""
-
-  export GCP_API_KEY=""
-
-  export GETTY_IMAGES_KEY=""
-
-  export MS_CONTENT_MODERATOR_KEY=""
-
-  export MS_ASR_KEY=""
-
-  export MS_NEWS_SEARCH_KEY=""
-
-  export MS_TEXT_KEY=""
-
-  export AMANA_KEY=""
+  export MS_TEXT_KEY=""  
+  export MS_IMAGE_SEARCH_KEY=""  
+  export UNSPLASH_KEY=""  
+  export FLICKR_KEY=""  
+  export GCP_API_KEY=""  
+  export GETTY_IMAGES_KEY=""  
+  export MS_CONTENT_MODERATOR_KEY=""  
+  export MS_ASR_KEY=""  
+  export MS_NEWS_SEARCH_KEY=""  
+  export MS_TEXT_KEY=""  
+  export AMANA_KEY=""  
 
 ## 3rd Party Services
 
@@ -205,6 +214,11 @@ wall_id: 1, 9, 15, 16 (Amanaさん向けの実装)
 ## Transparent Wall画面 データオブジェクト　(α ver, 5/1/2018)
 
 主にウェブアプリに表示するのは検索に使用したワード（Searchオブジェクト）とそれに付随した関連コンテンツ（RelatedContentオブジェクト）になります.
+
+### ERD図
+
+![Transparent Domain Model](https://github.com/InolabSF/transparent-web-dev/blob/refactoring/erd.pdf)
+
 
 <!-- #### Transcript オブジェクト ： ユーザーの声から取得した発言情報
 
@@ -701,27 +715,3 @@ wall_id: 1, 9, 15, 16 (Amanaさん向けの実装)
 ### 画像の削除
 
 "GET", "/api/update/contents/" + related_content_id
-
-## フロント開発者のための各種設定値サンプル
-
-フロントコーディング時は下記の値を使用してください. バックエンドと統合時に動的なものに変更します.
-統合時のために各種設定値は"bundle.js"の外に出して頂くようにお願いします.
-
-    wall_id = 3
-
-    langcode = 'ja-JP'
-
-    FacebookID = 'guest_x'
-
-
-<!-- ## &検索ワードの設定
-
-"GET", "/set/context/" + wall_id
-
-params['query'] = &検索ワード -->
-
-<!-- ## &検索ワードの削除
-
-"GET", "/delete/context/" + wall_id
-
-params['query'] = &検索ワード -->
