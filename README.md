@@ -238,7 +238,7 @@ Transparent webアプリのアーキテクチャFirestoreを活用するには�
 
 ## Transparent Wall画面 データオブジェクト　(α ver, 5/1/2018)
 
-主にウェブアプリに表示するのは検索に使用したワード（Searchオブジェクト）とそれに付随した関連コンテンツ（RelatedContentオブジェクト）になります.
+主にウェブアプリに表示するのは検索に使用したワード（Searchオブジェクト）とそれに付随した関連コンテンツ（RelatedContentオブジェクト）になります。認識した音声のテキスト情報はDBのTranscriptテーブルに保存しています。
 
 ### ERD図
 
