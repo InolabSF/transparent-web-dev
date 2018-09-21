@@ -8,14 +8,18 @@ Rails.application.routes.draw do
 
   get '/console/config', to: 'home#get_config'
 
-  ## config
+  ## all version
 
-  ## post '/walls', to: 'walls#create'
+  get '/:version/wall/:random_key/:wall_name', to: 'home#index'
+
+  ## next100
+
+  post '/walls', to: 'walls#create'
 
   ## alpha
 
   ## choas test
-  get '/alpha/wall/:random_key/:wall_name', to: 'home#alpha'
+  # get '/alpha/wall/:random_key/:wall_name', to: 'home#alpha'
 
   get '/alpha/test/en',   to: 'home#alpha_test_en'
   get '/alpha/test/ja',   to: 'home#alpha_test_ja'

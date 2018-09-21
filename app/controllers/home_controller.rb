@@ -45,7 +45,7 @@ class HomeController < ApplicationController
 
   # alpha
 
-  def alpha
+  def index
     random_key = params[:random_key]
     walls = Wall.where("url like '%" + random_key + "%'")
 
@@ -73,7 +73,9 @@ class HomeController < ApplicationController
                          end
       end
 
-      if params[:view] == 'grid'
+      if params[:version] == 'next100'
+        render file: 'home/front/wall/alpha/chaos'
+      elsif params[:view] == 'grid'
         render file: 'home/front/wall/alpha/grid'
       else
         render file: 'home/front/wall/alpha/chaos'

@@ -1,6 +1,6 @@
 class Wall < ApplicationRecord
   has_many :transcripts
-  
+
   enum default_langcode: {
     en: 0,
     ja: 1
@@ -23,5 +23,4 @@ class Wall < ApplicationRecord
 
     self.url = 'https://trnspt.com/alpha/wall/' + new_hash + '/' + wall_name
   end
-
 end
