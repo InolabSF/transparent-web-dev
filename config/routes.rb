@@ -8,14 +8,26 @@ Rails.application.routes.draw do
 
   get '/console/config', to: 'home#get_config'
 
-  ## config
+  ## all version
 
-  ## post '/walls', to: 'walls#create'
+  # get '/:version/wall/:random_key/:wall_name', to: 'home#index'
+
+  ## next100
+
+  get '/next100/wall/:key', to: 'next100/home#index' ## wallのコンテンツ一覧
+  get '/next100/wall/:key/pinned', to: 'next100/home#index_pinned' ## wallのピン一覧
+
+  post '/walls', to: 'walls#create' ## wallの作成
+  get '/next100/contents', to: 'next100/contents#index' ## wallのコンテンツ一覧取得
+  post '/next100/pins', to: 'next100/pins#create' ## ピンのON
+  delete '/next100/pins', to: 'next100/pins#destory' ## ピンのOFF
+  delete '/next100/searches', to: 'api/transcripts#archive_search'
+  delete '/next100/contents', to: 'api/transcripts#archive_related_content'
 
   ## alpha
 
   ## choas test
-  get '/alpha/wall/:random_key/:wall_name', to: 'home#alpha'
+  get '/alpha/wall/:random_key/:wall_name', to: 'home#index'
 
   get '/alpha/test/en',   to: 'home#alpha_test_en'
   get '/alpha/test/ja',   to: 'home#alpha_test_ja'

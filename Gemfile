@@ -84,3 +84,7 @@ gem 'google-cloud-firestore'
 # gem 'babel-transpiler'
 
 gem 'rails-erd', group: :development
+
+gem 'rubocop', '~> 0.57.2', require: false
+
+# gem 'rubocop-airbnb'
