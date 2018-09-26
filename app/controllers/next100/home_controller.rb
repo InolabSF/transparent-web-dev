@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Next100::HomeController < ApplicationController
   def index
     key = params[:key]

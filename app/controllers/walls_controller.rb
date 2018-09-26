@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class WallsController < ApplicationController
   def create
     if !params[:default_langcode].kind_of?(Integer)

@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   get '/next100/wall/:key/pinned', to: 'next100/home#index_pinned' ## wallのピン一覧
 
   post '/walls', to: 'walls#create' ## wallの作成
-  get '/next100/contents/:wall_id', to: 'next100/contents#index' ## wallのコンテンツ一覧取得
+  get '/next100/contents', to: 'next100/contents#index' ## wallのコンテンツ一覧取得
   post '/next100/pins', to: 'next100/pins#create' ## ピンのON
   delete '/next100/pins', to: 'next100/pins#destory' ## ピンのOFF
   delete '/next100/searches', to: 'api/transcripts#archive_search'

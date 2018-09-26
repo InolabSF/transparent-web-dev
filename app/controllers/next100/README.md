@@ -47,7 +47,11 @@
 
 ### [GET] ウォール毎のtranscripts一覧）取得
 
-[GET] '/next100/contents/' + wall_key
+[GET] '/next100/contents/'
+
+    Requested parameters:
+
+        - wall_id: NUM
 
 #### Sample Response
 
