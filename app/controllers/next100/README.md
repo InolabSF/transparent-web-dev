@@ -53,6 +53,10 @@
 
         - wall_id: NUM
 
+#### Sample Request
+
+    [GET] '/next100/contents?wall_id=3'
+
 #### Sample Response
 
     responseBody = {
@@ -129,6 +133,10 @@
 
         - eventuser_id: STRING
 
+#### Sample Request
+
+[DELETE] '/next100/pins?related_content_id=209&eventuser_id=A'
+
 ### [DELETE] コメントカードの削除
 
 [DELETE] "/next100/searches/"
@@ -137,6 +145,10 @@
 
         - search_id: NUM
 
+#### Sample Request
+
+[DELETE] '/next100/search?search_id=200'
+
 ### [DELETE] 画像の削除
 
 [DELETE] "/next100/contents/"
@@ -144,3 +156,7 @@
     Requested parameters:
 
         - related_content_id: NUM
+
+#### Sample Request
+
+[DELETE] '/next100/contents?related_content_id=70'
