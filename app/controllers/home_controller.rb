@@ -51,8 +51,8 @@ class HomeController < ApplicationController
 
     if walls.blank?
       render json: { message: 'no wall found' }
-    elsif random_key.length != 8
-      render json: { message: 'invalid url' }
+    # elsif random_key.length != 8
+    #   render json: { message: 'invalid url' }
     elsif walls.length != 1
       render json: { message: 'invalid url' }
     else

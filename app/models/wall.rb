@@ -13,14 +13,16 @@ class Wall < ApplicationRecord
   before_create :new_url
 
   def new_url
-    new_hash = [*1..9, *'A'..'Z', *'a'..'z'].sample(8).join
+    # new_hash = [*1..9, *'A'..'Z', *'a'..'z'].sample(8).join
+    key = SecureRandom.uuid.delete('-')
 
-    if self.name.present?
-      wall_name = self.name.gsub(" ", "-")
-    else
-      wall_name = 'blankname'
-    end
+    wall_name = if self.name.present?
+                  self.name.gsub(" ", "-")
+                else
+                  'blankname'
+                end
 
-    self.url = 'https://trnspt.com/alpha/wall/' + new_hash + '/' + wall_name
+    self.key = key
+    self.url = 'https://trnspt.com/alpha/wall/' + key + '/' + wall_name
   end
 end

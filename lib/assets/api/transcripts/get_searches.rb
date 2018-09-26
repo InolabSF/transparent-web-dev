@@ -113,6 +113,45 @@ def get_further_searches(wall_id, search_first_index, num)
   return search_list, search_first_index, related_contents
 end
 
+def get_all_searches(wall_id)
+  searches = Search.joins(:transcript)
+              .where('transcripts.wall_id' => wall_id, 'searches.is_visible' => true)
+              .order('id DESC')
+
+  search_list = []
+  for search in searches.reverse
+    words = []
+    search.entities.each { |entity| words.push(entity.name) }
+    search.with_words.each { |with_word| words.push(with_word.text) }
+
+    search_hash = search.attributes
+    search_hash.store('words', words)
+    search_list.unshift(search_hash)
+
+  end
+
+  if searches.present?
+    search_last_index = searches.first.id
+    search_first_index = searches.last.id
+
+    query_search_index = search_first_index - 1
+    related_contents = RelatedContent.joins(:transcript)
+                        .where('transcripts.wall_id' => wall_id, 'related_contents.is_visible' => true)
+                        # .joins(:search)
+                        # .where('searches.id > ?', query_search_index)
+                        # .order('id DESC')
+
+    related_content_last_index = related_contents.first.id if related_contents.present?
+
+  else
+    search_last_index = 0
+    search_first_index = 0
+    related_content_last_index = 0
+  end
+
+  return search_list, search_last_index, search_first_index, related_contents, related_content_last_index
+end
+
 def get_formated_data_debug(transcripts)
   formated_transcripts = []
 

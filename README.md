@@ -652,7 +652,7 @@ Transparent webアプリのアーキテクチャFirestoreを活用するには�
 
     responseBody = {
 
-        searches : [
+        searches: [
 
           {
             "id" : 14,
@@ -670,9 +670,9 @@ Transparent webアプリのアーキテクチャFirestoreを活用するには�
           },
         ],
 
-        search_first_index : 13,
+        search_first_index: 13,
 
-        related_contents : [
+        related_contents: [
 
             {
                 "id": 104,

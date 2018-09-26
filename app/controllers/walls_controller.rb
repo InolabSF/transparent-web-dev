@@ -11,7 +11,8 @@ class WallsController < ApplicationController
       @wall = Wall.new(name: name, default_langcode: default_langcode)
       if @wall.save
         version = params[:version]
-        @wall.url = 'test' if version.present?
+        @wall.url = 'https://trnspt.com/next100/wall/' + @wall.key if version == 'next100'
+        @wall.save
         render json: @wall
       else
         puts('error')
