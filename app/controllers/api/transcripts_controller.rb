@@ -61,7 +61,8 @@ class Api::TranscriptsController < ApplicationController
 
     # nlp switcher
     # 内部向けテストwallでは試験的にnlpをgoogleに切り替えています
-    dev_wall = [3, 12]
+    # dev_wall = [3, 12]
+    dev_wall = []
     if dev_wall.include?(params[:wallID])
       nlp_type = 'GCP'
       multiple_search = false
@@ -71,8 +72,8 @@ class Api::TranscriptsController < ApplicationController
 
     # amana test
     # amanaさん用のwallでは試験的にコンテンツを切り替えて運用しています
-    amana_test_wall = [1, 9, 15, 16]
-    is_test_mode = true if amana_test_wall.include?(params[:wallID])
+    # amana_test_wall = [1, 9, 15, 16]
+    # is_test_mode = true if amana_test_wall.include?(params[:wallID])
 
     @transcript = create_transcript(
       params,
