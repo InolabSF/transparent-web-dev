@@ -1,18 +1,21 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <!-- TODO Three.jsのコンテンツ、DOMの間にまるごとレンダリングする -->
+  <div id="homeTarget">home</div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
 export default {
-  name: 'home',
-  components: {
-    HelloWorld
+  name: "home",
+  created() {
+    this.$nextTick(() => {
+      const target = document.querySelector("#homeTarget");
+      target.addEventListener("click", this.onClickStart);
+    });
+  },
+  methods: {
+    onClickStart() {
+      this.$router.push("/welcome");
+    }
   }
-}
+};
 </script>

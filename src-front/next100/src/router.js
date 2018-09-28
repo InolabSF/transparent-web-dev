@@ -1,25 +1,37 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Home from './views/Home.vue'
+import Vue from "vue";
+import Router from "vue-router";
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/',
-      name: 'home',
-      component: Home
+      path: "/",
+      name: "home",
+      component: () => import("./views/Home")
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+      path: "/welcome",
+      name: "welcome",
+      component: () => import("./views/Welcome")
+    },
+    {
+      path: "/ready",
+      name: "ready",
+      component: () => import("./views/Ready")
+    },
+    {
+      path: "/walls/:wallId/meeting",
+      name: "meeting",
+      component: () => import("./views/Meeting")
+    },
+    {
+      path: "/walls/:wallId/logs",
+      name: "welcome",
+      component: () => import("./views/WallLogList"),
+      meta: { layout: "mobile" }
     }
   ]
-})
+});
