@@ -4,6 +4,13 @@
 
 <script>
 export default {
-  name: "Meeting"
+  name: "Meeting",
+  data() {
+    return {
+      isShowContentDetailModal: false,
+      currentContentDetailModalFloor: false,
+      contextModalStatuses: []
+    }
+  }
 };
 </script>
