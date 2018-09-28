@@ -1,5 +1,6 @@
 class RelatedContent < ApplicationRecord
   has_one :condition, dependent: :destroy
+  has_many :pins, dependent: :destroy
   belongs_to :search
   belongs_to :transcript
 
