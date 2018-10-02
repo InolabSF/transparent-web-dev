@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180905191156) do
+ActiveRecord::Schema.define(version: 20180926040234) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -57,6 +57,13 @@ ActiveRecord::Schema.define(version: 20180905191156) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["word"], name: "index_no_good_words_on_word", unique: true
+  end
+
+  create_table "pins", force: :cascade do |t|
+    t.integer "related_content_id", null: false
+    t.string "eventuser_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "related_contents", force: :cascade do |t|
@@ -108,6 +115,7 @@ ActiveRecord::Schema.define(version: 20180905191156) do
     t.integer "manager_id"
     t.string "url"
     t.integer "default_langcode"
+    t.string "key"
   end
 
   create_table "with_word_searches", force: :cascade do |t|
