@@ -18,11 +18,6 @@ export default new Router({
       component: () => import("./views/Welcome")
     },
     {
-      path: "/ready",
-      name: "ready",
-      component: () => import("./views/Ready")
-    },
-    {
       path: "/walls/:wallId/meeting",
       name: "meeting",
       component: () => import("./views/Meeting")
