@@ -1,13 +1,10 @@
 <template>
-  <div>welcome</div>
+  <div class="fill" @click="onClickStart">welcome</div>
 </template>
 
 <script>
 export default {
   name: "welcome",
-  created() {
-    window.addEventListener("click", this.onClickStart);
-  },
   methods: {
     onClickStart() {
       this.$router.push("/ready");

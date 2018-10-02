@@ -1,6 +1,8 @@
 <template>
   <!-- TODO Three.jsのコンテンツ、DOMの間にまるごとレンダリングする -->
-  <div id="homeTarget">home</div>
+  <div class="fill" id="homeTarget" >
+    <h3>home</h3>
+  </div>
 </template>
 
 <script>
