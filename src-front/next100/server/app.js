@@ -2,7 +2,7 @@ var app = require('http').createServer(handler);
 var io = require('socket.io').listen(app);
 var fs = require('fs');
 const url = require('url');
-const port = 8888;
+const port = process.env.PORT || 8888;
 
 app.listen(port, () => {
     console.log(`port = ${port}`);
@@ -13,7 +13,8 @@ function handler(req, res) {
     var url_parse = url.parse(req.url, true);
     if (url_parse['search'] && url_parse['search'].indexOf('?_=') == 0) {
         res.writeHead(200, {
-            'Content-Type': 'text/plain'
+            'Content-Type': 'text/plain',
+            'Access-Control-Allow-Origin': '*'
         });
         var query = url_parse.query['_'];
         console.log(query);

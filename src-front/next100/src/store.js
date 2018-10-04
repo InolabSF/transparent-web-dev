@@ -5,7 +5,11 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    loginUsers: []
+    loginUsers: [],
+    customTouchMode: "production",
+    debugParams: {
+      currentFloorId: 1,
+    },
   },
   mutations: {
     set(state, payload) {
