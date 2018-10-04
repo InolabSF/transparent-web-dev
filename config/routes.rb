@@ -24,6 +24,28 @@ Rails.application.routes.draw do
   delete '/next100/searches', to: 'api/transcripts#archive_search'
   delete '/next100/contents', to: 'api/transcripts#archive_related_content'
 
+  match '/next100/welcome', to: 'next100/home#demo', via: :get
+
+  # path: "/",
+  #     name: "home",
+  #     component: () => import("./views/Home")
+  # },
+  #     {
+  #         path: "/welcome",
+  #         name: "welcome",
+  #         component: () => import("./views/Welcome")
+  #     },
+  #     {
+  #         path: "/walls/:wallId/meeting",
+  #         name: "meeting",
+  #         component: () => import("./views/Meeting")
+  #     },
+  #     {
+  #         path: "/walls/:wallId/logs",
+  #         name: "welcome",
+  #         component: () => import("./views/WallLogList"),
+  #         meta: { layout: "mobile" }
+
   ## alpha
 
   ## choas test
