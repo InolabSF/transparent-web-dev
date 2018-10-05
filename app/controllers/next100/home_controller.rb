@@ -50,4 +50,8 @@ class Next100::HomeController < ApplicationController
       render json: @pinned_contents
     end
   end
+
+  def demo
+    render file: 'public/next100/index.html', status: 200, layout: false
+  end
 end
