@@ -1,8 +1,30 @@
 <template>
   <div id="app">
     <router-view></router-view>
+    <mode-select-modal></mode-select-modal>
   </div>
 </template>
+
+<script>
+import ModeSelectModal from "@/components/ModeSelectModal";
+
+export default {
+  name: "App",
+  components: {
+    ModeSelectModal
+  },
+  created() {
+    setTimeout(() => {
+      this.showSettingModal();
+    });
+  },
+  methods: {
+    showSettingModal () {
+      this.$modal.show('hello-world');
+    }
+  }
+}
+</script>
 
 <style lang="css">
   #app {
@@ -12,6 +34,7 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+    overflow: hidden;
   }
 
   .fill {

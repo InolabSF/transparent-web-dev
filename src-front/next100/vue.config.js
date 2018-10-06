@@ -3,6 +3,7 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 module.exports = {
   baseUrl: '/next100',
   outputDir: '../../public/next100',
+  assetsDir: 'static',
   devServer: {
     proxy: {
       '/transcript': {

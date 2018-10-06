@@ -1,7 +1,7 @@
 <template>
-  <div class="fill" @click="onClickTable">
+  <div class="fill">
     <h1>welcome</h1>
-    <div class="user" v-for="user in loginUsers" :key="user.floorId" :style="getStyleByFloorId(user.floorId)">{{ user.name }}</div>
+    <div class="user" v-for="user in loginUsers" :key="user.floorId" :data-floor-id="user.floorId" :style="getStyleByFloorId(user.floorId)">{{ user.name }}</div>
     <div class="overlay flex-column" v-if="isShowConfirmOverlay" @click="isShowConfirmOverlay != false">
       <h1 style="{color: '#fff'}">ready?</h1>
       <div>
@@ -16,22 +16,29 @@ import api from "@/core/ApiClient";
 import moment from "moment";
 import { mapState } from "vuex";
 import userMixin from "@/mixins/userMixin";
+import customTouchEventDriver from "@/mixins/customTouchEventDriver";
 
 export default {
   name: "welcome",
-  mixins: [userMixin],
+  mixins: [userMixin, customTouchEventDriver],
   data() {
     return {
       isShowConfirmOverlay: false,
     }
   },
+  created() {
+    window.addEventListener('CUSTOM_TOUCH_START', this.onClickTable);
+  },
   methods: {
-    onClickTable() {
+    onClickTable(evt) {
       // TODO ここの条件は仮 2回目だったら、ready?モーダルで会議をスタート確認
-      try {
-        this.login();
-      } catch(e) {
+      const floorId = evt.detail[0].floorId;
+      const isLoggedin = !!this.loginUsers.find(u => u.floorId === floorId);
+
+      if (isLoggedin) {
         this.confirmStartMeeting();
+      } else {
+        this.login(floorId);
       }
       // this.$router.push("/ready");
     },

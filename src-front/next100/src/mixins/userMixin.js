@@ -1,12 +1,12 @@
 const USER_LIMIT = 4;
 export default {
   methods: {
-    login() {
+    login(floorId) {
       // TODO ID識別
       // TODO 名前連番
-      const floorId = this.$store.state.loginUsers.length + 1;
+      // const floorId = this.$store.state.loginUsers.length + 1;
       const user = {
-        floorId,
+        floorId: floorId,
         name: `randomName${1000}`,
         pins: [],
       };
@@ -23,7 +23,7 @@ export default {
         2: {bottom: 'auto', left: 0, top: 'auto'},
         3: {top: 0, left: 'auto', right: 'auto'},
         4: {bottom: 'auto', right: 0, top: 'auto'},
-      }
+      };
       return styleMap[floorId];
     }
   }
