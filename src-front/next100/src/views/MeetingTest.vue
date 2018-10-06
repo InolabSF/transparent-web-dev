@@ -24,6 +24,9 @@ import _ from "lodash";
 
 export default {
   name: "MeetingTest",
+  created() {
+    this.stopWindowPinchAction();
+  },
   data() {
     return {
       layers: [
@@ -50,7 +53,18 @@ export default {
     }
   },
   methods: {
-    onInputTranslateZ(evt) {
+    stopWindowPinchAction() {
+      // window.addEventListener('touchmove', (evt) => {
+      //   alert("move");
+      //   evt.preventDefault();
+      // });
+      document.addEventListener('touchstart', event => {
+        if (event.touches.length > 1) {
+          event.preventDefault();
+        }
+      }, true);
+    },
+    onInputTranslateZ(et) {
       const val = evt.target.value;
       this.childStyle = {
         transform: `translate3D(0px, 0px, ${val}px)`,

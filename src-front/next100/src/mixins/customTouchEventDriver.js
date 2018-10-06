@@ -6,6 +6,8 @@ const client = axios.create({
   baseURL: process.env.VUE_APP_CUSTOM_TOUCH_EVENT_DRIVER_BASE_URL
 });
 
+const VIRTUAL_MAX_LENGTH = 32768;
+
 export default {
   methods: {
     startObserver() {
@@ -43,8 +45,9 @@ export default {
         if (mode === 'developer') {
           this.sendDriver(queue);
         } else if (mode === 'preview') {
+          const filterdData = this.filterData(queue);
           const option = {
-            detail: queue
+            detail: filterdData
           };
           const customTouchStartEvent = new CustomEvent('CUSTOM_TOUCH_START', option);
           window.dispatchEvent(customTouchStartEvent);
@@ -54,7 +57,7 @@ export default {
     getConvertedPosition(touch) {
       const x = touch.clientX;
       const y = touch.clientY;
-      const max = 32768;
+      const max = VIRTUAL_MAX_LENGTH;
       return {
         x: _.round(max * x / window.innerWidth),
         y: _.round(max * y / window.innerHeight)
@@ -67,18 +70,28 @@ export default {
       const socket = io(process.env.VUE_APP_CUSTOM_TOUCH_EVENT_DRIVER_BASE_URL);
       socket.on('emit_from_server', function(data) {
         console.log('receive from websocket: ' + data);
+        const filteredData = this.filterData(data);
         const option = {
-          detail: JSON.parse(data)
+          detail: JSON.parse(filteredData)
         };
         const customTouchStartEvent = new CustomEvent('CUSTOM_TOUCH_START', option);
         window.dispatchEvent(customTouchStartEvent);
       });
     },
+    filterData(data) {
+      let filteredData = data.map(d => {
+        let r = d;
+        r.x = (d.x / VIRTUAL_MAX_LENGTH) * window.innerWidth;
+        r.y = (d.y / VIRTUAL_MAX_LENGTH) * window.innerHeight;
+        return d;
+      });
+      return filteredData;
+    },
     listenOnceCustomTouchStart(callback) {
       const listener = window.addEventListener('CUSTOM_TOUCH_START', (evt) => {
         window.removeEventListener('CUSTOM_TOUCH_START', listener);
         callback(evt);
-      })
+      });
     },
     sendDriver(data) {
       client.get(`/?_= ${JSON.stringify(data)}`);

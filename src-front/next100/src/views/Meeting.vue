@@ -30,6 +30,7 @@ export default {
     startRecognizeSpeachSDK(opts);
     // TODO transcriptsの取得
     this.fetchTranscripts();
+    this.listenPersonalTouch();
   },
   data() {
     return {
@@ -43,6 +44,9 @@ export default {
 
   },
   methods: {
+    listenPersonalTouch() {
+      window.addEventListener('CUSTOM_TOUCH_START', this.onClickTable);
+    },
     async fetchTranscripts() {
       const wallId = this.$route.params.wallId;
       const url = `/api/transcripts/${wallId}`;
@@ -68,7 +72,8 @@ export default {
       // TODO モーダル開く
       // ID識別で向きを変える
     },
-    onClickTable() {
+    onClickTable(evt) {
+      const touch = evt.detail[0];
       // TODO ID識別
       // TODO 既に開いているコンテキストメニューがあったら
       if (true) {
