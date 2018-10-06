@@ -3,13 +3,25 @@
   <!--レイヤーと奥行き表示ロジック-->
   <!--<div>TODO コンテキストメニュー＋QRコード</div>-->
   <!--<div>TODO コンテキスト（leave確認）</div>-->
-  <div class="layer-list-wrapper">
-    <div class="layer-list">
-      <div class="layer" :style="getComputedStyleForLayer(i)" v-for="layer, i in layers">
-        <div class="layer__word" :style="getRandomStyleForKeyWord()">{{ layer.words[0] }}</div>
-        <img class="layer__img" :style="getRandomStyleForImage()" v-for="content in layer.related_contents" :key="content.id" :src="content.img_url" />
+  <div class="wrapper">
+    <div class="layer-list-wrapper">
+      <div class="layer-list">
+        <div class="layer" :style="getComputedStyleForLayer(i)" v-for="layer, i in layers">
+          <div class="layer__word" :style="getRandomStyleForKeyWord()">{{ layer.words[0] }}</div>
+          <img class="layer__img" :style="getRandomStyleForImage()" v-for="content in layer.related_contents" :key="content.id" :src="content.img_url" />
+        </div>
       </div>
     </div>
+    <template v-for="stat in contextMenuStatuses">
+      <div
+        class="context-menu"
+        :style="stat.style"
+        :ref="stat.refName"
+      >
+        context menu
+      </div>
+    </template>
+
   </div>
 </template>
 
@@ -47,6 +59,30 @@ export default {
     listenPersonalTouch() {
       window.addEventListener('CUSTOM_TOUCH_START', this.onClickTable);
     },
+    isTouchObjectByElement(touch, elm) {
+      if (
+        touch.x <= elm.offsetLeft + elm.offsetWidth &&
+        touch.x >= elm.offsetLeft &&
+        touch.y <= elm.offsetTop + elm.offsetHeight &&
+        touch.y >= elm.offsetTop
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    isTouchObjectByRect(touch, {x, y, width, height}) {
+      if (
+        touch.x <= x + width &&
+        touch.x >= x &&
+        touch.y <= y + height &&
+        touch.y >= y
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    },
     async fetchTranscripts() {
       const wallId = this.$route.params.wallId;
       const url = `/api/transcripts/${wallId}`;
@@ -73,23 +109,39 @@ export default {
       // ID識別で向きを変える
     },
     onClickTable(evt) {
+      // TODO 長押しで開く
       const touch = evt.detail[0];
-      // TODO ID識別
-      // TODO 既に開いているコンテキストメニューがあったら
-      if (true) {
-
-      } else {
-        this.openContextMenu({x: 200, y: 400})
+      // NOTE: refsは配列で返ってくる
+      const existRef = this.$refs[`context-menu-${touch.floorId}`];
+      if (
+        this.contextMenuStatuses
+          .filter(
+            d => (d.floorId === touch.floorId)
+          ).length === 0) {
+        this.openContextMenu(touch);
+      } else if (
+        existRef &&
+        !this.isTouchObjectByRect(touch, existRef[0].getBoundingClientRect())
+      ) {
+        this.closeContextMenu(touch);
       }
     },
-    openContextMenu(floorId, touchedPosition) {
-      const {x, y} = touchedPosition;
-      const status = {
-        floorId,
-        x,
-        y,
+    openContextMenu(touch) {
+      const style = {
+        left: `${touch.x}px`,
+        top: `${touch.y}px`,
       };
-      this.contextMenuStatuses.push();
+      const refName = `context-menu-${touch.floorId}`;
+      const status = {
+        floorId: touch.floorId,
+        style,
+        refName
+      };
+      this.contextMenuStatuses.push(status);
+    },
+    closeContextMenu(touch) {
+      const floorId = touch.floorId;
+      this.contextMenuStatuses = this.contextMenuStatuses.filter(s => s.floorId !== floorId);
     },
     getStyleByContextMenuPosition() {
       // TODO タッチ位置に合わせて出す位置調整
@@ -154,7 +206,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
 .layer-list-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   display: flex;
@@ -190,5 +253,12 @@ export default {
   position: absolute;
   color: darkred;
   font-weight: bold;
+}
+
+.context-menu {
+  position: absolute;
+  width: 400px;
+  height: 600px;
+  background: #f2f2f2;
 }
 </style>
