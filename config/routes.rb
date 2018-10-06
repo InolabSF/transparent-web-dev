@@ -24,7 +24,9 @@ Rails.application.routes.draw do
   delete '/next100/searches', to: 'api/transcripts#archive_search'
   delete '/next100/contents', to: 'api/transcripts#archive_related_content'
 
-  match '/next100/welcome', to: 'next100/home#demo', via: :get
+  get '/next100/welcome', to: 'next100/home#demo'
+  get '/next100/walls/:wall_id/meeting', to: 'next100/home#demo'
+  get '/next100/walls/:wall_id/logs', to: 'next100/home#demo'
 
   # path: "/",
   #     name: "home",
