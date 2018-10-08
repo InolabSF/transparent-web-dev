@@ -24,9 +24,9 @@ export default {
      * (developer用) ブラウザタッチイベントを専用ドライバに送信
      */
     observeBrowserTouchEvent() {
-      const floorId = this.$store.state.debugParams.currentFloorId;
       console.log('start observe browser touch event...');
       window.addEventListener('touchstart', (evt) => {
+        const floorId = this.$store.state.debugParams.currentFloorId;
         const queue = [];
         for (let i = 0; i < evt.changedTouches.length; i++) {
           const touch = evt.changedTouches[i];

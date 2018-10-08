@@ -12,7 +12,7 @@ export default new Vuex.Store({
     },
   },
   mutations: {
-    set(state, payload) {
+    setState(state, payload) {
       state = Object.assign(state, payload);
     },
     addLoginUser(state, user) {
@@ -22,6 +22,9 @@ export default new Vuex.Store({
       state.loginUsers = state.loginusers.filter((u) => {
         return u.floorId !== floorId;
       });
+    },
+    setDebugParams(state, payload) {
+      state.debugParams = Object.assign(state.debugParams, payload);
     }
   },
   actions: {}

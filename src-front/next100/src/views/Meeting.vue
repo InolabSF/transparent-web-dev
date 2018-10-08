@@ -8,7 +8,7 @@
       <div class="layer-list">
         <div class="layer" :style="getComputedStyleForLayer(i)" v-for="layer, i in layers">
           <div class="layer__word" :style="getRandomStyleForKeyWord()">{{ layer.words[0] }}</div>
-          <img class="layer__img" :style="getRandomStyleForImage()" v-for="content in layer.related_contents" :key="content.id" :src="content.img_url" />
+          <img class="layer__img" :style="getRandomStyleForImage()" v-for="content, j in layer.related_contents" :key="content.id" :src="content.img_url" @click="onClickImage(content)" />
         </div>
       </div>
     </div>
@@ -19,6 +19,17 @@
         :ref="stat.refName"
       >
         context menu
+      </div>
+    </template>
+    <template v-if="isShowContentDetailModal">
+      <div class="modal is-active">
+        <div class="modal-background" @click="isShowContentDetailModal = false"></div>
+        <div class="modal-content" v-if="currentDetailModalContent">
+          <p class="image is-4by3">
+            <img :src="currentDetailModalContent.img_url" alt="">
+          </p>
+        </div>
+        <button class="modal-close is-large" aria-label="close"></button>
       </div>
     </template>
 
@@ -49,7 +60,7 @@ export default {
       layers: [],
       isShowContentDetailModal: false,
       currentContentDetailModalFloor: false,
-      contextMenuStatuses: []
+      contextMenuStatuses: [],
     }
   },
   computed: {
@@ -104,9 +115,11 @@ export default {
 
       this.layers = layers;
     },
-    onClickThumbnail() {
-      // TODO モーダル開く
+    onClickImage(content) {
+      debugger;
       // ID識別で向きを変える
+      this.isShowContentDetailModal = true;
+      this.currentDetailModalContent = content;
     },
     onClickTable(evt) {
       // TODO 長押しで開く

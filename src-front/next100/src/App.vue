@@ -2,16 +2,19 @@
   <div id="app">
     <router-view></router-view>
     <mode-select-modal></mode-select-modal>
+    <!--<debug-control></debug-control>-->
   </div>
 </template>
 
 <script>
 import ModeSelectModal from "@/components/ModeSelectModal";
+import DebugControl from "@/components/DebugControl";
 
 export default {
   name: "App",
   components: {
-    ModeSelectModal
+    ModeSelectModal,
+    DebugControl
   },
   created() {
     setTimeout(() => {
