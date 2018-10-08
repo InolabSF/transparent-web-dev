@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     onClickSelectMode() {
-      this.$store.commit('set', {
+      this.$store.commit('setState', {
         customTouchMode: this.selectedMode
       });
       this.startObserver();
