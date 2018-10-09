@@ -19,6 +19,8 @@
 
 <script>
 import customTouchEventDriver from "@/mixins/customTouchEventDriver";
+import { mapState } from "vuex";
+
 export default {
   name: "ModeSelectModal",
   mixins: [customTouchEventDriver],
@@ -27,12 +29,18 @@ export default {
       selectedMode: "production"
     };
   },
+  computed: {
+    ...mapState(['isModeSelectFinished'])
+  },
   methods: {
     onClickSelectMode() {
       this.$store.commit('setState', {
         customTouchMode: this.selectedMode
       });
       this.startObserver();
+      this.$store.commit('setState', {
+        isModeSelectFinished: true
+      });
       this.$modal.hide('hello-world');
     }
   }

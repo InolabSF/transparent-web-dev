@@ -24,15 +24,19 @@ export default {
      * (developer用) ブラウザタッチイベントを専用ドライバに送信
      */
     observeBrowserTouchEvent() {
-      console.log('start observe browser touch event...');
-      window.addEventListener('touchstart', (evt) => {
+      window.addEventListener('touchstart', this.handleNativeTouchEvent('touchstart', 'CUSTOM_TOUCH_START'));
+      window.addEventListener('touchend', this.handleNativeTouchEvent('touchend', 'CUSTOM_TOUCH_END'));
+      window.addEventListener('touchmove', this.handleNativeTouchEvent('touchmove', 'CUSTOM_TOUCH_MOVE'));
+    },
+    handleNativeTouchEvent(listenEventName, dispatchEventName) {
+      return (evt) => {
         const floorId = this.$store.state.debugParams.currentFloorId;
         const queue = [];
         for (let i = 0; i < evt.changedTouches.length; i++) {
           const touch = evt.changedTouches[i];
           const pos = this.getConvertedPosition(touch);
           const params = {
-            type: 'touchstart',
+            type: listenEventName,
             identify: i + 1,
             floorId,
             x: pos.x,
@@ -49,10 +53,10 @@ export default {
           const option = {
             detail: filterdData
           };
-          const customTouchStartEvent = new CustomEvent('CUSTOM_TOUCH_START', option);
+          const customTouchStartEvent = new CustomEvent(dispatchEventName, option);
           window.dispatchEvent(customTouchStartEvent);
         }
-      });
+      };
     },
     getConvertedPosition(touch) {
       const x = touch.clientX;
