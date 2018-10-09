@@ -6,9 +6,9 @@
   <div class="wrapper">
     <div class="layer-list-wrapper">
       <div class="layer-list">
-        <div class="layer" :style="getComputedStyleForLayer(i)" v-for="layer, i in layers">
-          <div class="layer__word" :style="getRandomStyleForKeyWord()">{{ layer.words[0] }}</div>
-          <img class="layer__img" :style="getRandomStyleForImage()" v-for="content, j in layer.related_contents" :key="content.id" :src="content.img_url" @click="onClickImage(content)" />
+        <div class="layer" :style="layerStyles[i]" v-for="layer, i in layers">
+          <div class="layer__word" :style="keywordStyles[i]">{{ layer.words[0] }}</div>
+          <img class="layer__img" :style="imageStyles[i]" v-for="content, j in layer.related_contents" :key="content.id" :src="content.img_url" @click="onClickImage(content)" />
         </div>
       </div>
     </div>
@@ -61,6 +61,15 @@ export default {
       isShowContentDetailModal: false,
       currentContentDetailModalFloor: false,
       contextMenuStatuses: [],
+      layerStyles: _.range(10).map((i) => {
+        return this.getComputedStyleForLayer(i);
+      }),
+      keywordStyles: _.range(10).map(() => {
+        return this.getRandomStyleForKeyWord()
+      }),
+      imageStyles: _.range(10).map(() => {
+        return this.getRandomStyleForImage();
+      }),
     }
   },
   computed: {
