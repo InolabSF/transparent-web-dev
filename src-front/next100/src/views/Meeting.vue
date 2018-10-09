@@ -25,10 +25,12 @@
       <div class="modal is-active">
         <div class="modal-background" @click.prevent="closeContentDetailModal"></div>
         <!--<div class="modal-background"></div>-->
-        <div class="modal-content" v-if="currentDetailModalContent">
+        <div class="modal-content" v-if="currentDetailModalContent" :style="currentDetailModalStyle">
+          <p>{{ currentDetailModalContent.title }}</p>
           <p class="image is-4by3">
             <img :src="currentDetailModalContent.img_url" alt="">
           </p>
+          <p>{{ currentDetailModalContent.desc }}</p>
         </div>
         <button class="modal-close is-large" aria-label="close"></button>
       </div>
@@ -61,6 +63,8 @@ export default {
       layers: [],
       isShowContentDetailModal: false,
       currentContentDetailModalFloor: false,
+      currentDetailModalContent: null,
+      currentDetailModalStyle: {},
       contextMenuStatuses: [],
       layerStyles: _.range(10).map((i) => {
         return this.getComputedStyleForLayer(i);
@@ -125,10 +129,10 @@ export default {
 
       this.layers = layers;
     },
-    onClickImage(contentId) {
-      this.openContentDetailModal(contentId);
+    onClickImage({floorId, contentId}) {
+      this.openContentDetailModal({floorId, contentId});
     },
-    openContentDetailModal(contentId) {
+    openContentDetailModal({floorId, contentId}) {
       // ID識別で向きを変える
       const layer = this.layers.find(l => {
         return l.related_contents.find(c => ( c.id === contentId ));
@@ -139,6 +143,7 @@ export default {
       }
 
       const content = layer.related_contents.find(c => ( c.id === contentId ));
+      this.currentDetailModalStyle = this.getModalStyleByFloorId(floorId);
       this.currentDetailModalContent = content;
       this.isShowContentDetailModal = true;
       this.contentDetailOpenTime = new Date().getTime();
@@ -152,6 +157,7 @@ export default {
       this.isShowContentDetailModal = false;
     },
     onClickTable(evt) {
+      // TODO シーン判別のようなものを追加
       // TODO 長押しで開く
       const touch = evt.detail[0];
 
@@ -168,8 +174,9 @@ export default {
       });
 
       if (touchedImage) {
+        const floorId = touch.floorId;
         const contentId = Number(touchedImage.getAttribute('data-content-id'));
-        this.onClickImage(contentId);
+        this.onClickImage({floorId, contentId});
         return false;
       }
 
@@ -264,6 +271,24 @@ export default {
         zIndex
       };
       return style;
+    },
+    getModalStyleByFloorId(floorId) {
+      const styleMap = {
+        1: {
+          'transform': `rotate(0deg)`
+        },
+        2: {
+          'transform': `rotate(90deg)`
+        },
+        3: {
+          'transform': `rotate(180deg)`
+        },
+        4: {
+          'transform': `rotate(270deg)`
+        },
+      };
+
+      return styleMap[floorId];
     }
   }
 };
@@ -324,5 +349,10 @@ export default {
   width: 400px;
   height: 600px;
   background: #f2f2f2;
+}
+
+.modal-content {
+  font-size: 2vw;
+  color: #fff;
 }
 </style>
