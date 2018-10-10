@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 194 194">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #292929;
+      }
+
+      .cls-2 {
+        fill: #fff;
+        font-size: 23px;
+        font-family: NotoSansJP-Medium, Noto Sans JP Medium;
+        font-weight: 500;
+        letter-spacing: 0.05em;
+      }
+
+      .cls-3, .cls-4 {
+        fill: none;
+        stroke: #fff;
+        stroke-linecap: round;
+        stroke-miterlimit: 10;
+        stroke-width: 7px;
+      }
+
+      .cls-4 {
+        stroke-linejoin: round;
+      }
+    </style>
+  </defs>
+  <g id="グループ化_59" data-name="グループ化 59" transform="translate(-1823 -983)">
+    <circle id="楕円形_26" data-name="楕円形 26" class="cls-1" cx="97" cy="97" r="97" transform="translate(1823 983)"/>
+    <text id="RETURN" class="cls-2" transform="translate(1919.964 1117.392)"><tspan x="-48.726" y="0">RETURN</tspan></text>
+    <g id="back_icon01" transform="translate(1894.968 1041.873)">
+      <path id="パス_119" data-name="パス 119" class="cls-3" d="M44.273,5h3.377a12.509,12.509,0,0,1,0,25.017H10" transform="translate(-10 -5)"/>
+      <line id="線_1" data-name="線 1" class="cls-4" x1="10.007" y2="10.007" transform="translate(0 15.01)"/>
+    </g>
+  </g>
+</svg>

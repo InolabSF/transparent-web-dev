@@ -6,9 +6,9 @@
   <div class="wrapper">
     <div class="layer-list-wrapper">
       <div class="layer-list">
-        <div class="layer" :style="getComputedStyleForLayer(i)" v-for="layer, i in layers">
-          <div class="layer__word" :style="getRandomStyleForKeyWord()">{{ layer.words[0] }}</div>
-          <img class="layer__img" :style="getRandomStyleForImage()" v-for="content, j in layer.related_contents" :key="content.id" :src="content.img_url" @click="onClickImage(content)" />
+        <div class="layer" :style="layerStyles[i]" v-for="layer, i in layers">
+          <div class="layer__word" :style="keywordStyles[i]">{{ layer.words[0] }}</div>
+          <img ref="images" class="layer__img" :style="imageStyles[i]" v-for="content, j in layer.related_contents" :key="content.id" :data-layer-id="layer.id" :data-content-id="content.id" :src="content.img_url" @click="onClickImage(content)" />
         </div>
       </div>
     </div>
@@ -23,11 +23,14 @@
     </template>
     <template v-if="isShowContentDetailModal">
       <div class="modal is-active">
-        <div class="modal-background" @click="isShowContentDetailModal = false"></div>
-        <div class="modal-content" v-if="currentDetailModalContent">
+        <div class="modal-background" @click.prevent="closeContentDetailModal"></div>
+        <!--<div class="modal-background"></div>-->
+        <div class="modal-content" v-if="currentDetailModalContent" :style="currentDetailModalStyle">
+          <p>{{ currentDetailModalContent.title }}</p>
           <p class="image is-4by3">
             <img :src="currentDetailModalContent.img_url" alt="">
           </p>
+          <p>{{ currentDetailModalContent.desc }}</p>
         </div>
         <button class="modal-close is-large" aria-label="close"></button>
       </div>
@@ -60,7 +63,18 @@ export default {
       layers: [],
       isShowContentDetailModal: false,
       currentContentDetailModalFloor: false,
+      currentDetailModalContent: null,
+      currentDetailModalStyle: {},
       contextMenuStatuses: [],
+      layerStyles: _.range(10).map((i) => {
+        return this.getComputedStyleForLayer(i);
+      }),
+      keywordStyles: _.range(10).map(() => {
+        return this.getRandomStyleForKeyWord()
+      }),
+      imageStyles: _.range(10).map(() => {
+        return this.getRandomStyleForImage();
+      }),
     }
   },
   computed: {
@@ -115,28 +129,72 @@ export default {
 
       this.layers = layers;
     },
-    onClickImage(content) {
-      debugger;
+    onClickImage({floorId, contentId}) {
+      this.openContentDetailModal({floorId, contentId});
+    },
+    openContentDetailModal({floorId, contentId}) {
       // ID識別で向きを変える
-      this.isShowContentDetailModal = true;
+      const layer = this.layers.find(l => {
+        return l.related_contents.find(c => ( c.id === contentId ));
+      });
+
+      if (!layer) {
+        return false;
+      }
+
+      const content = layer.related_contents.find(c => ( c.id === contentId ));
+      this.currentDetailModalStyle = this.getModalStyleByFloorId(floorId);
       this.currentDetailModalContent = content;
+      this.isShowContentDetailModal = true;
+      this.contentDetailOpenTime = new Date().getTime();
+    },
+    closeContentDetailModal() {
+      const waitTime = 1000;
+      const time = new Date().getTime() - this.contentDetailOpenTime;
+      if (time <= waitTime) {
+        return false;
+      }
+      this.isShowContentDetailModal = false;
     },
     onClickTable(evt) {
+      // TODO シーン判別のようなものを追加
       // TODO 長押しで開く
       const touch = evt.detail[0];
+
+      // NOTE 画像触ったら反応しない
+      let isTouchImage = false;
+      let touchedImage;
+      this.$refs.images.forEach((img) => {
+        const rect = img.getBoundingClientRect();
+        if (this.isTouchObjectByRect(touch, rect)) {
+          isTouchImage = true;
+          touchedImage = img;
+          return false;
+        }
+      });
+
+      if (touchedImage) {
+        const floorId = touch.floorId;
+        const contentId = Number(touchedImage.getAttribute('data-content-id'));
+        this.onClickImage({floorId, contentId});
+        return false;
+      }
+
       // NOTE: refsは配列で返ってくる
       const existRef = this.$refs[`context-menu-${touch.floorId}`];
       if (
-        this.contextMenuStatuses
-          .filter(
-            d => (d.floorId === touch.floorId)
-          ).length === 0) {
-        this.openContextMenu(touch);
-      } else if (
         existRef &&
+        existRef.length > 0 &&
         !this.isTouchObjectByRect(touch, existRef[0].getBoundingClientRect())
       ) {
         this.closeContextMenu(touch);
+      } else if (
+        this.contextMenuStatuses
+          .filter(
+            d => (d.floorId === touch.floorId)
+          ).length === 0
+      ) {
+        this.openContextMenu(touch);
       }
     },
     openContextMenu(touch) {
@@ -213,6 +271,24 @@ export default {
         zIndex
       };
       return style;
+    },
+    getModalStyleByFloorId(floorId) {
+      const styleMap = {
+        1: {
+          'transform': `rotate(0deg)`
+        },
+        2: {
+          'transform': `rotate(90deg)`
+        },
+        3: {
+          'transform': `rotate(180deg)`
+        },
+        4: {
+          'transform': `rotate(270deg)`
+        },
+      };
+
+      return styleMap[floorId];
     }
   }
 };
@@ -273,5 +349,10 @@ export default {
   width: 400px;
   height: 600px;
   background: #f2f2f2;
+}
+
+.modal-content {
+  font-size: 2vw;
+  color: #fff;
 }
 </style>

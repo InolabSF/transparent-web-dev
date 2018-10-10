@@ -16,7 +16,7 @@ export default {
         this.observeBrowserTouchEvent();
       }
 
-      if (mode !== 'preview') {
+      if (mode === 'developer' || mode === 'production') {
         this.observeEventFromDriver();
       }
     },
@@ -24,15 +24,19 @@ export default {
      * (developer用) ブラウザタッチイベントを専用ドライバに送信
      */
     observeBrowserTouchEvent() {
-      console.log('start observe browser touch event...');
-      window.addEventListener('touchstart', (evt) => {
+      window.addEventListener('touchstart', this.handleNativeTouchEvent('touchstart', 'CUSTOM_TOUCH_START'));
+      window.addEventListener('touchend', this.handleNativeTouchEvent('touchend', 'CUSTOM_TOUCH_END'));
+      window.addEventListener('touchmove', this.handleNativeTouchEvent('touchmove', 'CUSTOM_TOUCH_MOVE'));
+    },
+    handleNativeTouchEvent(listenEventName, dispatchEventName) {
+      return (evt) => {
         const floorId = this.$store.state.debugParams.currentFloorId;
         const queue = [];
         for (let i = 0; i < evt.changedTouches.length; i++) {
           const touch = evt.changedTouches[i];
           const pos = this.getConvertedPosition(touch);
           const params = {
-            type: 'touchstart',
+            type: listenEventName,
             identify: i + 1,
             floorId,
             x: pos.x,
@@ -49,10 +53,10 @@ export default {
           const option = {
             detail: filterdData
           };
-          const customTouchStartEvent = new CustomEvent('CUSTOM_TOUCH_START', option);
+          const customTouchStartEvent = new CustomEvent(dispatchEventName, option);
           window.dispatchEvent(customTouchStartEvent);
         }
-      });
+      };
     },
     getConvertedPosition(touch) {
       const x = touch.clientX;
@@ -68,14 +72,46 @@ export default {
      */
     observeEventFromDriver() {
       const socket = io(process.env.VUE_APP_CUSTOM_TOUCH_EVENT_DRIVER_BASE_URL);
-      socket.on('emit_from_server', function(data) {
-        console.log('receive from websocket: ' + data);
-        const filteredData = this.filterData(data);
+      // socket.on('emit_from_server', (data) => {
+      //   console.log('receive from websocket: ' + data);
+      //   const filteredData = this.filterData(JSON.parse(data));
+      //   const option = {
+      //     detail: filteredData
+      //   };
+      //   const customTouchStartEvent = new CustomEvent('CUSTOM_TOUCH_START', option);
+      //   window.dispatchEvent(customTouchStartEvent);
+      // });
+      socket.on('emit_from_server', this.dispatchCustomEventByStream);
+    },
+    dispatchCustomEventByStream(streamData) {
+      debugger;
+      const filteredData = this.filterData(JSON.parse(streamData));
+      const dataGroupByTypes = {
+        'touchstart': [],
+        'touchmove': [],
+        'touchend': []
+      };
+
+      const eventNameMap = {
+        'touchstart': 'CUSTOM_TOUCH_START',
+        'touchmove': 'CUSTOM_TOUCH_MOVE',
+        'touchend': 'CUSTOM_TOUCH_END'
+      };
+
+      filteredData.forEach((d) => {
+        dataGroupByTypes[d.type].push(d);
+      });
+
+      Object.keys(dataGroupByTypes).forEach(type => {
+        const row = dataGroupByTypes[type];
+        if (!row.length) {
+          return false;
+        }
         const option = {
-          detail: JSON.parse(filteredData)
+          detail: row
         };
-        const customTouchStartEvent = new CustomEvent('CUSTOM_TOUCH_START', option);
-        window.dispatchEvent(customTouchStartEvent);
+        const customTouchEvent = new CustomEvent(eventNameMap[type], option);
+        window.dispatchEvent(customTouchEvent);
       });
     },
     filterData(data) {

@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   get '/next100/welcome', to: 'next100/home#demo'
   get '/next100/walls/:wall_id/meeting', to: 'next100/home#demo'
   get '/next100/walls/:wall_id/logs', to: 'next100/home#demo'
+  get '/next100/test-index', to: 'next100/home#demo'
 
   # path: "/",
   #     name: "home",
