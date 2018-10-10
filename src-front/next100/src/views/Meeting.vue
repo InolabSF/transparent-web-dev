@@ -18,7 +18,8 @@
         :style="stat.style"
         :ref="stat.refName"
       >
-        context menu
+        ユーザー 000{{stat.floorId}} <br>
+        のメニュー
       </div>
     </template>
     <template v-if="isShowContentDetailModal">
@@ -133,6 +134,10 @@ export default {
       this.openContentDetailModal({floorId, contentId});
     },
     openContentDetailModal({floorId, contentId}) {
+      if (this.isShowContentDetailModal) {
+        return;
+      }
+
       // ID識別で向きを変える
       const layer = this.layers.find(l => {
         return l.related_contents.find(c => ( c.id === contentId ));
@@ -198,9 +203,11 @@ export default {
       }
     },
     openContextMenu(touch) {
+      const d = this.getTransformDegByFloorId(touch.floorId);
       const style = {
         left: `${touch.x}px`,
         top: `${touch.y}px`,
+        transform: `rotate(${d}deg)`,
       };
       const refName = `context-menu-${touch.floorId}`;
       const status = {
@@ -273,22 +280,18 @@ export default {
       return style;
     },
     getModalStyleByFloorId(floorId) {
-      const styleMap = {
-        1: {
-          'transform': `rotate(0deg)`
-        },
-        2: {
-          'transform': `rotate(90deg)`
-        },
-        3: {
-          'transform': `rotate(180deg)`
-        },
-        4: {
-          'transform': `rotate(270deg)`
-        },
+      const d = this.getTransformDegByFloorId(floorId);
+      return { transform: `rotate(${d}deg)` };
+    },
+    getTransformDegByFloorId(floorId) {
+      const map = {
+        1: 0,
+        2: 90,
+        3: 180,
+        4: 270
       };
 
-      return styleMap[floorId];
+      return map[floorId];
     }
   }
 };
@@ -349,6 +352,11 @@ export default {
   width: 400px;
   height: 600px;
   background: #f2f2f2;
+
+  font-sizd: 2vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .modal-content {
