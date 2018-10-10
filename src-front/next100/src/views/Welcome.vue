@@ -69,6 +69,7 @@ export default {
 <style lang="scss" scoped>
 .user {
   position: absolute;
+  font-size: 2vw;
 }
 .overlay {
   position: absolute;
