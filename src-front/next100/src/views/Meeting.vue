@@ -43,6 +43,7 @@
 <script>
 import client from "@/core/ApiClient";
 import _ from "lodash";
+import customTouchEventDriver from "@/mixins/customTouchEventDriver";
 
 const START_Z_AXIS = 50; // 先頭z座標
 const Z_STEP = 10; // 1レイヤー間のz深度
@@ -50,6 +51,7 @@ const SHOW_LAYER_NUM = 10 // 階層数
 
 export default {
   name: "Meeting",
+  mixins: [customTouchEventDriver],
   created() {
     const opts = {
       wallId: this.$route.params.wallId
@@ -79,35 +81,10 @@ export default {
     }
   },
   computed: {
-
   },
   methods: {
     listenPersonalTouch() {
       window.addEventListener('CUSTOM_TOUCH_START', this.onClickTable);
-    },
-    isTouchObjectByElement(touch, elm) {
-      if (
-        touch.x <= elm.offsetLeft + elm.offsetWidth &&
-        touch.x >= elm.offsetLeft &&
-        touch.y <= elm.offsetTop + elm.offsetHeight &&
-        touch.y >= elm.offsetTop
-      ) {
-        return true;
-      } else {
-        return false;
-      }
-    },
-    isTouchObjectByRect(touch, {x, y, width, height}) {
-      if (
-        touch.x <= x + width &&
-        touch.x >= x &&
-        touch.y <= y + height &&
-        touch.y >= y
-      ) {
-        return true;
-      } else {
-        return false;
-      }
     },
     async fetchTranscripts() {
       const wallId = this.$route.params.wallId;

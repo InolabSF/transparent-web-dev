@@ -138,6 +138,26 @@ export default {
     },
     sendDriver(data) {
       client.get(`/?_= ${JSON.stringify(data)}`);
-    }
+    },
+    isTouchObjectByElement(touch, elm) {
+      const rect = elm.getBoundingClientRect();
+      if (!rect) {
+        throw new Error('cannnot get client rect');
+      }
+
+      return this.isTouchObjectByRect(touch, rect)
+    },
+    isTouchObjectByRect(touch, {x, y, width, height}) {
+      if (
+        touch.x <= x + width &&
+        touch.x >= x &&
+        touch.y <= y + height &&
+        touch.y >= y
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    },
   },
 };

@@ -38,6 +38,11 @@ export default new Router({
       component: () => import("./views/test/TestScroll"),
     },
     {
+      path: "/test-hit",
+      name: "test-hit",
+      component: () => import("./views/test/TestHit"),
+    },
+    {
       path: "/",
       name: "home",
       component: () => import("./views/Home")
