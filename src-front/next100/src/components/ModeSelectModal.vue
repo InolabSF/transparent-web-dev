@@ -1,5 +1,5 @@
 <template>
-  <modal name="hello-world">
+  <modal name="hello-world" class="wrapper">
     <div class="p4">
       <label class="block">
         <input type="radio" name="selectedMode" value="production" v-model="selectedMode"> 本番モード（要専用ドライバ）
@@ -12,6 +12,9 @@
       </label>
       <div>
         <button type="submit" @click="onClickSelectMode">OK</button>
+      </div>
+      <div>
+        <small><router-link to="/test-index">モックindex</router-link></small>
       </div>
     </div>
   </modal>
@@ -46,3 +49,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  .wrapper {
+    font-size: 2vw;
+  }
+</style>

@@ -8,24 +8,34 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
+      path: "/test-index",
+      name: "test-index",
+      component: () => import("./views/test/TestIndex"),
+    },
+    {
       path: "/meeting-test",
       name: "meeting-test",
       component: () => import("./views/MeetingTest"),
     },
     {
       path: "/test-log",
-      name: "test",
+      name: "test-log",
       component: () => import("./views/test/TestLog"),
     },
     {
       path: "/test-hold",
-      name: "test",
+      name: "test-hold",
       component: () => import("./views/test/TestHold"),
     },
     {
       path: "/test-pinch",
-      name: "test",
+      name: "test-pinch",
       component: () => import("./views/test/TestPinch"),
+    },
+    {
+      path: "/test-scroll",
+      name: "test-scroll",
+      component: () => import("./views/test/TestScroll"),
     },
     {
       path: "/",
