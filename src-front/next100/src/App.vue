@@ -21,6 +21,11 @@ export default {
     setTimeout(() => {
       this.showSettingModal();
     });
+
+    // NOTE: 長押しでコンテキストメニューが開くのが邪魔なので消す
+    window.addEventListener("contextmenu", (e) => {
+      e.preventDefault();
+    }, false);
   },
   methods: {
     showSettingModal () {
