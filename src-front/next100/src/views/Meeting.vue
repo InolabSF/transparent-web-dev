@@ -146,18 +146,29 @@ export default {
       // NOTE 画像触ったら反応しない
       let isTouchImage = false;
       let touchedImage;
+
+      const touchedImages = [];
       this.$refs.images.forEach((img) => {
         const rect = img.getBoundingClientRect();
         if (this.isTouchObjectByRect(touch, rect)) {
           isTouchImage = true;
-          touchedImage = img;
+          touchedImages.push(img);
           return false;
         }
       });
 
-      if (touchedImage) {
+      if (isTouchImage) {
+        // TODO: 先頭だけ取り出す 要ブラッシュアップ
+        touchedImages.sort((a, b) => {
+          const aId = Number(a.getAttribute('data-content-id'));
+          const bId = Number(b.getAttribute('data-content-id'));
+          return aId < bId ? -1 : 1;
+        });
+
+        const latestTouchedImage = touchedImages[0];
+
         const floorId = touch.floorId;
-        const contentId = Number(touchedImage.getAttribute('data-content-id'));
+        const contentId = Number(latestTouchedImage.getAttribute('data-content-id'));
         this.onClickImage({floorId, contentId});
         return false;
       }
