@@ -660,6 +660,90 @@ body {
 	right: 0.75em;
 	width: 4.375em;
 }
+.media-container[data-keyword-color="red"] .keyword-box .keyword-text::before,
+.media-container[data-keyword-color="red"] .keyword-box .keyword-text::after {
+	background-color: #B80117;
+}
+.media-container[data-keyword-color="red"] .media-photo .bg {
+	background-image: url('data:image/svg+xml;charset=utf8,%3Csvg%20viewBox%3D%220%200%20200%20200%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%22100%22%20fill%3D%22%23b80117%22%2F%3E%3C%2Fsvg%3E');
+}
+.media-container[data-keyword-color="blue"] .keyword-box .keyword-text::before,
+.media-container[data-keyword-color="blue"] .keyword-box .keyword-text::after {
+	background-color: #0168B3;
+}
+.media-container[data-keyword-color="blue"] .media-photo .bg {
+	background-image: url('data:image/svg+xml;charset=utf8,%3Csvg%20viewBox%3D%220%200%20200%20200%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%22100%22%20fill%3D%22%230168b3%22%2F%3E%3C%2Fsvg%3E');
+}
+.media-container[data-keyword-color="green"] .keyword-box .keyword-text::before,
+.media-container[data-keyword-color="green"] .keyword-box .keyword-text::after {
+	background-color: #00904A;
+}
+.media-container[data-keyword-color="green"] .media-photo .bg {
+	background-image: url('data:image/svg+xml;charset=utf8,%3Csvg%20viewBox%3D%220%200%20200%20200%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%22100%22%20fill%3D%22%2300904a%22%2F%3E%3C%2Fsvg%3E');
+}
+.media-container[data-keyword-color="yellow"] .keyword-box .keyword-text::before,
+.media-container[data-keyword-color="yellow"] .keyword-box .keyword-text::after {
+	background-color: #EDC600;
+}
+.media-container[data-keyword-color="yellow"] .media-photo .bg {
+	background-image: url('data:image/svg+xml;charset=utf8,%3Csvg%20viewBox%3D%220%200%20200%20200%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%22100%22%20fill%3D%22%23edc600%22%2F%3E%3C%2Fsvg%3E');
+}
+.media-container[data-keyword-color="purple"] .keyword-box .keyword-text::before,
+.media-container[data-keyword-color="purple"] .keyword-box .keyword-text::after {
+	background-color: #6D1782;
+}
+.media-container[data-keyword-color="purple"] .media-photo .bg {
+	background-image: url('data:image/svg+xml;charset=utf8,%3Csvg%20viewBox%3D%220%200%20200%20200%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%22100%22%20fill%3D%22%236d1782%22%2F%3E%3C%2Fsvg%3E');
+}
+.media-container[data-keyword-color="vermilion"] .keyword-box .keyword-text::before,
+.media-container[data-keyword-color="vermilion"] .keyword-box .keyword-text::after {
+	background-color: #A03C44;
+}
+.media-container[data-keyword-color="vermilion"] .media-photo .bg {
+	background-image: url('data:image/svg+xml;charset=utf8,%3Csvg%20viewBox%3D%220%200%20200%20200%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%22100%22%20fill%3D%22%23a03c44%22%2F%3E%3C%2Fsvg%3E');
+}
+.media-container[data-keyword-color="yellowgreen"] .keyword-box .keyword-text::before,
+.media-container[data-keyword-color="yellowgreen"] .keyword-box .keyword-text::after {
+	background-color: #A0C238;
+}
+.media-container[data-keyword-color="yellowgreen"] .media-photo .bg {
+	background-image: url('data:image/svg+xml;charset=utf8,%3Csvg%20viewBox%3D%220%200%20200%20200%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%22100%22%20fill%3D%22%23a0c238%22%2F%3E%3C%2Fsvg%3E');
+}
+.media-container[data-keyword-color="orange"] .keyword-box .keyword-text::before,
+.media-container[data-keyword-color="orange"] .keyword-box .keyword-text::after {
+	background-color: #C0542D;
+}
+.media-container[data-keyword-color="orange"] .media-photo .bg {
+	background-image: url('data:image/svg+xml;charset=utf8,%3Csvg%20viewBox%3D%220%200%20200%20200%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%22100%22%20fill%3D%22%23c0542d%22%2F%3E%3C%2Fsvg%3E');
+}
+.media-container[data-keyword-color="lightblue"] .keyword-box .keyword-text::before,
+.media-container[data-keyword-color="lightblue"] .keyword-box .keyword-text::after {
+	background-color: #66B7EC;
+}
+.media-container[data-keyword-color="lightblue"] .media-photo .bg {
+	background-image: url('data:image/svg+xml;charset=utf8,%3Csvg%20viewBox%3D%220%200%20200%20200%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%22100%22%20fill%3D%22%2366b7ec%22%2F%3E%3C%2Fsvg%3E');
+}
+.media-container[data-keyword-color="gold"] .keyword-box .keyword-text::before,
+.media-container[data-keyword-color="gold"] .keyword-box .keyword-text::after {
+	background-color: #E5AB47;
+}
+.media-container[data-keyword-color="gold"] .media-photo .bg {
+	background-image: url('data:image/svg+xml;charset=utf8,%3Csvg%20viewBox%3D%220%200%20200%20200%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%22100%22%20fill%3D%22%23e5ab47%22%2F%3E%3C%2Fsvg%3E');
+}
+.media-container[data-keyword-color="pink"] .keyword-box .keyword-text::before,
+.media-container[data-keyword-color="pink"] .keyword-box .keyword-text::after {
+	background-color: #C30068;
+}
+.media-container[data-keyword-color="pink"] .media-photo .bg {
+	background-image: url('data:image/svg+xml;charset=utf8,%3Csvg%20viewBox%3D%220%200%20200%20200%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%22100%22%20fill%3D%22%23c30068%22%2F%3E%3C%2Fsvg%3E');
+}
+.media-container[data-keyword-color="bluegreen"] .keyword-box .keyword-text::before,
+.media-container[data-keyword-color="bluegreen"] .keyword-box .keyword-text::after {
+	background-color: #6BB6BB;
+}
+.media-container[data-keyword-color="bluegreen"] .media-photo .bg {
+	background-image: url('data:image/svg+xml;charset=utf8,%3Csvg%20viewBox%3D%220%200%20200%20200%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%20%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%22100%22%20fill%3D%22%236bb6bb%22%2F%3E%3C%2Fsvg%3E');
+}
 #media-send-leyer {
 	background-color: rgba(0,255,255,0.1);
 	height: 60%;

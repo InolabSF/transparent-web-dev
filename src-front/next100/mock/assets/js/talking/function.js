@@ -40,6 +40,8 @@ jQuery(function($){
 	
 	var rotate = ['0deg', '90deg', '180deg', '270deg'];
 	var rotate2 = ['1deg', '-0deg', '-1deg', '-2deg', '-3deg', '-4deg', '-3deg', '-2deg', '-1deg', '0deg'];
+	var keyword_color = ['red', 'blue', 'green', 'yellow', 'purple', 'vermilion', 'yellowgreen', 'orange', 'lightblue', 'gold', 'pink', 'bluegreen', 'white'];
+	arreyShuffle(keyword_color);
 	$('.post').each(function(j){
 		$(this).find('.media-container > *').each(function(i){
 			//var top = pos_data[i].y;
@@ -56,6 +58,8 @@ jQuery(function($){
 			$(this).css({'top':top - center_y+'px','left':left - center_x+'px','transform':'rotate('+rotate[0]+')'});
 		});
 		$(this).children().css({'transform':'translate3d(0,0,'+ (500*j-4500) +'px) rotate('+rotate2[j]+')', 'filter':'blur('+ (90 - (j*10)) +'px)', 'opacity':(0.1 + (j*0.1))});
+		
+		$(this).children().attr('data-keyword-color', keyword_color[j]);
 	});
 	
 });
