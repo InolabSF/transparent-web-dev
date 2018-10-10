@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <router-view v-if="isModeSelectFinished"></router-view>
     <mode-select-modal></mode-select-modal>
     <!--<debug-control></debug-control>-->
   </div>
@@ -9,6 +9,7 @@
 <script>
 import ModeSelectModal from "@/components/ModeSelectModal";
 import DebugControl from "@/components/DebugControl";
+import { mapState } from "vuex";
 
 export default {
   name: "App",
@@ -20,11 +21,19 @@ export default {
     setTimeout(() => {
       this.showSettingModal();
     });
+
+    // NOTE: 長押しでコンテキストメニューが開くのが邪魔なので消す
+    window.addEventListener("contextmenu", (e) => {
+      e.preventDefault();
+    }, false);
   },
   methods: {
     showSettingModal () {
       this.$modal.show('hello-world');
     }
+  },
+  computed: {
+    ...mapState(['isModeSelectFinished'])
   }
 }
 </script>
