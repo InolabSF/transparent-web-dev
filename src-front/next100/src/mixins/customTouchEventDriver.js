@@ -84,7 +84,6 @@ export default {
       socket.on('emit_from_server', this.dispatchCustomEventByStream);
     },
     dispatchCustomEventByStream(streamData) {
-      debugger;
       const filteredData = this.filterData(JSON.parse(streamData));
       const dataGroupByTypes = {
         'touchstart': [],
@@ -99,7 +98,9 @@ export default {
       };
 
       filteredData.forEach((d) => {
-        dataGroupByTypes[d.type].push(d);
+        if (dataGroupByTypes[d.type]) {
+          dataGroupByTypes[d.type].push(d);
+        }
       });
 
       Object.keys(dataGroupByTypes).forEach(type => {
@@ -121,6 +122,12 @@ export default {
         r.y = (d.y / VIRTUAL_MAX_LENGTH) * window.innerHeight;
         return d;
       });
+
+      // 操作者なしアクセスはイベントを発火させない floorId: 0
+      filteredData = filteredData.filter(d => {
+        return d.floorId !== 0;
+      });
+
       return filteredData;
     },
     listenOnceCustomTouchStart(callback) {
