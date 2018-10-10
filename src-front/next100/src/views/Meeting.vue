@@ -44,6 +44,7 @@
 import client from "@/core/ApiClient";
 import _ from "lodash";
 import customTouchEventDriver from "@/mixins/customTouchEventDriver";
+import Hammer from "hammerjs";
 
 const START_Z_AXIS = 50; // 先頭z座標
 const Z_STEP = 10; // 1レイヤー間のz深度
@@ -60,6 +61,8 @@ export default {
     // TODO transcriptsの取得
     this.fetchTranscripts();
     this.listenPersonalTouch();
+
+    this.initializePinchEvent();
   },
   data() {
     return {
@@ -280,7 +283,31 @@ export default {
       };
 
       return map[floorId];
-    }
+    },
+    initializePinchEvent() {
+      const square = document.querySelector('#app');
+      const hammer = new Hammer(square);
+      hammer.get('pinch').set({ enable: true });
+      hammer.on('pinchout', (e) => {
+        this.logType('pinchout');
+        this.logEvent(e);
+      });
+      hammer.on('pinchin', (e) => {
+        this.logType('pinchin');
+        this.logEvent(e);
+      });
+      hammer.on('pinchmove', (e) => {
+        this.logType('pinchmove');
+        this.logEvent(e);
+      });
+    },
+    logType(type) {
+      console.log(type);
+    },
+    logEvent(e) {
+      this.pinchScale = e.scale;
+      console.log(e.scale);
+    },
   }
 };
 </script>
