@@ -10,10 +10,10 @@
       </div>
     </div>
     <div class="control">
-      translateZ: <input type="number" value="0" @input="onInputTranslateZ">px<br>
+      scale: {{ pinchScale }} <br>
+      translateZ: <input type="number" v-model.number="translateZ" @input="onInputTranslateZ">px<br>
       perspective: <input type="number" value="100" @input="onInputPerspective">px<br>
       <button @click="onClickAddLayer">add layer</button><br>
-      -<br>
     </div>
   </div>
 </template>
@@ -26,18 +26,12 @@ import Hammer from "hammerjs";
 export default {
   name: "MeetingTest",
   created() {
-    const square = document.querySelector('#app');
-    const hammer = new Hammer(square);
-    hammer.get('pinch').set({ enable: true });
-    hammer.on('pinchout', function(e) {
-      alert("pinchout");
-    });
-    hammer.on('pinchin', function(e) {
-      alert("pinchin");
-    });
+    this.initializePinchEvent();
   },
   data() {
     return {
+      translateZ: 0,
+      pinchScale: 1,
       layers: [
         {name: 'layer-5'},
         {name: 'layer-4'},
@@ -62,6 +56,33 @@ export default {
     }
   },
   methods: {
+    initializePinchEvent() {
+      const square = document.querySelector('#app');
+      const hammer = new Hammer(square);
+      hammer.get('pinch').set({ enable: true });
+      hammer.on('pinchout', (e) => {
+        this.logType('pinchout');
+        this.logEvent(e);
+      });
+      hammer.on('pinchin', (e) => {
+        this.logType('pinchin');
+        this.logEvent(e);
+      });
+      hammer.on('pinchmove', (e) => {
+        this.logType('pinchmove');
+        this.logEvent(e);
+      });
+    },
+    logType(type) {
+      console.log(type);
+    },
+    logEvent(e) {
+      this.pinchScale = e.scale;
+      console.log(e.scale);
+    },
+    convertTranslateZ(scale) {
+      this.translateZ
+    },
     stopWindowPinchAction() {
       // window.addEventListener('touchmove', (evt) => {
       //   alert("move");
