@@ -23,6 +23,11 @@ export default new Router({
       component: () => import("./views/test/TestHold"),
     },
     {
+      path: "/test-pinch",
+      name: "test",
+      component: () => import("./views/test/TestPinch"),
+    },
+    {
       path: "/",
       name: "home",
       component: () => import("./views/Home")

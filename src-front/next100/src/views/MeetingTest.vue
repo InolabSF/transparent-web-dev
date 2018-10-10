@@ -64,7 +64,7 @@ export default {
         }
       }, true);
     },
-    onInputTranslateZ(et) {
+    onInputTranslateZ(evt) {
       const val = evt.target.value;
       this.childStyle = {
         transform: `translate3D(0px, 0px, ${val}px)`,
