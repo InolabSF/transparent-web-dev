@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="control">
-      scale: {{ pinchScale }} <br>
+      params: {{ debugParams }} <br>
       translateZ: <input type="number" v-model.number="translateZ" @input="onInputTranslateZ">px<br>
       perspective: <input type="number" value="100" @input="onInputPerspective">px<br>
       <button @click="onClickAddLayer">add layer</button><br>
@@ -31,7 +31,7 @@ export default {
   data() {
     return {
       translateZ: 0,
-      pinchScale: 1,
+      debugParams: '',
       layers: [
         {name: 'layer-5'},
         {name: 'layer-4'},
@@ -77,8 +77,14 @@ export default {
       console.log(type);
     },
     logEvent(e) {
-      this.pinchScale = e.scale;
-      console.log(e.scale);
+      const debugParams = {
+        type: e.type,
+        scale: e.scale,
+        rotation: e.rotation,
+        velocity: e.velocity,
+      };
+      this.debugParams = JSON.stringify(debugParams)
+      console.log(debugParams);
     },
     convertTranslateZ(scale) {
       this.translateZ
