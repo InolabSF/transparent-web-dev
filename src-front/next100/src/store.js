@@ -12,6 +12,7 @@ export default new Vuex.Store({
       currentFloorId: 1,
     },
     touchingQueues: [],
+    isStartTalkModal: false,
   },
   mutations: {
     setState(state, payload) {
@@ -21,9 +22,17 @@ export default new Vuex.Store({
       state.loginUsers.push(user);
     },
     removeLoginUser(state, floorId) {
-      state.loginUsers = state.loginusers.filter((u) => {
+      state.loginUsers = state.loginUsers.filter((u) => {
         return u.floorId !== floorId;
       });
+    },
+    updateLoginUser(state, {floorId, params}) {
+      const user = state.loginUsers.find(d => {
+        return d.floorId === floorId;
+      });
+
+      // 参照わたし？
+      Object.assign(user, params);
     },
     enqueueTouchingQueue(state, {floorId, time}) {
       state.touchingQueues.push({floorId, time});

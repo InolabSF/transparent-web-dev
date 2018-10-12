@@ -1,11 +1,30 @@
 <template>
-  <div class="fill">
-    <h1>welcome</h1>
-    <div class="user" v-for="user in loginUsers" :key="user.floorId" :data-floor-id="user.floorId" :style="getStyleByFloorId(user.floorId)">{{ user.name }}</div>
-    <div class="overlay flex-column" v-if="isShowConfirmOverlay" @click="isShowConfirmOverlay != false">
-      <h1 style="{color: '#fff'}">ready?</h1>
-      <div>
-        <button class="button" @click="onClickStartButton">START</button>
+  <!--<div class="fill">-->
+    <!--<h1>welcome</h1>-->
+    <!--<div class="user" v-for="user in loginUsers" :key="user.floorId" :data-floor-id="user.floorId" :style="getStyleByFloorId(user.floorId)">{{ user.name }}</div>-->
+    <!--<div class="overlay flex-column" v-if="isShowConfirmOverlay" @click="isShowConfirmOverlay != false">-->
+      <!--<h1 style="{color: '#fff'}">ready?</h1>-->
+      <!--<div>-->
+        <!--<button class="button" @click="onClickStartButton">START</button>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+
+  <div id="talk-stand-by">
+    <div id="wrapper">
+      <div id="hue"></div>
+      <user-layer @click="test"></user-layer>
+      <div id="media-send-leyer"   @click="test">
+        <div class="send-area"></div>
+        <div class="send-area"></div>
+        <div class="send-area"></div>
+        <div class="send-area"></div>
+        <div class="send-area"></div>
+        <div class="send-area"></div>
+        <div class="send-area"></div>
+        <div class="send-area"></div>
+        <div class="send-area"></div>
+        <div class="send-area"></div>
       </div>
     </div>
   </div>
@@ -17,9 +36,13 @@ import moment from "moment";
 import { mapState } from "vuex";
 import userMixin from "@/mixins/userMixin";
 import customTouchEventDriver from "@/mixins/customTouchEventDriver";
+import UserLayer from "@/components/UserLayer";
 
 export default {
   name: "welcome",
+  components: {
+    UserLayer
+  },
   mixins: [userMixin, customTouchEventDriver],
   data() {
     return {
@@ -30,25 +53,38 @@ export default {
     window.addEventListener('CUSTOM_TOUCH_START', this.onClickTable);
   },
   methods: {
+    test() {
+      // TODO なぜかuser-layerでクリックイベントが発火しない
+      debugger;
+    },
     onClickTable(evt) {
-      // TODO ここの条件は仮 2回目だったら、ready?モーダルで会議をスタート確認
       const floorId = evt.detail[0].floorId;
-      const isLoggedin = !!this.loginUsers.find(u => u.floorId === floorId);
+      const user = this.loginUsers.find(u => u.floorId === floorId);
+      const isLoggedin = !!user;
 
-      if (isLoggedin) {
-        this.confirmStartMeeting();
+      if (isLoggedin && user.isStartTalkModal) {
+        this.startmeeting();
+      } else if (isLoggedin) {
+        this.confirmStartMeeting(floorId);
       } else {
         this.login(floorId);
       }
-      // this.$router.push("/ready");
     },
-    confirmStartMeeting() {
-      this.isShowConfirmOverlay = true;
-    },
-    async onClickStartButton() {
+    async startmeeting() {
       const res = await this.createWall();
       const wall = res.data;
       this.$router.push(`/walls/${wall.id}/meeting`);
+    },
+    confirmStartMeeting(floorId) {
+      this.$store.commit('updateLoginUser', {
+        floorId,
+        params: {
+          isStartTalkModal: true,
+        }
+      });
+    },
+    onClickStartButton() {
+      this.startmeeting();
     },
     createWall() {
       const formatedDatetime = moment().format("MMDDHHm");
@@ -61,7 +97,10 @@ export default {
     }
   },
   computed: {
-    ...mapState(['loginUsers'])
+    ...mapState([
+      'loginUsers',
+      'isStartTalkModal'
+    ])
   }
 };
 </script>

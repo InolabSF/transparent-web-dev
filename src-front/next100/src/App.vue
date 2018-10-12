@@ -39,15 +39,15 @@ export default {
 </script>
 
 <style lang="css">
-  #app {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    overflow: hidden;
-  }
+  /*#app {*/
+    /*width: 100vw;*/
+    /*height: 100vh;*/
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+    /*text-align: center;*/
+    /*overflow: hidden;*/
+  /*}*/
 
   .fill {
     width: 100%;

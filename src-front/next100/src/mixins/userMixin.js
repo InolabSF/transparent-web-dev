@@ -9,6 +9,7 @@ export default {
         floorId: floorId,
         name: `randomName${1000}`,
         pins: [],
+        isStartTalkModal: false,
       };
 
       if (this.$store.state.loginUsers.length < USER_LIMIT) {
@@ -25,6 +26,19 @@ export default {
         4: {bottom: 'auto', right: 0, top: 'auto'},
       };
       return styleMap[floorId];
-    }
+    },
+    getUserByFloorId(floorId) {
+      const user = this.$store.state.loginUsers.find(u => {
+        return u.floorId === floorId;
+      });
+      return user;
+    },
+    // updateUserByFloorId(floorId) {
+    //   const user = this.getUserByFloorId(floorID);
+    //
+    //   this.$store.commit('setState', {
+    //
+    //   });
+    // }
   }
 }

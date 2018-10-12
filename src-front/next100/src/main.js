@@ -4,11 +4,12 @@ import router from "./router";
 import store from "./store";
 // import "@/core/CustomTouchEventDriver";
 import VModal from "vue-js-modal";
-import { VueHammer } from "vue2-hammer";
+import userMixin from "@/mixins/userMixin";
+
 
 Vue.config.productionTip = false;
 Vue.use(VModal);
-Vue.use(VueHammer);
+Vue.mixin(userMixin);
 
 new Vue({
   router,
