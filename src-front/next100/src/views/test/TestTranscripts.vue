@@ -1,123 +1,20 @@
 <template>
-  <!--<h1>Let's Talk!!</h1>-->
-  <!--レイヤーと奥行き表示ロジック-->
-  <!--<div>TODO コンテキストメニュー＋QRコード</div>-->
-  <!--<div>TODO コンテキスト（leave確認）</div>-->
-  <!--<div class="wrapper">-->
-    <!--<div class="layer-list-wrapper">-->
-      <!--<div class="layer-list">-->
-        <!--<div class="layer" :style="layerStyles[i]" v-for="layer, i in layers">-->
-          <!--<div class="layer__word" :style="keywordStyles[i]">{{ layer.words[0] }}</div>-->
-          <!--<img ref="images" class="layer__img" :style="imageStyles[i]" v-for="content, j in layer.related_contents" :key="content.id" :data-layer-id="layer.id" :data-content-id="content.id" :src="content.img_url" @click="onClickImage(content)" />-->
-        <!--</div>-->
-      <!--</div>-->
-    <!--</div>-->
-    <!--<template v-for="stat in contextMenuStatuses">-->
-      <!--<div-->
-        <!--class="context-menu"-->
-        <!--:style="stat.style"-->
-        <!--:ref="stat.refName"-->
-      <!--&gt;-->
-        <!--ユーザー 000{{stat.floorId}} <br>-->
-        <!--のメニュー-->
-      <!--</div>-->
-    <!--</template>-->
-    <!--<template v-if="isShowContentDetailModal">-->
-      <!--<div class="modal is-active">-->
-        <!--<div class="modal-background" @click.prevent="closeContentDetailModal"></div>-->
-        <!--&lt;!&ndash;<div class="modal-background"></div>&ndash;&gt;-->
-        <!--<div class="modal-content" v-if="currentDetailModalContent" :style="currentDetailModalStyle">-->
-          <!--<p>{{ currentDetailModalContent.title }}</p>-->
-          <!--<p class="image is-4by3">-->
-            <!--<img :src="currentDetailModalContent.img_url" alt="">-->
-          <!--</p>-->
-          <!--<p>{{ currentDetailModalContent.desc }}</p>-->
-        <!--</div>-->
-        <!--<button class="modal-close is-large" aria-label="close"></button>-->
-      <!--</div>-->
-    <!--</template>-->
-  <!--</div>-->
-
-
-  <div id="talking">
-    <div id="wrapper">
-      <div id="webgl"></div>
-      <div id="hue"></div>
-      <div id="grid-layer">
-        <div class="grid"><span class="line"></span></div>
-        <div class="grid"><span class="line"></span></div>
-        <div class="grid"><span class="line"></span></div>
-        <div class="grid"><span class="line"></span></div>
-        <div class="grid"><span class="line"></span></div>
-        <div class="grid"><span class="line"></span></div>
-        <div class="grid"><span class="line"></span></div>
-        <div class="grid"><span class="line"></span></div>
-        <div class="grid"><span class="line"></span></div>
-        <div class="grid"><span class="line"></span></div>
+  <div>
+    <div v-for="(layer, layerIndex) in layers" :key="layerIndex">
+      <div>------------------------------------------------------</div>
+      <div>id: {{ layer.id }}</div>
+      <div>created_at: {{ layer.created_at }}</div>
+      <div>画像:</div>
+      <div class="flexbox">
+        <img
+          v-for="(content, contentIndex) in layer.related_contents"
+          :key="content.id"
+          @click="onClickImage(content)"
+          :src="content.img_url"
+          class="image"
+        />
       </div>
-      <user-layer></user-layer>
-      <!--<div id="user-layer">-->
-        <!--<div class="user-top user-box" data-color="yellow">-->
-          <!--<div class="user-avatar"></div>-->
-          <!--<div class="user-name">ゲスト1002</div>-->
-        <!--</div>-->
-        <!--<div class="user-right user-box" data-color="blue">-->
-          <!--<div class="user-avatar"></div>-->
-          <!--<div class="user-name">ゲスト1004</div>-->
-        <!--</div>-->
-        <!--<div class="user-bottom user-box" data-color="green">-->
-          <!--<div class="user-avatar"></div>-->
-          <!--<div class="user-name">ゲスト1001</div>-->
-        <!--</div>-->
-        <!--<div class="user-left user-box" data-color="red">-->
-          <!--<div class="user-avatar"></div>-->
-          <!--<div class="user-name">ゲスト1003</div>-->
-        <!--</div>-->
-      <!--</div>-->
-      <div id="media-leyer">
-        <div class="post transit" v-for="(layer, layerIndex) in layers">
-          <div class="media-container" :style="getLayerStyle(layerIndex)" :data-keyword-color="getKeywordColor(layerIndex)">
-            <div
-              v-for="(content, contentIndex) in layer.related_contents"
-              :key="content.id"
-              :data-layer-id="layer.id"
-              :data-content-id="content.id"
-              class="item"
-              :style="getImageStyle(contentIndex)"
-              @click="onClickImage(content)"
-            >
-              <div class="media-photo" data-title="おやつレシピスクラップ: 柚子レモネード" data-desc="The result by MS Bing Search Image with &quot; レモネード &quot;" data-id="67514" data-searchid="27093" data-relatedcontentid="509554">
-                <div class="bg"></div>
-                <img :src="content.img_url" class="img">
-                <ul class="pin-list">
-                </ul>
-                <button class="btn-pin"></button>
-              </div>
-            </div>
-            <div class="item" :style="getImageStyle(layer.related_contents.length)">
-              <div class="keyword-box" data-searchid="27093">
-                <!-- TODO 時間 -->
-                <div class="time-stamp">00:39:01</div>
-                <div class="keyword-text">
-                  <span>{{ layer.words[0] }}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div id="media-send-leyer">
-        <div class="send-area"></div>
-        <div class="send-area"></div>
-        <div class="send-area"></div>
-        <div class="send-area"></div>
-        <div class="send-area"></div>
-        <div class="send-area"></div>
-        <div class="send-area"></div>
-        <div class="send-area"></div>
-        <div class="send-area"></div>
-        <div class="send-area"></div>
-      </div>
+      <div>キーワード {{ layer.words.join(', ') }}</div>
     </div>
   </div>
 </template>
@@ -147,24 +44,21 @@ export default {
     startRecognizeSpeachSDK(opts);
     // TODO transcriptsの取得
     this.fetchTranscripts();
-    this.listenPersonalTouch();
-
-    this.initializePinchEvent();
-
-    if (!this.$route.query.stopPolling) {
-      this.startListenTranscriptsUpdate();
-    }
-
-    await this.$nextTick();
-    this.calcSendPosition();
-
-    window.fetchTranscripts = this.fetchTranscripts;
-    window.startListenTranscriptsUpdate = this.startListenTranscriptsUpdate;
-    window.stopListenTranscriptsUpdate = this.stopListenTranscriptsUpdate;
+    this.listenTranscriptsUpdate();
+    $('body').css({
+      overflow: 'auto'
+    });
+    // this.listenPersonalTouch();
+    //
+    // this.initializePinchEvent();
+    //
+    // this.listenTranscriptsPostSuccess();
+    //
+    // await this.$nextTick();
+    // this.calcSendPosition();
   },
   data() {
     return {
-      fetchTranscriptsInterval: null,
       layers: [],
       isShowContentDetailModal: false,
       currentContentDetailModalFloor: false,
@@ -206,6 +100,7 @@ export default {
         related_content_last_index
       } = res.data;
 
+      // TODO ここでrelated_contentsが0件場合は新規レイヤーを追加しない
       let layers = searches.map(s => {
         s.related_contents = related_contents.filter(r => ( r.transcript_id === s.transcript_id ));
         return s;
@@ -215,13 +110,7 @@ export default {
         return l.related_contents && l.related_contents.length > 0;
       });
 
-      layers = layers.slice(0, 10);
-
-      if (this.layers[0] && this.layers[0].id === layers[0].id) {
-        return false;
-      } else {
-        this.layers = layers;
-      }
+      this.layers = layers.slice(0, 10);
     },
     onClickImage({floorId, contentId}) {
       this.openContentDetailModal({floorId, contentId});
@@ -490,86 +379,23 @@ export default {
     updateLayer() {
       client.get('');
     },
-    startListenTranscriptsUpdate() {
-      this.fetchTranscriptsInterval = setInterval(() => {
+    listenTranscriptsUpdate() {
+      // window.addEventListener('TRANSCRIPT_POST_SUCCESS', () => {
+      //   this.fetchTranscripts();
+      // });
+
+      setInterval(() => {
         this.fetchTranscripts();
       }, 1000);
-    },
-    stopListenTranscriptsUpdate() {
-      clearInterval(this.fetchTranscriptsInterval);
-      this.fetchTranscriptsInterval = null;
     }
   }
 };
 </script>
 
-<style lang="scss" scoped>
-.media-send-leyer {
-  pointer-events: none;
+<style>
+.image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
 }
-/*.wrapper {*/
-  /*position: absolute;*/
-  /*top: 0;*/
-  /*left: 0;*/
-  /*width: 100%;*/
-  /*height: 100%;*/
-/*}*/
-
-/*.layer-list-wrapper {*/
-  /*position: absolute;*/
-  /*top: 0;*/
-  /*left: 0;*/
-  /*width: 100%;*/
-  /*height: 100%;*/
-  /*display: flex;*/
-  /*perspective: 100px;*/
-  /*perspective-origin: center center;*/
-
-  /*// TODO仮*/
-  /*font-size: 10rem;*/
-/*}*/
-
-/*.layer-list {*/
-  /*width: 100%;*/
-  /*height: 100%;*/
-  /*display: flex;*/
-  /*transform-origin: center center;*/
-  /*transform-style: preserve-3D;*/
-/*}*/
-
-/*.layer {*/
-  /*position: absolute;*/
-  /*width: 100%;*/
-  /*height: 100%;*/
-  /*display: flex;*/
-/*}*/
-
-/*.layer__img {*/
-  /*position: absolute;*/
-  /*max-width: 600px;*/
-  /*max-height: 600px;*/
-/*}*/
-
-/*.layer__word {*/
-  /*position: absolute;*/
-  /*color: darkred;*/
-  /*font-weight: bold;*/
-/*}*/
-
-/*.context-menu {*/
-  /*position: absolute;*/
-  /*width: 400px;*/
-  /*height: 600px;*/
-  /*background: #f2f2f2;*/
-
-  /*font-sizd: 2vw;*/
-  /*display: flex;*/
-  /*justify-content: center;*/
-  /*align-items: center;*/
-/*}*/
-
-/*.modal-content {*/
-  /*font-size: 2vw;*/
-  /*color: #fff;*/
-/*}*/
 </style>

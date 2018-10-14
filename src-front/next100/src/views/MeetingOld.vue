@@ -38,88 +38,7 @@
     <!--</template>-->
   <!--</div>-->
 
-
-  <div id="talking">
-    <div id="wrapper">
-      <div id="webgl"></div>
-      <div id="hue"></div>
-      <div id="grid-layer">
-        <div class="grid"><span class="line"></span></div>
-        <div class="grid"><span class="line"></span></div>
-        <div class="grid"><span class="line"></span></div>
-        <div class="grid"><span class="line"></span></div>
-        <div class="grid"><span class="line"></span></div>
-        <div class="grid"><span class="line"></span></div>
-        <div class="grid"><span class="line"></span></div>
-        <div class="grid"><span class="line"></span></div>
-        <div class="grid"><span class="line"></span></div>
-        <div class="grid"><span class="line"></span></div>
-      </div>
-      <user-layer></user-layer>
-      <!--<div id="user-layer">-->
-        <!--<div class="user-top user-box" data-color="yellow">-->
-          <!--<div class="user-avatar"></div>-->
-          <!--<div class="user-name">ゲスト1002</div>-->
-        <!--</div>-->
-        <!--<div class="user-right user-box" data-color="blue">-->
-          <!--<div class="user-avatar"></div>-->
-          <!--<div class="user-name">ゲスト1004</div>-->
-        <!--</div>-->
-        <!--<div class="user-bottom user-box" data-color="green">-->
-          <!--<div class="user-avatar"></div>-->
-          <!--<div class="user-name">ゲスト1001</div>-->
-        <!--</div>-->
-        <!--<div class="user-left user-box" data-color="red">-->
-          <!--<div class="user-avatar"></div>-->
-          <!--<div class="user-name">ゲスト1003</div>-->
-        <!--</div>-->
-      <!--</div>-->
-      <div id="media-leyer">
-        <div class="post transit" v-for="(layer, layerIndex) in layers">
-          <div class="media-container" :style="getLayerStyle(layerIndex)" :data-keyword-color="getKeywordColor(layerIndex)">
-            <div
-              v-for="(content, contentIndex) in layer.related_contents"
-              :key="content.id"
-              :data-layer-id="layer.id"
-              :data-content-id="content.id"
-              class="item"
-              :style="getImageStyle(contentIndex)"
-              @click="onClickImage(content)"
-            >
-              <div class="media-photo" data-title="おやつレシピスクラップ: 柚子レモネード" data-desc="The result by MS Bing Search Image with &quot; レモネード &quot;" data-id="67514" data-searchid="27093" data-relatedcontentid="509554">
-                <div class="bg"></div>
-                <img :src="content.img_url" class="img">
-                <ul class="pin-list">
-                </ul>
-                <button class="btn-pin"></button>
-              </div>
-            </div>
-            <div class="item" :style="getImageStyle(layer.related_contents.length)">
-              <div class="keyword-box" data-searchid="27093">
-                <!-- TODO 時間 -->
-                <div class="time-stamp">00:39:01</div>
-                <div class="keyword-text">
-                  <span>{{ layer.words[0] }}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div id="media-send-leyer">
-        <div class="send-area"></div>
-        <div class="send-area"></div>
-        <div class="send-area"></div>
-        <div class="send-area"></div>
-        <div class="send-area"></div>
-        <div class="send-area"></div>
-        <div class="send-area"></div>
-        <div class="send-area"></div>
-        <div class="send-area"></div>
-        <div class="send-area"></div>
-      </div>
-    </div>
-  </div>
+  
 </template>
 
 <script>
@@ -127,8 +46,7 @@ import client from "@/core/ApiClient";
 import _ from "lodash";
 import customTouchEventDriver from "@/mixins/customTouchEventDriver";
 import Hammer from "hammerjs";
-import $ from "jquery";
-import UserLayer from "@/components/UserLayer";
+import UserLayer from "../components/UserLayer";
 
 const START_Z_AXIS = 50; // 先頭z座標
 const Z_STEP = 10; // 1レイヤー間のz深度
@@ -136,11 +54,9 @@ const SHOW_LAYER_NUM = 10 // 階層数
 
 export default {
   name: "Meeting",
+  components: {UserLayer},
   mixins: [customTouchEventDriver],
-  components: {
-    UserLayer
-  },
-  async created() {
+  created() {
     const opts = {
       wallId: this.$route.params.wallId
     };
@@ -150,21 +66,9 @@ export default {
     this.listenPersonalTouch();
 
     this.initializePinchEvent();
-
-    if (!this.$route.query.stopPolling) {
-      this.startListenTranscriptsUpdate();
-    }
-
-    await this.$nextTick();
-    this.calcSendPosition();
-
-    window.fetchTranscripts = this.fetchTranscripts;
-    window.startListenTranscriptsUpdate = this.startListenTranscriptsUpdate;
-    window.stopListenTranscriptsUpdate = this.stopListenTranscriptsUpdate;
   },
   data() {
     return {
-      fetchTranscriptsInterval: null,
       layers: [],
       isShowContentDetailModal: false,
       currentContentDetailModalFloor: false,
@@ -180,21 +84,17 @@ export default {
       imageStyles: _.range(10).map(() => {
         return this.getRandomStyleForImage();
       }),
-      positionMap: [],
     }
   },
   computed: {
   },
   methods: {
-    onClickTest() {
-      alert('test');
-    },
     listenPersonalTouch() {
       window.addEventListener('CUSTOM_TOUCH_START', this.onClickTable);
     },
     async fetchTranscripts() {
       const wallId = this.$route.params.wallId;
-      const url = `/next100/contents?wall_id=${wallId}`
+      const url = `/api/transcripts/${wallId}`;
       const res = await client.get(url);
 
       // 整形
@@ -206,22 +106,12 @@ export default {
         related_content_last_index
       } = res.data;
 
-      let layers = searches.map(s => {
+      const layers = searches.map(s => {
         s.related_contents = related_contents.filter(r => ( r.transcript_id === s.transcript_id ));
         return s;
       });
 
-      layers = layers.filter((l) => {
-        return l.related_contents && l.related_contents.length > 0;
-      });
-
-      layers = layers.slice(0, 10);
-
-      if (this.layers[0] && this.layers[0].id === layers[0].id) {
-        return false;
-      } else {
-        this.layers = layers;
-      }
+      this.layers = layers;
     },
     onClickImage({floorId, contentId}) {
       this.openContentDetailModal({floorId, contentId});
@@ -421,155 +311,74 @@ export default {
       this.pinchScale = e.scale;
       console.log(e.scale);
     },
-    // ランダム整数
-    randNum(max,min) {
-      return Math.floor(Math.random()*(max-min+1)+min);
-    },
-    arreyShuffle(array){
-      for(var i = array.length - 1; i > 0; i--){
-        var r = Math.floor(Math.random() * (i + 1));
-        var tmp = array[i];
-        array[i] = array[r];
-        array[r] = tmp;
-      }
-    },
-    calcSendPosition() {
-      var posisionMap = [];
-      $('#media-send-leyer .send-area').each(function(i){
-        var x = parseInt($(this).offset().left);
-        var y = parseInt($(this).offset().top);
-        var x_max = parseInt(x + $(this).width());
-        var y_max = parseInt(y + $(this).height());
-        console.log('x:'+x);
-        console.log('y:'+y);
-        console.log('x_max:'+x_max);
-        console.log('y_max:'+y_max);
-        //return false;
-        var temp = {};
-        temp.x = x;
-        temp.y = y;
-        temp.x_max = x_max;
-        temp.y_max = y_max;
-        posisionMap[i] = temp;
-      });
-
-      this.arreyShuffle(posisionMap);
-      this.positionMap = posisionMap;
-    },
-    getLayerStyle(index) {
-      const rotate = ['1deg', '-0deg', '-1deg', '-2deg', '-3deg', '-4deg', '-3deg', '-2deg', '-1deg', '0deg'];
-      const style = {
-        'transform': 'translate3d(0,0,'+ (500*index-4500) +'px) rotate('+rotate[index]+')',
-        'filter':'blur('+ (90 - (index*10)) +'px)',
-        'opacity':(0.1 + (index*0.1))
-      };
-      return style;
-    },
-    getImageStyle(index) {
-      const pos_data = this.positionMap;
-      const rotate = ['0deg', '90deg', '180deg', '270deg'];
-      const top = _.random(pos_data[index].y_max, pos_data[index].y);
-      const left = _.random(pos_data[index].x_max,pos_data[index].x);
-      // const center_x = parseInt($(this).children().width() / 2);
-      // const center_y = parseInt($(this).children().height() / 2);
-      // TODO サイズ調整
-      const center_x = parseInt(window.innerWidth / 4 / 2);
-      const center_y = parseInt(window.innerHeight / 5 / 2);
-      this.arreyShuffle(rotate);
-      const style = {
-        'top': top - center_y+'px',
-        'left':left - center_x+'px',
-        'transform':'rotate('+rotate[0]+')'
-      };
-      return style;
-    },
-    getKeywordColor(index) {
-      const keyword_color = ['red', 'blue', 'green', 'yellow', 'purple', 'vermilion', 'yellowgreen', 'orange', 'lightblue', 'gold', 'pink', 'bluegreen', 'white'];
-      return keyword_color[index];
-    },
-    updateLayer() {
-      client.get('');
-    },
-    startListenTranscriptsUpdate() {
-      this.fetchTranscriptsInterval = setInterval(() => {
-        this.fetchTranscripts();
-      }, 1000);
-    },
-    stopListenTranscriptsUpdate() {
-      clearInterval(this.fetchTranscriptsInterval);
-      this.fetchTranscriptsInterval = null;
-    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.media-send-leyer {
-  pointer-events: none;
+.wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
-/*.wrapper {*/
-  /*position: absolute;*/
-  /*top: 0;*/
-  /*left: 0;*/
-  /*width: 100%;*/
-  /*height: 100%;*/
-/*}*/
 
-/*.layer-list-wrapper {*/
-  /*position: absolute;*/
-  /*top: 0;*/
-  /*left: 0;*/
-  /*width: 100%;*/
-  /*height: 100%;*/
-  /*display: flex;*/
-  /*perspective: 100px;*/
-  /*perspective-origin: center center;*/
+.layer-list-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  perspective: 100px;
+  perspective-origin: center center;
 
-  /*// TODO仮*/
-  /*font-size: 10rem;*/
-/*}*/
+  // TODO仮
+  font-size: 10rem;
+}
 
-/*.layer-list {*/
-  /*width: 100%;*/
-  /*height: 100%;*/
-  /*display: flex;*/
-  /*transform-origin: center center;*/
-  /*transform-style: preserve-3D;*/
-/*}*/
+.layer-list {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  transform-origin: center center;
+  transform-style: preserve-3D;
+}
 
-/*.layer {*/
-  /*position: absolute;*/
-  /*width: 100%;*/
-  /*height: 100%;*/
-  /*display: flex;*/
-/*}*/
+.layer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
 
-/*.layer__img {*/
-  /*position: absolute;*/
-  /*max-width: 600px;*/
-  /*max-height: 600px;*/
-/*}*/
+.layer__img {
+  position: absolute;
+  max-width: 600px;
+  max-height: 600px;
+}
 
-/*.layer__word {*/
-  /*position: absolute;*/
-  /*color: darkred;*/
-  /*font-weight: bold;*/
-/*}*/
+.layer__word {
+  position: absolute;
+  color: darkred;
+  font-weight: bold;
+}
 
-/*.context-menu {*/
-  /*position: absolute;*/
-  /*width: 400px;*/
-  /*height: 600px;*/
-  /*background: #f2f2f2;*/
+.context-menu {
+  position: absolute;
+  width: 400px;
+  height: 600px;
+  background: #f2f2f2;
 
-  /*font-sizd: 2vw;*/
-  /*display: flex;*/
-  /*justify-content: center;*/
-  /*align-items: center;*/
-/*}*/
+  font-sizd: 2vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-/*.modal-content {*/
-  /*font-size: 2vw;*/
-  /*color: #fff;*/
-/*}*/
+.modal-content {
+  font-size: 2vw;
+  color: #fff;
+}
 </style>
