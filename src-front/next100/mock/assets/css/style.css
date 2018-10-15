@@ -1056,14 +1056,15 @@ body {
 	width: 12.125em;
 }
 .img-detail-container {
-	left: 50%;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: center;
 	margin: auto;
 	max-width: 100.75em;
-	position: absolute;
+    position: relative;
 	text-align: center;
-	top: 50%;
-	-webkit-transform: translateX(-50%) translateY(-50%);
-	transform: translateX(-50%) translateY(-50%);
 	width: 100%;
 }
 .img-detail-wrapper {
@@ -1102,8 +1103,8 @@ body {
 	margin: 0.25em auto;
 }
 .img-detail-box .btn.return {
+    margin-bottom: calc(-4.375em + -5.375em);
 	margin-top: 4.375em;
-	position: absolute;
 	text-align: center;
 	width: 100%;
 }
