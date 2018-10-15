@@ -552,10 +552,12 @@ body {
 	height: 100%;
 	position: absolute;
 	width: 100%;
+  transform-style: preserve-3d;
+  perspective: 500px;
 }
 #media-leyer .post {
-	transform-style: preserve-3d;
-	perspective: 500px;
+	/*transform-style: preserve-3d;*/
+	/*perspective: 500px;*/
 }
 #media-leyer .post .media-container .item {
 	position: absolute;

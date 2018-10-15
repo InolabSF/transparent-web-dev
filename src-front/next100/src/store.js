@@ -3,9 +3,13 @@ import Vuex from "vuex";
 
 Vue.use(Vuex);
 
+// NOTE: リロード時前のログインユーザーは保持している
+const loginIUsersStringFromLS = localStorage.getItem('loginUsers');
+const loginUsersFromLS = loginIUsersStringFromLS ? JSON.parse(loginIUsersStringFromLS) : [];
+
 export default new Vuex.Store({
   state: {
-    loginUsers: [],
+    loginUsers: loginUsersFromLS || [],
     isModeSelectFinished: false,
     customTouchMode: "production",
     debugParams: {
@@ -44,6 +48,24 @@ export default new Vuex.Store({
     },
     setDebugParams(state, payload) {
       state.debugParams = Object.assign(state.debugParams, payload);
+    },
+    togglePinByFloorId(state, {floorId, contentId}) {
+      state.loginUsers = state.loginUsers.map(u => {
+        if (u.floorId === floorId) {
+          const isPinned = !!u.pinnedContentIds.find(cid => cid === contentId);
+          if (isPinned) {
+            u.pinnedContentIds = u.pinnedContentIds.filter(cid => cid !== contentId);
+          } else {
+            u.pinnedContentIds.push(contentId);
+          }
+          return u;
+        } else {
+          return u;
+        }
+      });
+    },
+    deletePinByFloorId(state, {floorId, contentId}) {
+      Object.assign(usre);
     }
   },
   actions: {}

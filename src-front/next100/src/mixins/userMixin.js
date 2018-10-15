@@ -1,4 +1,6 @@
 const USER_LIMIT = 4;
+import client from "@/core/ApiClient";
+
 export default {
   methods: {
     login(floorId) {
@@ -7,13 +9,14 @@ export default {
       // const floorId = this.$store.state.loginUsers.length + 1;
       const user = {
         floorId: floorId,
-        name: `randomName${1000}`,
-        pins: [],
+        name: `randomName100${floorId}`,
+        pinnedContentIds: [],
         isStartTalkModal: false,
       };
 
       if (this.$store.state.loginUsers.length < USER_LIMIT) {
         this.$store.commit('addLoginUser', user);
+        localStorage.setItem('loginUsers', JSON.stringify(this.$store.state.loginUsers));
       } else {
         throw "参加人数は4名まで";
       }
@@ -32,6 +35,56 @@ export default {
         return u.floorId === floorId;
       });
       return user;
+    },
+    togglePinByFloorId(floorId, contentId) {
+      debugger;
+      this.$store.commit('togglePinByFloorId', {
+        floorId,
+        contentId,
+      });
+      const user = this.getUserByFloorId(floorId);
+      const isPinned = user.pinnedContentIds.find(cid => {
+        return cid === contentId;
+      });
+
+      if (isPinned) {
+        this.deletePinByFloorId(contentId, user.name);
+      } else {
+        this.postPinByFloorId(contentId, user.name);
+      }
+    },
+    async postPinByFloorId(related_content_id, eventuser_id) {
+      const url = '/next100/pins';
+      const params = {
+        eventuser_id,
+        related_content_id,
+      };
+      const res = await client.post(url, params).catch(() => {
+        return false;
+      });
+      return res ? true : false;
+    },
+    async deletePinByFloorId(related_content_id, eventuser_id) {
+      const url = '/next100/pins';
+      const params = {
+        data: {
+          eventuser_id,
+          related_content_id,
+        }
+      };
+      const res = await client.delete(url, params).catch(() => {
+        return false;
+      });
+      return res ? true : false;
+    },
+    getColorMap() {
+      const colorMap = {
+        1: 'green',
+        2: 'red',
+        3: 'yellow',
+        4: 'blue'
+      };
+      return colorMap;
     },
     // updateUserByFloorId(floorId) {
     //   const user = this.getUserByFloorId(floorID);

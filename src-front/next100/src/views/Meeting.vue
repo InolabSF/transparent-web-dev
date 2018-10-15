@@ -74,21 +74,20 @@
           <!--<div class="user-name">ゲスト1003</div>-->
         <!--</div>-->
       <!--</div>-->
-      <div id="media-leyer">
+      <div id="media-leyer" style="getMediaLayersStyle">
         <div class="post transit" v-for="(layer, layerIndex) in layers">
           <div class="media-container" :style="getLayerStyle(layerIndex)" :data-keyword-color="getKeywordColor(layerIndex)">
             <div
-              v-for="(content, contentIndex) in layer.related_contents"
+              v-for="(content, contentIndex) in layer.related_contents.slice(0, 5)"
               :key="content.id"
               :data-layer-id="layer.id"
               :data-content-id="content.id"
               class="item"
               :style="getImageStyle(contentIndex)"
-              @click="onClickImage(content)"
             >
               <div class="media-photo" data-title="おやつレシピスクラップ: 柚子レモネード" data-desc="The result by MS Bing Search Image with &quot; レモネード &quot;" data-id="67514" data-searchid="27093" data-relatedcontentid="509554">
                 <div class="bg"></div>
-                <img :src="content.img_url" class="img">
+                <img ref="images" :src="content.img_url" class="img" :data-content-id="content.id">
                 <ul class="pin-list">
                 </ul>
                 <button class="btn-pin"></button>
@@ -118,9 +117,32 @@
         <div class="send-area"></div>
         <div class="send-area"></div>
       </div>
+      <image-detail-modal
+        :isShow="isShowContentDetailModal"
+        :onClose="closeContentDetailModal"
+        :content="currentDetailModalContent"
+        :floorId="currentContentDetailModalFloor"
+      ></image-detail-modal>
+      <div class="hitTest" ref="hitTest">
+        hit test
+      </div>
     </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.hitTest {
+  background: red;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 400px;
+  right: 400px;
+}
+</style>
 
 <script>
 import client from "@/core/ApiClient";
@@ -129,6 +151,8 @@ import customTouchEventDriver from "@/mixins/customTouchEventDriver";
 import Hammer from "hammerjs";
 import $ from "jquery";
 import UserLayer from "@/components/UserLayer";
+import ImageDetailModal from "@/components/ImageDetailModal";
+
 
 const START_Z_AXIS = 50; // 先頭z座標
 const Z_STEP = 10; // 1レイヤー間のz深度
@@ -138,13 +162,15 @@ export default {
   name: "Meeting",
   mixins: [customTouchEventDriver],
   components: {
-    UserLayer
+    UserLayer,
+    ImageDetailModal
   },
   async created() {
     const opts = {
       wallId: this.$route.params.wallId
     };
     startRecognizeSpeachSDK(opts);
+
     // TODO transcriptsの取得
     this.fetchTranscripts();
     this.listenPersonalTouch();
@@ -164,12 +190,12 @@ export default {
   },
   data() {
     return {
+      currentMediaLayerDepth: 0,
       fetchTranscriptsInterval: null,
       layers: [],
       isShowContentDetailModal: false,
-      currentContentDetailModalFloor: false,
+      currentContentDetailModalFloor: 1,
       currentDetailModalContent: null,
-      currentDetailModalStyle: {},
       contextMenuStatuses: [],
       layerStyles: _.range(10).map((i) => {
         return this.getComputedStyleForLayer(i);
@@ -232,6 +258,8 @@ export default {
       }
 
       // ID識別で向きを変える
+      this.currentContentDetailModalFloor = floorId;
+
       const layer = this.layers.find(l => {
         return l.related_contents.find(c => ( c.id === contentId ));
       });
@@ -241,7 +269,6 @@ export default {
       }
 
       const content = layer.related_contents.find(c => ( c.id === contentId ));
-      this.currentDetailModalStyle = this.getModalStyleByFloorId(floorId);
       this.currentDetailModalContent = content;
       this.isShowContentDetailModal = true;
       this.contentDetailOpenTime = new Date().getTime();
@@ -264,14 +291,25 @@ export default {
       let touchedImage;
 
       const touchedImages = [];
-      this.$refs.images.forEach((img) => {
-        const rect = img.getBoundingClientRect();
-        if (this.isTouchObjectByRect(touch, rect)) {
-          isTouchImage = true;
-          touchedImages.push(img);
-          return false;
+
+      if (this.isTouchObjectByElement(touch, this.$refs.hitTest)) {
+        if (this.layers.length) {
+          this.onClickImage({floorId: 1, contentId: this.layers[0].related_contents[0].id});
+        } else {
+          console.error('not exist content');
         }
-      });
+      }
+
+      // TODO ここのあたり判定をなんとかする
+      if (this.$refs.images) {
+        this.$refs.images.forEach((img) => {
+          if (this.isTouchObjectByElement(touch, img)) {
+            isTouchImage = true;
+            touchedImages.push(img);
+            return false;
+          }
+        });
+      }
 
       if (isTouchImage) {
         // TODO: 先頭だけ取り出す 要ブラッシュアップ
@@ -383,10 +421,10 @@ export default {
       };
       return style;
     },
-    getModalStyleByFloorId(floorId) {
-      const d = this.getTransformDegByFloorId(floorId);
-      return { transform: `rotate(${d}deg)` };
-    },
+    // getModalStyleByFloorId(floorId) {
+    //   const d = this.getTransformDegByFloorId(floorId);
+    //   return { transform: `rotate(${d}deg)` };
+    // },
     getTransformDegByFloorId(floorId) {
       const map = {
         1: 0,
@@ -457,6 +495,7 @@ export default {
       this.positionMap = posisionMap;
     },
     getLayerStyle(index) {
+      return {};
       const rotate = ['1deg', '-0deg', '-1deg', '-2deg', '-3deg', '-4deg', '-3deg', '-2deg', '-1deg', '0deg'];
       const style = {
         'transform': 'translate3d(0,0,'+ (500*index-4500) +'px) rotate('+rotate[index]+')',
@@ -489,6 +528,11 @@ export default {
     },
     updateLayer() {
       client.get('');
+    },
+    getMediaLayersStyle() {
+      const style = {
+        transform: `translate3d(0, 0, ${this.currentMediaLayerDepth}px)`
+      }
     },
     startListenTranscriptsUpdate() {
       this.fetchTranscriptsInterval = setInterval(() => {
@@ -573,3 +617,5 @@ export default {
   /*color: #fff;*/
 /*}*/
 </style>
+
+

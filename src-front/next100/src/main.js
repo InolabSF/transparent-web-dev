@@ -5,11 +5,13 @@ import store from "./store";
 // import "@/core/CustomTouchEventDriver";
 import VModal from "vue-js-modal";
 import userMixin from "@/mixins/userMixin";
+import customTouchEventDriver from "@/mixins/customTouchEventDriver";
 
 
 Vue.config.productionTip = false;
 Vue.use(VModal);
 Vue.mixin(userMixin);
+Vue.mixin(customTouchEventDriver);
 
 new Vue({
   router,

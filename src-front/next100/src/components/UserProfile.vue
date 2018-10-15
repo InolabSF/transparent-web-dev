@@ -6,10 +6,10 @@
         <figure class="icon-touch"><img src="/next100/static/img/icon-touch01.svg" alt="TOUCH"></figure>
         <div class="btn return" @click="onClickReturn"><a href="#"><img src="/next100/static/img/btn_return01.svg" alt="RETURN"></a></div>
       </template>
-      <template v-else-if="isWelcome" >
+      <template v-else-if="isWelcome">
         <p class="state-text">WELCOME!</p>
       </template>
-      <template v-else>
+      <template v-else-if="$route.name === 'welcome'">
         <p class="state-text">TOUCH!</p>
         <figure class="icon-touch"><img src="/next100/static/img/icon-touch01.svg" alt="TOUCH"></figure>
       </template>
@@ -47,15 +47,6 @@ export default {
       };
       return className;
     },
-    userColor() {
-      const colorMap = {
-        1: 'green',
-        2: 'red',
-        3: 'yellow',
-        4: 'blue'
-      };
-      return colorMap[this.user.floorId];
-    },
     getDirectionClassByFloorId() {
       const directionMap = {
         1: 'bottom',
@@ -72,7 +63,11 @@ export default {
           isStartTalkModal: false
         }
       });
-    }
+    },
+    userColor() {
+      const colorMap = this.getColorMap();
+      return colorMap[this.user.floorId];
+    },
   }
 }
 </script>
