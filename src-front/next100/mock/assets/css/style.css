@@ -1109,6 +1109,77 @@ body {
 	width: 100%;
 }
 
+/* COntext Menu
+======================================== */
+.context-menu {
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+}
+.context-menu-container {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: center;
+}
+.context-menu-wrapper {
+    background-color: rgba(0,0,0,0.71);
+    border-radius: 1.25em;
+    box-sizing: border-box;
+    display: inline-block;
+    height: 33.125em;
+    max-width: 44em;
+    position: relative;
+    width: 100%;
+}
+.context-menu .btn-close {
+    height: 2.375em;
+    position: absolute;
+    right: 1.75em;
+    top: 2.75em;
+    width: 2.375em;
+}
+.context-menu .qr-link-box {
+    margin: 2.4375em auto;
+}
+.context-menu .menu-list {
+    letter-spacing: -0.4em;
+    text-align: center;
+}
+.context-menu .menu-list li {
+    display: inline-block;
+    letter-spacing: normal;
+    margin: 1em 1.75em;
+}
+.context-menu .menu-icon {
+    width: 6.25em;
+}
+.context-menu .menu-list li p {
+    font-size: 1.5em;
+    letter-spacing: 0.05em;
+    margin: 0.5em auto;
+}
+.context-menu .state-text {
+	color: #FFF;
+	font-family: "Dosis", "Noto Sans JP", "游ゴシック体", "Yu Gothic", YuGothic, "Hiragino Sans", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", "sans-serif";
+	font-size: 6.25em;
+	font-weight: bold;
+	letter-spacing: 0.05em;
+	line-height: 1;
+	margin: auto;
+}
+
+.context-menu .state-text.sub {
+	font-size: 2.625em;
+	margin-bottom: 0.675em;
+    margin-top: 2.1429em;
+}
+.context-menu .btn.leave {
+    margin: 4em auto;
+    max-width: 34.125em;
+}
+
 /* Animation/Javascript
 ======================================== */
 
