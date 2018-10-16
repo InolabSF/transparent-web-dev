@@ -1,45 +1,5 @@
 <template>
-  <!--<h1>Let's Talk!!</h1>-->
-  <!--レイヤーと奥行き表示ロジック-->
-  <!--<div>TODO コンテキストメニュー＋QRコード</div>-->
-  <!--<div>TODO コンテキスト（leave確認）</div>-->
-  <!--<div class="wrapper">-->
-    <!--<div class="layer-list-wrapper">-->
-      <!--<div class="layer-list">-->
-        <!--<div class="layer" :style="layerStyles[i]" v-for="layer, i in layers">-->
-          <!--<div class="layer__word" :style="keywordStyles[i]">{{ layer.words[0] }}</div>-->
-          <!--<img ref="images" class="layer__img" :style="imageStyles[i]" v-for="content, j in layer.related_contents" :key="content.id" :data-layer-id="layer.id" :data-content-id="content.id" :src="content.img_url" @click="onClickImage(content)" />-->
-        <!--</div>-->
-      <!--</div>-->
-    <!--</div>-->
-    <!--<template v-for="stat in contextMenuStatuses">-->
-      <!--<div-->
-        <!--class="context-menu"-->
-        <!--:style="stat.style"-->
-        <!--:ref="stat.refName"-->
-      <!--&gt;-->
-        <!--ユーザー 000{{stat.floorId}} <br>-->
-        <!--のメニュー-->
-      <!--</div>-->
-    <!--</template>-->
-    <!--<template v-if="isShowContentDetailModal">-->
-      <!--<div class="modal is-active">-->
-        <!--<div class="modal-background" @click.prevent="closeContentDetailModal"></div>-->
-        <!--&lt;!&ndash;<div class="modal-background"></div>&ndash;&gt;-->
-        <!--<div class="modal-content" v-if="currentDetailModalContent" :style="currentDetailModalStyle">-->
-          <!--<p>{{ currentDetailModalContent.title }}</p>-->
-          <!--<p class="image is-4by3">-->
-            <!--<img :src="currentDetailModalContent.img_url" alt="">-->
-          <!--</p>-->
-          <!--<p>{{ currentDetailModalContent.desc }}</p>-->
-        <!--</div>-->
-        <!--<button class="modal-close is-large" aria-label="close"></button>-->
-      <!--</div>-->
-    <!--</template>-->
-  <!--</div>-->
-
-
-  <div id="talking">
+    <div id="talking">
     <div id="wrapper">
       <div id="webgl"></div>
       <div id="hue"></div>
@@ -56,24 +16,6 @@
         <div class="grid"><span class="line"></span></div>
       </div>
       <user-layer></user-layer>
-      <!--<div id="user-layer">-->
-        <!--<div class="user-top user-box" data-color="yellow">-->
-          <!--<div class="user-avatar"></div>-->
-          <!--<div class="user-name">ゲスト1002</div>-->
-        <!--</div>-->
-        <!--<div class="user-right user-box" data-color="blue">-->
-          <!--<div class="user-avatar"></div>-->
-          <!--<div class="user-name">ゲスト1004</div>-->
-        <!--</div>-->
-        <!--<div class="user-bottom user-box" data-color="green">-->
-          <!--<div class="user-avatar"></div>-->
-          <!--<div class="user-name">ゲスト1001</div>-->
-        <!--</div>-->
-        <!--<div class="user-left user-box" data-color="red">-->
-          <!--<div class="user-avatar"></div>-->
-          <!--<div class="user-name">ゲスト1003</div>-->
-        <!--</div>-->
-      <!--</div>-->
       <div id="media-leyer" style="getMediaLayersStyle">
         <div class="post transit" v-for="(layer, layerIndex) in layers">
           <div class="media-container" :style="getLayerStyle(layerIndex)" :data-keyword-color="getKeywordColor(layerIndex)">
@@ -83,7 +25,7 @@
               :data-layer-id="layer.id"
               :data-content-id="content.id"
               class="item"
-              :style="getImageStyle(contentIndex)"
+              :style="getImageStyle(layerIndex, contentIndex)"
             >
               <div class="media-photo" data-title="おやつレシピスクラップ: 柚子レモネード" data-desc="The result by MS Bing Search Image with &quot; レモネード &quot;" data-id="67514" data-searchid="27093" data-relatedcontentid="509554">
                 <div class="bg"></div>
@@ -93,7 +35,7 @@
                 <button class="btn-pin"></button>
               </div>
             </div>
-            <div class="item" :style="getImageStyle(layer.related_contents.length)">
+            <div class="item" :style="getImageStyle(layerIndex, layer.related_contents.length)">
               <div class="keyword-box" data-searchid="27093">
                 <!-- TODO 時間 -->
                 <div class="time-stamp">00:39:01</div>
@@ -220,16 +162,8 @@ export default {
       currentContentDetailModalFloor: 1,
       currentDetailModalContent: null,
       contextMenuStatuses: [],
-      layerStyles: _.range(10).map((i) => {
-        return this.getComputedStyleForLayer(i);
-      }),
-      keywordStyles: _.range(10).map(() => {
-        return this.getRandomStyleForKeyWord()
-      }),
-      imageStyles: _.range(10).map(() => {
-        return this.getRandomStyleForImage();
-      }),
       positionMap: [],
+      cachedLayerStyles: [],
     }
   },
   computed: {
@@ -449,41 +383,6 @@ export default {
     removeWord() {
       // TODO ワードを消す
     },
-    getRandomStyleForImage() {
-      const x = _.random(window.innerWidth);
-      const y = _.random(window.innerHeight);
-      const style = {
-        left: `${x}px`,
-        top: `${y}px`,
-      };
-      return style;
-    },
-    getRandomStyleForKeyWord() {
-      const x0 = 800;
-      const y0 = 600;
-      const x = _.random(x0, window.innerWidth - x0);
-      const y = _.random(y0, window.innerHeight - y0);
-      const style = {
-        left: `${x}px`,
-        top: `${y}px`,
-      };
-      return style;
-    },
-    getComputedStyleForLayer(index) {
-      const z = START_Z_AXIS - (index * Z_STEP);
-      const alpha = 1 - (index * 0.08);
-      const zIndex = SHOW_LAYER_NUM - index;
-      const style = {
-        transform: `translate3D(0px, 0px, ${z}px)`,
-        opacity: alpha,
-        zIndex
-      };
-      return style;
-    },
-    // getModalStyleByFloorId(floorId) {
-    //   const d = this.getTransformDegByFloorId(floorId);
-    //   return { transform: `rotate(${d}deg)` };
-    // },
     getTransformDegByFloorId(floorId) {
       const map = {
         1: 0,
@@ -554,36 +453,54 @@ export default {
       this.positionMap = posisionMap;
     },
     getLayerStyle(index) {
-      return {};
       const rotate = ['1deg', '-0deg', '-1deg', '-2deg', '-3deg', '-4deg', '-3deg', '-2deg', '-1deg', '0deg'];
+
+      const step = 0.05;
+      const startScale = 1 - this.layers.length * step;
       const style = {
-        'transform': 'translate3d(0,0,'+ (500*index-4500) +'px) rotate('+rotate[index]+')',
-        'filter':'blur('+ (90 - (index*10)) +'px)',
-        'opacity':(0.1 + (index*0.1))
+        // 'transform': 'translate3d(0,0,'+ (500*index-4500) +'px) rotate('+rotate[index]+')',
+        'transform': `scale(${startScale + index*step}) rotate(${rotate[index]})`,
+        'transition': 'all .5s',
+        // 'filter':'blur('+ (90 - (index*10)) +'px)',
+        // 'opacity':(0.1 + (index*0.1))
       };
       return style;
     },
-    getImageStyle(index) {
+    getImageStyle(layerIndex, contentIndex) {
+      const cachedStyle = this.cachedLayerStyles[layerIndex] && this.cachedLayerStyles[layerIndex][contentIndex] || null;
+      if (cachedStyle) {
+        return cachedStyle;
+      }
       const pos_data = this.positionMap;
+      const key = contentIndex % pos_data.length;
       const rotate = ['0deg', '90deg', '180deg', '270deg'];
-      const top = _.random(pos_data[index].y_max, pos_data[index].y);
-      const left = _.random(pos_data[index].x_max,pos_data[index].x);
+      const top = _.random(pos_data[key].y_max, pos_data[key].y);
+      const left = _.random(pos_data[key].x_max,pos_data[key].x);
       // const center_x = parseInt($(this).children().width() / 2);
       // const center_y = parseInt($(this).children().height() / 2);
       // TODO サイズ調整
-      const center_x = parseInt(window.innerWidth / 4 / 2);
-      const center_y = parseInt(window.innerHeight / 5 / 2);
+      // const center_x = parseInt(window.innerWidth / 4 / 2);
+      // const center_y = parseInt(window.innerHeight / 5 / 2);
       this.arreyShuffle(rotate);
       const style = {
-        'top': top - center_y+'px',
-        'left':left - center_x+'px',
-        'transform':'rotate('+rotate[0]+')'
+        // 'top': top - center_y+'px',
+        // 'left':left - center_x+'px',
+        'top': top +'px',
+        'left':left +'px',
+        'transform':'rotate('+rotate[contentIndex % rotate.length]+')'
       };
+
+      if (!this.cachedLayerStyles[layerIndex]) {
+        this.cachedLayerStyles[layerIndex] = [];
+      }
+
+      this.cachedLayerStyles[layerIndex][contentIndex] = style;
       return style;
     },
     getKeywordColor(index) {
       const keyword_color = ['red', 'blue', 'green', 'yellow', 'purple', 'vermilion', 'yellowgreen', 'orange', 'lightblue', 'gold', 'pink', 'bluegreen', 'white'];
-      return keyword_color[index];
+      const key = index % this.positionMap.length;
+      return keyword_color[key];
     },
     updateLayer() {
       client.get('');

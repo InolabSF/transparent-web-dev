@@ -130,6 +130,8 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+.img-detail-container {
+  transition: all .5s;
+}
 </style>

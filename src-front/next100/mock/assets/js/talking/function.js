@@ -58,7 +58,9 @@ jQuery(function($){
 			$(this).css({'top':top - center_y+'px','left':left - center_x+'px','transform':'rotate('+rotate[0]+')'});
 		});
 		$(this).children().css({'transform':'translate3d(0,0,'+ (500*j-4500) +'px) rotate('+rotate2[j]+')', 'filter':'blur('+ (90 - (j*10)) +'px)', 'opacity':(0.1 + (j*0.1))});
-		
+		// $(this).children().css({'transform':'scale('+(0.5 + j*0.05)+') rotate('+rotate2[j]+')', 'filter':'blur('+ (90 - (j*10)) +'px)', 'opacity':(0.1 + (j*0.1))});
+		// $(this).children().css({'transform':'scale('+(1 - j*0.05)+') rotate('+rotate2[j]+')', 'opacity':(0.1 + (j*0.1))});
+
 		$(this).children().attr('data-keyword-color', keyword_color[j]);
 	});
 	
