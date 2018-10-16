@@ -17,7 +17,7 @@
       </div>
       <user-layer></user-layer>
       <div id="media-leyer" style="getMediaLayersStyle">
-        <div class="post transit" v-for="(layer, layerIndex) in layers">
+        <div class="post transit" v-for="(layer, layerIndex) in layers" v-if="minLayerIndex <= layerIndex && layerIndex <= maxLayerIndex">
           <div class="media-container" :style="getLayerStyle(layerIndex)" :data-keyword-color="getKeywordColor(layerIndex)">
             <div
               v-for="(content, contentIndex) in layer.related_contents.slice(0, 5)"
@@ -27,7 +27,7 @@
               class="item"
               :style="getImageStyle(layerIndex, contentIndex)"
             >
-              <div class="media-photo" data-title="おやつレシピスクラップ: 柚子レモネード" data-desc="The result by MS Bing Search Image with &quot; レモネード &quot;" data-id="67514" data-searchid="27093" data-relatedcontentid="509554">
+              <div class="media-photo">
                 <div class="bg"></div>
                 <img ref="images" :src="content.img_url" class="img" :data-content-id="content.id">
                 <ul class="pin-list">
@@ -124,18 +124,26 @@ export default {
     ContextMenu,
     PinList
   },
+  props: {
+    maxLayerNum: {
+      type: Number,
+      default: 10
+    }
+  },
   async created() {
     const opts = {
       wallId: this.$route.params.wallId
     };
     startRecognizeSpeachSDK(opts);
 
-    // TODO transcriptsの取得
-    this.fetchTranscripts();
     this.listenPersonalTouch();
 
     this.initializePinchEvent();
     this.fetchAllUsersPinStatus();
+
+    // TODO transcriptsの取得
+    await this.fetchTranscripts();
+    this.currentShowMediaLayerIndex = this.layers.length;
 
     if (!this.$route.query.stopPolling) {
       this.startListenTranscriptsUpdate();
@@ -167,6 +175,12 @@ export default {
     }
   },
   computed: {
+    minLayerIndex() {
+      return this.currentShowMediaLayerIndex - this.maxLayerNum;
+    },
+    maxLayerIndex() {
+      return this.currentShowMediaLayerIndex;
+    }
   },
   methods: {
     async fetchAllUsersPinStatus() {
@@ -190,11 +204,25 @@ export default {
     listenLayerIndexChange() {
       window.addEventListener('keydown', (evt) => {
         if (evt.key === 'ArrowUp') {
-          this.currentShowMediaLayerIndex += 1;
+          this.incrementCurrentShowMediaLayerIndex();
         } else if (evt.key === 'ArrowDown') {
-          this.currentShowMediaLayerIndex += -1;
+          this.decrementCurrentShowMediaLayerIndex();
         }
       })
+    },
+    incrementCurrentShowMediaLayerIndex() {
+      if (this.currentShowMediaLayerIndex + 1 >= this.layers.length) {
+        this.currentShowMediaLayerIndex = this.layers.length;
+      } else {
+        this.currentShowMediaLayerIndex += 1;
+      }
+    },
+    decrementCurrentShowMediaLayerIndex() {
+      if (this.currentShowMediaLayerIndex - 1 <= 0) {
+        this.currentShowMediaLayerIndex = 0;
+      } else {
+        this.currentShowMediaLayerIndex -= 1;
+      }
     },
     listenPersonalTouch() {
       window.addEventListener('CUSTOM_TOUCH_START', this.onClickTable);
@@ -222,12 +250,12 @@ export default {
         return l.related_contents && l.related_contents.length > 0;
       });
 
-      layers = layers.slice(0, 10);
+      // layers = layers.slice(0, 10);
 
       if (this.layers[0] && this.layers[0].id === layers[0].id) {
         return false;
       } else {
-        this.layers = layers;
+        this.layers = layers.reverse();
       }
     },
     onClickImage({floorId, contentId}) {
@@ -454,12 +482,15 @@ export default {
     },
     getLayerStyle(index) {
       const rotate = ['1deg', '-0deg', '-1deg', '-2deg', '-3deg', '-4deg', '-3deg', '-2deg', '-1deg', '0deg'];
+      const step = 0.15;
+      // current 90 length 100 index
+      const startScale = 1.5 - (this.maxLayerNum * step); //0.2
+      const distance = index - this.minLayerIndex;
+      const calcedScale = startScale + (distance * step);
 
-      const step = 0.05;
-      const startScale = 1 - this.layers.length * step;
       const style = {
         // 'transform': 'translate3d(0,0,'+ (500*index-4500) +'px) rotate('+rotate[index]+')',
-        'transform': `scale(${startScale + index*step}) rotate(${rotate[index]})`,
+        'transform': `scale(${calcedScale}) rotate(${rotate[index % rotate.length]})`,
         'transition': 'all .5s',
         // 'filter':'blur('+ (90 - (index*10)) +'px)',
         // 'opacity':(0.1 + (index*0.1))
@@ -504,11 +535,6 @@ export default {
     },
     updateLayer() {
       client.get('');
-    },
-    getMediaLayersStyle() {
-      const style = {
-        transform: `translate3d(0, 0, ${this.currentShowMediaLayerIndex}px)`
-      }
     },
     startListenTranscriptsUpdate() {
       this.fetchTranscriptsInterval = setInterval(() => {

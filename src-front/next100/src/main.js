@@ -6,6 +6,7 @@ import store from "./store";
 import VModal from "vue-js-modal";
 import userMixin from "@/mixins/userMixin";
 import customTouchEventDriver from "@/mixins/customTouchEventDriver";
+import "animate.css";
 
 
 Vue.config.productionTip = false;
