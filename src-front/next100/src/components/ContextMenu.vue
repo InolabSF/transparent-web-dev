@@ -15,7 +15,7 @@
     </div>
     <ul class="menu-list">
       <li class="quit">
-        <a @click="onClickExit">
+        <a @click="onClickExitMeeting">
           <figure class="menu-icon"><img src="/next100/static/img/btn_icon_quit01.svg" alt=""></figure>
           <p>終了する</p>
         </a>
@@ -56,6 +56,14 @@ export default {
       required: true
     },
     onClickPinList: {
+      type: Function,
+      required: true
+    },
+    onClickExitMeeting: {
+      type: Function,
+      required: true
+    },
+    onClickOffMic: {
       type: Function,
       required: true
     }

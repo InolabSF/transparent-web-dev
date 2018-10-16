@@ -13,7 +13,7 @@ export default new Vuex.Store({
     isModeSelectFinished: false,
     customTouchMode: "production",
     debugParams: {
-      currentFloorId: 1,
+      currentFloorId: 2,
     },
     touchingQueues: [],
     isStartTalkModal: false,
@@ -49,15 +49,10 @@ export default new Vuex.Store({
     setDebugParams(state, payload) {
       state.debugParams = Object.assign(state.debugParams, payload);
     },
-    togglePinByFloorId(state, {floorId, contentId}) {
+    addPinByFloorId(state, {floorId, contentId}) {
       state.loginUsers = state.loginUsers.map(u => {
         if (u.floorId === floorId) {
-          const isPinned = !!u.pinnedContentIds.find(cid => cid === contentId);
-          if (isPinned) {
-            u.pinnedContentIds = u.pinnedContentIds.filter(cid => cid !== contentId);
-          } else {
-            u.pinnedContentIds.push(contentId);
-          }
+          u.pinnedContentIds.push(contentId);
           return u;
         } else {
           return u;
@@ -65,7 +60,14 @@ export default new Vuex.Store({
       });
     },
     deletePinByFloorId(state, {floorId, contentId}) {
-      Object.assign(usre);
+      state.loginUsers = state.loginUsers.map(u => {
+        if (u.floorId === floorId) {
+          u.pinnedContentIds = u.pinnedContentIds.filter(cid => cid !== contentId);
+          return u;
+        } else {
+          return u;
+        }
+      });
     }
   },
   actions: {}

@@ -43,20 +43,24 @@ export default {
       });
       return user;
     },
-    togglePinByFloorId(floorId, contentId) {
-      debugger;
-      this.$store.commit('togglePinByFloorId', {
-        floorId,
-        contentId,
-      });
+    isPinedByFloorId(floorId, contentId) {
       const user = this.getUserByFloorId(floorId);
-      const isPinned = user.pinnedContentIds.find(cid => {
-        return cid === contentId;
-      });
-
+      return user.pinnedContentIds.find(cid => cid === contentId);
+    },
+    togglePinByFloorId(floorId, contentId) {
+      const user = this.getUserByFloorId(floorId);
+      const isPinned = this.isPinedByFloorId(floorId, contentId);
       if (isPinned) {
+        this.$store.commit('deletePinByFloorId', {
+          floorId,
+          contentId,
+        });
         this.deletePinByFloorId(contentId, user.name);
       } else {
+        this.$store.commit('addPinByFloorId', {
+          floorId,
+          contentId,
+        });
         this.postPinByFloorId(contentId, user.name);
       }
     },

@@ -9,7 +9,7 @@
               <div class="media-photo">
                 <img :src="content.img_url" class="img">
                 <ul class="pin-list" v-if="attachedPins.length > 0">
-                  <li :data-color="color" v-for="color in attachedPins" :key="color"></li>
+                  <li :data-color="color" v-for="(color, i) in attachedPins" :key="i"></li>
                 </ul>
                 <button ref="pinButton" class="btn-pin"></button>
               </div>
@@ -47,12 +47,6 @@ export default {
       required: true
     }
   },
-  data() {
-    return {
-      listener: null,
-
-    }
-  },
   computed: {
     style() {
       return this.getModalStyleByFloorId(this.floorId)
@@ -63,7 +57,7 @@ export default {
       this.$store.state.loginUsers.forEach(u => {
         const isPinned = !!u.pinnedContentIds.find(cid => cid === contentId);
         if (isPinned) {
-          const color = this.getColorMap()[this.floorId];
+          const color = this.getColorMap()[u.floorId];
           colors.push(color);
         }
       });
@@ -87,10 +81,10 @@ export default {
       this.onClose();
     },
     startListenCustomTouchStart() {
-      this.listener = window.addEventListener('CUSTOM_TOUCH_START', this.onTouchArea);
+      window.addEventListener('CUSTOM_TOUCH_START', this.onTouchArea);
     },
     stopListenCustomTouchStart() {
-      window.removeEventListener('CUSTOM_TOUCH_START', this.listener);
+      window.removeEventListener('CUSTOM_TOUCH_START', this.onTouchArea);
     },
     onTouchArea(evt) {
       const touch = evt.detail[0];
@@ -126,6 +120,9 @@ export default {
     },
   },
   created() {
+    document.body.addEventListener('CUSTOM_TOUCH_START', d => {
+      debugger;
+    });
     // window.addEventListener('click', () => {
     //   alert("window click");
     // });

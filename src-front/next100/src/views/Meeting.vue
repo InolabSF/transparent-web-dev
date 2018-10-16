@@ -128,12 +128,18 @@
       </div>
       <context-menu
         v-for="(status, i) in contextMenuStatuses"
+        v-if="status"
         :key="i"
         :status="status"
         :ref="status.refName"
         :onClickPinList="() => { isShowPinListModal = true }"
+        :onClickExitMeeting="() => { isShowPinListModal = true; isConfirmExit = true; }"
+        :onClickOffMic="() => { isRecording = false }"
       ></context-menu>
-      <pin-list v-if="isShowPinListModal" onClose="() => { this.isShowPinListModal = false }"></pin-list>
+      <pin-list
+        v-if="isShowPinListModal"
+        :onClose="() => { this.isShowPinListModal = false }"
+      ></pin-list>
     </div>
   </div>
 </template>
@@ -163,7 +169,6 @@ import ImageDetailModal from "@/components/ImageDetailModal";
 import ContextMenu from "@/components/ContextMenu";
 import PinList from "@/components/PinList";
 
-
 const START_Z_AXIS = 50; // 先頭z座標
 const Z_STEP = 10; // 1レイヤー間のz深度
 const SHOW_LAYER_NUM = 10 // 階層数
@@ -188,6 +193,7 @@ export default {
     this.listenPersonalTouch();
 
     this.initializePinchEvent();
+    this.fetchAllUsersPinStatus();
 
     if (!this.$route.query.stopPolling) {
       this.startListenTranscriptsUpdate();
@@ -206,6 +212,8 @@ export default {
     return {
       currentShowMediaLayerIndex: 0,
       fetchTranscriptsInterval: null,
+      isConfirmExit: false,
+      isRecording: true,
       layers: [],
       isShowPinListModal: false,
       isShowContentDetailModal: false,
@@ -227,8 +235,23 @@ export default {
   computed: {
   },
   methods: {
-    onClickTest() {
-      alert('test');
+    async fetchAllUsersPinStatus() {
+      const key = this.$route.query.key;
+      const url = `/next100/wall/${key}/pinned`;
+      const res = await client.get(url);
+      const contents = res.data;
+
+      const updateUsers = this.$store.state.loginUsers.map(u => {
+        const myPinnedContents = contents.filter(c => {
+          return c.pins.filter(p => p.eventuser_id === u.name).length > 0;
+        });
+        u.pinnedContentIds = myPinnedContents.map(mp => mp.id);
+        return u;
+      });
+
+      this.$store.commit('setState', {
+        loginUsers: updateUsers
+      });
     },
     listenLayerIndexChange() {
       window.addEventListener('keydown', (evt) => {
