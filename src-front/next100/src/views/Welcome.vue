@@ -46,11 +46,12 @@ export default {
   mixins: [userMixin, customTouchEventDriver],
   data() {
     return {
-      isShowConfirmOverlay: false,
+      customTouchEventListener: null,
+      isShowConfirmOverlay: false
     }
   },
   created() {
-    window.addEventListener('CUSTOM_TOUCH_START', this.onClickTable);
+    this.customTouchEventListener = window.addEventListener('CUSTOM_TOUCH_START', this.onClickTable);
   },
   methods: {
     test() {
@@ -72,6 +73,7 @@ export default {
     },
     async startmeeting() {
       const res = await this.createWall();
+      window.removeEventListener('CUSTOM_TOUCH_START', this.customTouchEventListener);
       const wall = res.data;
       this.$router.push(`/walls/${wall.id}/meeting`);
     },

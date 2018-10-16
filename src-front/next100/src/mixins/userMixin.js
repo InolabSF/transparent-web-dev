@@ -16,10 +16,17 @@ export default {
 
       if (this.$store.state.loginUsers.length < USER_LIMIT) {
         this.$store.commit('addLoginUser', user);
-        localStorage.setItem('loginUsers', JSON.stringify(this.$store.state.loginUsers));
+        this.syncLoginUserToLocalStorage();
       } else {
         throw "参加人数は4名まで";
       }
+    },
+    logout(floorId) {
+      this.$store.commit('removeLoginUser', floorId);
+      this.syncLoginUserToLocalStorage();
+    },
+    syncLoginUserToLocalStorage() {
+      localStorage.setItem('loginUsers', JSON.stringify(this.$store.state.loginUsers));
     },
     getStyleByFloorId(floorId) {
       const styleMap = {

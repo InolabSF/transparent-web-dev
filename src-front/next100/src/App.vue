@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <router-view v-if="isModeSelectFinished"></router-view>
-    <mode-select-modal></mode-select-modal>
+    <router-view v-if="isModeSelectFinished || !isShowModeSelectModal"></router-view>
+    <mode-select-modal v-if="isShowModeSelectModal"></mode-select-modal>
     <!--<debug-control></debug-control>-->
   </div>
 </template>
@@ -33,7 +33,16 @@ export default {
     }
   },
   computed: {
-    ...mapState(['isModeSelectFinished'])
+    ...mapState(['isModeSelectFinished']),
+    isShowModeSelectModal() {
+      const ignoreRoutes = [
+        'wallLogs'
+      ];
+      if (ignoreRoutes.includes(this.$route.name)) {
+        return false;
+      }
+      return true;
+    },
   }
 }
 </script>

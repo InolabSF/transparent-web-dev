@@ -1,0 +1,483 @@
+<template>
+  <div class="overlay">
+    <div class="user-top user-box" data-color="yellow">
+      <div class="pin-img-list-container">
+        <div class="pin-img-list-wrapper">
+          <div class="pin-img-list-slide">
+            <ul class="pin-img-list">
+              <li class="item">
+                <div class="media-photo" data-title="池袋ウエストゲートパーク (文春文庫) | エキサイト商品情報" data-desc="The result by MS Bing Search Image with &quot; 池袋ウエストゲートパーク &quot;" data-id="67468" data-searchid="27073" data-relatedcontentid="509437" style="background-image: url(https://tse1.mm.bing.net/th?id=OIP.YKjBVc2Xt1k57Z91kGx5nQHaKw&amp;pid=Api);">
+                  <img src="https://tse1.mm.bing.net/th?id=OIP.YKjBVc2Xt1k57Z91kGx5nQHaKw&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="item">
+                <div class="media-photo" data-title="池袋ウエストゲートパーク スープの回 完全版 : 池袋ウエスト ..." data-desc="The result by MS Bing Search Image with &quot; 池袋ウエストゲートパーク &quot;" data-id="67468" data-searchid="27073" data-relatedcontentid="509438" style="background-image: url(https://tse1.mm.bing.net/th?id=OIP.lV5fxB0SP7saQXMWupzz2gHaKd&amp;pid=Api);">
+                  <img src="https://tse1.mm.bing.net/th?id=OIP.lV5fxB0SP7saQXMWupzz2gHaKd&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="item">
+                <div class="media-photo" data-title="VIPPERな俺 : 池袋ウエストゲートパークって面白かったよな" data-desc="The result by MS Bing Search Image with &quot; 池袋ウエストゲートパーク &quot;" data-id="67468" data-searchid="27073" style="background-image: url(https://tse2.mm.bing.net/th?id=OIP.pXTr37II9du6FgQciKNpGAHaI6&amp;pid=Api);">
+                  <img src="https://tse2.mm.bing.net/th?id=OIP.pXTr37II9du6FgQciKNpGAHaI6&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="item">
+                <div class="media-photo" data-title="『池袋ウエストゲートパーク [Kindle]』(石田衣良)の感想(2 ..." data-desc="The result by MS Bing Search Image with &quot; 池袋ウエストゲートパーク &quot;" data-id="67468" data-searchid="27073" data-relatedcontentid="509439" style="background-image: url(https://tse1.mm.bing.net/th?id=OIP.Ed-82l4prg9g5a-tjtxQogHaKs&amp;pid=Api);">
+                  <img src="https://tse1.mm.bing.net/th?id=OIP.Ed-82l4prg9g5a-tjtxQogHaKs&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="item">
+                <div class="media-photo" data-title="巻き舌の歌姫:池袋ウエストゲートパーク" data-desc="The result by MS Bing Search Image with &quot; 池袋ウエストゲートパーク &quot;" data-id="67468" data-searchid="27073" data-relatedcontentid="509436" style="background-image: url(https://tse3.mm.bing.net/th?id=OIP.7G4s0VDP53vVTrkpbyAl9wHaE8&amp;pid=Api);">
+                  <img src="https://tse3.mm.bing.net/th?id=OIP.7G4s0VDP53vVTrkpbyAl9wHaE8&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="item">
+                <div class="media-photo" data-title="iPhone 4Sとスティーブ・ジョブズ逝去...など今週のアップル ..." data-desc="The result by MS Bing Search Image with &quot; スティーブジョブズ &quot;" data-id="67480" data-searchid="27077" data-relatedcontentid="509452" style="background-image: url(https://tse1.mm.bing.net/th?id=OIP.lFCL9iWM3h33TXtqFaiqhwHaIg&amp;pid=Api);">
+                  <img src="https://tse1.mm.bing.net/th?id=OIP.lFCL9iWM3h33TXtqFaiqhwHaIg&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="item">
+                <div class="media-photo" data-title="スティーブ・ジョブズが好き | 和田憲幸のブログ" data-desc="The result by MS Bing Search Image with &quot; スティーブジョブズ &quot;" data-id="67480" data-searchid="27077" data-relatedcontentid="509451" style="background-image: url(https://tse4.mm.bing.net/th?id=OIP.Q_P2uIpbwoIuMrH7MSM3FAHaGB&amp;pid=Api);">
+                  <img src="https://tse4.mm.bing.net/th?id=OIP.Q_P2uIpbwoIuMrH7MSM3FAHaGB&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="item">
+                <div class="media-photo" data-title="スティーブジョブズBOT (@SteveJobs_BOT) | Twitter" data-desc="The result by MS Bing Search Image with &quot; スティーブジョブズ &quot;" data-id="67480" data-searchid="27077" data-relatedcontentid="509453" style="background-image: url(https://tse4.mm.bing.net/th?id=OIP.06V1CCAaAkLBcR7Qv9dINgHaHa&amp;pid=Api);">
+                  <img src="https://tse4.mm.bing.net/th?id=OIP.06V1CCAaAkLBcR7Qv9dINgHaHa&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="item">
+                <div class="media-photo" data-title="スティーブ・ジョブズ名言・格言 (@stevejobswise) | Twitter" data-desc="The result by MS Bing Search Image with &quot; スティーブジョブズ &quot;" data-id="67480" data-searchid="27077" data-relatedcontentid="509454" style="background-image: url(https://tse3.mm.bing.net/th?id=OIP.GNmHVd2fRzm7PfGlYnz9fgAAAA&amp;pid=Api);">
+                  <img src="https://tse3.mm.bing.net/th?id=OIP.GNmHVd2fRzm7PfGlYnz9fgAAAA&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="item">
+                <div class="media-photo" data-title="スティーブ・ジョブズ似顔絵" data-desc="The result by MS Bing Search Image with &quot; スティーブジョブズ &quot;" data-id="67480" data-searchid="27077" data-relatedcontentid="509455" style="background-image: url(https://tse4.mm.bing.net/th?id=OIP.ZBEPiqHjDbWhFFqpaPKSAwHaIu&amp;pid=Api);">
+                  <img src="https://tse4.mm.bing.net/th?id=OIP.ZBEPiqHjDbWhFFqpaPKSAwHaIu&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="pin-img-list-slide">
+            <ul class="pin-img-list">
+              <li class="item">
+                <div class="media-photo" data-title="Identify your iPad model - Apple Support" data-desc="The result by MS Bing Search Image with &quot; Ipad &quot;" data-id="67478" data-searchid="27075" data-relatedcontentid="509441" style="background-image: url(https://tse4.mm.bing.net/th?id=OIP.BmM7O6_O4Thz6Se2xvUZVwHaHV&amp;pid=Api);">
+                  <img src="https://tse4.mm.bing.net/th?id=OIP.BmM7O6_O4Thz6Se2xvUZVwHaHV&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="item">
+                <div class="media-photo" data-title="Ipad – Tablet Talk" data-desc="The result by MS Bing Search Image with &quot; Ipad &quot;" data-id="67478" data-searchid="27075" data-relatedcontentid="509443" style="background-image: url(https://tse4.mm.bing.net/th?id=OIP.5PE8751Uz8efQNu80eNiyQHaFu&amp;pid=Api);">
+                  <img src="https://tse4.mm.bing.net/th?id=OIP.5PE8751Uz8efQNu80eNiyQHaFu&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="qr-link-box">
+        <figure class="qr-img"><img src="/next100/staticimg/QR_Code.jpg" alt="QR Code"></figure>
+        <p class="qr-text">このトークのURL</p>
+      </div>
+    </div>
+    <div class="user-right user-box" data-color="blue">
+      <div class="pin-img-list-container">
+        <div class="pin-img-list-wrapper">
+          <div class="pin-img-list-slide">
+            <ul class="pin-img-list">
+              <li class="item">
+                <div class="media-photo" data-title="池袋ウエストゲートパーク (文春文庫) | エキサイト商品情報" data-desc="The result by MS Bing Search Image with &quot; 池袋ウエストゲートパーク &quot;" data-id="67468" data-searchid="27073" data-relatedcontentid="509437" style="background-image: url(https://tse1.mm.bing.net/th?id=OIP.YKjBVc2Xt1k57Z91kGx5nQHaKw&amp;pid=Api);">
+                  <img src="https://tse1.mm.bing.net/th?id=OIP.YKjBVc2Xt1k57Z91kGx5nQHaKw&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="item">
+                <div class="media-photo" data-title="池袋ウエストゲートパーク スープの回 完全版 : 池袋ウエスト ..." data-desc="The result by MS Bing Search Image with &quot; 池袋ウエストゲートパーク &quot;" data-id="67468" data-searchid="27073" data-relatedcontentid="509438" style="background-image: url(https://tse1.mm.bing.net/th?id=OIP.lV5fxB0SP7saQXMWupzz2gHaKd&amp;pid=Api);">
+                  <img src="https://tse1.mm.bing.net/th?id=OIP.lV5fxB0SP7saQXMWupzz2gHaKd&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="item">
+                <div class="media-photo" data-title="VIPPERな俺 : 池袋ウエストゲートパークって面白かったよな" data-desc="The result by MS Bing Search Image with &quot; 池袋ウエストゲートパーク &quot;" data-id="67468" data-searchid="27073" style="background-image: url(https://tse2.mm.bing.net/th?id=OIP.pXTr37II9du6FgQciKNpGAHaI6&amp;pid=Api);">
+                  <img src="https://tse2.mm.bing.net/th?id=OIP.pXTr37II9du6FgQciKNpGAHaI6&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="item">
+                <div class="media-photo" data-title="『池袋ウエストゲートパーク [Kindle]』(石田衣良)の感想(2 ..." data-desc="The result by MS Bing Search Image with &quot; 池袋ウエストゲートパーク &quot;" data-id="67468" data-searchid="27073" data-relatedcontentid="509439" style="background-image: url(https://tse1.mm.bing.net/th?id=OIP.Ed-82l4prg9g5a-tjtxQogHaKs&amp;pid=Api);">
+                  <img src="https://tse1.mm.bing.net/th?id=OIP.Ed-82l4prg9g5a-tjtxQogHaKs&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="item">
+                <div class="media-photo" data-title="巻き舌の歌姫:池袋ウエストゲートパーク" data-desc="The result by MS Bing Search Image with &quot; 池袋ウエストゲートパーク &quot;" data-id="67468" data-searchid="27073" data-relatedcontentid="509436" style="background-image: url(https://tse3.mm.bing.net/th?id=OIP.7G4s0VDP53vVTrkpbyAl9wHaE8&amp;pid=Api);">
+                  <img src="https://tse3.mm.bing.net/th?id=OIP.7G4s0VDP53vVTrkpbyAl9wHaE8&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="item">
+                <div class="media-photo" data-title="iPhone 4Sとスティーブ・ジョブズ逝去...など今週のアップル ..." data-desc="The result by MS Bing Search Image with &quot; スティーブジョブズ &quot;" data-id="67480" data-searchid="27077" data-relatedcontentid="509452" style="background-image: url(https://tse1.mm.bing.net/th?id=OIP.lFCL9iWM3h33TXtqFaiqhwHaIg&amp;pid=Api);">
+                  <img src="https://tse1.mm.bing.net/th?id=OIP.lFCL9iWM3h33TXtqFaiqhwHaIg&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="item">
+                <div class="media-photo" data-title="スティーブ・ジョブズが好き | 和田憲幸のブログ" data-desc="The result by MS Bing Search Image with &quot; スティーブジョブズ &quot;" data-id="67480" data-searchid="27077" data-relatedcontentid="509451" style="background-image: url(https://tse4.mm.bing.net/th?id=OIP.Q_P2uIpbwoIuMrH7MSM3FAHaGB&amp;pid=Api);">
+                  <img src="https://tse4.mm.bing.net/th?id=OIP.Q_P2uIpbwoIuMrH7MSM3FAHaGB&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="item">
+                <div class="media-photo" data-title="スティーブジョブズBOT (@SteveJobs_BOT) | Twitter" data-desc="The result by MS Bing Search Image with &quot; スティーブジョブズ &quot;" data-id="67480" data-searchid="27077" data-relatedcontentid="509453" style="background-image: url(https://tse4.mm.bing.net/th?id=OIP.06V1CCAaAkLBcR7Qv9dINgHaHa&amp;pid=Api);">
+                  <img src="https://tse4.mm.bing.net/th?id=OIP.06V1CCAaAkLBcR7Qv9dINgHaHa&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="item">
+                <div class="media-photo" data-title="スティーブ・ジョブズ名言・格言 (@stevejobswise) | Twitter" data-desc="The result by MS Bing Search Image with &quot; スティーブジョブズ &quot;" data-id="67480" data-searchid="27077" data-relatedcontentid="509454" style="background-image: url(https://tse3.mm.bing.net/th?id=OIP.GNmHVd2fRzm7PfGlYnz9fgAAAA&amp;pid=Api);">
+                  <img src="https://tse3.mm.bing.net/th?id=OIP.GNmHVd2fRzm7PfGlYnz9fgAAAA&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="item">
+                <div class="media-photo" data-title="スティーブ・ジョブズ似顔絵" data-desc="The result by MS Bing Search Image with &quot; スティーブジョブズ &quot;" data-id="67480" data-searchid="27077" data-relatedcontentid="509455" style="background-image: url(https://tse4.mm.bing.net/th?id=OIP.ZBEPiqHjDbWhFFqpaPKSAwHaIu&amp;pid=Api);">
+                  <img src="https://tse4.mm.bing.net/th?id=OIP.ZBEPiqHjDbWhFFqpaPKSAwHaIu&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="pin-img-list-slide">
+            <ul class="pin-img-list">
+              <li class="item">
+                <div class="media-photo" data-title="Identify your iPad model - Apple Support" data-desc="The result by MS Bing Search Image with &quot; Ipad &quot;" data-id="67478" data-searchid="27075" data-relatedcontentid="509441" style="background-image: url(https://tse4.mm.bing.net/th?id=OIP.BmM7O6_O4Thz6Se2xvUZVwHaHV&amp;pid=Api);">
+                  <img src="https://tse4.mm.bing.net/th?id=OIP.BmM7O6_O4Thz6Se2xvUZVwHaHV&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="item">
+                <div class="media-photo" data-title="Ipad – Tablet Talk" data-desc="The result by MS Bing Search Image with &quot; Ipad &quot;" data-id="67478" data-searchid="27075" data-relatedcontentid="509443" style="background-image: url(https://tse4.mm.bing.net/th?id=OIP.5PE8751Uz8efQNu80eNiyQHaFu&amp;pid=Api);">
+                  <img src="https://tse4.mm.bing.net/th?id=OIP.5PE8751Uz8efQNu80eNiyQHaFu&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="qr-link-box">
+        <figure class="qr-img"><img src="/next100/staticimg/QR_Code.jpg" alt="QR Code"></figure>
+        <p class="qr-text">このトークのURL</p>
+      </div>
+    </div>
+    <div class="user-bottom user-box" data-color="green">
+      <div class="pin-img-list-container">
+        <div class="pin-img-list-wrapper">
+          <div class="pin-img-list-slide">
+            <ul class="pin-img-list">
+              <li class="item">
+                <div class="media-photo" data-title="池袋ウエストゲートパーク (文春文庫) | エキサイト商品情報" data-desc="The result by MS Bing Search Image with &quot; 池袋ウエストゲートパーク &quot;" data-id="67468" data-searchid="27073" data-relatedcontentid="509437" style="background-image: url(https://tse1.mm.bing.net/th?id=OIP.YKjBVc2Xt1k57Z91kGx5nQHaKw&amp;pid=Api);">
+                  <img src="https://tse1.mm.bing.net/th?id=OIP.YKjBVc2Xt1k57Z91kGx5nQHaKw&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="item">
+                <div class="media-photo" data-title="池袋ウエストゲートパーク スープの回 完全版 : 池袋ウエスト ..." data-desc="The result by MS Bing Search Image with &quot; 池袋ウエストゲートパーク &quot;" data-id="67468" data-searchid="27073" data-relatedcontentid="509438" style="background-image: url(https://tse1.mm.bing.net/th?id=OIP.lV5fxB0SP7saQXMWupzz2gHaKd&amp;pid=Api);">
+                  <img src="https://tse1.mm.bing.net/th?id=OIP.lV5fxB0SP7saQXMWupzz2gHaKd&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="item">
+                <div class="media-photo" data-title="VIPPERな俺 : 池袋ウエストゲートパークって面白かったよな" data-desc="The result by MS Bing Search Image with &quot; 池袋ウエストゲートパーク &quot;" data-id="67468" data-searchid="27073" style="background-image: url(https://tse2.mm.bing.net/th?id=OIP.pXTr37II9du6FgQciKNpGAHaI6&amp;pid=Api);">
+                  <img src="https://tse2.mm.bing.net/th?id=OIP.pXTr37II9du6FgQciKNpGAHaI6&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="item">
+                <div class="media-photo" data-title="『池袋ウエストゲートパーク [Kindle]』(石田衣良)の感想(2 ..." data-desc="The result by MS Bing Search Image with &quot; 池袋ウエストゲートパーク &quot;" data-id="67468" data-searchid="27073" data-relatedcontentid="509439" style="background-image: url(https://tse1.mm.bing.net/th?id=OIP.Ed-82l4prg9g5a-tjtxQogHaKs&amp;pid=Api);">
+                  <img src="https://tse1.mm.bing.net/th?id=OIP.Ed-82l4prg9g5a-tjtxQogHaKs&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="item">
+                <div class="media-photo" data-title="巻き舌の歌姫:池袋ウエストゲートパーク" data-desc="The result by MS Bing Search Image with &quot; 池袋ウエストゲートパーク &quot;" data-id="67468" data-searchid="27073" data-relatedcontentid="509436" style="background-image: url(https://tse3.mm.bing.net/th?id=OIP.7G4s0VDP53vVTrkpbyAl9wHaE8&amp;pid=Api);">
+                  <img src="https://tse3.mm.bing.net/th?id=OIP.7G4s0VDP53vVTrkpbyAl9wHaE8&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="item">
+                <div class="media-photo" data-title="iPhone 4Sとスティーブ・ジョブズ逝去...など今週のアップル ..." data-desc="The result by MS Bing Search Image with &quot; スティーブジョブズ &quot;" data-id="67480" data-searchid="27077" data-relatedcontentid="509452" style="background-image: url(https://tse1.mm.bing.net/th?id=OIP.lFCL9iWM3h33TXtqFaiqhwHaIg&amp;pid=Api);">
+                  <img src="https://tse1.mm.bing.net/th?id=OIP.lFCL9iWM3h33TXtqFaiqhwHaIg&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="item">
+                <div class="media-photo" data-title="スティーブ・ジョブズが好き | 和田憲幸のブログ" data-desc="The result by MS Bing Search Image with &quot; スティーブジョブズ &quot;" data-id="67480" data-searchid="27077" data-relatedcontentid="509451" style="background-image: url(https://tse4.mm.bing.net/th?id=OIP.Q_P2uIpbwoIuMrH7MSM3FAHaGB&amp;pid=Api);">
+                  <img src="https://tse4.mm.bing.net/th?id=OIP.Q_P2uIpbwoIuMrH7MSM3FAHaGB&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="item">
+                <div class="media-photo" data-title="スティーブジョブズBOT (@SteveJobs_BOT) | Twitter" data-desc="The result by MS Bing Search Image with &quot; スティーブジョブズ &quot;" data-id="67480" data-searchid="27077" data-relatedcontentid="509453" style="background-image: url(https://tse4.mm.bing.net/th?id=OIP.06V1CCAaAkLBcR7Qv9dINgHaHa&amp;pid=Api);">
+                  <img src="https://tse4.mm.bing.net/th?id=OIP.06V1CCAaAkLBcR7Qv9dINgHaHa&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="item">
+                <div class="media-photo" data-title="スティーブ・ジョブズ名言・格言 (@stevejobswise) | Twitter" data-desc="The result by MS Bing Search Image with &quot; スティーブジョブズ &quot;" data-id="67480" data-searchid="27077" data-relatedcontentid="509454" style="background-image: url(https://tse3.mm.bing.net/th?id=OIP.GNmHVd2fRzm7PfGlYnz9fgAAAA&amp;pid=Api);">
+                  <img src="https://tse3.mm.bing.net/th?id=OIP.GNmHVd2fRzm7PfGlYnz9fgAAAA&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="item">
+                <div class="media-photo" data-title="スティーブ・ジョブズ似顔絵" data-desc="The result by MS Bing Search Image with &quot; スティーブジョブズ &quot;" data-id="67480" data-searchid="27077" data-relatedcontentid="509455" style="background-image: url(https://tse4.mm.bing.net/th?id=OIP.ZBEPiqHjDbWhFFqpaPKSAwHaIu&amp;pid=Api);">
+                  <img src="https://tse4.mm.bing.net/th?id=OIP.ZBEPiqHjDbWhFFqpaPKSAwHaIu&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="pin-img-list-slide">
+            <ul class="pin-img-list">
+              <li class="item">
+                <div class="media-photo" data-title="Identify your iPad model - Apple Support" data-desc="The result by MS Bing Search Image with &quot; Ipad &quot;" data-id="67478" data-searchid="27075" data-relatedcontentid="509441" style="background-image: url(https://tse4.mm.bing.net/th?id=OIP.BmM7O6_O4Thz6Se2xvUZVwHaHV&amp;pid=Api);">
+                  <img src="https://tse4.mm.bing.net/th?id=OIP.BmM7O6_O4Thz6Se2xvUZVwHaHV&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="item">
+                <div class="media-photo" data-title="Ipad – Tablet Talk" data-desc="The result by MS Bing Search Image with &quot; Ipad &quot;" data-id="67478" data-searchid="27075" data-relatedcontentid="509443" style="background-image: url(https://tse4.mm.bing.net/th?id=OIP.5PE8751Uz8efQNu80eNiyQHaFu&amp;pid=Api);">
+                  <img src="https://tse4.mm.bing.net/th?id=OIP.5PE8751Uz8efQNu80eNiyQHaFu&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="pin-img-list-arrow">
+        <div class="pin-img-list-arrow-next"></div>
+        <div class="pin-img-list-arrow-prev"></div>
+      </div>
+      <div class="qr-link-box">
+        <figure class="qr-img"><img src="/next100/staticimg/QR_Code.jpg" alt="QR Code"></figure>
+        <p class="qr-text">このトークのURL</p>
+      </div>
+    </div>
+    <div class="user-left user-box" data-color="red">
+      <div class="pin-img-list-container">
+        <div class="pin-img-list-wrapper">
+          <div class="pin-img-list-slide">
+            <ul class="pin-img-list">
+              <li class="item">
+                <div class="media-photo" data-title="池袋ウエストゲートパーク (文春文庫) | エキサイト商品情報" data-desc="The result by MS Bing Search Image with &quot; 池袋ウエストゲートパーク &quot;" data-id="67468" data-searchid="27073" data-relatedcontentid="509437" style="background-image: url(https://tse1.mm.bing.net/th?id=OIP.YKjBVc2Xt1k57Z91kGx5nQHaKw&amp;pid=Api);">
+                  <img src="https://tse1.mm.bing.net/th?id=OIP.YKjBVc2Xt1k57Z91kGx5nQHaKw&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="item">
+                <div class="media-photo" data-title="池袋ウエストゲートパーク スープの回 完全版 : 池袋ウエスト ..." data-desc="The result by MS Bing Search Image with &quot; 池袋ウエストゲートパーク &quot;" data-id="67468" data-searchid="27073" data-relatedcontentid="509438" style="background-image: url(https://tse1.mm.bing.net/th?id=OIP.lV5fxB0SP7saQXMWupzz2gHaKd&amp;pid=Api);">
+                  <img src="https://tse1.mm.bing.net/th?id=OIP.lV5fxB0SP7saQXMWupzz2gHaKd&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="item">
+                <div class="media-photo" data-title="VIPPERな俺 : 池袋ウエストゲートパークって面白かったよな" data-desc="The result by MS Bing Search Image with &quot; 池袋ウエストゲートパーク &quot;" data-id="67468" data-searchid="27073" style="background-image: url(https://tse2.mm.bing.net/th?id=OIP.pXTr37II9du6FgQciKNpGAHaI6&amp;pid=Api);">
+                  <img src="https://tse2.mm.bing.net/th?id=OIP.pXTr37II9du6FgQciKNpGAHaI6&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="item">
+                <div class="media-photo" data-title="『池袋ウエストゲートパーク [Kindle]』(石田衣良)の感想(2 ..." data-desc="The result by MS Bing Search Image with &quot; 池袋ウエストゲートパーク &quot;" data-id="67468" data-searchid="27073" data-relatedcontentid="509439" style="background-image: url(https://tse1.mm.bing.net/th?id=OIP.Ed-82l4prg9g5a-tjtxQogHaKs&amp;pid=Api);">
+                  <img src="https://tse1.mm.bing.net/th?id=OIP.Ed-82l4prg9g5a-tjtxQogHaKs&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="item">
+                <div class="media-photo" data-title="巻き舌の歌姫:池袋ウエストゲートパーク" data-desc="The result by MS Bing Search Image with &quot; 池袋ウエストゲートパーク &quot;" data-id="67468" data-searchid="27073" data-relatedcontentid="509436" style="background-image: url(https://tse3.mm.bing.net/th?id=OIP.7G4s0VDP53vVTrkpbyAl9wHaE8&amp;pid=Api);">
+                  <img src="https://tse3.mm.bing.net/th?id=OIP.7G4s0VDP53vVTrkpbyAl9wHaE8&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="item">
+                <div class="media-photo" data-title="iPhone 4Sとスティーブ・ジョブズ逝去...など今週のアップル ..." data-desc="The result by MS Bing Search Image with &quot; スティーブジョブズ &quot;" data-id="67480" data-searchid="27077" data-relatedcontentid="509452" style="background-image: url(https://tse1.mm.bing.net/th?id=OIP.lFCL9iWM3h33TXtqFaiqhwHaIg&amp;pid=Api);">
+                  <img src="https://tse1.mm.bing.net/th?id=OIP.lFCL9iWM3h33TXtqFaiqhwHaIg&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="item">
+                <div class="media-photo" data-title="スティーブ・ジョブズが好き | 和田憲幸のブログ" data-desc="The result by MS Bing Search Image with &quot; スティーブジョブズ &quot;" data-id="67480" data-searchid="27077" data-relatedcontentid="509451" style="background-image: url(https://tse4.mm.bing.net/th?id=OIP.Q_P2uIpbwoIuMrH7MSM3FAHaGB&amp;pid=Api);">
+                  <img src="https://tse4.mm.bing.net/th?id=OIP.Q_P2uIpbwoIuMrH7MSM3FAHaGB&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="item">
+                <div class="media-photo" data-title="スティーブジョブズBOT (@SteveJobs_BOT) | Twitter" data-desc="The result by MS Bing Search Image with &quot; スティーブジョブズ &quot;" data-id="67480" data-searchid="27077" data-relatedcontentid="509453" style="background-image: url(https://tse4.mm.bing.net/th?id=OIP.06V1CCAaAkLBcR7Qv9dINgHaHa&amp;pid=Api);">
+                  <img src="https://tse4.mm.bing.net/th?id=OIP.06V1CCAaAkLBcR7Qv9dINgHaHa&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="item">
+                <div class="media-photo" data-title="スティーブ・ジョブズ名言・格言 (@stevejobswise) | Twitter" data-desc="The result by MS Bing Search Image with &quot; スティーブジョブズ &quot;" data-id="67480" data-searchid="27077" data-relatedcontentid="509454" style="background-image: url(https://tse3.mm.bing.net/th?id=OIP.GNmHVd2fRzm7PfGlYnz9fgAAAA&amp;pid=Api);">
+                  <img src="https://tse3.mm.bing.net/th?id=OIP.GNmHVd2fRzm7PfGlYnz9fgAAAA&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="item">
+                <div class="media-photo" data-title="スティーブ・ジョブズ似顔絵" data-desc="The result by MS Bing Search Image with &quot; スティーブジョブズ &quot;" data-id="67480" data-searchid="27077" data-relatedcontentid="509455" style="background-image: url(https://tse4.mm.bing.net/th?id=OIP.ZBEPiqHjDbWhFFqpaPKSAwHaIu&amp;pid=Api);">
+                  <img src="https://tse4.mm.bing.net/th?id=OIP.ZBEPiqHjDbWhFFqpaPKSAwHaIu&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="pin-img-list-slide">
+            <ul class="pin-img-list">
+              <li class="item">
+                <div class="media-photo" data-title="Identify your iPad model - Apple Support" data-desc="The result by MS Bing Search Image with &quot; Ipad &quot;" data-id="67478" data-searchid="27075" data-relatedcontentid="509441" style="background-image: url(https://tse4.mm.bing.net/th?id=OIP.BmM7O6_O4Thz6Se2xvUZVwHaHV&amp;pid=Api);">
+                  <img src="https://tse4.mm.bing.net/th?id=OIP.BmM7O6_O4Thz6Se2xvUZVwHaHV&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="item">
+                <div class="media-photo" data-title="Ipad – Tablet Talk" data-desc="The result by MS Bing Search Image with &quot; Ipad &quot;" data-id="67478" data-searchid="27075" data-relatedcontentid="509443" style="background-image: url(https://tse4.mm.bing.net/th?id=OIP.5PE8751Uz8efQNu80eNiyQHaFu&amp;pid=Api);">
+                  <img src="https://tse4.mm.bing.net/th?id=OIP.5PE8751Uz8efQNu80eNiyQHaFu&amp;pid=Api" class="img">
+                  <ul class="pin-list">
+                    <li data-color="green"></li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="qr-link-box">
+        <figure class="qr-img"><img src="/next100/staticimg/QR_Code.jpg" alt="QR Code"></figure>
+        <p class="qr-text">このトークのURL</p>
+      </div>
+    </div>
+    <div class="control-box">
+      <div class="btn circle"><a @click="onClose"><img src="/next100/staticimg/btn_circle_return01.svg" alt="RETURN"></a></div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "PinList",
+  props: {
+    onClose: {
+      type: Function,
+      required: true,
+    }
+  },
+}
+</script>
+
+<style scoped>
+
+</style>

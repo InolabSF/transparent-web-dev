@@ -126,6 +126,14 @@
       <div class="hitTest" ref="hitTest">
         hit test
       </div>
+      <context-menu
+        v-for="(status, i) in contextMenuStatuses"
+        :key="i"
+        :status="status"
+        :ref="status.refName"
+        :onClickPinList="() => { isShowPinListModal = true }"
+      ></context-menu>
+      <pin-list v-if="isShowPinListModal" onClose="() => { this.isShowPinListModal = false }"></pin-list>
     </div>
   </div>
 </template>
@@ -152,6 +160,8 @@ import Hammer from "hammerjs";
 import $ from "jquery";
 import UserLayer from "@/components/UserLayer";
 import ImageDetailModal from "@/components/ImageDetailModal";
+import ContextMenu from "@/components/ContextMenu";
+import PinList from "@/components/PinList";
 
 
 const START_Z_AXIS = 50; // 先頭z座標
@@ -163,7 +173,9 @@ export default {
   mixins: [customTouchEventDriver],
   components: {
     UserLayer,
-    ImageDetailModal
+    ImageDetailModal,
+    ContextMenu,
+    PinList
   },
   async created() {
     const opts = {
@@ -187,12 +199,15 @@ export default {
     window.fetchTranscripts = this.fetchTranscripts;
     window.startListenTranscriptsUpdate = this.startListenTranscriptsUpdate;
     window.stopListenTranscriptsUpdate = this.stopListenTranscriptsUpdate;
+
+    this.listenLayerIndexChange();
   },
   data() {
     return {
-      currentMediaLayerDepth: 0,
+      currentShowMediaLayerIndex: 0,
       fetchTranscriptsInterval: null,
       layers: [],
+      isShowPinListModal: false,
       isShowContentDetailModal: false,
       currentContentDetailModalFloor: 1,
       currentDetailModalContent: null,
@@ -214,6 +229,15 @@ export default {
   methods: {
     onClickTest() {
       alert('test');
+    },
+    listenLayerIndexChange() {
+      window.addEventListener('keydown', (evt) => {
+        if (evt.key === 'ArrowUp') {
+          this.currentShowMediaLayerIndex += 1;
+        } else if (evt.key === 'ArrowDown') {
+          this.currentShowMediaLayerIndex += -1;
+        }
+      })
     },
     listenPersonalTouch() {
       window.addEventListener('CUSTOM_TOUCH_START', this.onClickTable);
@@ -300,7 +324,6 @@ export default {
         }
       }
 
-      // TODO ここのあたり判定をなんとかする
       if (this.$refs.images) {
         this.$refs.images.forEach((img) => {
           if (this.isTouchObjectByElement(touch, img)) {
@@ -329,24 +352,37 @@ export default {
 
       // NOTE: refsは配列で返ってくる
       const existRef = this.$refs[`context-menu-${touch.floorId}`];
+
       if (
+        // 未開の場合
         existRef &&
         existRef.length > 0 &&
-        !this.isTouchObjectByRect(touch, existRef[0].getBoundingClientRect())
+        !this.isTouchObjectByElement(touch, existRef[0].$el) &&
+        this.isExistContextMenuByFloorId(touch.floorId)
       ) {
         this.closeContextMenu(touch);
-      } else if (
-        this.contextMenuStatuses
-          .filter(
-            d => (d.floorId === touch.floorId)
-          ).length === 0
-      ) {
+      // } else if (
+      //   !this.isExistContextMenuByFloorId(touch.floorId)
+      // ) {
+      //   this.openContextMenu(touch);
+      } else {
+        // NOTE: ここまでに他のタッチ動作はガードしている前提なのでいける（詳細モーダル・ログイン）
         this.openContextMenu(touch);
       }
     },
+    isExistContextMenuByFloorId(floorId) {
+      return !!this.contextMenuStatuses.find(d => d.floorId === floorId);
+    },
     openContextMenu(touch) {
+      const isExist = this.contextMenuStatuses.find(d => d.floorId === touch.floorId);
+      if (isExist) {
+        console.log('is exist context menu floor id: ' + touch.floorId);
+        return false;
+      }
+
       const d = this.getTransformDegByFloorId(touch.floorId);
       const style = {
+        position: 'absolute',
         left: `${touch.x}px`,
         top: `${touch.y}px`,
         transform: `rotate(${d}deg)`,
@@ -531,7 +567,7 @@ export default {
     },
     getMediaLayersStyle() {
       const style = {
-        transform: `translate3d(0, 0, ${this.currentMediaLayerDepth}px)`
+        transform: `translate3d(0, 0, ${this.currentShowMediaLayerIndex}px)`
       }
     },
     startListenTranscriptsUpdate() {

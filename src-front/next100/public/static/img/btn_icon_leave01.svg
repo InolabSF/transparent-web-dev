@@ -1,0 +1,27 @@
+<svg id="グループ化_54" data-name="グループ化 54" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+
+      .cls-2 {
+        fill: #ccc;
+      }
+
+      .cls-3 {
+        stroke: #000;
+        stroke-linejoin: round;
+        stroke-miterlimit: 10;
+        stroke-width: 0.853px;
+      }
+    </style>
+  </defs>
+  <g id="グループ化_53" data-name="グループ化 53">
+    <circle id="楕円形_36" data-name="楕円形 36" class="cls-1" cx="49.583" cy="49.583" r="49.583" transform="translate(0.417 0.417)"/>
+    <path id="パス_195" data-name="パス 195" class="cls-2" d="M50,.833A49.167,49.167,0,1,1,.833,50,49.257,49.257,0,0,1,50,.833M50,0a50,50,0,1,0,50,50A50.04,50.04,0,0,0,50,0Z"/>
+  </g>
+  <circle id="楕円形_37" data-name="楕円形 37" class="cls-3" cx="5.667" cy="5.667" r="5.667" transform="translate(44.333 44.333)"/>
+  <circle id="楕円形_38" data-name="楕円形 38" class="cls-3" cx="5.667" cy="5.667" r="5.667" transform="translate(64.25 44.75)"/>
+  <circle id="楕円形_39" data-name="楕円形 39" class="cls-3" cx="5.667" cy="5.667" r="5.667" transform="translate(24.417 44.75)"/>
+</svg>

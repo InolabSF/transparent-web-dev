@@ -64,9 +64,14 @@ export default new Router({
     },
     {
       path: "/walls/:wallId/logs",
-      name: "welcome",
+      name: "wallLogs",
       component: () => import("./views/WallLogList"),
       meta: { layout: "mobile" }
+    },
+    {
+      path: "*",
+      name: "notFound",
+      component: () => import("./views/NotFound"),
     }
   ]
 });
