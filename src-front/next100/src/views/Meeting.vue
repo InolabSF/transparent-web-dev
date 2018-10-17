@@ -81,6 +81,7 @@
       <pin-list
         v-if="isShowPinListModal"
         :onClose="() => { this.isShowPinListModal = false }"
+        :isConfirmExit="isConfirmExit"
       ></pin-list>
     </div>
   </div>
