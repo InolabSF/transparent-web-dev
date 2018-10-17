@@ -77,6 +77,7 @@
         :onClickPinList="() => { isShowPinListModal = true }"
         :onClickExitMeeting="() => { isShowPinListModal = true; isConfirmExit = true; }"
         :onClickOffMic="() => { isRecording = false }"
+        :onClickCloseButton="() => { closeContextMenu(status.floorId) }"
       ></context-menu>
       <pin-list
         v-if="isShowPinListModal"
@@ -347,7 +348,7 @@ export default {
         !this.isTouchObjectByElement(touch, existRef[0].$el) &&
         this.isExistContextMenuByFloorId(touch.floorId)
       ) {
-        this.closeContextMenu(touch);
+        this.closeContextMenu(touch.floorId);
       // } else if (
       //   !this.isExistContextMenuByFloorId(touch.floorId)
       // ) {
@@ -382,8 +383,7 @@ export default {
       };
       this.contextMenuStatuses.push(status);
     },
-    closeContextMenu(touch) {
-      const floorId = touch.floorId;
+    closeContextMenu(floorId) {
       this.contextMenuStatuses = this.contextMenuStatuses.filter(s => s.floorId !== floorId);
     },
     getStyleByContextMenuPosition() {
