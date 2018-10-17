@@ -1,21 +1,27 @@
 <template>
-  <div id="app">
+  <mobile-layout v-if="$route.meta.layout === 'mobile'">
+    <router-view></router-view>
+  </mobile-layout>
+  <default-layout v-else>
     <router-view v-if="isModeSelectFinished || !isShowModeSelectModal"></router-view>
     <mode-select-modal v-if="isShowModeSelectModal"></mode-select-modal>
-    <!--<debug-control></debug-control>-->
-  </div>
+  </default-layout>
 </template>
 
 <script>
 import ModeSelectModal from "@/components/ModeSelectModal";
 import DebugControl from "@/components/DebugControl";
 import { mapState } from "vuex";
+import DefaultLayout from "@/layouts/DefaultLayout";
+import MobileLayout from "@/layouts/MobileLayout";
 
 export default {
   name: "App",
   components: {
     ModeSelectModal,
-    DebugControl
+    DebugControl,
+    DefaultLayout,
+    MobileLayout
   },
   created() {
     setTimeout(() => {
@@ -67,5 +73,3 @@ export default {
   text-align: center;
 }
 </style>
-
-

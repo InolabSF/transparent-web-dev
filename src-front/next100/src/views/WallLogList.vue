@@ -185,9 +185,13 @@
 </template>
 
 <script>
+import $ from "jquery";
 export default {
   name: "WallLogList",
   created() {
+    $("#mainStyle").remove();
+    const mobileStyle = '<link id="mobileStyle" rel="stylesheet" href="/next100/static/css/mobile.css">';
+    $("head").append(mobileStyle);
   }
 };
 </script>
