@@ -21,7 +21,7 @@
         </a>
       </li>
       <li class="offreco">
-        <a @click="onClickOffMic">
+        <a @click="onClickToggleMic">
           <figure class="menu-icon"><img src="/next100/static/img/btn_icon_offreco01.svg" alt=""></figure>
           <p>オフレコ</p>
         </a>
@@ -63,10 +63,6 @@ export default {
       type: Function,
       required: true
     },
-    onClickOffMic: {
-      type: Function,
-      required: true
-    },
     onClickCloseButton: {
       type: Function,
       required: true
@@ -79,6 +75,16 @@ export default {
     };
   },
   methods: {
+    onClickToggleMic() {
+      const isActive = window.isActive;
+      if (isActive) {
+        alert('会話ログの収集を止めます');
+        killMic();
+      } else {
+        alert('会話ログの収集を再開します');
+        activateMic();
+      }
+    },
     getTransformDegByFloorId(floorId) {
       const map = {
         1: 0,

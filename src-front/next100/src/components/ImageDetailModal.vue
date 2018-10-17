@@ -20,13 +20,18 @@
             <p class="detail-desc">{{ content.desc }}</p>
           </div>
         </div>
-        <div class="btn return"><a href="#"><img src="/next100/static/img/btn_return01.svg" alt="RETURN" ref="returnButton"></a></div>
+        <div class="btn return">
+          <a @click="onClose"><img src="/next100/static/img/btn_return01.svg" alt="RETURN" ref="returnButton"></a>
+          <a @click="onClickDelete"><img src="/next100/static/img/btn_return01.svg" alt="RETURN" ref="returnButton"></a>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import client from "@/core/ApiClient";
+
 export default {
   name: "ImageDetailModal",
   props: {
@@ -77,6 +82,16 @@ export default {
     }
   },
   methods: {
+    onClickDelete() {
+      confirm("この画像を削除します");
+      const body = {
+        data: {
+          related_content_id: this.content.id
+        }
+      };
+      client.delete('/next100/contents', body);
+      this.onClose();
+    },
     onClickCloseArea() {
       this.onClose();
     },
