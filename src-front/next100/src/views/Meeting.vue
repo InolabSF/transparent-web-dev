@@ -115,6 +115,7 @@ import PinList from "@/components/PinList";
 const START_Z_AXIS = 50; // 先頭z座標
 const Z_STEP = 10; // 1レイヤー間のz深度
 const SHOW_LAYER_NUM = 10 // 階層数
+const DEBOUNCE_SECOND = 100;
 
 export default {
   name: "Meeting",
@@ -426,26 +427,15 @@ export default {
       const square = document.querySelector('#app');
       const hammer = new Hammer(square);
       hammer.get('pinch').set({ enable: true });
-      hammer.on('pinchout', (e) => {
-        this.logType('pinchout');
-        this.logEvent(e);
-      });
-      hammer.on('pinchin', (e) => {
-        this.logType('pinchin');
-        this.logEvent(e);
-      });
-      hammer.on('pinchmove', (e) => {
-        this.logType('pinchmove');
-        this.logEvent(e);
-      });
+      hammer.on('pinchout', this.onPinchOut);
+      hammer.on('pinchin', this.onPinchIn);
     },
-    logType(type) {
-      console.log(type);
-    },
-    logEvent(e) {
-      this.pinchScale = e.scale;
-      console.log(e.scale);
-    },
+    onPinchOut: _.debounce((type) => {
+      this.decrementCurrentShowMediaLayerIndex();
+    }, DEBOUNCE_SECOND),
+    onPinchIn: _.debounce((type) => {
+      this.incrementCurrentShowMediaLayerIndex();
+    }, DEBOUNCE_SECOND),
     // ランダム整数
     randNum(max,min) {
       return Math.floor(Math.random()*(max-min+1)+min);

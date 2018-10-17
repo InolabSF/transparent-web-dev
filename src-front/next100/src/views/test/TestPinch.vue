@@ -56,17 +56,22 @@ export default {
     }
   },
   methods: {
+    throttleLog: _.debounce((type) => {
+      console.error(type);
+    }, 200),
     initializePinchEvent() {
       const square = document.querySelector('#app');
       const hammer = new Hammer(square);
       hammer.get('pinch').set({ enable: true });
       hammer.on('pinchout', (e) => {
-        this.logType('pinchout');
+        // this.logType('pinchout');
+        this.throttleLog('[mabiki] pinch out');
         this.logEvent(e);
       });
       hammer.on('pinchin', (e) => {
         this.logType('pinchin');
         this.logEvent(e);
+        this.throttleLog('[mabiki] pinch in');
       });
       hammer.on('pinchmove', (e) => {
         this.logType('pinchmove');
