@@ -130,12 +130,6 @@ export default {
 
       return filteredData;
     },
-    listenOnceCustomTouchStart(callback) {
-      const listener = window.addEventListener('CUSTOM_TOUCH_START', (evt) => {
-        window.removeEventListener('CUSTOM_TOUCH_START', listener);
-        callback(evt);
-      });
-    },
     sendDriver(data) {
       client.get(`/?_= ${JSON.stringify(data)}`);
     },

@@ -14,7 +14,7 @@
 
 			var textureLoader = new THREE.TextureLoader();
 
-			textureLoader.load( './assets/img/opening/scene02.jpg', function ( texture ) {
+			textureLoader.load( '/next100/static/img/opening/scene02.jpg', function ( texture ) {
 
 				texture.mapping = THREE.UVMapping;
 
@@ -51,7 +51,7 @@
 				//
 
 				var loader = new THREE.SVGLoader();
-				loader.load( './assets/img/opening/text01.svg', function ( paths ) {
+				loader.load( '/next100/static/img/opening/text01.svg', function ( paths ) {
 
 					var group01 = new THREE.Group();
 					group01.scale.multiplyScalar( 0.2 );
@@ -90,7 +90,7 @@
 
 				});
 				
-				loader.load( './assets/img/opening/text02.svg', function ( paths ) {
+				loader.load( '/next100/static/img/opening/text02.svg', function ( paths ) {
 
 					var group02 = new THREE.Group();
 					group02.scale.multiplyScalar( 0.2 );

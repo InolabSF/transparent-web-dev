@@ -14,7 +14,7 @@
     <div id="wrapper">
       <div id="hue"></div>
       <user-layer @click="test"></user-layer>
-      <div id="media-send-leyer"   @click="test">
+      <div id="media-send-leyer" @click="test">
         <div class="send-area"></div>
         <div class="send-area"></div>
         <div class="send-area"></div>

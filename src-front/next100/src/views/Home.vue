@@ -1,8 +1,11 @@
 <template>
-  <!-- TODO Three.jsのコンテンツ、DOMの間にまるごとレンダリングする -->
-  <div class="fill">
-    <div class="fill" id="homeTarget">
-      <h1>TOUCH<br>AND<br>TALK</h1>
+  <div id="opening">
+    <div id="wrapper">
+      <div id="webgl"></div>
+      <div id="hue"></div>
+    </div>
+    <div id="overlay" class="webgl-overlay">
+
     </div>
   </div>
 </template>
@@ -10,21 +13,35 @@
 <script>
 import userMixin from "@/mixins/userMixin";
 import customTouchEventDriver from "@/mixins/customTouchEventDriver";
+import $ from "jquery";
 
 export default {
   name: "home",
   mixins: [userMixin, customTouchEventDriver],
   created() {
     this.$nextTick(() => {
-      const target = document.querySelector("#homeTarget");
-      target.addEventListener("click", this.onTouchStart);
-      // this.listenOnceCustomTouchStart(this.onCustomTouchStart);
+      window.addEventListener('CUSTOM_TOUCH_START', this.onCustomTouchStart, { once: true });
     });
+    this.addScripts();
   },
   methods: {
+    addScripts() {
+      const srcs = [
+        '/next100/static/js/opening/three.js',
+        '/next100/static/js/opening/SVGLoader.js',
+        '/next100/static/js/opening/main2.js',
+      ];
+      srcs.forEach(src => {
+        const tag = document.createElement("script");
+        tag.setAttribute('src', src);
+        $('head').append(tag);
+      });
+
+      $(window).trigger('load');
+    },
     onCustomTouchStart(evt) {
-      // const floorId = evt.detail.floorId;
-      // this.login(floorId);
+      const floorId = evt.detail[0].floorId;
+      this.login(floorId);
       this.$router.push("/welcome");
     },
     onTouchStart() {
@@ -32,4 +49,15 @@ export default {
     }
   }
 };
+
 </script>
+
+<style lang="scss" scoped>
+.webgl-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+</style>

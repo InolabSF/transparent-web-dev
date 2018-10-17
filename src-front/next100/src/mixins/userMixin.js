@@ -7,6 +7,13 @@ export default {
       // TODO ID識別
       // TODO 名前連番
       // const floorId = this.$store.state.loginUsers.length + 1;
+
+      const isExist = !!this.$store.state.loginUsers.find(u => u.floorId === floorId);
+
+      if (isExist) {
+        return false;
+      }
+
       const user = {
         floorId: floorId,
         name: `randomName100${floorId}`,
