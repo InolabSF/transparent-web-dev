@@ -13,6 +13,7 @@
     "http": "0.0.0",
     "jquery": "^3.3.1",
     "qrcode.vue": "^1.6.1",
+    "query-string": "^6.2.0",
     "socket.io": "^2.1.1",
     "socket.io-client": "^2.1.1",
     "url": "^0.11.0",

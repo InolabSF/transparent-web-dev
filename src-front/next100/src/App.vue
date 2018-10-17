@@ -3,8 +3,7 @@
     <router-view></router-view>
   </mobile-layout>
   <default-layout v-else>
-    <router-view v-if="isModeSelectFinished || !isShowModeSelectModal"></router-view>
-    <mode-select-modal v-if="isShowModeSelectModal"></mode-select-modal>
+    <router-view></router-view>
   </default-layout>
 </template>
 
@@ -18,7 +17,6 @@ import MobileLayout from "@/layouts/MobileLayout";
 export default {
   name: "App",
   components: {
-    ModeSelectModal,
     DebugControl,
     DefaultLayout,
     MobileLayout
@@ -38,18 +36,6 @@ export default {
       this.$modal.show('hello-world');
     }
   },
-  computed: {
-    ...mapState(['isModeSelectFinished']),
-    isShowModeSelectModal() {
-      const ignoreRoutes = [
-        'wallLogs'
-      ];
-      if (ignoreRoutes.includes(this.$route.name)) {
-        return false;
-      }
-      return true;
-    },
-  }
 }
 </script>
 

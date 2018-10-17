@@ -13,7 +13,7 @@ export default new Vuex.Store({
     isModeSelectFinished: false,
     customTouchMode: "production",
     debugParams: {
-      currentFloorId: 2,
+      currentFloorId: 1,
     },
     touchingQueues: [],
     isStartTalkModal: false,
