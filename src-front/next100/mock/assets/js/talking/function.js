@@ -21,10 +21,6 @@ jQuery(function($){
 		var y = parseInt($(this).offset().top);
 		var x_max = parseInt(x + $(this).width());
 		var y_max = parseInt(y + $(this).height());
-		console.log('x:'+x);
-		console.log('y:'+y);
-		console.log('x_max:'+x_max);
-		console.log('y_max:'+y_max);
 		//return false;
 		var temp = {};
 		temp.x = x;
@@ -33,10 +29,8 @@ jQuery(function($){
 		temp.y_max = y_max;
 		pos_data[i] = temp;
 	});
-	console.log(pos_data.length);
 	
 	arreyShuffle(pos_data);
-	console.log(pos_data);
 	
 	var rotate = ['0deg', '90deg', '180deg', '270deg'];
 	var rotate2 = ['1deg', '-0deg', '-1deg', '-2deg', '-3deg', '-4deg', '-3deg', '-2deg', '-1deg', '0deg'];
@@ -50,8 +44,6 @@ jQuery(function($){
 			var left = randNum(pos_data[i].x_max,pos_data[i].x);
 			var center_x = parseInt($(this).children().width() / 2);
 			var center_y = parseInt($(this).children().height() / 2);
-			console.log('top:'+top);
-			console.log('left:'+left);
 			//console.log('center_x:'+center_x);
 			//console.log('center_y:'+center_y);
 			arreyShuffle(rotate);
@@ -63,5 +55,38 @@ jQuery(function($){
 
 		$(this).children().attr('data-keyword-color', keyword_color[j]);
 	});
-	
+    
+    // mockテスト用アニメーション制御ボタン追加
+    var buttonControls = '<div id="buttonControls" style="font-size:200%; position:fixed; right:30px; top:30px; z-index:9999;">'
+    $('#opening #wrapper').append(buttonControls + '<input type="button" value="WebGL Anime End" data-class-name="is-end" data-target="#webgl" id="webgl-hidden">');
+    $('#webgl-hidden').on('click', function(){
+        setTimeout(function(){
+            $('#webgl').children().remove();
+        },3000);
+    });
+    $('#talk-welcome #wrapper').append(buttonControls + '<input type="button" value="State Box Hide" data-class-name="is-blurOut" data-target=".touch-state-box" data-action="add">');
+    $('#talk-stand-by #wrapper').append(buttonControls + '<input type="button" value="State Box Hide" data-class-name="is-blurOut" data-target=".touch-state-box" data-action="add">');
+    $('#talk-start #wrapper').append(buttonControls + '<input type="button" value="Hue Anime Start" data-class-name="is-small" data-target="#hue"> <input type="button" value="Hue Anime End" data-class-name="is-end" data-target="#hue"> <input type="button" value="Hue Remove Class" data-target="#hue" data-action="remove"> <input type="button" value="State Box Hide" data-class-name="is-blurOut" data-target=".touch-state-box" data-action="add">');
+    $('#buttonControls input[type="button"]').on('click', function(){
+        var className = $(this).data('className');
+        var target = $(this).data('target');
+        var action = $(this).data('action');
+        if(action === 'remove'){
+            $(target).removeAttr('class');
+        } else if(action === 'add') {
+            $(target).addClass(className);
+        } else {
+            $(target).attr('class','');
+            $(target).addClass(className);
+        }
+    });
+    $('#talking #hue').addClass('is-end');
+    $('#talking-start #hue').addClass('is-end');
+    setTimeout(function(){ // 確認用delay
+        $('#talking-start .user-box').addClass('is-active');
+        $('#talking-start #grid-layer').addClass('is-move');
+        setTimeout(function(){ // 確認用delay
+            $('#talking-start .post').addClass('transit');
+        },2000);
+    },1000);
 });
