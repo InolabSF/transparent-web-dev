@@ -462,10 +462,10 @@ export default {
         var y = parseInt($(this).offset().top);
         var x_max = parseInt(x + $(this).width());
         var y_max = parseInt(y + $(this).height());
-        console.log('x:'+x);
-        console.log('y:'+y);
-        console.log('x_max:'+x_max);
-        console.log('y_max:'+y_max);
+        // console.log('x:'+x);
+        // console.log('y:'+y);
+        // console.log('x_max:'+x_max);
+        // console.log('y_max:'+y_max);
         //return false;
         var temp = {};
         temp.x = x;
