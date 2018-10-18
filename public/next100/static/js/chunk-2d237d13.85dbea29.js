@@ -1,2 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d237d13"],{fd76:function(l,n,e){"use strict";e.r(n);var t=function(){var l=this,n=l.$createElement,e=l._self._c||n;return e("div",[l._v("wall log list")])},a=[],i=(e("cadf"),e("551c"),e("097d"),{name:"WallLogList"}),o=i,s=e("2877"),c=Object(s["a"])(o,t,a,!1,null,null,null);c.options.__file="WallLogList.vue";n["default"]=c.exports}}]);
-//# sourceMappingURL=chunk-2d237d13.85dbea29.js.map

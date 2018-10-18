@@ -127,6 +127,9 @@ function postTranscript(text) {
   });
   axios.post(post_url, body)
     .then((res) => {
+      var customEvent = new CustomEvent("TRANSCRIPT_POST_SUCCESS");
+      window.dispatchEvent(customEvent);
+
       console.log("POST /transcripts request success");
     })
     .catch((e) => {

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 194 194">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #6e0000;
+      }
+
+      .cls-2, .cls-3 {
+        fill: #fff;
+      }
+
+      .cls-2 {
+        font-size: 23px;
+        font-family: NotoSansJP-Medium, Noto Sans JP Medium;
+        font-weight: 500;
+        letter-spacing: 0.05em;
+      }
+    </style>
+  </defs>
+  <g id="グループ化_60" data-name="グループ化 60" transform="translate(-1940 -983)">
+    <g id="グループ化_45" data-name="グループ化 45" transform="translate(117)">
+      <circle id="楕円形_26" data-name="楕円形 26" class="cls-1" cx="97" cy="97" r="97" transform="translate(1823 983)"/>
+      <text id="QUIT" class="cls-2" transform="translate(1919.964 1121.392)"><tspan x="-29.394" y="0">QUIT</tspan></text>
+    </g>
+    <path id="パス_197" data-name="パス 197" class="cls-3" d="M71.936,0H1.468A1.505,1.505,0,0,0,0,1.468V44.532A1.505,1.505,0,0,0,1.468,46H71.936A1.505,1.505,0,0,0,73.4,44.532V1.468A1.505,1.505,0,0,0,71.936,0ZM18.694,28.677A5.481,5.481,0,1,1,24.174,23.2,5.472,5.472,0,0,1,18.694,28.677ZM36.7,28.285A5.481,5.481,0,1,1,42.183,22.8,5.472,5.472,0,0,1,36.7,28.285Zm18.008.391A5.481,5.481,0,1,1,60.191,23.2,5.472,5.472,0,0,1,54.711,28.677Z" transform="translate(2000.798 1035.5)"/>
+  </g>
+</svg>
