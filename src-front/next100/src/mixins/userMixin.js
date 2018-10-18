@@ -16,7 +16,7 @@ export default {
 
       const user = {
         floorId: floorId,
-        name: `randomName100${floorId}`,
+        name: `Guest100${floorId}`,
         pinnedContents: [],
         isStartTalkModal: false,
       };
