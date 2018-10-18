@@ -73,9 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
   //     // TRANSCRIPTS.toggleRecordhing();
   //   });
   // });
-  debugger;
   fetchConfig().then(function(){
-    debugger;
     Initialize(function (speechSdk) {
       SDK = speechSdk;
     });
