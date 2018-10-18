@@ -137,7 +137,15 @@ export default {
     const opts = {
       wallId: this.$route.params.wallId
     };
-    startRecognizeSpeachSDK(opts);
+
+    // NOTE: GET console/configでsubscriptionKeyが取得できるのを待つ
+    if (window.key) {
+      startRecognizeSpeachSDK(opts);
+    } else {
+      window.addEventListener('RECOGNIZER_CONFIG_FETCH_COMPLETE', () => {
+        startRecognizeSpeachSDK(opts);
+      });
+    }
 
     this.listenPersonalTouch();
 

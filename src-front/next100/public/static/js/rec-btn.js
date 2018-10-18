@@ -77,6 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
     Initialize(function (speechSdk) {
       SDK = speechSdk;
     });
+    window.dispatchEvent(new CustomEvent('RECOGNIZER_CONFIG_FETCH_COMPLETE'));
   });
 });
 
