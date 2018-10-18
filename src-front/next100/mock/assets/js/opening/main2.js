@@ -35,7 +35,7 @@
 				scene.add( mesh );
 
 				renderer = new THREE.WebGLRenderer( { antialias: true } );
-				renderer.setPixelRatio( window.devicePixelRatio );
+				//renderer.setPixelRatio( window.devicePixelRatio ); //chrome TEST fit size
 				renderer.setSize( window.innerWidth, window.innerHeight );
 
 				cubeCamera1 = new THREE.CubeCamera( 1, 1000, 256 );
@@ -157,7 +157,8 @@
 
 			function onWindowResized( event ) {
 
-				renderer.setSize( window.innerWidth, window.innerHeight );
+				//renderer.setPixelRatio( window.devicePixelRatio );
+                renderer.setSize( window.innerWidth, window.innerHeight );
 
 				camera.aspect = window.innerWidth / window.innerHeight;
 				camera.updateProjectionMatrix();
