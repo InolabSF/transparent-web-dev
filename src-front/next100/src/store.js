@@ -49,10 +49,10 @@ export default new Vuex.Store({
     setDebugParams(state, payload) {
       state.debugParams = Object.assign(state.debugParams, payload);
     },
-    addPinByFloorId(state, {floorId, contentId}) {
+    addPinByFloorId(state, {floorId, content}) {
       state.loginUsers = state.loginUsers.map(u => {
         if (u.floorId === floorId) {
-          u.pinnedContentIds.push(contentId);
+          u.pinnedContents.push(content);
           return u;
         } else {
           return u;
@@ -62,7 +62,7 @@ export default new Vuex.Store({
     deletePinByFloorId(state, {floorId, contentId}) {
       state.loginUsers = state.loginUsers.map(u => {
         if (u.floorId === floorId) {
-          u.pinnedContentIds = u.pinnedContentIds.filter(cid => cid !== contentId);
+          u.pinnedContents = u.pinnedContents.filter(c => c.id !== contentId);
           return u;
         } else {
           return u;

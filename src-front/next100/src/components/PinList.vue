@@ -11,11 +11,11 @@
           <div class="pin-img-list-slide">
             <ul class="pin-img-list">
               <li
-                v-for="(pin, i) in user.pinnedContentIds"
+                v-for="(pin, i) in user.pinnedContents"
                 :key="i"
                 class="item"
               >
-                <div class="media-photo" data-title="池袋ウエストゲートパーク (文春文庫) | エキサイト商品情報" data-desc="The result by MS Bing Search Image with &quot; 池袋ウエストゲートパーク &quot;" data-id="67468" data-searchid="27073" data-relatedcontentid="509437" style="background-image: url(https://tse1.mm.bing.net/th?id=OIP.YKjBVc2Xt1k57Z91kGx5nQHaKw&amp;pid=Api);">
+                <div class="media-photo" :style="{ backgroundImage: `url(${pin.img_url})` }">
                   <img src="https://tse1.mm.bing.net/th?id=OIP.YKjBVc2Xt1k57Z91kGx5nQHaKw&amp;pid=Api" class="img">
                   <ul class="pin-list">
                     <li data-color="green"></li>
@@ -27,7 +27,10 @@
         </div>
       </div>
       <div class="qr-link-box">
-        <figure class="qr-img"><img src="/next100/staticimg/QR_Code.jpg" alt="QR Code"></figure>
+        <!--<figure class="qr-img"><img src="/next100/staticimg/QR_Code.jpg" alt="QR Code"></figure>-->
+        <figure class="qr-img">
+          <qrcode-vue class="qrcode" :value="qrCodeUrl" :size="120" level="H"></qrcode-vue>
+        </figure>
         <p class="qr-text">このトークのURL</p>
       </div>
     </div>
@@ -40,8 +43,17 @@
 
 <script>
 import { mapState } from "vuex";
+import wallMixin from '@/mixins/wallMixin';
+import QrcodeVue from 'qrcode.vue';
+
 export default {
   name: "PinList",
+  components: {
+    QrcodeVue
+  },
+  mixins: [
+    wallMixin
+  ],
   props: {
     onClose: {
       type: Function,
@@ -51,6 +63,11 @@ export default {
       type: Boolean,
       required: true
     }
+  },
+  data() {
+    return {
+      qrCodeUrl: this.$_wallMixin_getWallLogUrl()
+    };
   },
   methods: {
     onExit() {
@@ -73,6 +90,13 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+.qrcode /deep/ canvas {
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
 </style>

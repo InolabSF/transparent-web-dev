@@ -17,7 +17,7 @@ export default {
       const user = {
         floorId: floorId,
         name: `randomName100${floorId}`,
-        pinnedContentIds: [],
+        pinnedContents: [],
         isStartTalkModal: false,
       };
 
@@ -52,23 +52,23 @@ export default {
     },
     isPinedByFloorId(floorId, contentId) {
       const user = this.getUserByFloorId(floorId);
-      return user.pinnedContentIds.find(cid => cid === contentId);
+      return user.pinnedContents.find(c => c.id === contentId);
     },
-    togglePinByFloorId(floorId, contentId) {
+    togglePinByFloorId(floorId, content) {
       const user = this.getUserByFloorId(floorId);
-      const isPinned = this.isPinedByFloorId(floorId, contentId);
+      const isPinned = this.isPinedByFloorId(floorId, content.id);
       if (isPinned) {
         this.$store.commit('deletePinByFloorId', {
           floorId,
-          contentId,
+          contentId: content.id,
         });
-        this.deletePinByFloorId(contentId, user.name);
+        this.deletePinByFloorId(content.id, user.name);
       } else {
         this.$store.commit('addPinByFloorId', {
           floorId,
-          contentId,
+          content,
         });
-        this.postPinByFloorId(contentId, user.name);
+        this.postPinByFloorId(content.id, user.name);
       }
     },
     async postPinByFloorId(related_content_id, eventuser_id) {

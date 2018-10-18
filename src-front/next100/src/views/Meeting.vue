@@ -196,7 +196,7 @@ export default {
         const myPinnedContents = contents.filter(c => {
           return c.pins.filter(p => p.eventuser_id === u.name).length > 0;
         });
-        u.pinnedContentIds = myPinnedContents.map(mp => mp.id);
+        u.pinnedContents = myPinnedContents;
         return u;
       });
 

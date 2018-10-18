@@ -60,7 +60,7 @@ export default {
       let colors = [];
       const contentId = this.content.id;
       this.$store.state.loginUsers.forEach(u => {
-        const isPinned = !!u.pinnedContentIds.find(cid => cid === contentId);
+        const isPinned = !!u.pinnedContents.find(c => c.id === contentId);
         if (isPinned) {
           const color = this.getColorMap()[u.floorId];
           colors.push(color);
@@ -112,8 +112,7 @@ export default {
       }
     },
     async onTouchPinButton(touch) {
-      const contentId = this.content.id;
-      await this.togglePinByFloorId(touch.floorId, contentId);
+      await this.togglePinByFloorId(touch.floorId, this.content);
       // alert("pin button touch by " + touch.floorId);
     },
     onTouchCloseArea(touch) {

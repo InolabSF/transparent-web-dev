@@ -44,12 +44,16 @@
 
 <script>
 import QrcodeVue from 'qrcode.vue';
+import wallMixin from '@/mixins/wallMixin';
 
 export default {
   name: "ContextMenu",
   components: {
     QrcodeVue
   },
+  mixins: [
+    wallMixin
+  ],
   props: {
     status: {
       type: Object,
@@ -71,7 +75,7 @@ export default {
   data() {
     return {
       isLeaveConfirm: false,
-      qrCodeUrl: location.origin + `/next100/walls/${this.$route.params.wallId}/logs`,
+      qrCodeUrl: this.$_wallMixin_getWallLogUrl(),
     };
   },
   methods: {
