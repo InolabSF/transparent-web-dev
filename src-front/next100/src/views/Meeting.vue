@@ -137,7 +137,15 @@ export default {
     const opts = {
       wallId: this.$route.params.wallId
     };
-    startRecognizeSpeachSDK(opts);
+
+    // NOTE: GET console/configでsubscriptionKeyが取得できるのを待つ
+    if (window.key) {
+      startRecognizeSpeachSDK(opts);
+    } else {
+      window.addEventListener('RECOGNIZER_CONFIG_FETCH_COMPLETE', () => {
+        startRecognizeSpeachSDK(opts);
+      });
+    }
 
     this.listenPersonalTouch();
 
@@ -298,6 +306,13 @@ export default {
       // TODO 長押しで開く
       const touch = evt.detail[0];
 
+      // NOTE: 未ログインユーザーの場合、ログイン
+      const isExistUsr = !!this.$store.state.loginUsers.find(u => u.floorId === touch.floorId);
+      if (!isExistUsr) {
+        this.login(touch.floorId);
+        return false;
+      }
+
       // NOTE 画像触ったら反応しない
       let isTouchImage = false;
       let touchedImage;
@@ -455,10 +470,10 @@ export default {
         var y = parseInt($(this).offset().top);
         var x_max = parseInt(x + $(this).width());
         var y_max = parseInt(y + $(this).height());
-        console.log('x:'+x);
-        console.log('y:'+y);
-        console.log('x_max:'+x_max);
-        console.log('y_max:'+y_max);
+        // console.log('x:'+x);
+        // console.log('y:'+y);
+        // console.log('x_max:'+x_max);
+        // console.log('y_max:'+y_max);
         //return false;
         var temp = {};
         temp.x = x;
