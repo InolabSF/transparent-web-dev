@@ -14,6 +14,7 @@ export default {
   mixins: [customTouchEventDriver],
   created() {
     this.initCustomTouchMode();
+    this.initUserSwitchDebugger();
   },
   methods: {
     initCustomTouchMode() {
@@ -42,6 +43,21 @@ export default {
       });
       localStorage.setItem('customTouchMode', customTouchMode);
       this.startObserver();
+    },
+    initUserSwitchDebugger() {
+      const { customTouchMode } = this.$store.state;
+      if (customTouchMode === 'preview') {
+        window.addEventListener('keydown', evt => {
+          const { currentFloorId } = this.$store.state.debugParams;
+          if (evt.code === 'ArrowLeft') {
+            const afterCurrentFloorId = currentFloorId - 1 >= 1 ? currentFloorId - 1 : 1;
+            this.$store.commit('setDebugParams', { currentFloorId: afterCurrentFloorId });
+          } else if (evt.code === 'ArrowRight') {
+            const afterCurrentFloorId = currentFloorId + 1 <= 4 ? currentFloorId + 1 : 4;
+            this.$store.commit('setDebugParams', { currentFloorId: afterCurrentFloorId });
+          }
+        });
+      }
     }
   },
 }
