@@ -48,7 +48,6 @@ startRecognizeSpeachSDK = (opts) => {
 
 document.addEventListener("DOMContentLoaded", function () {
 
-  fetchConfig();
   languageOptions = languageCode;
   formatOptions = "Simple";
   inputSource = "Mic";
@@ -74,9 +73,12 @@ document.addEventListener("DOMContentLoaded", function () {
   //     // TRANSCRIPTS.toggleRecordhing();
   //   });
   // });
-
-  Initialize(function (speechSdk) {
-    SDK = speechSdk;
+  debugger;
+  fetchConfig().then(function(){
+    debugger;
+    Initialize(function (speechSdk) {
+      SDK = speechSdk;
+    });
   });
 });
 
@@ -89,11 +91,12 @@ function fetchConfig(){
     },
     responseType: 'json'
   });
-  instance.get('/config').then(function (response){
-    key = response.data.asr;
-  }, function (error) {
-    console.log(error);
-  });
+  return instance.get('/config')
+    .then(function (response){
+      key = response.data.asr;
+    }, function (error) {
+      console.log(error);
+    });
 }
 
 function sleepByPromise(sec) {
