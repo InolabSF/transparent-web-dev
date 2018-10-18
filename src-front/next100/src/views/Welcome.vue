@@ -64,6 +64,12 @@ export default {
 
       if (isLoggedin && user.isStartTalkModal) {
         this.startmeeting();
+        this.$store.commit('updateLoginUser', {
+          floorId,
+          params: {
+            isStartTalkModal: false,
+          }
+        });
       } else if (isLoggedin) {
         this.confirmStartMeeting(floorId);
       } else {
