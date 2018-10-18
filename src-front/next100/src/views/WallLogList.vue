@@ -24,13 +24,17 @@
     </header>
     <div id="main">
       <div class="tab-menu">
-        <div class="tab-menu-btn menu-active">
-          <a href="#">
+        <div
+          :class="{ 'tab-menu-btn': true,  'menu-active': currentTabIndex === 0 }"
+        >
+          <a @click="currentTabIndex = 0">
             <p class="menu-title">ピンされたアイテム</p>
           </a>
         </div>
-        <div class="tab-menu-btn">
-          <a href="#">
+        <div
+          :class="{ 'tab-menu-btn': true,  'menu-active': currentTabIndex === 1 }"
+        >
+          <a @click="currentTabIndex = 1">
             <p class="menu-title">全てアイテム</p>
           </a>
         </div>
@@ -185,13 +189,51 @@
 </template>
 
 <script>
-import $ from "jquery";
+import client from "@/core/ApiClient";
+
 export default {
   name: "WallLogList",
+  data() {
+    return {
+      currentTabIndex: 0,
+      allContents: [],
+      pinnedContents: [],
+    };
+  },
+  mounted() {
+    this.fetchAll();
+  },
   created() {
-    $("#mainStyle").remove();
-    const mobileStyle = '<link id="mobileStyle" rel="stylesheet" href="/next100/static/css/mobile.css">';
-    $("head").append(mobileStyle);
+    this.addStyle();
+    this.initMasonly();
+  },
+  methods: {
+    addStyle() {
+      const mobileStyle = '<link id="mobileStyle" rel="stylesheet" href="/next100/static/css/mobile.css">';
+      $("head").append(mobileStyle);
+    },
+    initMasonly() {
+      $(function($){
+        $('.media-container').masonry({
+          itemSelector: '.item',
+          percentPosition: true
+        });
+      });
+    },
+    fetchAll() {
+      this.fetchContents();
+      this.fetchPinnedContents();
+    },
+    async fetchContents() {
+      const url = `/next100/wall/${this.$route.params.wallId}`;
+      const res = await client.get(url);
+      this.allContents = res.data;
+    },
+    async fetchPinnedContents() {
+      const url = `/next100/wall/${this.$route.params.wallId}/pinned`;
+      const res = await client.get(url);
+      this.pinnedContents = res.data;
+    },
   }
 };
 </script>

@@ -27,14 +27,20 @@ export default {
       const params = qs.parse(location.search);
       let customTouchMode = params.mode;
 
+      const customTouchModeFromLS = localStorage.getItem('customTouchMode');
+      if (!customTouchMode && customTouchModeFromLS !== 'production' && confirm(`前回のモードを再現しますか？ mode： ${customTouchModeFromLS}`)) {
+        customTouchMode = customTouchModeFromLS;
+      }
+
       if (!modeList.includes(customTouchMode)) {
         customTouchMode = 'production';
       }
-      console.log(customTouchMode);
+      console.log('mode:' + customTouchMode);
 
       this.$store.commit('setState', {
         customTouchMode
       });
+      localStorage.setItem('customTouchMode', customTouchMode);
       this.startObserver();
     }
   },
