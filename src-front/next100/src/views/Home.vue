@@ -1,7 +1,7 @@
 <template>
   <div id="opening">
     <div id="wrapper">
-      <div id="webgl"></div>
+      <div id="webgl" ref="webgl" :class="{'is-end': isPlayingAnimation}"></div>
       <div id="hue"></div>
     </div>
     <div id="overlay" class="webgl-overlay">
@@ -24,6 +24,11 @@ export default {
     });
     this.addScripts();
   },
+  data() {
+    return {
+      isPlayingAnimation: false
+    };
+  },
   methods: {
     addScripts() {
       const srcs = [
@@ -42,7 +47,11 @@ export default {
     onCustomTouchStart(evt) {
       const floorId = evt.detail[0].floorId;
       this.login(floorId);
-      this.$router.push("/welcome");
+
+      this.isPlayingAnimation = true;
+      this.$refs.webgl.addEventListener('transitionend', () => {
+        this.$router.push("/welcome");
+      });
     },
     onTouchStart() {
       this.$router.push("/welcome");
