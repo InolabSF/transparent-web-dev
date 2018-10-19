@@ -46,11 +46,7 @@ end
 
 def production_alpha(word, search, transcript, langcode, is_concurrent, search_type)
   if search_type.zero?
-    contents = if transcript.wall_id == 3
-                 image_search_beta(word, search, transcript, langcode, is_concurrent)
-               else
-                 image_search(word, search, transcript, langcode, is_concurrent)
-               end
+    contents = image_search(word, search, transcript, langcode, is_concurrent)
   elsif search_type == 1
     contents = news_search(word, search, transcript, langcode, is_concurrent)
   elsif search_type == 2
@@ -90,19 +86,6 @@ def image_search(word, search, transcript, langcode, is_concurrent)
   # google_custom_search(word, search, transcript, langcode, is_concurrent, 3, contents)
   threads.each { |t| t.join } unless is_concurrent
   # threads.each { |t| t.join }
-
-  contents
-end
-
-def image_search_beta(word, search, transcript, langcode, is_concurrent)
-  contents = []
-  threads = []
-  threads << Thread.new do
-    ActiveRecord::Base.connection_pool.with_connection do
-      ms_image_search(word, search, transcript, langcode, is_concurrent, 5, contents)
-    end
-  end
-  threads.each { |t| t.join } unless is_concurrent
 
   contents
 end
