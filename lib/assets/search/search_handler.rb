@@ -68,7 +68,7 @@ def image_search(word, search, transcript, langcode, is_concurrent)
   threads = []
   threads << Thread.new do
     ActiveRecord::Base.connection_pool.with_connection do
-      ms_image_search(word, search, transcript, langcode, is_concurrent, 5, contents)
+      ms_image_search(word, search, transcript, langcode, is_concurrent, 6, contents)
     end
   end
   ## Next 100対応でunsplash削除
@@ -84,7 +84,7 @@ def image_search(word, search, transcript, langcode, is_concurrent)
   # end
   threads << Thread.new do
     ActiveRecord::Base.connection_pool.with_connection do
-      flickr(word, search, transcript, langcode, is_concurrent, 4, contents)
+      flickr(word, search, transcript, langcode, is_concurrent, 3, contents)
     end
   end
   # google_custom_search(word, search, transcript, langcode, is_concurrent, 3, contents)
