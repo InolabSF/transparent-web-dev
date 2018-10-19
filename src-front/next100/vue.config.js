@@ -7,10 +7,10 @@ module.exports = {
   devServer: {
     proxy: {
       '/transcript': {
-        target: 'http://localhost:3000'
+        target: process.env.VUE_APP_API_BASE_URL
       },
       '/console/config': {
-        target: 'http://localhost:3000'
+        target: process.env.VUE_APP_API_BASE_URL
       }
     }
   },
