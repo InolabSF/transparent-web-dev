@@ -1,90 +1,84 @@
 <template>
-    <div id="talking">
-    <div id="wrapper">
-      <div id="webgl"></div>
-      <div id="hue"></div>
-      <div id="grid-layer">
-        <div class="grid"><span class="line"></span></div>
-        <div class="grid"><span class="line"></span></div>
-        <div class="grid"><span class="line"></span></div>
-        <div class="grid"><span class="line"></span></div>
-        <div class="grid"><span class="line"></span></div>
-        <div class="grid"><span class="line"></span></div>
-        <div class="grid"><span class="line"></span></div>
-        <div class="grid"><span class="line"></span></div>
-        <div class="grid"><span class="line"></span></div>
-        <div class="grid"><span class="line"></span></div>
-      </div>
-      <user-layer></user-layer>
-      <div id="media-leyer" style="getMediaLayersStyle">
-        <div class="post transit" v-for="(layer, layerIndex) in layers" v-if="minLayerIndex <= layerIndex && layerIndex <= maxLayerIndex">
-          <div class="media-container" :style="getLayerStyle(layerIndex)" :data-keyword-color="getKeywordColor(layerIndex)">
-            <div
-              v-for="(content, contentIndex) in layer.related_contents.slice(0, 5)"
-              :key="content.id"
-              :data-layer-id="layer.id"
-              :data-content-id="content.id"
-              class="item"
-              :style="getImageStyle(layerIndex, contentIndex)"
-            >
-              <div class="media-photo">
-                <div class="bg"></div>
-                <img ref="images" :src="content.img_url" class="img" :data-content-id="content.id">
-                <ul class="pin-list">
-                </ul>
-                <button class="btn-pin"></button>
-              </div>
+  <div>
+    <div id="grid-layer" class="is-move">
+      <div class="grid"><span class="line"></span></div>
+      <div class="grid"><span class="line"></span></div>
+      <div class="grid"><span class="line"></span></div>
+      <div class="grid"><span class="line"></span></div>
+      <div class="grid"><span class="line"></span></div>
+      <div class="grid"><span class="line"></span></div>
+      <div class="grid"><span class="line"></span></div>
+      <div class="grid"><span class="line"></span></div>
+      <div class="grid"><span class="line"></span></div>
+      <div class="grid"><span class="line"></span></div>
+    </div>
+    <user-layer></user-layer>
+    <div id="media-leyer" style="getMediaLayersStyle">
+      <div class="post transit" v-for="(layer, layerIndex) in layers" v-if="minLayerIndex <= layerIndex && layerIndex <= maxLayerIndex">
+        <div class="media-container" :style="getLayerStyle(layerIndex)" :data-keyword-color="getKeywordColor(layerIndex)">
+          <div
+            v-for="(content, contentIndex) in layer.related_contents.slice(0, 5)"
+            :key="content.id"
+            :data-layer-id="layer.id"
+            :data-content-id="content.id"
+            class="item animated fadeIn"
+            :style="getImageStyle(layerIndex, contentIndex)"
+          >
+            <div class="media-photo">
+              <div class="bg"></div>
+              <img ref="images" :src="content.img_url" class="img" :data-content-id="content.id">
+              <ul class="pin-list">
+              </ul>
+              <button class="btn-pin"></button>
             </div>
-            <div class="item" :style="getImageStyle(layerIndex, layer.related_contents.length)">
-              <div class="keyword-box" data-searchid="27093">
-                <!-- TODO 時間 -->
-                <div class="time-stamp">00:39:01</div>
-                <div class="keyword-text">
-                  <span>{{ layer.words[0] }}</span>
-                </div>
+          </div>
+          <div class="item animated fadeIn" :style="getImageStyle(layerIndex, layer.related_contents.length)">
+            <div class="keyword-box" data-searchid="27093">
+              <!-- TODO 時間 -->
+              <div class="time-stamp">00:39:01</div>
+              <div class="keyword-text">
+                <span>{{ layer.words[0] }}</span>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div id="media-send-leyer">
-        <div class="send-area"></div>
-        <div class="send-area"></div>
-        <div class="send-area"></div>
-        <div class="send-area"></div>
-        <div class="send-area"></div>
-        <div class="send-area"></div>
-        <div class="send-area"></div>
-        <div class="send-area"></div>
-        <div class="send-area"></div>
-        <div class="send-area"></div>
-      </div>
-      <image-detail-modal
-        :isShow="isShowContentDetailModal"
-        :onClose="closeContentDetailModal"
-        :content="currentDetailModalContent"
-        :floorId="currentContentDetailModalFloor"
-      ></image-detail-modal>
-      <div class="hitTest" ref="hitTest">
-        hit test
-      </div>
-      <context-menu
-        v-for="(status, i) in contextMenuStatuses"
-        v-if="status"
-        :key="i"
-        :status="status"
-        :ref="status.refName"
-        :onClickPinList="() => { isShowPinListModal = true }"
-        :onClickExitMeeting="() => { isShowPinListModal = true; isConfirmExit = true; }"
-        :onClickOffMic="() => { isRecording = false }"
-        :onClickCloseButton="() => { closeContextMenu(status.floorId) }"
-      ></context-menu>
-      <pin-list
-        v-if="isShowPinListModal"
-        :onClose="() => { this.isShowPinListModal = false }"
-        :isConfirmExit="isConfirmExit"
-      ></pin-list>
     </div>
+    <div id="media-send-leyer">
+      <div class="send-area"></div>
+      <div class="send-area"></div>
+      <div class="send-area"></div>
+      <div class="send-area"></div>
+      <div class="send-area"></div>
+      <div class="send-area"></div>
+      <div class="send-area"></div>
+      <div class="send-area"></div>
+      <div class="send-area"></div>
+      <div class="send-area"></div>
+    </div>
+    <image-detail-modal
+      :isShow="isShowContentDetailModal"
+      :onClose="closeContentDetailModal"
+      :content="currentDetailModalContent"
+      :floorId="currentContentDetailModalFloor"
+    ></image-detail-modal>
+    <!--<div class="hitTest" ref="hitTest">hit test</div>-->
+    <context-menu
+      v-for="(status, i) in contextMenuStatuses"
+      v-if="status"
+      :key="i"
+      :status="status"
+      :ref="status.refName"
+      :onClickPinList="() => { isShowPinListModal = true }"
+      :onClickExitMeeting="() => { isShowPinListModal = true; isConfirmExit = true; }"
+      :onClickOffMic="() => { isRecording = false }"
+      :onClickCloseButton="() => { closeContextMenu(status.floorId) }"
+    ></context-menu>
+    <pin-list
+      v-if="isShowPinListModal"
+      :onClose="() => { this.isShowPinListModal = false }"
+      :isConfirmExit="isConfirmExit"
+    ></pin-list>
   </div>
 </template>
 

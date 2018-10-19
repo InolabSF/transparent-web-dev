@@ -49,7 +49,7 @@ export default new Router({
     },
     {
       path: "/",
-      name: "home",
+      name: "opening",
       component: () => import("./views/Home")
     },
     {

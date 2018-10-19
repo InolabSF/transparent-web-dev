@@ -1,31 +1,17 @@
 <template>
-  <!--<div class="fill">-->
-    <!--<h1>welcome</h1>-->
-    <!--<div class="user" v-for="user in loginUsers" :key="user.floorId" :data-floor-id="user.floorId" :style="getStyleByFloorId(user.floorId)">{{ user.name }}</div>-->
-    <!--<div class="overlay flex-column" v-if="isShowConfirmOverlay" @click="isShowConfirmOverlay != false">-->
-      <!--<h1 style="{color: '#fff'}">ready?</h1>-->
-      <!--<div>-->
-        <!--<button class="button" @click="onClickStartButton">START</button>-->
-      <!--</div>-->
-    <!--</div>-->
-  <!--</div>-->
-
-  <div id="talk-stand-by">
-    <div id="wrapper">
-      <div id="hue"></div>
-      <user-layer @click="test"></user-layer>
-      <div id="media-send-leyer" @click="test">
-        <div class="send-area"></div>
-        <div class="send-area"></div>
-        <div class="send-area"></div>
-        <div class="send-area"></div>
-        <div class="send-area"></div>
-        <div class="send-area"></div>
-        <div class="send-area"></div>
-        <div class="send-area"></div>
-        <div class="send-area"></div>
-        <div class="send-area"></div>
-      </div>
+  <div>
+    <user-layer></user-layer>
+    <div id="media-send-leyer">
+      <div class="send-area"></div>
+      <div class="send-area"></div>
+      <div class="send-area"></div>
+      <div class="send-area"></div>
+      <div class="send-area"></div>
+      <div class="send-area"></div>
+      <div class="send-area"></div>
+      <div class="send-area"></div>
+      <div class="send-area"></div>
+      <div class="send-area"></div>
     </div>
   </div>
 </template>
@@ -46,17 +32,13 @@ export default {
   mixins: [userMixin, customTouchEventDriver],
   data() {
     return {
-      isShowConfirmOverlay: false
+      isShowConfirmOverlay: false,
     }
   },
   created() {
     window.addEventListener('CUSTOM_TOUCH_START', this.onClickTable);
   },
   methods: {
-    test() {
-      // TODO なぜかuser-layerでクリックイベントが発火しない
-      debugger;
-    },
     onClickTable(evt) {
       const floorId = evt.detail[0].floorId;
       const user = this.loginUsers.find(u => u.floorId === floorId);
@@ -81,8 +63,10 @@ export default {
       window.removeEventListener('CUSTOM_TOUCH_START', this.onClickTable);
       const wall = res.data;
       this.$router.push(`/walls/${wall.id}/meeting?key=${res.data.key}`);
+      this.$store.commit('setState', { isSmallHue: false });
     },
     confirmStartMeeting(floorId) {
+      this.$store.commit('setState', { isSmallHue: true });
       this.$store.commit('updateLoginUser', {
         floorId,
         params: {

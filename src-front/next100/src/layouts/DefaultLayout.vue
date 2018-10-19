@@ -1,6 +1,11 @@
 <template>
   <div id="app">
-    <slot></slot>
+    <div :id="$route.name">
+      <div id="wrapper">
+        <slot></slot>
+        <div id="hue" :class="{ 'is-small': isSmallHue }"></div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -15,6 +20,11 @@ export default {
   created() {
     this.initCustomTouchMode();
     this.initUserSwitchDebugger();
+  },
+  computed: {
+    ...mapState([
+      'isSmallHue',
+    ]),
   },
   methods: {
     initCustomTouchMode() {

@@ -1,12 +1,7 @@
 <template>
-  <div id="opening">
-    <div id="wrapper">
-      <div id="webgl" ref="webgl" :class="{'is-end': isPlayingAnimation}"></div>
-      <div id="hue"></div>
-    </div>
-    <div id="overlay" class="webgl-overlay">
-
-    </div>
+  <div>
+    <div id="webgl" ref="webgl" :class="{'is-end': isPlayingAnimation}"></div>
+    <div id="overlay" class="webgl-overlay"></div>
   </div>
 </template>
 

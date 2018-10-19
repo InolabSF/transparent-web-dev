@@ -21,6 +21,7 @@ export default new Vuex.Store({
     },
     touchingQueues: [],
     isStartTalkModal: false,
+    isSmallHue: false,
   },
   mutations: {
     setState(state, payload) {

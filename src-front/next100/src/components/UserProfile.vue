@@ -7,15 +7,15 @@
         <div class="btn return" @click="onClickReturn"><a href="#"><img src="/next100/static/img/btn_return01.svg" alt="RETURN"></a></div>
       </template>
       <template v-else-if="isWelcome">
-        <p class="state-text">WELCOME!</p>
+        <p class="state-text animated fadeInUp">WELCOME!</p>
       </template>
       <template v-else-if="$route.name === 'welcome'">
         <p class="state-text">TOUCH!</p>
         <figure class="icon-touch"><img src="/next100/static/img/icon-touch01.svg" alt="TOUCH"></figure>
       </template>
     </div>
-    <div class="user-avatar"></div>
-    <div class="user-name">{{ user.name }}</div>
+    <div class="user-avatar animated fadeInUp fast delay-1s"></div>
+    <div class="user-name animated fadeInUp fast delay-2s">{{ user.name }}</div>
   </div>
 </template>
 
