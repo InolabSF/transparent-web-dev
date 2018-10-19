@@ -4,6 +4,7 @@
       <div id="wrapper">
         <slot></slot>
         <div id="hue" :class="{ 'is-small': isSmallHue }"></div>
+        <user-layer v-if="$route.name !== 'opening'"></user-layer>
       </div>
     </div>
   </div>
@@ -13,10 +14,14 @@
 import customTouchEventDriver from "@/mixins/customTouchEventDriver";
 import { mapState } from "vuex";
 import qs from "query-string";
+import UserLayer from "@/components/UserLayer";
 
 export default {
   name: "DefaultLayout",
   mixins: [customTouchEventDriver],
+  components: {
+    UserLayer
+  },
   created() {
     this.initCustomTouchMode();
     this.initUserSwitchDebugger();

@@ -12,7 +12,6 @@
       <div class="grid"><span class="line"></span></div>
       <div class="grid"><span class="line"></span></div>
     </div>
-    <user-layer></user-layer>
     <div id="media-leyer" style="getMediaLayersStyle">
       <div class="post transit" v-for="(layer, layerIndex) in layers" v-if="minLayerIndex <= layerIndex && layerIndex <= maxLayerIndex">
         <div class="media-container" :style="getLayerStyle(layerIndex)" :data-keyword-color="getKeywordColor(layerIndex)">
@@ -102,7 +101,6 @@ import _ from "lodash";
 import customTouchEventDriver from "@/mixins/customTouchEventDriver";
 import Hammer from "hammerjs";
 import $ from "jquery";
-import UserLayer from "@/components/UserLayer";
 import ImageDetailModal from "@/components/ImageDetailModal";
 import ContextMenu from "@/components/ContextMenu";
 import PinList from "@/components/PinList";
@@ -116,7 +114,6 @@ export default {
   name: "Meeting",
   mixins: [customTouchEventDriver],
   components: {
-    UserLayer,
     ImageDetailModal,
     ContextMenu,
     PinList

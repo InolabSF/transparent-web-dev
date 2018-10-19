@@ -1,6 +1,6 @@
 <template>
   <div>
-    <user-layer></user-layer>
+    <!--<user-layer></user-layer>-->
     <div id="media-send-leyer">
       <div class="send-area"></div>
       <div class="send-area"></div>
@@ -64,6 +64,12 @@ export default {
       const wall = res.data;
       this.$router.push(`/walls/${wall.id}/meeting?key=${res.data.key}`);
       this.$store.commit('setState', { isSmallHue: false });
+      this.$store.commit('setState', {
+        loginUsers: this.$store.state.loginUsers.map(u => {
+          u.isStartTalkModal = false;
+          return u;
+        })
+      });
     },
     confirmStartMeeting(floorId) {
       this.$store.commit('setState', { isSmallHue: true });

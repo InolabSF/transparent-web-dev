@@ -2,12 +2,17 @@
   <div :class="userClass()" :data-color="userColor()">
     <div class="touch-state-box">
       <template v-if="user.isStartTalkModal">
-        <p class="state-text">START!</p>
-        <figure class="icon-touch"><img src="/next100/static/img/icon-touch01.svg" alt="TOUCH"></figure>
+        <p class="state-text animated fadeInUp">START!</p>
+        <figure class="icon-touch animated zoomIn fast delay-1s"><img src="/next100/static/img/icon-touch01.svg" alt="TOUCH"></figure>
         <div class="btn return" @click="onClickReturn"><a href="#"><img src="/next100/static/img/btn_return01.svg" alt="RETURN"></a></div>
       </template>
       <template v-else-if="isWelcome">
-        <p class="state-text animated fadeInUp">WELCOME!</p>
+        <transition
+          enter-active-class="animated fadeInUp"
+          leave-active-class="animated fadeOut"
+        >
+          <p class="state-text ">WELCOME!</p>
+        </transition>
       </template>
       <template v-else-if="$route.name === 'welcome'">
         <p class="state-text">TOUCH!</p>
@@ -36,7 +41,7 @@ export default {
   created() {
     setTimeout(() => {
       this.isWelcome = false;
-    }, 1000);
+    }, 2000);
   },
   methods: {
     userClass() {
