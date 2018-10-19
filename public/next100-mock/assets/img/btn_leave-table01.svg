@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 546.77 104.146">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#linear-gradient);
+      }
+
+      .cls-2, .cls-3 {
+        fill: #fff;
+      }
+
+      .cls-2 {
+        font-size: 51px;
+        font-family: Dosis-Medium, Dosis;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="0.474" y1="0.624" x2="0.5" y2="1.146" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="green"/>
+      <stop offset="1" stop-color="#00b300"/>
+    </linearGradient>
+  </defs>
+  <g id="グループ化_60" data-name="グループ化 60" transform="translate(-2188.615 -1731.927)">
+    <g id="グループ化_35" data-name="グループ化 35" transform="translate(1094.615 -22.073)">
+      <rect id="長方形_75" data-name="長方形 75" class="cls-1" width="546.769" height="104.147" rx="52.073" transform="translate(1094 1754)"/>
+      <text id="LEAVE_TABLE" data-name="LEAVE TABLE" class="cls-2" transform="translate(1402.524 1822.981)"><tspan x="-154.785" y="0">LEAVE TABLE</tspan></text>
+    </g>
+    <path id="パス_196" data-name="パス 196" class="cls-3" d="M53.952,0H1.1A1.129,1.129,0,0,0,0,1.1V33.4a1.129,1.129,0,0,0,1.1,1.1H23.856V24.517a2.2,2.2,0,0,1,4.4,0V46.612a.931.931,0,0,0,.073.44c0,.073.073.147.073.22s.073.147.073.22.073.147.147.22a.256.256,0,0,0,.073.147,2.234,2.234,0,0,0,.587.587c.073,0,.073.073.147.073.073.073.147.073.22.147.073,0,.147.073.22.073s.147.073.22.073c.147,0,.294.073.44.073a.931.931,0,0,0,.44-.073c.073,0,.147-.073.22-.073s.147-.073.22-.073.147-.073.22-.147a.256.256,0,0,0,.147-.073,1.289,1.289,0,0,0,.367-.294l5.872-5.872A2.18,2.18,0,0,0,34.94,39.2l-2.129,2.129V34.5H54.1a1.129,1.129,0,0,0,1.1-1.1V1.1A1.4,1.4,0,0,0,53.952,0Z" transform="translate(2262 1760.856)"/>
+  </g>
+</svg>

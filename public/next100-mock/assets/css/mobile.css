@@ -1,0 +1,267 @@
+@charset "utf-8";
+
+/* Base Layout
+======================================== */
+html,
+body {
+  height: auto;
+	overflow: visible;
+}
+
+/* Common Layout
+======================================== */
+body {
+	background-color: #000;
+	color: #868686;
+	/*font-feature-settings: "palt";*/
+	font-family: "Noto Sans JP", "游ゴシック体", "Yu Gothic", YuGothic, "Hiragino Sans", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", "sans-serif";
+	letter-spacing: 0.05em;
+  line-height: 1.5;
+  min-width: 320px;
+  position: relative;
+}
+#wrapper {
+	height: auto;
+}
+
+/* Mobile Header
+======================================== */
+#mobile #header {
+	box-sizing: border-box;
+	text-align: center;
+	padding: 1.75em 4% 1.2em;
+	position: relative;
+}
+#mobile #header::before {
+	background: url(../img/hue.png) no-repeat center;
+	background-size: cover;
+	bottom: 0;
+	content: "";
+	display: block;
+	left: 0;
+	opacity: 0.27;
+	position: absolute;
+	right: 0;
+	top: 0;
+	z-index: -1;
+}
+#mobile #header .talk-date {
+	font-family: "Lato", "Noto Sans JP", "游ゴシック体", "Yu Gothic", YuGothic, "Hiragino Sans", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", "sans-serif";
+	font-size: 0.6875em;
+	letter-spacing: 0.09em;
+	margin: auto;
+}
+#mobile #header .talk-title {
+	color: #FFF;
+	font-size: 1.1875em;
+	font-weight: 500;
+	margin-top: 0.1em;
+}
+#mobile #user-list {
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 67.5em;
+	text-align: left;
+	width: calc(100% + 0.75em);
+}
+#mobile #user-list > * {
+	display: inline-block;
+	margin-right: 0.75em;
+}
+#mobile #user-list .user-list-item .user-avatar {
+	border: 1px solid rgba(134,134,134,0.25);
+	border-radius: 100%;
+	box-sizing: border-box;
+	display: inline-block;
+	height: 0.5625em;
+	margin-right: 0.05em;
+	width: 0.5625em;
+}
+#mobile #user-list .user-list-item[data-color="red"] .user-avatar {
+	background: #F00;
+	background: -moz-linear-gradient(-30deg, #F00 0%, #FFF 100%);
+	background: -webkit-linear-gradient(-30deg, #F00 0%,#FFF 100%);
+	background: linear-gradient(150deg, #F00 0%,#FFF 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#F00', endColorstr='#FFF',GradientType=1 );
+}
+#mobile #user-list .user-list-item[data-color="blue"] .user-avatar {
+	background: #00F;
+	background: -moz-linear-gradient(-30deg, #00F 0%, #FFF 100%);
+	background: -webkit-linear-gradient(-30deg, #00F 0%,#FFF 100%);
+	background: linear-gradient(150deg, #00F 0%,#FFF 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00F', endColorstr='#FFF',GradientType=1 );
+}
+#mobile #user-list .user-list-item[data-color="green"] .user-avatar {
+	background: #0F0;
+	background: -moz-linear-gradient(-30deg, #0F0 0%, #FFF 100%);
+	background: -webkit-linear-gradient(-30deg, #0F0 0%,#FFF 100%);
+	background: linear-gradient(150deg, #0F0 0%,#FFF 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0F0', endColorstr='#FFF',GradientType=1 );
+}
+#mobile #user-list .user-list-item[data-color="yellow"] .user-avatar {
+	background: #FF0;
+	background: -moz-linear-gradient(-30deg, #FF0 0%, #FFF 100%);
+	background: -webkit-linear-gradient(-30deg, #FF0 0%,#FFF 100%);
+	background: linear-gradient(150deg, #FF0 0%,#FFF 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FF0', endColorstr='#FFF',GradientType=1 );
+}
+#mobile #user-list .user-list-item[data-color="orange"] .user-avatar {
+	background: #FF8C00;
+	background: -moz-linear-gradient(-30deg, #FF8C00 0%, #FFF 100%);
+	background: -webkit-linear-gradient(-30deg, #FF8C00 0%,#FFF 100%);
+	background: linear-gradient(150deg, #FF8C00 0%,#FFF 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FF8C00', endColorstr='#FFF',GradientType=1 );
+}
+#mobile #user-list .user-list-item[data-color="pink"] .user-avatar {
+	background: #FF1493;
+	background: -moz-linear-gradient(-30deg, #FF1493 0%, #FFF 100%);
+	background: -webkit-linear-gradient(-30deg, #FF1493 0%,#FFF 100%);
+	background: linear-gradient(150deg, #FF1493 0%,#FFF 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FF1493', endColorstr='#FFF',GradientType=1 );
+}
+#mobile #user-list .user-list-item[data-color="cyan"] .user-avatar {
+	background: #0FF;
+	background: -moz-linear-gradient(-30deg, #0FF 0%, #FFF 100%);
+	background: -webkit-linear-gradient(-30deg, #0FF 0%,#FFF 100%);
+	background: linear-gradient(150deg, #0FF 0%,#FFF 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0FF', endColorstr='#FFF',GradientType=1 );
+}
+#mobile #user-list .user-list-item[data-color="purple"] .user-avatar {
+	background: #800080;
+	background: -moz-linear-gradient(-30deg, #800080 0%, #FFF 100%);
+	background: -webkit-linear-gradient(-30deg, #800080 0%,#FFF 100%);
+	background: linear-gradient(150deg, #800080 0%,#FFF 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#800080', endColorstr='#FFF',GradientType=1 );
+}
+#mobile #user-list .user-name {
+	font-size: 0.625em;
+	display: inline-block;
+}
+
+/* Mobile Main
+======================================== */
+#mobile #main {
+	padding: 0 4%;
+}
+#mobile #main > * {
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 67.5em;
+}
+#mobile #main .tab-menu {
+	margin: 1.375em auto 1.875em;
+	overflow: hidden;
+}
+#mobile #main .tab-menu > * {
+	float: left;
+	text-align: center;
+	width: 50%;
+}
+#mobile #main .tab-menu .tab-menu-btn a {
+	color: rgba(255,255,255,0.3);
+	border-bottom: 2px solid rgba(255,255,255,0.2);
+	display: block;
+	height: 2.5em;
+	line-height: 2.5em;
+}
+#mobile #main .tab-menu .tab-menu-btn.menu-active a {
+	color: rgba(255,255,255,1);
+	border-bottom-color: rgba(255,255,255,1);
+}
+#mobile #main .tab-menu .tab-menu-btn .menu-title {
+	font-size: 0.875em;
+	margin: 0;
+}
+#mobile #main #media-list .keyword {
+	margin-top: 1.625em;
+	margin-bottom: 0.8125em;
+}
+#mobile #main #media-list .keyword::before {
+	color: #6A6A6A;
+	content: "Keyword";
+	font-family: "Lato", "Noto Sans JP", "游ゴシック体", "Yu Gothic", YuGothic, "Hiragino Sans", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", "sans-serif";
+	font-size: 0.6875em;
+	letter-spacing: 0.09em;
+}
+#mobile #main #media-list .keyword .keyword-text {
+	border-bottom: 1px solid #6A6A6A;
+}
+#mobile #main #media-list .keyword .keyword-text::before {
+	background-color: #6A6A6A;
+	content: "";
+	display: block;
+	height: 1px;
+	width: 0.5em;
+}
+#mobile #main #media-list .keyword .keyword-text span {
+	color: #FFF;
+	display: inline-block;
+	font-size: 1.1875em;
+	padding: 0 0 0.1em 0.5em; 
+}
+#mobile #main #media-list .media-container {
+	border-bottom: 1px solid #6A6A6A;
+	letter-spacing: -0.4em;
+	overflow: hidden;
+	padding-bottom: 0.5625em;
+	width: 102.6087%;
+}
+#mobile #main #media-list .media-container .item {
+	box-sizing: border-box;
+	display: inline-block;
+	letter-spacing: normal;
+	padding: 0 2.5424% 2.5424% 0;
+	width: 50%;
+}
+@media all and ( min-width: 821px ) {
+	#mobile #main #media-list .media-container .item {
+		width: 25%;
+	}
+}
+@media all and ( max-width: 820px ) {
+	#mobile #main #media-list .media-container .item {
+		width: 33.333%;
+	}
+}
+@media all and ( max-width: 480px ) {
+	#mobile #main #media-list .media-container .item {
+		width: 50%;
+	}
+}
+#mobile #main #media-list .media-photo .img {
+    max-height: none;
+    max-width: 100%;
+}
+#mobile #main #media-list .pin-list {
+	left: 0.25em;
+	top: 0.25em;
+}
+#mobile #main #media-list .pin-list li {
+	box-sizing: content-box;
+	height: 0.5625em;
+	margin-right: 0;
+	vertical-align: top;
+	width: 0.5625em;
+}
+
+/* Mobile Footer
+======================================== */
+#mobile #footer {
+	background-color: #1A1A1A;
+	box-sizing: border-box;
+	margin-top: 4.375em;
+	text-align: center;
+	padding: 1.2em 4% 1.5em;
+}
+#mobile #footer #copyright small {
+	color: #A3A3A3;
+	font-family: "Lato", "Noto Sans JP", "游ゴシック体", "Yu Gothic", YuGothic, "Hiragino Sans", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", "sans-serif";
+	font-size: 0.6875em;
+	letter-spacing: 0.09em;
+}
+
+/* Animation/Javascript
+======================================== */
+
+/* Media Query
+======================================== */
