@@ -53,10 +53,10 @@ class Api::TranscriptsController < ApplicationController
   end
 
   def create
-    default_nlp = 'MS'
+    default_nlp = 'GCP' # Next100対応
     is_word_only = true
     is_concurrent = true # trueにするとtranscript, search, related_contentを非同期的にDB登録します。alpha版以前の仕様でアプリを実行する場合にはfalseにしてください。
-    multiple_search = true
+    multiple_search = false # Next100対応
     is_test_mode = false
 
     # nlp switcher

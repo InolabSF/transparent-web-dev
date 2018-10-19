@@ -71,11 +71,12 @@ def image_search(word, search, transcript, langcode, is_concurrent)
       ms_image_search(word, search, transcript, langcode, is_concurrent, 5, contents)
     end
   end
-  threads << Thread.new do
-    ActiveRecord::Base.connection_pool.with_connection do
-      unsplash(word, search, transcript, langcode, is_concurrent, 2, contents)
-    end
-  end
+  ## Next 100対応でunsplash削除
+  # threads << Thread.new do
+  #   ActiveRecord::Base.connection_pool.with_connection do
+  #     unsplash(word, search, transcript, langcode, is_concurrent, 2, contents)
+  #   end
+  # end
   # threads << Thread.new do
   #   ActiveRecord::Base.connection_pool.with_connection do
   #     getty_images(word, search, transcript, langcode, is_concurrent, 2, contents)
@@ -83,7 +84,7 @@ def image_search(word, search, transcript, langcode, is_concurrent)
   # end
   threads << Thread.new do
     ActiveRecord::Base.connection_pool.with_connection do
-      flickr(word, search, transcript, langcode, is_concurrent, 2, contents)
+      flickr(word, search, transcript, langcode, is_concurrent, 4, contents)
     end
   end
   # google_custom_search(word, search, transcript, langcode, is_concurrent, 3, contents)
