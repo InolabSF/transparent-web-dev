@@ -190,14 +190,14 @@ export default {
       return this.currentShowMediaLayerIndex - this.maxLayerNum;
     },
     maxLayerIndex() {
-      return this.currentShowMediaLayerIndex;
+      return this.currentShowMediaLayerIndex - 1;
     }
   },
   watch: {
     layers(val, beforeVal) {
       if (val.length > beforeVal.length) {
         // NOTE: 最先端にいるときだけに絞っているがそれが良いかどうかはユーザーテストが必要
-        if (this.currentShowMediaLayerIndex = this.maxLayerIndex) {
+        if (true || this.currentShowMediaLayerIndex == this.maxLayerIndex) {
           this.incrementCurrentShowMediaLayerIndex();
         }
       }
@@ -353,13 +353,13 @@ export default {
 
       const touchedImages = [];
 
-      if (this.isTouchObjectByElement(touch, this.$refs.hitTest)) {
-        if (this.layers.length) {
-          this.onClickImage({floorId: 1, contentId: this.layers[0].related_contents[0].id});
-        } else {
-          console.error('not exist content');
-        }
-      }
+      // if (this.isTouchObjectByElement(touch, this.$refs.hitTest)) {
+      //   if (this.layers.length) {
+      //     this.onClickImage({floorId: 1, contentId: this.layers[0].related_contents[0].id});
+      //   } else {
+      //     console.error('not exist content');
+      //   }
+      // }
 
       if (this.$refs.images) {
         this.$refs.images.forEach((img) => {
@@ -520,17 +520,15 @@ export default {
       this.arreyShuffle(posisionMap);
       this.positionMap = posisionMap;
     },
-    /**
-     * 100レイヤー
-     * minLayerIndex = 90
-     */
     getLayerStyle(index) {
       const rotate = ['1deg', '-0deg', '-1deg', '-2deg', '-3deg', '-4deg', '-3deg', '-2deg', '-1deg', '0deg'];
-      const step = 0.15;
-      // current 90 length 100 index
-      const startScale = 1.5 - (this.maxLayerNum * step); //0.2
-      const distance = index - this.minLayerIndex;
-      const calcedScale = startScale + (distance * step);
+      const step = 0.2;
+      debugger;
+      // const startScale = 1 - (this.maxLayerNum * step);
+      // const distance = index - this.minLayerIndex;
+      // const calcedScale = startScale * (distance * step);
+      const distanceFromLatest = this.maxLayerIndex - index;
+      const calcedScale = Math.pow(step, distanceFromLatest);
 
       const style = {
         // 'transform': 'translate3d(0,0,'+ (500*index-4500) +'px) rotate('+rotate[index]+')',
