@@ -12,7 +12,7 @@
       <div class="grid"><span class="line"></span></div>
       <div class="grid"><span class="line"></span></div>
     </div>
-    <div id="media-leyer">
+    <div id="media-leyer" v-if="positionMap.length > 0">
       <transition-group
         enter-active-class="animated fadeIn"
         leave-active-class="animated fadeOut"
@@ -20,7 +20,7 @@
         <div class="post transit" v-for="(layer, layerIndex) in layers" v-if="minLayerIndex <= layerIndex && layerIndex <= maxLayerIndex" :key="layerIndex">
           <div class="media-container" :style="getLayerStyle(layerIndex)" :data-keyword-color="getKeywordColor(layerIndex)">
             <div
-              v-for="(content, contentIndex) in layer.related_contents.slice(0, 5)"
+              v-for="(content, contentIndex) in layer.related_contents"
               :key="content.id"
               :data-layer-id="layer.id"
               :data-content-id="content.id"
