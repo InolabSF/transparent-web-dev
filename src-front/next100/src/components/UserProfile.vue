@@ -1,27 +1,29 @@
 <template>
-  <div :class="userClass()" :data-color="userColor()">
-    <div class="touch-state-box">
-      <template v-if="user.isStartTalkModal">
-        <p class="state-text animated fadeInUp">START!</p>
-        <figure class="icon-touch animated zoomIn fast delay-1s"><img src="/next100/static/img/icon-touch01.svg" alt="TOUCH"></figure>
-        <div class="btn return" @click="onClickReturn"><a href="#"><img src="/next100/static/img/btn_return01.svg" alt="RETURN"></a></div>
-      </template>
-      <template v-else-if="isWelcome">
-        <transition
-          enter-active-class="animated fadeInUp"
-          leave-active-class="animated fadeOut"
-        >
-          <p class="state-text ">WELCOME!</p>
-        </transition>
-      </template>
-      <template v-else-if="$route.name === 'welcome'">
-        <p class="state-text">TOUCH!</p>
-        <figure class="icon-touch"><img src="/next100/static/img/icon-touch01.svg" alt="TOUCH"></figure>
-      </template>
+  <transition
+    enter-active-class="animated fadeIn"
+    leave-active-class="animated fadeOut"
+  >
+    <div :class="userClass()" :data-color="userColor()">
+      <div class="touch-state-box">
+        <template v-if="user.isStartTalkModal">
+          <p class="state-text animated fadeInUp">START!</p>
+          <figure class="icon-touch animated zoomIn fast delay-1s"><img src="/next100/static/img/icon-touch01.svg" alt="TOUCH"></figure>
+          <div class="btn return animated fadeIn fast delay-2s" @click="onClickReturn"><a href="#"><img src="/next100/static/img/btn_return01.svg" alt="RETURN"></a></div>
+        </template>
+        <template v-else-if="isWelcome">
+          <transition enter-active-class="animated fadeInUp">
+            <p class="state-text" ref="welcome">WELCOME!</p>
+          </transition>
+        </template>
+        <template v-else-if="$route.name === 'welcome'">
+          <p class="state-text animated fadeInUp" key="1">TOUCH!</p>
+          <figure class="icon-touch animated zoomIn fast delay-1s" key="2"><img src="/next100/static/img/icon-touch01.svg" alt="TOUCH"></figure>
+        </template>
+      </div>
+      <div class="user-avatar animated fadeInUp fast delay-1s"></div>
+      <div class="user-name animated fadeInUp fast delay-2s">{{ user.name }}</div>
     </div>
-    <div class="user-avatar animated fadeInUp fast delay-1s"></div>
-    <div class="user-name animated fadeInUp fast delay-2s">{{ user.name }}</div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -41,7 +43,7 @@ export default {
   created() {
     setTimeout(() => {
       this.isWelcome = false;
-    }, 2000);
+    }, 4000);
   },
   methods: {
     userClass() {

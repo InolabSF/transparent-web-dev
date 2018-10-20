@@ -24,7 +24,8 @@
             :style="getImageStyle(layerIndex, contentIndex)"
           >
             <div class="media-photo">
-              <div class="bg"></div>
+              <!-- NOTE: なぜかイメージより前に出てきているので消している-->
+              <!--<div class="bg"></div>-->
               <img ref="images" :src="content.img_url" class="img" :data-content-id="content.id">
               <ul class="pin-list">
               </ul>
