@@ -12,37 +12,42 @@
       <div class="grid"><span class="line"></span></div>
       <div class="grid"><span class="line"></span></div>
     </div>
-    <div id="media-leyer" style="getMediaLayersStyle">
-      <div class="post transit" v-for="(layer, layerIndex) in layers" v-if="minLayerIndex <= layerIndex && layerIndex <= maxLayerIndex">
-        <div class="media-container" :style="getLayerStyle(layerIndex)" :data-keyword-color="getKeywordColor(layerIndex)">
-          <div
-            v-for="(content, contentIndex) in layer.related_contents.slice(0, 5)"
-            :key="content.id"
-            :data-layer-id="layer.id"
-            :data-content-id="content.id"
-            class="item animated fadeIn"
-            :style="getImageStyle(layerIndex, contentIndex)"
-          >
-            <div class="media-photo">
-              <!-- NOTE: なぜかイメージより前に出てきているので消している-->
-              <!--<div class="bg"></div>-->
-              <img ref="images" :src="content.img_url" class="img" :data-content-id="content.id">
-              <ul class="pin-list">
-              </ul>
-              <button class="btn-pin"></button>
+    <div id="media-leyer">
+      <transition-group
+        enter-active-class="animated fadeIn"
+        leave-active-class="animated fadeOut"
+      >
+        <div class="post transit" v-for="(layer, layerIndex) in layers" v-if="minLayerIndex <= layerIndex && layerIndex <= maxLayerIndex" :key="layerIndex">
+          <div class="media-container" :style="getLayerStyle(layerIndex)" :data-keyword-color="getKeywordColor(layerIndex)">
+            <div
+              v-for="(content, contentIndex) in layer.related_contents.slice(0, 5)"
+              :key="content.id"
+              :data-layer-id="layer.id"
+              :data-content-id="content.id"
+              class="item"
+              :style="getImageStyle(layerIndex, contentIndex)"
+            >
+              <div class="media-photo">
+                <!-- NOTE: なぜかイメージより前に出てきているので消している-->
+                <!--<div class="bg"></div>-->
+                <img ref="images" :src="content.img_url" class="img" :data-content-id="content.id">
+                <ul class="pin-list">
+                </ul>
+                <button class="btn-pin"></button>
+              </div>
             </div>
-          </div>
-          <div class="item animated fadeIn" :style="getImageStyle(layerIndex, layer.related_contents.length)">
-            <div class="keyword-box" data-searchid="27093">
-              <!-- TODO 時間 -->
-              <div class="time-stamp">00:39:01</div>
-              <div class="keyword-text">
-                <span>{{ layer.words[0] }}</span>
+            <div class="item" :style="getImageStyle(layerIndex, layer.related_contents.length)">
+              <div class="keyword-box" data-searchid="27093">
+                <!-- TODO 時間 -->
+                <div class="time-stamp">00:39:01</div>
+                <div class="keyword-text">
+                  <span>{{ layer.words[0] }}</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </transition-group>
     </div>
     <div id="media-send-leyer">
       <div class="send-area"></div>
@@ -164,6 +169,7 @@ export default {
   data() {
     return {
       currentShowMediaLayerIndex: 0,
+      currentShowMediaPoiner: 0,
       fetchTranscriptsInterval: null,
       isConfirmExit: false,
       isRecording: true,
@@ -175,6 +181,8 @@ export default {
       contextMenuStatuses: [],
       positionMap: [],
       cachedLayerStyles: [],
+      lastRelatedContents: [],
+      lastSearches: [],
     }
   },
   computed: {
@@ -183,6 +191,16 @@ export default {
     },
     maxLayerIndex() {
       return this.currentShowMediaLayerIndex;
+    }
+  },
+  watch: {
+    layers(val, beforeVal) {
+      if (val.length > beforeVal.length) {
+        // NOTE: 最先端にいるときだけに絞っているがそれが良いかどうかはユーザーテストが必要
+        if (this.currentShowMediaLayerIndex = this.maxLayerIndex) {
+          this.incrementCurrentShowMediaLayerIndex();
+        }
+      }
     }
   },
   methods: {
@@ -219,12 +237,24 @@ export default {
       } else {
         this.currentShowMediaLayerIndex += 1;
       }
+
+      if (this.currentShowMediaPointer + 1 >= this.layers.length) {
+        this.currentShowMediaPoiner = this.layers.length;
+      } else {
+        this.currentShowMediaPoiner += 1;
+      }
     },
     decrementCurrentShowMediaLayerIndex() {
       if (this.currentShowMediaLayerIndex - 1 <= 0) {
         this.currentShowMediaLayerIndex = 0;
       } else {
         this.currentShowMediaLayerIndex -= 1;
+      }
+
+      if (this.currentShowMediaPoiner - 1 <= 0) {
+        this.currentShowMediaPoiner = 0;
+      } else {
+        this.currentShowMediaPoiner -= 1;
       }
     },
     listenPersonalTouch() {
@@ -244,6 +274,18 @@ export default {
         related_content_last_index
       } = res.data;
 
+      const isSizeUp = related_contents.length > this.lastRelatedContents.length;
+
+      this.lastRelatedContents = related_contents;
+      this.lastSearches = searches;
+
+      if (!isSizeUp) {
+        return;
+      }
+
+      this.updateLayers(searches, related_contents);
+    },
+    updateLayers(searches, related_contents) {
       let layers = searches.map(s => {
         s.related_contents = related_contents.filter(r => ( r.transcript_id === s.transcript_id ));
         return s;
@@ -478,6 +520,10 @@ export default {
       this.arreyShuffle(posisionMap);
       this.positionMap = posisionMap;
     },
+    /**
+     * 100レイヤー
+     * minLayerIndex = 90
+     */
     getLayerStyle(index) {
       const rotate = ['1deg', '-0deg', '-1deg', '-2deg', '-3deg', '-4deg', '-3deg', '-2deg', '-1deg', '0deg'];
       const step = 0.15;
