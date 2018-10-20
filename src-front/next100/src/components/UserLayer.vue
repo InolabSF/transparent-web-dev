@@ -27,5 +27,7 @@ export default {
 </script>
 
 <style scoped>
-
+#user-layer {
+  z-index: 50;
+}
 </style>

@@ -1,32 +1,37 @@
 <template>
   <!--<div class="overlay" v-if="isShow" @click.prevent.stop="onClickCloseArea">-->
-  <div class="overlay" v-if="isShow">
-    <div class="img-detail-box">
-      <div class="img-detail-container" :style="style">
-        <div class="img-detail-wrapper">
-          <div class="left-col">
-            <div class="item">
-              <div class="media-photo">
-                <img :src="content.img_url" class="img">
-                <ul class="pin-list" v-if="attachedPins.length > 0">
-                  <li :data-color="color" v-for="(color, i) in attachedPins" :key="i"></li>
-                </ul>
-                <button ref="pinButton" class="btn-pin"></button>
+  <transition
+    enter-active-class="animated fadeIn faster"
+    enter-leave-class="animated fadeOut faster"
+  >
+    <div class="overlay" v-if="isShow">
+      <div class="img-detail-box">
+        <div class="img-detail-container" :style="style">
+          <div class="img-detail-wrapper">
+            <div class="left-col">
+              <div class="item">
+                <div class="media-photo">
+                  <img :src="content.img_url" class="img">
+                  <ul class="pin-list" v-if="attachedPins.length > 0">
+                    <li :data-color="color" v-for="(color, i) in attachedPins" :key="i"></li>
+                  </ul>
+                  <button ref="pinButton" class="btn-pin"></button>
+                </div>
               </div>
             </div>
+            <div class="right-col">
+              <h3 class="detail-title">{{ content.title }}</h3>
+              <p class="detail-desc">{{ content.desc }}</p>
+            </div>
           </div>
-          <div class="right-col">
-            <h3 class="detail-title">{{ content.title }}</h3>
-            <p class="detail-desc">{{ content.desc }}</p>
+          <div class="btn return">
+            <a @click="onClose"><img src="/next100/static/img/btn_return01.svg" alt="RETURN" ref="returnButton"></a>
+            <a @click="onClickDelete"><img src="/next100/static/img/btn_return01.svg" alt="RETURN" ref="returnButton"></a>
           </div>
-        </div>
-        <div class="btn return">
-          <a @click="onClose"><img src="/next100/static/img/btn_return01.svg" alt="RETURN" ref="returnButton"></a>
-          <a @click="onClickDelete"><img src="/next100/static/img/btn_return01.svg" alt="RETURN" ref="returnButton"></a>
         </div>
       </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
