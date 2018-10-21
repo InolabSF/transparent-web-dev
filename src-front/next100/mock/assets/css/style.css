@@ -454,6 +454,10 @@ body {
 #user-layer .user-box.is-active::after {
     opacity: 1;
 }
+.offreco-active #user-layer .user-box.is-active::before,
+.offreco-active #user-layer .user-box.is-active::after {
+    opacity: 0;
+}
 #user-layer .user-box::before {
 	margin-bottom: -2.375em;
 }
@@ -560,6 +564,20 @@ body {
 #user-layer .user-box .user-name {
 	color: #FFF;
 	font-size: 1.875em;
+    position: relative;
+}
+.offreco-active #user-layer .user-box .user-name::before {
+    content: "";
+    background-color: #FFF;
+    display: block;
+	filter: blur(3px);
+    height: 4px;
+    left: calc(50% - 1.7667em);
+    position: absolute;
+    top: -2.2em;
+    -webkit-transform: rotate(-45deg) scale(2);
+    transform: rotate(-45deg) scale(2);
+    width: 3.5334em;
 }
 #user-layer .user-top,
  .user-top {
@@ -1118,7 +1136,7 @@ body {
 	width: 100%;
 }
 
-/* COntext Menu
+/* Context Menu
 ======================================== */
 .context-menu {
     overflow: hidden;
@@ -1139,13 +1157,84 @@ body {
     display: inline-block;
     height: 33.125em;
     max-width: 44em;
+    overflow: hidden;
     position: relative;
     width: 100%;
+}
+.context-menu-wrapper::before {
+    border-radius: 100%;
+    content: "";
+    display: block;
+    filter: blur(50px);
+    height: 38.25em;
+    left: -20%;
+    opacity: 0.32;
+    top: -40%;
+    position: absolute;
+    -webkit-transform: rotate(-20deg);
+    transform: rotate(-20deg);
+    width: 38.25em;
+}
+.context-menu[data-color="red"] .context-menu-wrapper::before {
+	background: #F00;
+	background: -moz-linear-gradient(-30deg, #F00 0%, #000 100%);
+	background: -webkit-linear-gradient(-30deg, #F00 0%,#000 100%);
+	background: linear-gradient(150deg, #F00 0%,#000 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#F00', endColorstr='#000',GradientType=1 );
+}
+.context-menu[data-color="blue"] .context-menu-wrapper::before {
+	background: #00F;
+	background: -moz-linear-gradient(-30deg, #00F 0%, #000 100%);
+	background: -webkit-linear-gradient(-30deg, #00F 0%,#000 100%);
+	background: linear-gradient(150deg, #00F 0%,#000 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00F', endColorstr='#000',GradientType=1 );
+}
+.context-menu[data-color="green"] .context-menu-wrapper::before {
+	background: #0F0;
+	background: -moz-linear-gradient(-30deg, #0F0 0%, #000 100%);
+	background: -webkit-linear-gradient(-30deg, #0F0 0%,#000 100%);
+	background: linear-gradient(150deg, #0F0 0%,#000 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0F0', endColorstr='#000',GradientType=1 );
+}
+.context-menu[data-color="yellow"] .context-menu-wrapper::before {
+	background: #FF0;
+	background: -moz-linear-gradient(-30deg, #FF0 0%, #000 100%);
+	background: -webkit-linear-gradient(-30deg, #FF0 0%,#000 100%);
+	background: linear-gradient(150deg, #FF0 0%,#000 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FF0', endColorstr='#000',GradientType=1 );
+}
+.context-menu[data-color="orange"] .context-menu-wrapper::before {
+	background: #FF8C00;
+	background: -moz-linear-gradient(-30deg, #FF8C00 0%, #000 100%);
+	background: -webkit-linear-gradient(-30deg, #FF8C00 0%,#000 100%);
+	background: linear-gradient(150deg, #FF8C00 0%,#000 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FF8C00', endColorstr='#000',GradientType=1 );
+}
+.context-menu[data-color="pink"] .context-menu-wrapper::before {
+	background: #FF1493;
+	background: -moz-linear-gradient(-30deg, #FF1493 0%, #000 100%);
+	background: -webkit-linear-gradient(-30deg, #FF1493 0%,#000 100%);
+	background: linear-gradient(150deg, #FF1493 0%,#000 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FF1493', endColorstr='#000',GradientType=1 );
+}
+.context-menu[data-color="cyan"] .context-menu-wrapper::before {
+	background: #0FF;
+	background: -moz-linear-gradient(-30deg, #0FF 0%, #000 100%);
+	background: -webkit-linear-gradient(-30deg, #0FF 0%,#000 100%);
+	background: linear-gradient(150deg, #0FF 0%,#000 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0FF', endColorstr='#000',GradientType=1 );
+}
+.context-menu[data-color="purple"] .context-menu-wrapper::before {
+	background: #800080;
+	background: -moz-linear-gradient(-30deg, #800080 0%, #000 100%);
+	background: -webkit-linear-gradient(-30deg, #800080 0%,#000 100%);
+	background: linear-gradient(150deg, #800080 0%,#000 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#800080', endColorstr='#000',GradientType=1 );
 }
 .context-menu .btn-close {
     height: 2.375em;
     position: absolute;
-    right: 1.75em;
+    right: 2.75em;
     top: 2.75em;
     width: 2.375em;
 }
@@ -1162,12 +1251,22 @@ body {
     margin: 1em 1.75em;
 }
 .context-menu .menu-icon {
+    border: 2px solid #FFF;
+    border-radius: 100%;
+    box-sizing: border-box;
     width: 6.25em;
 }
 .context-menu .menu-list li p {
     font-size: 1.5em;
     letter-spacing: 0.05em;
     margin: 0.5em auto;
+}
+.offreco-active .context-menu .menu-list .offreco .menu-icon {
+    background: url("../img/btn_icon_offreco02.svg") no-repeat center #FFF;
+    background-size: cover;
+}
+.offreco-active .context-menu .menu-list .offreco .menu-icon img {
+    opacity: 0;
 }
 .context-menu .state-text {
 	color: #FFF;
@@ -1178,15 +1277,14 @@ body {
 	line-height: 1;
 	margin: auto;
 }
-
 .context-menu .state-text.sub {
 	font-size: 2.625em;
 	margin-bottom: 0.675em;
-    margin-top: 2.1429em;
+    margin-top: 1.7143em;
 }
 .context-menu .btn.leave {
-    margin: 4em auto;
-    max-width: 34.125em;
+    margin: 0 auto 2em;
+    max-width: 43.9375em;
 }
 
 /* Animation/Javascript
