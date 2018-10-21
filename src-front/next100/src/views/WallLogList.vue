@@ -4,22 +4,22 @@
       <p class="talk-date">2018.00.00</p>
       <h1 class="talk-title">トークタイトル</h1>
       <div id="user-list">
-        <div class="user-list-item" data-color="green">
+        <div v-for="(name, i) in memberNames" :key="i" class="user-list-item" :data-color="getColorMap()[i + 1]">
           <div class="user-avatar"></div>
-          <div class="user-name">ゲスト1001</div>
+          <div class="user-name">{{ name }}</div>
         </div>
-        <div class="user-list-item" data-color="yellow">
-          <div class="user-avatar"></div>
-          <div class="user-name">ゲスト1002</div>
-        </div>
-        <div class="user-list-item" data-color="red">
-          <div class="user-avatar"></div>
-          <div class="user-name">ゲスト1003</div>
-        </div>
-        <div class="user-list-item" data-color="blue">
-          <div class="user-avatar"></div>
-          <div class="user-name">ゲスト1004</div>
-        </div>
+        <!--<div class="user-list-item" data-color="yellow">-->
+          <!--<div class="user-avatar"></div>-->
+          <!--<div class="user-name">ゲスト1002</div>-->
+        <!--</div>-->
+        <!--<div class="user-list-item" data-color="red">-->
+          <!--<div class="user-avatar"></div>-->
+          <!--<div class="user-name">ゲスト1003</div>-->
+        <!--</div>-->
+        <!--<div class="user-list-item" data-color="blue">-->
+          <!--<div class="user-avatar"></div>-->
+          <!--<div class="user-name">ゲスト1004</div>-->
+        <!--</div>-->
       </div>
     </header>
     <div id="main">
@@ -206,6 +206,19 @@ export default {
   created() {
     this.addStyle();
     this.initMasonly();
+  },
+  computed: {
+    memberNames() {
+      let memberNames = [];
+      this.pinnedContents.forEach(c => {
+        c.pins.forEach(p => {
+          if (!memberNames.find(name => name === p.eventuser_id)) {
+            memberNames.push(p.eventuser_id);
+          }
+        });
+      });
+      return memberNames;
+    }
   },
   methods: {
     addStyle() {
