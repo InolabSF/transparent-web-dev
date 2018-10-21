@@ -566,7 +566,7 @@ body {
 	font-size: 1.875em;
     position: relative;
 }
-.offreco-active #user-layer .user-box .user-name::before {
+#user-layer .user-box .user-name::before {
     content: "";
     background-color: #FFF;
     display: block;
@@ -575,9 +575,16 @@ body {
     left: calc(50% - 1.7667em);
     position: absolute;
     top: -2.2em;
-    -webkit-transform: rotate(-45deg) scale(2);
-    transform: rotate(-45deg) scale(2);
+    -webkit-transition: 1s;
+    transition: 1s;
+    -webkit-transform: rotate(-45deg) scaleX(0) scaleY(2);
+    transform: rotate(-45deg) scaleX(0) scaleY(2);
     width: 3.5334em;
+}
+.offreco-active #user-layer .user-box .user-name::before {
+    opacity: 1;
+    -webkit-transform: rotate(-45deg) scaleX(2) scaleY(2);
+    transform: rotate(-45deg) scaleX(2) scaleY(2);
 }
 #user-layer .user-top,
  .user-top {
