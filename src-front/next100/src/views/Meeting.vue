@@ -39,7 +39,7 @@
             <div class="item" :style="getImageStyle(layerIndex, layer.related_contents.length)">
               <div class="keyword-box" data-searchid="27093">
                 <!-- TODO 時間 -->
-                <div class="time-stamp">00:39:01</div>
+                <div class="time-stamp">{{ moment(layer.created_at).format('H:m:s') }}</div>
                 <div class="keyword-text">
                   <span>{{ layer.words[0] }}</span>
                 </div>
@@ -104,6 +104,7 @@
 <script>
 import client from "@/core/ApiClient";
 import _ from "lodash";
+import moment from "moment";
 import customTouchEventDriver from "@/mixins/customTouchEventDriver";
 import Hammer from "hammerjs";
 import $ from "jquery";
@@ -168,6 +169,7 @@ export default {
   },
   data() {
     return {
+      moment,
       currentShowMediaLayerIndex: 0,
       currentShowMediaPoiner: 0,
       fetchTranscriptsInterval: null,
@@ -336,6 +338,11 @@ export default {
       this.isShowContentDetailModal = false;
     },
     onClickTable(evt) {
+      // NOTE: 詳細モーダル開いているときは反応しないように
+      if (this.isShowContentDetailModal) {
+        return false;
+      }
+
       // TODO シーン判別のようなものを追加
       // TODO 長押しで開く
       const touch = evt.detail[0];

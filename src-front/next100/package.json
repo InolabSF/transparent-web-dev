@@ -12,6 +12,7 @@
     "hammerjs": "^2.0.8",
     "http": "0.0.0",
     "jquery": "^3.3.1",
+    "moment": "^2.22.2",
     "qrcode.vue": "^1.6.1",
     "query-string": "^6.2.0",
     "socket.io": "^2.1.1",
@@ -19,6 +20,7 @@
     "url": "^0.11.0",
     "vue": "^2.5.17",
     "vue-js-modal": "^1.3.26",
+    "vue-masonry": "^0.11.6",
     "vue-router": "^3.0.1",
     "vue2-hammer": "^2.1.1",
     "vuex": "^3.0.1"
