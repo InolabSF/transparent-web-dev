@@ -705,7 +705,8 @@ body {
 }
 .btn-pin {
 	appearance: none;
-	background-color: #CCC;
+    background: url("../img/btn_icon_pins02.svg") no-repeat center #FFF;
+    background-size: cover;
 	border: none;
 	border-radius: 100%;
 	bottom: 0.75em;
@@ -716,6 +717,27 @@ body {
 	position: absolute;
 	right: 0.75em;
 	width: 4.375em;
+    z-index: 1;
+}
+.btn-pin::before {
+    border: 0.5em solid rgba(255,255,255,0.5);
+	border-radius: 100%;
+	bottom: -0.5em;
+    content: "";
+    display: block;
+	height: 4.375em;
+    opacity: 0;
+    position: absolute;
+	right: -0.5em;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    width: 4.375em;
+}
+.btn-pin:active::before {
+    filter: blur(3px);
+    opacity: 0.75;
+    -webkit-transform: scale(1.3);
+    transform: scale(1.3);
 }
 .media-container[data-keyword-color="red"] .keyword-box .keyword-text::before,
 .media-container[data-keyword-color="red"] .keyword-box .keyword-text::after {
@@ -1110,6 +1132,7 @@ body {
 }
 .img-detail-wrapper .right-col {
 	padding-left: 3.125em;
+    position: relative;
 	text-align: left;
 }
 .img-detail-box .media-photo .img {
@@ -1128,6 +1151,25 @@ body {
 	font-weight: 500;
 	letter-spacing: 0.05em;
 	margin: 0.25em auto;
+}
+.img-detail-box .btn.delete {
+    bottom: 0;
+    color: #FFF;
+    font-size: 1.3125em;
+    line-height: 1;
+    position: absolute;
+    width: 100%
+}
+.img-detail-box .btn.delete a {
+    color: #FFF;
+    overflow: hidden;
+}
+.img-detail-box .btn.delete img {
+    float: left;
+    height: 1.8096em;
+    margin-right: 0.75em;
+    margin-top: 0.125em;
+    width: 1.8096em;
 }
 .img-detail-box .btn.return {
     margin-bottom: calc(-4.375em + -5.375em);
