@@ -347,6 +347,12 @@ export default {
       // TODO 長押しで開く
       const touch = evt.detail[0];
 
+      // NOTE: 外野アラート
+      if (touch.floorId === 0) {
+        alert('テーブルサイドに立ってタップしてください');
+        return false;
+      }
+
       // NOTE: 未ログインユーザーの場合、ログイン
       const isExistUsr = !!this.$store.state.loginUsers.find(u => u.floorId === touch.floorId);
       if (!isExistUsr) {

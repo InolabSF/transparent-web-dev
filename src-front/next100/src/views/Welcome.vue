@@ -41,6 +41,13 @@ export default {
   methods: {
     onClickTable(evt) {
       const floorId = evt.detail[0].floorId;
+
+      // NOTE: 外野アラート
+      if (floorId === 0) {
+        alert('テーブルサイドに立ってタップしてください');
+        return false;
+      }
+
       const user = this.loginUsers.find(u => u.floorId === floorId);
       const isLoggedin = !!user;
 
