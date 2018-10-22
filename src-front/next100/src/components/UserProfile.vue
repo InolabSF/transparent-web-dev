@@ -10,7 +10,7 @@
           <figure class="icon-touch animated zoomIn fast delay-1s"><img src="/next100/static/img/icon-touch01.svg" alt="TOUCH"></figure>
           <div class="btn return animated fadeIn fast delay-2s" @click="onClickReturn"><a href="#"><img src="/next100/static/img/btn_return01.svg" alt="RETURN"></a></div>
         </template>
-        <template v-if="user.isConfirmTalkEndModal">
+        <template v-else-if="user.isConfirmTalkEndModal">
             <!--<p class="state-text sub animated fadeInUp">ARE YOU SURE?</p>-->
             <!--<p class="state-text animated fadeInUp delay-1s">QUIT TALK</p>-->
             <!--<figure class="icon-touch animated zoomIn fast delay-2s"><img src="./assets/img/icon-touch01.svg" alt="TOUCH"></figure>-->
