@@ -61,6 +61,8 @@ jQuery(function($){
     $('#opening #wrapper').append(buttonControls + '<input type="button" value="WebGL Anime End" data-class-name="is-end" data-target="#webgl" id="webgl-hidden">');
     $('#webgl-hidden').on('click', function(){
         setTimeout(function(){
+            var btn = document.getElementById("webgl-stop");
+            btn.click();
             $('#webgl').children().remove();
         },3000);
     });

@@ -2,6 +2,16 @@
 
   window.addEventListener('load', () => {
 
+            // Array Shuffle
+            function arreyShuffle(array){
+                for(var i = array.length - 1; i > 0; i--){
+                        var r = Math.floor(Math.random() * (i + 1));
+                        var tmp = array[i];
+                        array[i] = array[r];
+                        array[r] = tmp;
+                }
+            }
+
 			var camera, scene, renderer;
 			var cube, sphere, torus, material;
 
@@ -13,8 +23,11 @@
 			var targetDOM = document.getElementById('webgl');
 
 			var textureLoader = new THREE.TextureLoader();
+      
+            var sceneTexture = ['./assets/img/opening/scene01.jpg','./assets/img/opening/scene02.jpg','./assets/img/opening/scene03.jpg','./assets/img/opening/scene04.jpg'];
+            arreyShuffle(sceneTexture);
 
-			textureLoader.load( './assets/img/opening/scene02.jpg', function ( texture ) {
+			textureLoader.load( sceneTexture[0], function ( texture ) {
 
 				texture.mapping = THREE.UVMapping;
 
@@ -204,12 +217,38 @@
 
 			}*/
 
-			function animate() {
-
-				requestAnimationFrame( animate );
+			var requestId;
+            
+            var btn = document.createElement('input');
+            btn.type = 'button';
+            btn.setAttribute('id', 'webgl-stop');
+            btn.style.cssText = 'position: absolute; display: none;';
+            btn.onclick = (function(){ stop(); return });
+            targetDOM.appendChild(btn);
+            
+            function animate() {
+                
+                requestId = undefined;
+                
+                start();
 				render();
 
 			}
+      
+            function start() {
+                if (!requestId) {
+                   requestId = window.requestAnimationFrame( animate );
+                }
+            }
+      
+            function stop() {
+                if (requestId) {
+                   window.cancelAnimationFrame(requestId);
+                   requestId = undefined;
+                }
+            }
+                
+            //var sceneCount = 1;
 
 			function render() {
 
@@ -262,6 +301,30 @@
 				sphere.visible = true;
 
 				renderer.render( scene, camera );
+                
+                console.log(count);
+                
+                if ( count / ( 2400 * 2 ) === 1 ) {
+                    
+                    location.reload();
+                    
+                    /*if ( sceneCount > sceneTexture.length - 1 ) {
+                        sceneCount = 0;
+                    }
+
+                    textureLoader.load( sceneTexture[sceneCount], function ( texture ) {
+                    
+                        var mesh = new THREE.Mesh( new THREE.SphereBufferGeometry( 500, 32, 16 ), new THREE.MeshBasicMaterial( { map: texture } ) );
+                        mesh.geometry.scale( 1, 1,-  1 );
+                        mesh.rotation.z = Math.PI / 2 / 2;
+                        scene.add( mesh );
+
+                    } );
+                    
+                    sceneCount ++;
+                    
+                    count = 0;*/
+                }
 
 			}
 
