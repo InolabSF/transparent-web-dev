@@ -33,7 +33,7 @@
                 <img ref="images" :src="content.img_url" class="img" :data-content-id="content.id">
                 <ul class="pin-list">
                 </ul>
-                <button class="btn-pin"></button>
+                <button class="btn-pin" ref="pinButtonOnList" :data-content-json="JSON.stringify(content)"></button>
               </div>
             </div>
             <div class="item" :style="getImageStyle(layerIndex, layer.related_contents.length)">
@@ -76,7 +76,6 @@
       :ref="status.refName"
       :onClickPinList="() => { isShowPinListModal = true }"
       :onClickExitMeeting="() => { isShowPinListModal = true; isConfirmExit = true; }"
-      :onClickOffMic="() => { isRecording = false }"
       :onClickCloseButton="() => { closeContextMenu(status.floorId) }"
     ></context-menu>
     <pin-list
@@ -174,7 +173,6 @@ export default {
       currentShowMediaPoiner: 0,
       fetchTranscriptsInterval: null,
       isConfirmExit: false,
-      isRecording: true,
       layers: [],
       isShowPinListModal: false,
       isShowContentDetailModal: false,
@@ -367,6 +365,20 @@ export default {
         return false;
       }
 
+      // 既に開いているコンテキストメニューをガード
+      // TODO
+
+      // ピンボタン
+      const touchedPin = this.$refs.pinButtonOnList.find(p => {
+        return this.isTouchObjectByElement(touch, p)
+      });
+      if (touchedPin) {
+        const contentJson = touchedPin.getAttribute('data-content-json');
+        const content = JSON.parse(contentJson);
+        this.togglePinByFloorId(touch.floorId, content)
+        return false;
+      }
+
       // NOTE: 外野アラート
       if (touch.floorId === 0) {
         alert('テーブルサイドに立ってタップしてください');
@@ -421,13 +433,13 @@ export default {
       }
 
       // NOTE: refsは配列で返ってくる
-      const existRef = this.$refs[`context-menu-${touch.floorId}`];
+      const existContextMenu = this.$refs[`context-menu-${touch.floorId}`];
 
       if (
         // 未開の場合
-        existRef &&
-        existRef.length > 0 &&
-        !this.isTouchObjectByElement(touch, existRef[0].$el) &&
+        existContextMenu &&
+        existContextMenu.length > 0 &&
+        !this.isTouchObjectByElement(touch, existContextMenu[0].$el) &&
         this.isExistContextMenuByFloorId(touch.floorId)
       ) {
         this.closeContextMenu(touch.floorId);
