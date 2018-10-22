@@ -35,19 +35,21 @@ def analyze_text_gcp(text, langcode)
 
   for entity in entities
     ## extract only proper
-    if entity['mentions'][0]['type'] == 'PROPER'
-      entity_hash = {}
-      entity_hash.store('name', entity['name'])
-      entity_hash.store('category', entity['type'])
-      entities_hash.push(entity_hash)
-    else
-      puts('common entity')
-      puts(entity)
-    end
-    # entity_hash = {}
-    # entity_hash.store('name', entity['name'])
-    # entity_hash.store('category', entity['type'])
-    # entities_hash.push(entity_hash)
+    # if entity['mentions'][0]['type'] == 'PROPER'
+    #   entity_hash = {}
+    #   entity_hash.store('name', entity['name'])
+    #   entity_hash.store('category', entity['type'])
+    #   entities_hash.push(entity_hash)
+    # else
+    #   puts('common entity')
+    #   puts(entity)
+    # end
+
+    ## extract all noun
+    entity_hash = {}
+    entity_hash.store('name', entity['name'])
+    entity_hash.store('category', entity['type'])
+    entities_hash.push(entity_hash)
   end
   return entities_hash, sentiment
 end
