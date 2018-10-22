@@ -17,7 +17,7 @@
         enter-active-class="animated fadeIn"
         leave-active-class="animated fadeOut"
       >
-        <div class="post transit" v-for="(layer, layerIndex) in layers" v-if="minLayerIndex <= layerIndex && layerIndex <= maxLayerIndex" :key="layerIndex">
+        <div class="post transit" v-for="(layer, layerIndex) in aggregatedLayers" v-if="minLayerIndex <= layerIndex && layerIndex <= maxLayerIndex" :key="layerIndex">
           <div class="media-container" :style="getLayerStyle(layerIndex)" :data-keyword-color="getKeywordColor(layerIndex)">
             <div
               v-for="(content, contentIndex) in layer.related_contents"
@@ -191,6 +191,26 @@ export default {
     },
     maxLayerIndex() {
       return this.currentShowMediaLayerIndex - 1;
+    },
+    aggregatedLayers() {
+      const aggregated = this.layers;
+
+      let allPinnedContents = [];
+      this.$store.state.loginUsers.forEach(u => {
+        if (u.pinnedContents.length) {
+          allPinnedContents = allPinnedContents.concat(u.pinnedContents);
+        }
+      });
+
+      aggregated.map(l => {
+        // l.pins = allPinnedContents.filter(c => (c.id === l.content_id));
+        l.related_contents = l.related_contents.map(c => {
+          c.pins = allPinnedContents.filter(_c => (c.id === _c.id));
+          return c;
+        });
+        return l;
+      });
+      return aggregated;
     }
   },
   watch: {
