@@ -43,6 +43,12 @@ export default new Vuex.Store({
       // 参照わたし？
       Object.assign(user, params);
     },
+    updateAllLoginUser(state, {params}) {
+      state.loginUsers = state.loginUsers.map(u => {
+        Object.assign(u, params);
+        return u;
+      });
+    },
     enqueueTouchingQueue(state, {floorId, time}) {
       state.touchingQueues.push({floorId, time});
     },
@@ -75,5 +81,13 @@ export default new Vuex.Store({
       });
     }
   },
-  actions: {}
+  actions: {},
+  getters: {
+    isShowUserOverlay(state) {
+      if (state.loginUsers.find(u => u.isConfirmTalkEndModal)) {
+        return true;
+      }
+      return false;
+    }
+  }
 });

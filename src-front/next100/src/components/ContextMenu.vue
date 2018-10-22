@@ -15,7 +15,7 @@
     </div>
     <ul class="menu-list">
       <li class="quit">
-        <a @click="onClickExitMeeting">
+        <a @click="onClickQuitConfirm">
           <figure class="menu-icon"><img src="/next100/static/img/btn_icon_quit01.svg" alt=""></figure>
           <p>終了する</p>
         </a>
@@ -103,7 +103,16 @@ export default {
       this.isLeaveConfirm = false;
       this.onClickCloseButton();
       this.logout(floorId);
-    }
+    },
+    onClickQuitConfirm() {
+      this.onClickCloseButton();
+      this.$store.commit('updateLoginUser', {
+        floorId: this.status.floorId,
+        params: {
+          isConfirmTalkEndModal: true
+        }
+      });
+    },
   }
 }
 </script>
@@ -118,5 +127,8 @@ export default {
     right: 0;
     bottom: 0;
   }
+}
+.context-menu {
+  z-index: 60;
 }
 </style>

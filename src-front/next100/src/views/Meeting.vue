@@ -276,15 +276,14 @@ export default {
         related_content_last_index
       } = res.data;
 
-      const isSizeUp = related_contents && related_contents.length > this.lastRelatedContents.length;
-
-      this.lastRelatedContents = related_contents;
-      this.lastSearches = searches;
+      const isSizeUp = related_contents && (related_contents.length > this.lastRelatedContents.length);
 
       if (!isSizeUp) {
         return;
       }
 
+      this.lastRelatedContents = related_contents;
+      this.lastSearches = searches;
       this.updateLayers(searches, related_contents);
     },
     updateLayers(searches, related_contents) {
@@ -338,14 +337,35 @@ export default {
       this.isShowContentDetailModal = false;
     },
     onClickTable(evt) {
-      // NOTE: 詳細モーダル開いているときは反応しないように
+      // 詳細モーダル開いているときは反応しないように
       if (this.isShowContentDetailModal) {
+        return false;
+      }
+
+      // ピン一覧モーダル開いているときは反応しないように
+      if (this.isShowPinListModal) {
         return false;
       }
 
       // TODO シーン判別のようなものを追加
       // TODO 長押しで開く
       const touch = evt.detail[0];
+      const currentUser = this.$store.state.loginUsers.find(u => u.floorId === touch.floorId);
+
+      // ユーザー終了確認モーダル
+      if (
+        this.$store.getters.isShowUserOverlay &&
+        currentUser.isConfirmTalkEndModal
+      ) {
+        this.isShowPinListModal = true;
+        this.isConfirmExit = true;
+        this.$store.commit('updateAllLoginUser', {
+          params: {
+            isConfirmTalkEndModal: false
+          }
+        });
+        return false;
+      }
 
       // NOTE: 外野アラート
       if (touch.floorId === 0) {
@@ -536,7 +556,6 @@ export default {
     getLayerStyle(index) {
       const rotate = ['1deg', '-0deg', '-1deg', '-2deg', '-3deg', '-4deg', '-3deg', '-2deg', '-1deg', '0deg'];
       const step = 0.2;
-      debugger;
       // const startScale = 1 - (this.maxLayerNum * step);
       // const distance = index - this.minLayerIndex;
       // const calcedScale = startScale * (distance * step);
