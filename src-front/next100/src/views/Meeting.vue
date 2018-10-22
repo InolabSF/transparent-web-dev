@@ -32,6 +32,8 @@
                 <!--<div class="bg"></div>-->
                 <img ref="images" :src="content.img_url" class="img" :data-content-id="content.id">
                 <ul class="pin-list">
+                  <li v-for="(pin, k) in content.usersPinContents" :key="k" :data-color="getColorMap()[pin.user.floorId]"></li>
+                  <!--<li data-color="yellow"></li>-->
                 </ul>
                 <button class="btn-pin" ref="pinButtonOnList" :data-content-json="JSON.stringify(content)"></button>
               </div>
@@ -204,9 +206,20 @@ export default {
 
       aggregated.map(l => {
         // l.pins = allPinnedContents.filter(c => (c.id === l.content_id));
-        l.related_contents = l.related_contents.map(c => {
-          c.pins = allPinnedContents.filter(_c => (c.id === _c.id));
-          return c;
+        l.related_contents = l.related_contents.map(rc => {
+          // const targetContent = allPinnedContents.find(_c => (rc.id === _c.id));
+          const pinnedUsers = this.$store.state.loginUsers.filter(u => {
+            return u.pinnedContents.find(pc => pc.id === rc.id);
+          });
+
+          const usersPinContents = pinnedUsers.map(u => {
+            return {
+              user: u,
+              content: u.pinnedContents.find(pc => pc.id === rc.id)
+            };
+          });
+          rc.usersPinContents = usersPinContents;
+          return rc;
         });
         return l;
       });
@@ -650,7 +663,7 @@ export default {
     stopListenTranscriptsUpdate() {
       clearInterval(this.fetchTranscriptsInterval);
       this.fetchTranscriptsInterval = null;
-    }
+    },
   }
 };
 </script>
