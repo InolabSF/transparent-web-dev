@@ -35,7 +35,7 @@
                   <li v-for="(pin, k) in content.usersPinContents" :key="k" :data-color="getColorMap()[pin.user.floorId]"></li>
                   <!--<li data-color="yellow"></li>-->
                 </ul>
-                <button class="btn-pin" ref="pinButtonOnList" :data-content-json="JSON.stringify(content)"></button>
+                <button class="btn-pin" ref="pinButtonOnList" :data-content-id="content.id"></button>
               </div>
             </div>
             <div class="item" :style="getImageStyle(layerIndex, layer.related_contents.length)">
@@ -406,9 +406,11 @@ export default {
         return this.isTouchObjectByElement(touch, p)
       });
       if (touchedPin) {
-        const contentJson = touchedPin.getAttribute('data-content-json');
-        const content = JSON.parse(contentJson);
-        this.togglePinByFloorId(touch.floorId, content)
+        const contentId = Number(touchedPin.getAttribute('data-content-id'));
+        // TODO パフォーマンスチューニングの余地あり
+        const targetLayer = this.aggregatedLayers.find(l => l.related_contents.find(rc => rc.id === contentId));
+        const content = targetLayer.related_contents.find(rc => rc.id === contentId);
+        this.togglePinByFloorId(touch.floorId, content);
         return false;
       }
 
@@ -664,6 +666,9 @@ export default {
       clearInterval(this.fetchTranscriptsInterval);
       this.fetchTranscriptsInterval = null;
     },
+    convertJSONString(object) {
+      return JSON.stringify(object);
+    }
   }
 };
 </script>
