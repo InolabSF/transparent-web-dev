@@ -1,11 +1,14 @@
 <template>
   <div id="user-layer">
+    <transition enter-active-class="animated fadeIn faster">
+      <div v-if="isShowUserOverlay" class="user-overlay"></div>
+    </transition>
     <user-profile v-for="user in loginUsers" :key="user.floorId" :user="user"></user-profile>
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 import UserProfile from "@/components/UserProfile";
 
 export default {
@@ -21,7 +24,10 @@ export default {
   methods: {
   },
   computed: {
-    ...mapState(['loginUsers'])
+    ...mapState(['loginUsers']),
+    ...mapGetters([
+      'isShowUserOverlay'
+    ]),
   }
 }
 </script>
@@ -29,5 +35,13 @@ export default {
 <style scoped>
 #user-layer {
   z-index: 50;
+}
+.user-overlay {
+  background-color: rgba(0,0,0,0.82);
+  content: "";
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  z-index: -2;
 }
 </style>

@@ -17,7 +17,7 @@
         enter-active-class="animated fadeIn"
         leave-active-class="animated fadeOut"
       >
-        <div class="post transit" v-for="(layer, layerIndex) in layers" v-if="minLayerIndex <= layerIndex && layerIndex <= maxLayerIndex" :key="layerIndex">
+        <div class="post transit" v-for="(layer, layerIndex) in aggregatedLayers" v-if="minLayerIndex <= layerIndex && layerIndex <= maxLayerIndex" :key="layerIndex">
           <div class="media-container" :style="getLayerStyle(layerIndex)" :data-keyword-color="getKeywordColor(layerIndex)">
             <div
               v-for="(content, contentIndex) in layer.related_contents"
@@ -32,14 +32,16 @@
                 <!--<div class="bg"></div>-->
                 <img ref="images" :src="content.img_url" class="img" :data-content-id="content.id">
                 <ul class="pin-list">
+                  <li v-for="(pin, k) in content.usersPinContents" :key="k" :data-color="getColorMap()[pin.user.floorId]"></li>
+                  <!--<li data-color="yellow"></li>-->
                 </ul>
-                <button class="btn-pin"></button>
+                <button class="btn-pin" ref="pinButtonOnList" :data-content-id="content.id"></button>
               </div>
             </div>
             <div class="item" :style="getImageStyle(layerIndex, layer.related_contents.length)">
               <div class="keyword-box" data-searchid="27093">
                 <!-- TODO 時間 -->
-                <div class="time-stamp">00:39:01</div>
+                <div class="time-stamp">{{ moment(layer.created_at).format('H:m:s') }}</div>
                 <div class="keyword-text">
                   <span>{{ layer.words[0] }}</span>
                 </div>
@@ -76,7 +78,6 @@
       :ref="status.refName"
       :onClickPinList="() => { isShowPinListModal = true }"
       :onClickExitMeeting="() => { isShowPinListModal = true; isConfirmExit = true; }"
-      :onClickOffMic="() => { isRecording = false }"
       :onClickCloseButton="() => { closeContextMenu(status.floorId) }"
     ></context-menu>
     <pin-list
@@ -104,6 +105,7 @@
 <script>
 import client from "@/core/ApiClient";
 import _ from "lodash";
+import moment from "moment";
 import customTouchEventDriver from "@/mixins/customTouchEventDriver";
 import Hammer from "hammerjs";
 import $ from "jquery";
@@ -168,11 +170,11 @@ export default {
   },
   data() {
     return {
+      moment,
       currentShowMediaLayerIndex: 0,
       currentShowMediaPoiner: 0,
       fetchTranscriptsInterval: null,
       isConfirmExit: false,
-      isRecording: true,
       layers: [],
       isShowPinListModal: false,
       isShowContentDetailModal: false,
@@ -191,6 +193,37 @@ export default {
     },
     maxLayerIndex() {
       return this.currentShowMediaLayerIndex - 1;
+    },
+    aggregatedLayers() {
+      const aggregated = this.layers;
+
+      let allPinnedContents = [];
+      this.$store.state.loginUsers.forEach(u => {
+        if (u.pinnedContents.length) {
+          allPinnedContents = allPinnedContents.concat(u.pinnedContents);
+        }
+      });
+
+      aggregated.map(l => {
+        // l.pins = allPinnedContents.filter(c => (c.id === l.content_id));
+        l.related_contents = l.related_contents.map(rc => {
+          // const targetContent = allPinnedContents.find(_c => (rc.id === _c.id));
+          const pinnedUsers = this.$store.state.loginUsers.filter(u => {
+            return u.pinnedContents.find(pc => pc.id === rc.id);
+          });
+
+          const usersPinContents = pinnedUsers.map(u => {
+            return {
+              user: u,
+              content: u.pinnedContents.find(pc => pc.id === rc.id)
+            };
+          });
+          rc.usersPinContents = usersPinContents;
+          return rc;
+        });
+        return l;
+      });
+      return aggregated;
     }
   },
   watch: {
@@ -274,15 +307,14 @@ export default {
         related_content_last_index
       } = res.data;
 
-      const isSizeUp = related_contents.length > this.lastRelatedContents.length;
-
-      this.lastRelatedContents = related_contents;
-      this.lastSearches = searches;
+      const isSizeUp = related_contents && (related_contents.length > this.lastRelatedContents.length);
 
       if (!isSizeUp) {
         return;
       }
 
+      this.lastRelatedContents = related_contents;
+      this.lastSearches = searches;
       this.updateLayers(searches, related_contents);
     },
     updateLayers(searches, related_contents) {
@@ -336,9 +368,57 @@ export default {
       this.isShowContentDetailModal = false;
     },
     onClickTable(evt) {
+      // 詳細モーダル開いているときは反応しないように
+      if (this.isShowContentDetailModal) {
+        return false;
+      }
+
+      // ピン一覧モーダル開いているときは反応しないように
+      if (this.isShowPinListModal) {
+        return false;
+      }
+
       // TODO シーン判別のようなものを追加
       // TODO 長押しで開く
       const touch = evt.detail[0];
+      const currentUser = this.$store.state.loginUsers.find(u => u.floorId === touch.floorId);
+
+      // ユーザー終了確認モーダル
+      if (
+        this.$store.getters.isShowUserOverlay &&
+        currentUser.isConfirmTalkEndModal
+      ) {
+        this.isShowPinListModal = true;
+        this.isConfirmExit = true;
+        this.$store.commit('updateAllLoginUser', {
+          params: {
+            isConfirmTalkEndModal: false
+          }
+        });
+        return false;
+      }
+
+      // 既に開いているコンテキストメニューをガード
+      // TODO
+
+      // ピンボタン
+      const touchedPin = this.$refs.pinButtonOnList.find(p => {
+        return this.isTouchObjectByElement(touch, p)
+      });
+      if (touchedPin) {
+        const contentId = Number(touchedPin.getAttribute('data-content-id'));
+        // TODO パフォーマンスチューニングの余地あり
+        const targetLayer = this.aggregatedLayers.find(l => l.related_contents.find(rc => rc.id === contentId));
+        const content = targetLayer.related_contents.find(rc => rc.id === contentId);
+        this.togglePinByFloorId(touch.floorId, content);
+        return false;
+      }
+
+      // NOTE: 外野アラート
+      if (touch.floorId === 0) {
+        alert('テーブルサイドに立ってタップしてください');
+        return false;
+      }
 
       // NOTE: 未ログインユーザーの場合、ログイン
       const isExistUsr = !!this.$store.state.loginUsers.find(u => u.floorId === touch.floorId);
@@ -388,13 +468,13 @@ export default {
       }
 
       // NOTE: refsは配列で返ってくる
-      const existRef = this.$refs[`context-menu-${touch.floorId}`];
+      const existContextMenu = this.$refs[`context-menu-${touch.floorId}`];
 
       if (
         // 未開の場合
-        existRef &&
-        existRef.length > 0 &&
-        !this.isTouchObjectByElement(touch, existRef[0].$el) &&
+        existContextMenu &&
+        existContextMenu.length > 0 &&
+        !this.isTouchObjectByElement(touch, existContextMenu[0].$el) &&
         this.isExistContextMenuByFloorId(touch.floorId)
       ) {
         this.closeContextMenu(touch.floorId);
@@ -523,7 +603,6 @@ export default {
     getLayerStyle(index) {
       const rotate = ['1deg', '-0deg', '-1deg', '-2deg', '-3deg', '-4deg', '-3deg', '-2deg', '-1deg', '0deg'];
       const step = 0.2;
-      debugger;
       // const startScale = 1 - (this.maxLayerNum * step);
       // const distance = index - this.minLayerIndex;
       // const calcedScale = startScale * (distance * step);
@@ -586,6 +665,9 @@ export default {
     stopListenTranscriptsUpdate() {
       clearInterval(this.fetchTranscriptsInterval);
       this.fetchTranscriptsInterval = null;
+    },
+    convertJSONString(object) {
+      return JSON.stringify(object);
     }
   }
 };
