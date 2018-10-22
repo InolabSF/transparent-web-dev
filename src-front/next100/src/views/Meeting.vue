@@ -276,7 +276,7 @@ export default {
         related_content_last_index
       } = res.data;
 
-      const isSizeUp = related_contents.length > this.lastRelatedContents.length;
+      const isSizeUp = related_contents && related_contents.length > this.lastRelatedContents.length;
 
       this.lastRelatedContents = related_contents;
       this.lastSearches = searches;
