@@ -10,7 +10,7 @@
         <!--</div>-->
       <!--</div>-->
     </header>
-    <div id="main" v-if="allContents">
+    <div id="main">
       <div class="tab-menu">
         <div
           :class="{ 'tab-menu-btn': true,  'menu-active': currentTabIndex === 0 }"
@@ -27,45 +27,50 @@
           </a>
         </div>
       </div>
-      <div id="media-list" v-if="currentTabIndex === 0">
-        <div class="post" v-for="(search, i) in this.aggregatedAllContents.slice(0, contentsLimitNum)" :key="i">
-          <div class="item">
-            <div class="keyword">
-              <div class="keyword-text"><span>{{ search.words.join(' + ') }}</span></div>
+      <div v-if="!aggregatedAllContents.length || !aggregatedMyPinnedContents.length">
+        Loading....
+      </div>
+      <template v-else>
+        <div id="media-list" v-if="currentTabIndex === 0">
+          <div class="post" v-for="(search, i) in this.aggregatedAllContents.slice(0, contentsLimitNum)" :key="i">
+            <div class="item">
+              <div class="keyword">
+                <div class="keyword-text"><span>{{ search.words.join(' + ') }}</span></div>
+              </div>
             </div>
-          </div>
-          <div class="media-container" v-masonry origin-left="false" transition-duration="1s" item-selector=".item">
-            <div v-masonry-tile class="item" v-for="(content, j) in search.related_contents_all">
-              <div class="media-photo">
-                <img :src="content.img_url" class="img">
-                <ul class="pin-list" v-if="content.pins">
-                  <li v-for="(pin, k) in content.pins" :key="k" :data-color="getColorMap()[k+1]"></li>
-                </ul>
+            <div class="media-container" v-masonry origin-left="false" transition-duration="1s" item-selector=".item">
+              <div v-masonry-tile class="item" v-for="(content, j) in search.related_contents_all">
+                <div class="media-photo">
+                  <img :src="content.img_url" class="img">
+                  <ul class="pin-list" v-if="content.pins">
+                    <li v-for="(pin, k) in content.pins" :key="k" :data-color="getColorMap()[k+1]"></li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div id="media-list" v-if="currentTabIndex === 1">
-        <div class="post" v-for="(search, i) in this.aggregatedMyPinnedContents" :key="i">
-          <div class="item">
-            <div class="keyword">
-              <div class="keyword-text"><span>{{ search.words.join(' + ') }}</span></div>
+        <div id="media-list" v-if="currentTabIndex === 1">
+          <div class="post" v-for="(search, i) in this.aggregatedMyPinnedContents" :key="i">
+            <div class="item">
+              <div class="keyword">
+                <div class="keyword-text"><span>{{ search.words.join(' + ') }}</span></div>
+              </div>
             </div>
-          </div>
-          <div class="media-container">
-            <div class="item" v-for="(content, j) in search.related_contents_mypinned">
-              <div class="media-photo">
-                <img :src="content.img_url" class="img">
-                <ul class="pin-list" v-if="content.pins">
-                  <li v-for="(pin, k) in content.pins" :key="k" :data-color="getColorMap()[k+1]"></li>
-                </ul>
+            <div class="media-container">
+              <div class="item" v-for="(content, j) in search.related_contents_mypinned">
+                <div class="media-photo">
+                  <img :src="content.img_url" class="img">
+                  <ul class="pin-list" v-if="content.pins">
+                    <li v-for="(pin, k) in content.pins" :key="k" :data-color="getColorMap()[k+1]"></li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </template>
     </div>
     <footer id="footer">
       <p id="copyright"><small>© 2018 Panasonic Corporation</small></p>
