@@ -142,7 +142,7 @@ jQuery(function($){
         gridSound();
     });
     // ↑↑↑ユーザーアクションからしか音声を再生できないためボタン化しています
-    $('.btn.return a, .btn.circle a, .menu-list a').on('click', function(e){
+    $('.btn.return a, .btn.circle a, .menu-list a, .btn.leave a').on('click', function(e){
         e.preventDefault();
         tapSound();
     });
