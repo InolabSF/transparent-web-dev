@@ -402,9 +402,6 @@ export default {
         return false;
       }
 
-      // 既に開いているコンテキストメニューをガード
-      // TODO
-
       // ピンボタン
       const touchedPin = this.$refs.pinButtonOnList && this.$refs.pinButtonOnList.find(p => {
         return this.isTouchObjectByElement(touch, p)
@@ -428,6 +425,12 @@ export default {
       const isExistUsr = !!this.$store.state.loginUsers.find(u => u.floorId === touch.floorId);
       if (!isExistUsr) {
         this.login(touch.floorId);
+        return false;
+      }
+
+      // 既に開いているコンテキストメニューをガード
+      const myContextMenu = this.$refs[`context-menu-${touch.floorId}`];
+      if (myContextMenu && myContextMenu[0] && myContextMenu[0].$el && this.isTouchObjectByElement(touch, myContextMenu[0].$el)) {
         return false;
       }
 
