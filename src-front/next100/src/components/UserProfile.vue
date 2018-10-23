@@ -31,7 +31,7 @@
         </template>
       </div>
       <div class="user-avatar animated fadeInUp fast delay-1s"></div>
-      <div class="user-name animated fadeInUp fast delay-2s">{{ user.name }}</div>
+      <!--<div class="user-name animated fadeInUp fast delay-2s">{{ user.name }}</div>-->
     </div>
   </transition>
 </template>

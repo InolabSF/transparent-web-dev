@@ -12,7 +12,7 @@
     <div class="qr-link-box">
       <figure class="qr-img">
         <!--<img src="/next100/static/img/QR_Code.jpg" alt="QR Code">-->
-        <qrcode-vue :value="qrCodeUrl" :size="120" level="H"></qrcode-vue>
+        <qrcode-vue :value="$_wallMixin_getWallLogUrl(user.name)" :size="120" level="H"></qrcode-vue>
       </figure>
       <p class="qr-text">このトークのURL</p>
     </div>
@@ -78,7 +78,6 @@ export default {
   data() {
     return {
       isLeaveConfirm: false,
-      qrCodeUrl: this.$_wallMixin_getWallLogUrl(),
     };
   },
   methods: {
@@ -126,6 +125,9 @@ export default {
   computed: {
     myColor() {
       return this.getColorMap()[this.status.floorId];
+    },
+    user() {
+      return this.$store.state.loginUsers.find(u => u.floorId === this.status.floorId);
     }
   }
 }

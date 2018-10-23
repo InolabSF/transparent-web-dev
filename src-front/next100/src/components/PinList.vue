@@ -30,7 +30,7 @@
         <div class="qr-link-box">
           <!--<figure class="qr-img"><img src="/next100/staticimg/QR_Code.jpg" alt="QR Code"></figure>-->
           <figure class="qr-img">
-            <qrcode-vue class="qrcode" :value="qrCodeUrl" :size="120" level="H"></qrcode-vue>
+            <qrcode-vue class="qrcode" :value="$_wallMixin_getWallLogUrl(user.name)" :size="120" level="H"></qrcode-vue>
           </figure>
           <p class="qr-text">このトークのURL</p>
         </div>
@@ -65,11 +65,6 @@ export default {
       type: Boolean,
       required: true
     }
-  },
-  data() {
-    return {
-      qrCodeUrl: this.$_wallMixin_getWallLogUrl()
-    };
   },
   methods: {
     onExit() {
