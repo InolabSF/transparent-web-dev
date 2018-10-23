@@ -28,7 +28,7 @@
         </div>
       </div>
       <div id="media-list" v-if="currentTabIndex === 0">
-        <div class="post" v-for="(search, i) in this.aggregatedAllContents" :key="i">
+        <div class="post" v-for="(search, i) in this.aggregatedAllContents.slice(0, contentsLimitNum)" :key="i">
           <div class="item">
             <div class="keyword">
               <div class="keyword-text"><span>{{ search.words.join(' + ') }}</span></div>
@@ -90,10 +90,12 @@ export default {
       allContents: [],
       pinnedContents: [],
       searches: [],
+      contentsLimitNum: 4,
     };
   },
   mounted() {
     this.fetchAll();
+    this.startScrollEvent();
   },
   created() {
     this.addStyle();
@@ -191,6 +193,16 @@ export default {
   //   }
   // },
   methods: {
+    startScrollEvent() {
+      window.addEventListener('scroll', (evt) => {
+        const bodyHeight = document.body.getBoundingClientRect().height;
+        const isBottom = document.documentElement.scrollTop >= bodyHeight - window.innerHeight - 500;
+        const isMainTab = this.currentTabIndex === 0;
+        if (isBottom && isMainTab) {
+          this.contentsLimitNum += 10;
+        }
+      });
+    },
     addStyle() {
       const mobileStyle = '<link id="mobileStyle" rel="stylesheet" href="/next100/static/css/mobile.css">';
       $("head").append(mobileStyle);
