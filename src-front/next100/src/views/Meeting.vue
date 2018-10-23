@@ -230,16 +230,17 @@ export default {
       return aggregated;
     }
   },
-  watch: {
-    layers(val, beforeVal) {
-      if (val.length > beforeVal.length) {
-        // NOTE: 最先端にいるときだけに絞っているがそれが良いかどうかはユーザーテストが必要
-        if (true || this.currentShowMediaLayerIndex == this.maxLayerIndex) {
-          this.incrementCurrentShowMediaLayerIndex();
-        }
-      }
-    }
-  },
+  // watch: {
+  //   layers(val, beforeVal) {
+  //     if (val.length > beforeVal.length) {
+  //       // NOTE: 最先端にいるときだけに絞っているがそれが良いかどうかはユーザーテストが必要
+  //       if (true || this.currentShowMediaLayerIndex == this.maxLayerIndex) {
+  //         // this.incrementCurrentShowMediaLayerIndex();
+  //         // this.updateLatestCurrentShowMediaLayerIndex();
+  //       }
+  //     }
+  //   }
+  // },
   methods: {
     async fetchAllUsersPinStatus() {
       const key = this.$route.query.key;
@@ -267,6 +268,9 @@ export default {
           this.decrementCurrentShowMediaLayerIndex();
         }
       })
+    },
+    updateLatestCurrentShowMediaLayerIndex() {
+      this.currentShowMediaLayerIndex = this.layers.length;
     },
     incrementCurrentShowMediaLayerIndex() {
       if (this.currentShowMediaLayerIndex + 1 >= this.layers.length) {
@@ -313,12 +317,12 @@ export default {
 
       const isSizeUp = related_contents && (related_contents.length > this.lastRelatedContents.length);
 
-      if (!isSizeUp) {
-        return;
-      }
+      // if (!isSizeUp) {
+      //   return;
+      // }
 
-      this.lastRelatedContents = related_contents;
-      this.lastSearches = searches;
+      this.lastRelatedContents = related_contents || [];
+      this.lastSearches = searches || [];
       this.updateLayers(searches, related_contents);
     },
     updateLayers(searches, related_contents) {
@@ -338,6 +342,8 @@ export default {
       } else {
         this.layers = layers.reverse();
       }
+
+      this.updateLatestCurrentShowMediaLayerIndex();
     },
     onClickImage({floorId, contentId}) {
       this.openContentDetailModal({floorId, contentId});
