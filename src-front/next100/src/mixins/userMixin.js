@@ -19,6 +19,7 @@ export default {
         name: `guest100${floorId}`,
         pinnedContents: [],
         isStartTalkModal: false,
+        isConfirmTalkEndModal: false,
       };
 
       if (this.$store.state.loginUsers.length < USER_LIMIT) {

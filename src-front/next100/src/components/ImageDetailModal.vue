@@ -22,11 +22,11 @@
             <div class="right-col">
               <h3 class="detail-title">{{ content.title }}</h3>
               <p class="detail-desc">{{ content.desc }}</p>
+              <div class="btn delete"><a @click="onClickDelete"><img src="/next100/static/img/btn_close01.svg" alt=""> <span>DELETE<br>IMAGE</span></a></div>
             </div>
           </div>
           <div class="btn return">
             <a @click="onClose"><img src="/next100/static/img/btn_return01.svg" alt="RETURN" ref="returnButton"></a>
-            <a @click="onClickDelete"><img src="/next100/static/img/btn_return01.svg" alt="RETURN" ref="returnButton"></a>
           </div>
         </div>
       </div>

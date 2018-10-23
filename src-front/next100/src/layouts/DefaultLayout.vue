@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <div :id="$route.name">
-      <div id="wrapper">
+      <div
+        id="wrapper"
+        :class="{'offreco-active': !$store.state.isListeningMic}">
         <slot></slot>
         <div id="hue" :class="{ 'is-small': isSmallHue }"></div>
         <user-layer v-if="$route.name !== 'opening'"></user-layer>

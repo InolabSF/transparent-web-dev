@@ -1,10 +1,13 @@
 <template>
-  <div v-if="isLeaveConfirm" class="context-menu leave-table context-menu-wrapper" :style="status.style" >
-    <p class="state-text sub">ARE YOU SURE?</p>
-    <div class="btn leave"><a @click="onClickLeave"><img src="/next100/static/img/btn_leave-table01.svg" alt="LEAVE TABLE"></a></div>
-    <div class="btn return"><a @click="isLeaveConfirm = false"><img src="/next100/static/img/btn_return01.svg" alt="RETURN"></a></div>
+  <div v-if="isLeaveConfirm" class="context-menu leave-table context-menu-wrapper" :style="status.style" :data-color="myColor">
+    <!--<p class="state-text sub">ARE YOU SURE?</p>-->
+    <!--<div class="btn leave"><a @click="onClickLeave"><img src="/next100/static/img/btn_leave-table01.svg" alt="LEAVE TABLE"></a></div>-->
+    <!--<div class="btn return"><a @click="isLeaveConfirm = false"><img src="/next100/static/img/btn_return01.svg" alt="RETURN"></a></div>-->
+    <p class="state-text sub animated fadeInUp">ARE YOU SURE?</p>
+    <div class="btn leave animated zoomIn fast delay-1s"><a @click="onClickLeave"><img src="/next100/static/img/btn_leave-table01.svg" alt="LEAVE TABLE"></a></div>
+    <div class="btn return animated fadeInUp fast delay-2s"><a @click="isLeaveConfirm = false"><img src="/next100/static/img/btn_return01.svg" alt="RETURN"></a></div>
   </div>
-  <div v-else class="context-menu context-menu-wrapper" :style="status.style">
+  <div v-else class="context-menu context-menu-wrapper" :style="status.style" :data-color="myColor">
     <div class="btn-close"><a @click="onClickCloseButton"><img src="/next100/static/img/btn_close01.svg" alt="×"></a></div>
     <div class="qr-link-box">
       <figure class="qr-img">
@@ -15,7 +18,7 @@
     </div>
     <ul class="menu-list">
       <li class="quit">
-        <a @click="onClickExitMeeting">
+        <a @click="onClickQuitConfirm">
           <figure class="menu-icon"><img src="/next100/static/img/btn_icon_quit01.svg" alt=""></figure>
           <p>終了する</p>
         </a>
@@ -82,10 +85,16 @@ export default {
     onClickToggleMic() {
       const isActive = window.isActive;
       if (isActive) {
-        alert('会話ログの収集を止めます');
+        // alert('会話ログの収集を止めます');
+        this.$store.commit('setState', {
+          isListeningMic: false,
+        });
         killMic();
       } else {
-        alert('会話ログの収集を再開します');
+        // alert('会話ログの収集を再開します');
+        this.$store.commit('setState', {
+          isListeningMic: true,
+        });
         activateMic();
       }
     },
@@ -103,6 +112,20 @@ export default {
       this.isLeaveConfirm = false;
       this.onClickCloseButton();
       this.logout(floorId);
+    },
+    onClickQuitConfirm() {
+      this.onClickCloseButton();
+      this.$store.commit('updateLoginUser', {
+        floorId: this.status.floorId,
+        params: {
+          isConfirmTalkEndModal: true
+        }
+      });
+    },
+  },
+  computed: {
+    myColor() {
+      return this.getColorMap()[this.status.floorId];
     }
   }
 }
@@ -118,5 +141,8 @@ export default {
     right: 0;
     bottom: 0;
   }
+}
+.context-menu {
+  z-index: 60;
 }
 </style>
