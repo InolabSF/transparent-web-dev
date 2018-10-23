@@ -402,7 +402,7 @@ export default {
       // TODO
 
       // ピンボタン
-      const touchedPin = this.$refs.pinButtonOnList.find(p => {
+      const touchedPin = this.$refs.pinButtonOnList && this.$refs.pinButtonOnList.find(p => {
         return this.isTouchObjectByElement(touch, p)
       });
       if (touchedPin) {
