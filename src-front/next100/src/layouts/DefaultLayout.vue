@@ -46,7 +46,7 @@ export default {
       let customTouchMode = params.mode;
 
       const customTouchModeFromLS = localStorage.getItem('customTouchMode');
-      if (!customTouchMode && customTouchModeFromLS !== 'production' && confirm(`${customTouchModeFromLS}モードで再開しますか？`)) {
+      if (!customTouchMode && customTouchModeFromLS && customTouchModeFromLS !== 'production' && confirm(`${customTouchModeFromLS}モードで再開しますか？`)) {
         customTouchMode = customTouchModeFromLS;
       }
 
