@@ -134,6 +134,9 @@ export default {
       client.get(`/?_= ${JSON.stringify(data)}`);
     },
     isTouchObjectByElement(touch, elm) {
+      if (!elm.getBoundingClientRect) {
+        return false;
+      }
       const rect = elm.getBoundingClientRect();
       if (!rect) {
         throw new Error('cannnot get client rect');

@@ -20,7 +20,7 @@
         <div class="post transit" v-for="(layer, layerIndex) in aggregatedLayers" v-if="minLayerIndex <= layerIndex && layerIndex <= maxLayerIndex" :key="layerIndex">
           <div class="media-container" :style="getLayerStyle(layerIndex)" :data-keyword-color="getKeywordColor(layerIndex)">
             <div
-              v-for="(content, contentIndex) in layer.related_contents"
+              v-for="(content, contentIndex) in layer.related_contents.slice(0, $props.maxContentNum)"
               :key="content.id"
               :data-layer-id="layer.id"
               :data-content-id="content.id"
@@ -128,6 +128,10 @@ export default {
   },
   props: {
     maxLayerNum: {
+      type: Number,
+      default: 10
+    },
+    maxContentNum: {
       type: Number,
       default: 10
     }
@@ -398,11 +402,8 @@ export default {
         return false;
       }
 
-      // 既に開いているコンテキストメニューをガード
-      // TODO
-
       // ピンボタン
-      const touchedPin = this.$refs.pinButtonOnList.find(p => {
+      const touchedPin = this.$refs.pinButtonOnList && this.$refs.pinButtonOnList.find(p => {
         return this.isTouchObjectByElement(touch, p)
       });
       if (touchedPin) {
@@ -424,6 +425,12 @@ export default {
       const isExistUsr = !!this.$store.state.loginUsers.find(u => u.floorId === touch.floorId);
       if (!isExistUsr) {
         this.login(touch.floorId);
+        return false;
+      }
+
+      // 既に開いているコンテキストメニューをガード
+      const myContextMenu = this.$refs[`context-menu-${touch.floorId}`];
+      if (myContextMenu && myContextMenu[0] && myContextMenu[0].$el && this.isTouchObjectByElement(touch, myContextMenu[0].$el)) {
         return false;
       }
 
