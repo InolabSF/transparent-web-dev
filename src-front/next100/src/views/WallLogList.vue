@@ -35,11 +35,11 @@
             </div>
           </div>
           <div class="media-container" v-masonry origin-left="false" transition-duration="1s" item-selector=".item">
-            <div v-masonry-tile class="item" v-for="(content, j) in search.related_contents">
+            <div v-masonry-tile class="item" v-for="(content, j) in search.add_related_contents">
               <div class="media-photo">
                 <img :src="content.img_url" class="img">
                 <ul class="pin-list" v-if="content.pins">
-                  <li v-for="(pin, k) in content.pins" :key="k" data-color="green"></li>
+                  <li v-for="(pin, k) in content.pins" :key="k" :data-color="getColorMap()[k+1]"></li>
                 </ul>
               </div>
             </div>
@@ -59,7 +59,7 @@
               <div class="media-photo">
                 <img :src="content.img_url" class="img">
                 <ul class="pin-list" v-if="content.pins">
-                  <li v-for="(pin, k) in content.pins" :key="k" data-color="green"></li>
+                  <li v-for="(pin, k) in content.pins" :key="k" :data-color="getColorMap()[k+1]"></li>
                 </ul>
               </div>
             </div>
@@ -131,6 +131,7 @@ export default {
       }
       let aggregated = this.searches.map(s => {
         s.related_contents = this.allContents.filter(c => ( c.search_id === s.id ));
+        s.add_related_contents = this.allContents.filter(c => ( c.search_id === s.id ));
         return s;
       });
 
@@ -144,6 +145,7 @@ export default {
       }
       let aggregated = this.searches.map(s => {
         s.related_contents = this.pinnedContents.filter(c => ( c.search_id === s.id ));
+        s.add_related_contents = this.allContents.filter(c => ( c.search_id === s.id ));
         return s;
       });
 
@@ -152,6 +154,13 @@ export default {
       return aggregated;
     }
   },
+  // watch: {
+  //   currentTabIndex() {
+  //     this.$nextTick(() => {
+  //       this.$redrawVueMasonry();
+  //     });
+  //   }
+  // },
   methods: {
     addStyle() {
       const mobileStyle = '<link id="mobileStyle" rel="stylesheet" href="/next100/static/css/mobile.css">';
@@ -168,17 +177,17 @@ export default {
       this.fetchSearchs();
     },
     async fetchSearchs() {
-      const url = `/next100/contents?wall_id=${wallId}`
+      const url = `/next100/contents?wall_id=${this.$route.params.wallId}`
       const res = await client.get(url);
       this.searches = res.data.searches;
     },
     async fetchContents() {
-      const url = `/next100/wall/${this.$route.params.wallId}`;
+      const url = `/next100/wall/${this.$route.query.key}`;
       const res = await client.get(url);
       this.allContents = res.data;
     },
     async fetchPinnedContents() {
-      const url = `/next100/wall/${this.$route.params.wallId}/pinned`;
+      const url = `/next100/wall/${this.$route.query.key}/pinned`;
       const res = await client.get(url);
       this.pinnedContents = res.data;
     },
