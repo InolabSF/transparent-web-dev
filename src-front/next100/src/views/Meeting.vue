@@ -317,9 +317,9 @@ export default {
 
       const isSizeUp = related_contents && (related_contents.length > this.lastRelatedContents.length);
 
-      // if (!isSizeUp) {
-      //   return;
-      // }
+      if (!isSizeUp) {
+        return;
+      }
 
       this.lastRelatedContents = related_contents || [];
       this.lastSearches = searches || [];
@@ -569,15 +569,15 @@ export default {
       const square = document.querySelector('#app');
       const hammer = new Hammer(square);
       hammer.get('pinch').set({ enable: true });
-      hammer.on('pinchout', this.onPinchOut);
-      hammer.on('pinchin', this.onPinchIn);
+      hammer.on('pinchout', _.debounce(this.onPinchOut, DEBOUNCE_SECOND));
+      hammer.on('pinchin', _.debounce(this.onPinchIn, DEBOUNCE_SECOND));
     },
-    onPinchOut: _.debounce((type) => {
+    onPinchOut() {
       this.decrementCurrentShowMediaLayerIndex();
-    }, DEBOUNCE_SECOND),
-    onPinchIn: _.debounce((type) => {
+    },
+    onPinchIn() {
       this.incrementCurrentShowMediaLayerIndex();
-    }, DEBOUNCE_SECOND),
+    },
     // ランダム整数
     randNum(max,min) {
       return Math.floor(Math.random()*(max-min+1)+min);
