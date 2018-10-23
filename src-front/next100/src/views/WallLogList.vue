@@ -31,7 +31,7 @@
         <div class="post" v-for="(search, i) in this.aggregatedAllContents" :key="i">
           <div class="item">
             <div class="keyword">
-              <div class="keyword-text"><span>{{ search.words[0] }}</span></div>
+              <div class="keyword-text"><span>{{ search.words.join(' + ') }}</span></div>
             </div>
           </div>
           <div class="media-container" v-masonry origin-left="false" transition-duration="1s" item-selector=".item">
@@ -51,7 +51,7 @@
         <div class="post" v-for="(search, i) in this.aggregatedPinnedContents" :key="i">
           <div class="item">
             <div class="keyword">
-              <div class="keyword-text"><span>{{ search.words[0] }}</span></div>
+              <div class="keyword-text"><span>{{ search.words.join(' + ') }}</span></div>
             </div>
           </div>
           <div class="media-container">

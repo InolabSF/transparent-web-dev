@@ -43,7 +43,7 @@
                 <!-- TODO 時間 -->
                 <div class="time-stamp">{{ moment(layer.created_at).format('H:m:s') }}</div>
                 <div class="keyword-text">
-                  <span>{{ layer.words[0] }}</span>
+                  <span>{{ layer.words.join(' + ') }}</span>
                 </div>
               </div>
             </div>
