@@ -24,7 +24,7 @@
 
 			var textureLoader = new THREE.TextureLoader();
       
-            var sceneTexture = ['./assets/img/opening/scene01.jpg','./assets/img/opening/scene02.jpg','./assets/img/opening/scene03.jpg','./assets/img/opening/scene04.jpg'];
+            var sceneTexture = ['./assets/img/opening/scene01.jpg','./assets/img/opening/scene02.jpg','./assets/img/opening/scene03.jpg','./assets/img/opening/scene04.jpg','./assets/img/opening/scene05.jpg','./assets/img/opening/scene06.jpg','./assets/img/opening/scene07.jpg','./assets/img/opening/scene08.jpg','./assets/img/opening/scene09.jpg','./assets/img/opening/scene10.jpg','./assets/img/opening/scene11.jpg'];
             arreyShuffle(sceneTexture);
 
 			textureLoader.load( sceneTexture[0], function ( texture ) {
@@ -145,24 +145,11 @@
 				var cubeShader = THREE.ShaderLib[ "cube" ];
 				material = new THREE.MeshBasicMaterial( {
 					envMap: cubeCamera2.renderTarget.texture,
-					/*transparent: true,
-					opacity: 0.9,*/
 					side: THREE.BackSide
 				} );
 
 				sphere = new THREE.Mesh( new THREE.IcosahedronBufferGeometry( 20, 3 ), material );
 				scene.add( sphere );
-
-				/*cube = new THREE.Mesh( new THREE.BoxBufferGeometry( 20, 20, 20 ), material );
-				scene.add( cube );*/
-
-				//torus = new THREE.Mesh( new THREE.TorusKnotBufferGeometry( 10, 5, 100, 25 ), material );
-				//scene.add( torus );
-
-				//
-
-				//document.addEventListener( 'mousedown', onDocumentMouseDown, false );
-				//document.addEventListener( 'wheel', onDocumentMouseWheel, false );
 
 				window.addEventListener( 'resize', onWindowResized, false );
 
@@ -177,45 +164,6 @@
 				camera.updateProjectionMatrix();
 
 			}
-
-			/*function onDocumentMouseDown( event ) {
-
-				event.preventDefault();
-
-				onPointerDownPointerX = event.clientX;
-				onPointerDownPointerY = event.clientY;
-
-				onPointerDownLon = lon;
-				onPointerDownLat = lat;
-
-				document.addEventListener( 'mousemove', onDocumentMouseMove, false );
-				document.addEventListener( 'mouseup', onDocumentMouseUp, false );
-
-			}
-
-			function onDocumentMouseMove( event ) {
-
-				lon = ( event.clientX - onPointerDownPointerX ) * 0.1 + onPointerDownLon;
-				lat = ( event.clientY - onPointerDownPointerY ) * 0.1 + onPointerDownLat;
-
-			}
-
-			function onDocumentMouseUp( event ) {
-
-				document.removeEventListener( 'mousemove', onDocumentMouseMove, false );
-				document.removeEventListener( 'mouseup', onDocumentMouseUp, false );
-
-			}
-
-			function onDocumentMouseWheel( event ) {
-
-				var fov = camera.fov + event.deltaY * 0.05;
-
-				camera.fov = THREE.Math.clamp( fov, 10, 75 );
-
-				camera.updateProjectionMatrix();
-
-			}*/
 
 			var requestId;
             
@@ -247,32 +195,14 @@
                    requestId = undefined;
                 }
             }
-                
-            //var sceneCount = 1;
 
 			function render() {
-
-				var time = Date.now();
 
 				lon += .15;
 
 				lat = Math.max( - 85, Math.min( 85, lat ) );
 				phi = THREE.Math.degToRad( 90 - lat );
 				theta = THREE.Math.degToRad( lon );
-
-				/*cube.position.x = Math.cos( time * 0.001 ) * 30;
-				cube.position.y = Math.sin( time * 0.001 ) * 30;
-				cube.position.z = Math.sin( time * 0.001 ) * 30;
-
-				cube.rotation.x += 0.02;
-				cube.rotation.y += 0.03;*/
-
-				/*torus.position.x = Math.cos( time * 0.001 + 10 ) * 30;
-				torus.position.y = Math.sin( time * 0.001 + 10 ) * 30;
-				torus.position.z = Math.sin( time * 0.001 + 10 ) * 30;
-
-				torus.rotation.x += 0.02;
-				torus.rotation.y += 0.03;*/
 
 				camera.position.y = 100 * Math.cos( phi );
 				camera.position.x = 100 * Math.sin( phi ) * Math.cos( theta );
@@ -302,28 +232,10 @@
 
 				renderer.render( scene, camera );
                 
-                console.log(count);
-                
+                // 画像切り換え用リロード
                 if ( count / ( 2400 * 2 ) === 1 ) {
                     
                     location.reload();
-                    
-                    /*if ( sceneCount > sceneTexture.length - 1 ) {
-                        sceneCount = 0;
-                    }
-
-                    textureLoader.load( sceneTexture[sceneCount], function ( texture ) {
-                    
-                        var mesh = new THREE.Mesh( new THREE.SphereBufferGeometry( 500, 32, 16 ), new THREE.MeshBasicMaterial( { map: texture } ) );
-                        mesh.geometry.scale( 1, 1,-  1 );
-                        mesh.rotation.z = Math.PI / 2 / 2;
-                        scene.add( mesh );
-
-                    } );
-                    
-                    sceneCount ++;
-                    
-                    count = 0;*/
                 }
 
 			}
