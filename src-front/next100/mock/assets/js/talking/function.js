@@ -91,4 +91,68 @@ jQuery(function($){
             $('#talking-start .post').addClass('transit');
         },2000);
     },1000);
+    
+    // 効果音設定
+    function soundInit() {
+        createjs.Sound.registerPlugins([
+            createjs.HTMLAudioPlugin
+        ]);
+        createjs.Sound.alternateExtensions = ['mp3'];
+        createjs.Sound.registerSound('./assets/sounds/tap.mp3', 'tap');
+        createjs.Sound.registerSound('./assets/sounds/tap_cancel.mp3', 'tap_cancel');
+        createjs.Sound.registerSound('./assets/sounds/tap_pin.mp3', 'tap_pin');
+        createjs.Sound.registerSound('./assets/sounds/login.mp3', 'login');
+        createjs.Sound.registerSound('./assets/sounds/hue.mp3', 'hue');
+        createjs.Sound.registerSound('./assets/sounds/grid.mp3', 'grid');
+    }
+    soundInit();
+    function tapSound() {
+        createjs.Sound.play('tap');
+    }
+    function tapCancelSound() {
+        createjs.Sound.play('tap_cancel');
+    }
+    function tapPinSound() {
+        createjs.Sound.play('tap_pin');
+    }
+    function loginSound() {
+        createjs.Sound.play('login');
+    }
+    function hueSound() {
+        createjs.Sound.play('hue');
+    }
+    function gridSound() {
+        createjs.Sound.play('grid');
+    }
+    // ↓↓↓ユーザーアクションからしか音声を再生できないためボタン化しています
+    $('#talk-welcome #buttonControls').append('<input id="loginSound" type="button" value="Login Sound">');
+    $('#loginSound').on('click', function(e){
+        e.preventDefault();
+        loginSound();
+    });
+    $('input[value="Hue Anime Start"]').on('click', function(e){
+        e.preventDefault();
+        setTimeout(function(){ 
+            hueSound();
+        },800);
+    });
+    $('#talking-start #wrapper').append(buttonControls + '<input id="gridSound" type="button" value="Grid Sound">');
+    $('#gridSound').on('click', function(e){
+        e.preventDefault();
+        gridSound();
+    });
+    // ↑↑↑ユーザーアクションからしか音声を再生できないためボタン化しています
+    $('.btn.return a, .btn.circle a, .menu-list a').on('click', function(e){
+        e.preventDefault();
+        tapSound();
+    });
+    $('.btn-close a, .btn.delete a').on('click', function(e){
+        e.preventDefault();
+        tapCancelSound();
+    });
+    $('.btn-pin').on('click', function(e){
+        e.preventDefault();
+        tapPinSound();
+    });
+    
 });
