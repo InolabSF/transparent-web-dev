@@ -20,7 +20,7 @@
         <div class="post transit" v-for="(layer, layerIndex) in aggregatedLayers" v-if="minLayerIndex <= layerIndex && layerIndex <= maxLayerIndex" :key="layerIndex">
           <div class="media-container" :style="getLayerStyle(layerIndex)" :data-keyword-color="getKeywordColor(layerIndex)">
             <div
-              v-for="(content, contentIndex) in layer.related_contents"
+              v-for="(content, contentIndex) in layer.related_contents.slice(0, $props.maxContentNum)"
               :key="content.id"
               :data-layer-id="layer.id"
               :data-content-id="content.id"
@@ -128,6 +128,10 @@ export default {
   },
   props: {
     maxLayerNum: {
+      type: Number,
+      default: 10
+    },
+    maxContentNum: {
       type: Number,
       default: 10
     }
