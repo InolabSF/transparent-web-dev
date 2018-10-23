@@ -20,6 +20,7 @@ export default {
         pinnedContents: [],
         isStartTalkModal: false,
         isConfirmTalkEndModal: false,
+        lastCustomTouchStartTime: new Date().getTime(),
       };
 
       if (this.$store.state.loginUsers.length < USER_LIMIT) {

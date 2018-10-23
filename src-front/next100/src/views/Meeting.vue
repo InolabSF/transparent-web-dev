@@ -230,16 +230,17 @@ export default {
       return aggregated;
     }
   },
-  watch: {
-    layers(val, beforeVal) {
-      if (val.length > beforeVal.length) {
-        // NOTE: 最先端にいるときだけに絞っているがそれが良いかどうかはユーザーテストが必要
-        if (true || this.currentShowMediaLayerIndex == this.maxLayerIndex) {
-          this.incrementCurrentShowMediaLayerIndex();
-        }
-      }
-    }
-  },
+  // watch: {
+  //   layers(val, beforeVal) {
+  //     if (val.length > beforeVal.length) {
+  //       // NOTE: 最先端にいるときだけに絞っているがそれが良いかどうかはユーザーテストが必要
+  //       if (true || this.currentShowMediaLayerIndex == this.maxLayerIndex) {
+  //         // this.incrementCurrentShowMediaLayerIndex();
+  //         // this.updateLatestCurrentShowMediaLayerIndex();
+  //       }
+  //     }
+  //   }
+  // },
   methods: {
     async fetchAllUsersPinStatus() {
       const key = this.$route.query.key;
@@ -268,6 +269,9 @@ export default {
         }
       })
     },
+    updateLatestCurrentShowMediaLayerIndex() {
+      this.currentShowMediaLayerIndex = this.layers.length;
+    },
     incrementCurrentShowMediaLayerIndex() {
       if (this.currentShowMediaLayerIndex + 1 >= this.layers.length) {
         this.currentShowMediaLayerIndex = this.layers.length;
@@ -295,7 +299,8 @@ export default {
       }
     },
     listenPersonalTouch() {
-      window.addEventListener('CUSTOM_TOUCH_START', this.onClickTable);
+      window.addEventListener('CUSTOM_TOUCH_START', this.onTouchStartTable);
+      window.addEventListener('CUSTOM_TOUCH_END', this.onTouchEndTable);
     },
     async fetchTranscripts() {
       const wallId = this.$route.params.wallId;
@@ -317,8 +322,8 @@ export default {
         return;
       }
 
-      this.lastRelatedContents = related_contents;
-      this.lastSearches = searches;
+      this.lastRelatedContents = related_contents || [];
+      this.lastSearches = searches || [];
       this.updateLayers(searches, related_contents);
     },
     updateLayers(searches, related_contents) {
@@ -338,6 +343,8 @@ export default {
       } else {
         this.layers = layers.reverse();
       }
+
+      this.updateLatestCurrentShowMediaLayerIndex();
     },
     onClickImage({floorId, contentId}) {
       this.openContentDetailModal({floorId, contentId});
@@ -371,7 +378,16 @@ export default {
       }
       this.isShowContentDetailModal = false;
     },
-    onClickTable(evt) {
+    onTouchStartTable(evt) {
+      const touch = evt.detail[0];
+      this.$store.commit('updateLoginUser', {
+        floorId: touch.floorId,
+        params: {
+          lastCustomTouchStartTime: new Date().getTime()
+        }
+      });
+    },
+    onTouchEndTable(evt) {
       // 詳細モーダル開いているときは反応しないように
       if (this.isShowContentDetailModal) {
         return false;
@@ -474,6 +490,14 @@ export default {
         return false;
       }
 
+
+      // 以下長押し判定のみでガード
+      const timeDiff = new Date().getTime() - currentUser.lastCustomTouchStartTime;
+      const isLongTouch = 300 <= timeDiff && timeDiff <= 2000;
+      // if (!isLongTouch) {
+      //   return false;
+      // };
+
       // NOTE: refsは配列で返ってくる
       const existContextMenu = this.$refs[`context-menu-${touch.floorId}`];
 
@@ -489,7 +513,7 @@ export default {
       //   !this.isExistContextMenuByFloorId(touch.floorId)
       // ) {
       //   this.openContextMenu(touch);
-      } else {
+      } else if (isLongTouch) {
         // NOTE: ここまでに他のタッチ動作はガードしている前提なのでいける（詳細モーダル・ログイン）
         this.openContextMenu(touch);
       }
@@ -563,15 +587,15 @@ export default {
       const square = document.querySelector('#app');
       const hammer = new Hammer(square);
       hammer.get('pinch').set({ enable: true });
-      hammer.on('pinchout', this.onPinchOut);
-      hammer.on('pinchin', this.onPinchIn);
+      hammer.on('pinchout', _.debounce(this.onPinchOut, DEBOUNCE_SECOND));
+      hammer.on('pinchin', _.debounce(this.onPinchIn, DEBOUNCE_SECOND));
     },
-    onPinchOut: _.debounce((type) => {
+    onPinchOut() {
       this.decrementCurrentShowMediaLayerIndex();
-    }, DEBOUNCE_SECOND),
-    onPinchIn: _.debounce((type) => {
+    },
+    onPinchIn() {
       this.incrementCurrentShowMediaLayerIndex();
-    }, DEBOUNCE_SECOND),
+    },
     // ランダム整数
     randNum(max,min) {
       return Math.floor(Math.random()*(max-min+1)+min);
