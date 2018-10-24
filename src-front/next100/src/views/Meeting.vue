@@ -389,8 +389,6 @@ export default {
       });
     },
     onTouchEndTable(evt) {
-      createjs.Sound.play('tap');
-
       // 詳細モーダル開いているときは反応しないように
       if (this.isShowContentDetailModal) {
         return false;
@@ -446,6 +444,8 @@ export default {
         this.login(touch.floorId);
         return false;
       }
+
+      createjs.Sound.play('tap');
 
       // 既に開いているコンテキストメニューをガード
       const myContextMenu = this.$refs[`context-menu-${touch.floorId}`];
