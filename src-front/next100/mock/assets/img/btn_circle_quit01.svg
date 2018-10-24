@@ -1,30 +1,31 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 194 194">
-  <defs>
-    <style>
-      .cls-1 {
-        fill: #6e0000;
-      }
-
-      .cls-2, .cls-3 {
-        fill: #fff;
-      }
-
-      .cls-2 {
-        font-size: 23px;
-        font-family: NotoSansJP-Medium, Noto Sans JP Medium;
-        font-weight: 500;
-        letter-spacing: 0.05em;
-      }
-    </style>
-  </defs>
-  <g id="グループ化_68" data-name="グループ化 68" transform="translate(-1940 -983)">
-    <g id="グループ化_45" data-name="グループ化 45" transform="translate(117)">
-      <circle id="楕円形_26" data-name="楕円形 26" class="cls-1" cx="97" cy="97" r="97" transform="translate(1823 983)"/>
-      <text id="QUIT" class="cls-2" transform="translate(1919.964 1121.392)"><tspan x="-29.394" y="0">QUIT</tspan></text>
-    </g>
-    <g id="グループ化_66" data-name="グループ化 66" transform="translate(1940 983)">
-      <path id="パス_203" data-name="パス 203" class="cls-3" d="M99.18,62.44H70.39a1,1,0,0,0-.87.52L59.12,82.27a.983.983,0,0,0,.86,1.45H77.9Z"/>
-      <path id="パス_204" data-name="パス 204" class="cls-3" d="M132.88,82.27,122.47,62.96a.978.978,0,0,0-.87-.52h-6.02l7.8-7.8a2.913,2.913,0,0,0-4.12-4.12l-45,45a2.91,2.91,0,0,0,2.06,4.97,2.95,2.95,0,0,0,2.06-.85L94.31,83.71H132a.958.958,0,0,0,.84-.48A.9.9,0,0,0,132.88,82.27Z"/>
-    </g>
-  </g>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="レイヤー_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+	 y="0px" viewBox="0 0 194 194" style="enable-background:new 0 0 194 194;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#6E0000;}
+	.st1{enable-background:new    ;}
+	.st2{fill:#FFFFFF;}
+</style>
+<g id="グループ化_68" transform="translate(-1940 -983)">
+	<g id="グループ化_45" transform="translate(117)">
+		<circle id="楕円形_26" class="st0" cx="1920" cy="1080" r="97"/>
+		<g class="st1">
+			<path class="st2" d="M1907.1,1125.3c-0.6,0.3-1.5,0.4-2.6,0.4c-3.3,0-5.5-1.8-6.6-4.2c-3.7-0.6-6.1-3.8-6.1-8.7
+				c0-5.4,3-8.7,7.4-8.7c4.3,0,7.4,3.3,7.4,8.7c0,4.8-2.3,7.9-5.8,8.7c0.8,1.4,2.3,2.1,4,2.1c0.7,0,1.3-0.1,1.8-0.3L1907.1,1125.3z
+				 M1899.2,1119.5c2.8,0,4.6-2.6,4.6-6.6c0-4-1.8-6.4-4.6-6.4c-2.8,0-4.6,2.4-4.6,6.4C1894.6,1117,1896.4,1119.5,1899.2,1119.5z"/>
+			<path class="st2" d="M1911.2,1114.1v-9.7h2.7v9.8c0,3.8,1.5,5.1,3.6,5.1c2.1,0,3.7-1.2,3.7-5.1v-9.8h2.6v9.7
+				c0,5.5-2.5,7.6-6.3,7.6C1913.8,1121.7,1911.2,1119.6,1911.2,1114.1z"/>
+			<path class="st2" d="M1929.3,1104.5h2.7v16.9h-2.7V1104.5z"/>
+			<path class="st2" d="M1941,1106.7h-5v-2.2h12.6v2.2h-5v14.7h-2.7V1106.7z"/>
+		</g>
+	</g>
+	<g id="グループ化_66" transform="translate(1940 983)">
+		<path id="パス_203" class="st2" d="M99.2,62.4H70.4c-0.4,0-0.7,0.2-0.9,0.5L59.1,82.3c-0.3,0.5-0.1,1.1,0.4,1.3
+			c0.1,0.1,0.3,0.1,0.5,0.1h17.9L99.2,62.4z"/>
+		<path id="パス_204" class="st2" d="M132.9,82.3L122.5,63c-0.2-0.3-0.5-0.5-0.9-0.5h-6l7.8-7.8c1.1-1.1,1.1-3,0-4.1
+			c-1.1-1.1-3-1.1-4.1,0l-45,45c-1.1,1.1-1.1,3,0,4.1c0.5,0.5,1.3,0.9,2.1,0.9c0.8,0,1.5-0.3,2.1-0.8l15.9-15.9H132
+			c0.3,0,0.7-0.2,0.8-0.5C133,82.9,133.1,82.6,132.9,82.3z"/>
+	</g>
+</g>
 </svg>

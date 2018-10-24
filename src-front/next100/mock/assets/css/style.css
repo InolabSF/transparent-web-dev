@@ -167,6 +167,10 @@ body {
 	margin: 0.5em 2em 0 0;
 	width: 13.125em;
 }
+.touch-state-box .icon-touch img {
+	height: 13.125em;
+	width: 13.125em;
+}
 .btn.return {
 	margin: 1.5em auto 1.9375em;
 }
@@ -1110,6 +1114,10 @@ body {
 	margin: 0 1.25em;
 	width: 12.125em;
 }
+.btn.circle img {
+	height: 12.125em;
+	width: 12.125em;
+}
 .img-detail-container {
     align-items: center;
     display: flex;
@@ -1286,6 +1294,10 @@ body {
     top: 2.75em;
     width: 2.375em;
 }
+.context-menu .btn-close img {
+    height: 2.375em;
+    width: 2.375em;
+}
 .context-menu .qr-link-box {
     margin: 2.4375em auto;
 }
@@ -1303,6 +1315,10 @@ body {
     border-radius: 100%;
     box-sizing: border-box;
     width: 6.25em;
+}
+.context-menu .menu-icon img {
+    height: 6em;
+    width: 6em;
 }
 .context-menu .menu-list li p {
     font-size: 1.5em;
@@ -1330,9 +1346,19 @@ body {
 	margin-bottom: 0.675em;
     margin-top: 1.7143em;
 }
-.context-menu .btn.leave {
+.context-menu .leave-img {
     margin: 0 auto 2em;
     max-width: 43.9375em;
+}
+.context-menu .leave-img img {
+    width: 100%;
+}
+.btn.leave {
+	margin: 1.5em auto 1.9375em;
+}
+.btn.leave img {
+	height: 5.375em;
+	width: 25em;
 }
 
 /* Animation/Javascript
