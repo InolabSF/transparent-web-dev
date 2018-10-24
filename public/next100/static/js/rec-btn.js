@@ -205,6 +205,9 @@ function UpdateRecognizedPhrase(json) {
 function OnComplete() {
   // startBtn.disabled = false;
   // stopBtn.disabled = true;
+  setTimeout(function(){
+    activateMic();
+  }, 1000);
 }
 
 function activateMic() {
