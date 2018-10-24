@@ -137,6 +137,7 @@ export default {
     }
   },
   async created() {
+    createjs.Sound.play('grid');
     const opts = {
       wallId: this.$route.params.wallId
     };
@@ -443,6 +444,8 @@ export default {
         this.login(touch.floorId);
         return false;
       }
+
+      createjs.Sound.play('tap');
 
       // 既に開いているコンテキストメニューをガード
       const myContextMenu = this.$refs[`context-menu-${touch.floorId}`];

@@ -79,6 +79,7 @@ export default {
       });
     },
     confirmStartMeeting(floorId) {
+      createjs.Sound.play('hue');
       this.$store.commit('setState', { isSmallHue: true });
       this.$store.commit('updateLoginUser', {
         floorId,
