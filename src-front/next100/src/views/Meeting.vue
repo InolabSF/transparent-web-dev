@@ -591,10 +591,29 @@ export default {
       hammer.on('pinchin', _.debounce(this.onPinchIn, DEBOUNCE_SECOND));
     },
     onPinchOut() {
+      if (this.isGuradTouchEvent()) {
+        return false;
+      }
       this.decrementCurrentShowMediaLayerIndex();
     },
     onPinchIn() {
+      if (this.isGuradTouchEvent()) {
+        return false;
+      }
       this.incrementCurrentShowMediaLayerIndex();
+    },
+    isGuradTouchEvent() {
+      // 詳細モーダル開いているときは反応しないように
+      if (this.isShowContentDetailModal) {
+        return true;
+      }
+
+      // ピン一覧モーダル開いているときは反応しないように
+      if (this.isShowPinListModal) {
+        return true;
+      }
+
+      return false;
     },
     // ランダム整数
     randNum(max,min) {
