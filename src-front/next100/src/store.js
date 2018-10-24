@@ -3,13 +3,14 @@ import Vuex from "vuex";
 
 Vue.use(Vuex);
 
-const loginIUsersStringFromLS = localStorage.getItem('loginUsers');
-const loginUsersFromLS = loginIUsersStringFromLS ? JSON.parse(loginIUsersStringFromLS) : [];
-const res = !!loginIUsersStringFromLS && confirm(`前回のログイン状態を復元しますか？\n${loginUsersFromLS.map(u => `電極${u.floorId}: ${u.name}`).join('\n')}`);
-const defaultLoginUsers = res ? loginUsersFromLS : [];
-if (!res) {
-  localStorage.removeItem('loginUsers');
-}
+const defaultLoginUsers = [];
+// const loginIUsersStringFromLS = localStorage.getItem('loginUsers');
+// const loginUsersFromLS = loginIUsersStringFromLS ? JSON.parse(loginIUsersStringFromLS) : [];
+// const res = !!loginIUsersStringFromLS && confirm(`前回のログイン状態を復元しますか？\n${loginUsersFromLS.map(u => `電極${u.floorId}: ${u.name}`).join('\n')}`);
+// const defaultLoginUsers = res ? loginUsersFromLS : [];
+// if (!res) {
+//   localStorage.removeItem('loginUsers');
+// }
 
 export default new Vuex.Store({
   state: {
