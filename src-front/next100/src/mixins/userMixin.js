@@ -24,6 +24,7 @@ export default {
       };
 
       if (this.$store.state.loginUsers.length < USER_LIMIT) {
+        createjs.Sound.play('login');
         this.$store.commit('addLoginUser', user);
         this.syncLoginUserToLocalStorage();
       } else {
@@ -60,12 +61,14 @@ export default {
       const user = this.getUserByFloorId(floorId);
       const isPinned = this.isPinedByFloorId(floorId, content.id);
       if (isPinned) {
+        createjs.Sound.play('tap_cancel');
         this.$store.commit('deletePinByFloorId', {
           floorId,
           contentId: content.id,
         });
         this.deletePinByFloorId(content.id, user.name);
       } else {
+        createjs.Sound.play('tap_pin');
         this.$store.commit('addPinByFloorId', {
           floorId,
           content,

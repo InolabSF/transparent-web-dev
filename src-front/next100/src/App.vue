@@ -21,6 +21,9 @@ export default {
     DefaultLayout,
     MobileLayout
   },
+  mounted() {
+    this.initSound();
+  },
   created() {
     setTimeout(() => {
       this.showSettingModal();
@@ -34,6 +37,18 @@ export default {
   methods: {
     showSettingModal () {
       this.$modal.show('hello-world');
+    },
+    initSound() {
+      createjs.Sound.registerPlugins([
+        createjs.HTMLAudioPlugin
+      ]);
+      createjs.Sound.alternateExtensions = ['mp3'];
+      createjs.Sound.registerSound('/next100/static/sounds/tap.mp3', 'tap');
+      createjs.Sound.registerSound('/next100/static/sounds/tap_cancel.mp3', 'tap_cancel');
+      createjs.Sound.registerSound('/next100/static/sounds/tap_pin.mp3', 'tap_pin');
+      createjs.Sound.registerSound('/next100/static/sounds/login.mp3', 'login');
+      createjs.Sound.registerSound('/next100/static/sounds/hue.mp3', 'hue');
+      createjs.Sound.registerSound('/next100/static/sounds/grid.mp3', 'grid');
     }
   },
 }

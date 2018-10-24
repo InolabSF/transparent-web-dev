@@ -137,6 +137,7 @@ export default {
     }
   },
   async created() {
+    createjs.Sound.play('grid');
     const opts = {
       wallId: this.$route.params.wallId
     };
@@ -388,6 +389,8 @@ export default {
       });
     },
     onTouchEndTable(evt) {
+      createjs.Sound.play('tap');
+
       // 詳細モーダル開いているときは反応しないように
       if (this.isShowContentDetailModal) {
         return false;
