@@ -433,7 +433,6 @@ body {
 	text-align: center;
 	top: 50%;
 	width: 62.5em;
-	z-index: -1;
 }
 #user-layer .user-box::before,
 #user-layer .user-box::after {
