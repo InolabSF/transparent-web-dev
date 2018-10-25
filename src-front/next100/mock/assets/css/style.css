@@ -171,12 +171,19 @@ body {
 	height: 13.125em;
 	width: 13.125em;
 }
+.controls {
+	margin: 1.5em auto 1.9375em;
+}
+.controls div.btn {
+    display: inline-block;
+    margin: 0 0.5em;
+}
 .btn.return {
 	margin: 1.5em auto 1.9375em;
 }
 .btn.return img {
 	height: 5.375em;
-	width: 25em;
+	width: 17.5em;
 }
 
 /* Quit Talk Confirm
@@ -1370,7 +1377,7 @@ body {
     margin-top: 1.7143em;
 }
 .context-menu .leave-img {
-    margin: 0 auto 2em;
+    margin: 0 auto;
     max-width: 43.9375em;
 }
 .context-menu .leave-img img {
@@ -1381,7 +1388,7 @@ body {
 }
 .btn.leave img {
 	height: 5.375em;
-	width: 25em;
+	width: 17.5em;
 }
 
 /* Animation/Javascript
