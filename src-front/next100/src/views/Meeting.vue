@@ -50,6 +50,11 @@
           </div>
         </div>
       </transition-group>
+      <div class="recent-container" v-if="currentShowMediaLayerIndex < layers.length">
+        <div class="recent-wrapper" ref="returnLatestButton">
+          <div class="btn circle"><a><img src="/next100/static/img/btn_circle_return02.svg" alt="RETURN"></a></div>
+        </div>
+      </div>
     </div>
     <div id="media-send-leyer">
       <div class="send-area"></div>
@@ -77,7 +82,6 @@
       :status="status"
       :ref="status.refName"
       :onClickPinList="onClickShowPinListModal"
-      :onClickExitMeeting="onClickConfirmExit"
       :onClickCloseButton="() => { closeContextMenu(status.floorId) }"
     ></context-menu>
     <pin-list
@@ -102,7 +106,7 @@
 </style>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 import client from "@/core/ApiClient";
 import _ from "lodash";
 import moment from "moment";
@@ -195,6 +199,9 @@ export default {
       'isConfirmExit',
       'isShowPinListModal',
     ]),
+    ...mapGetters([
+     'isShowUserOverlay'
+    ]),
     minLayerIndex() {
       return this.currentShowMediaLayerIndex - this.maxLayerNum;
     },
@@ -245,15 +252,13 @@ export default {
   //   }
   // },
   methods: {
+    onClickReturnLatestLayer() {
+      alert("戻る！！！");
+      this.updateLatestCurrentShowMediaLayerIndex();
+    },
     onClickShowPinListModal() {
       this.$store.commit('setState', {
         isConfirmExit: false,
-        isShowPinListModal: true,
-      });
-    },
-    onClickConfirmExit() {
-      this.$store.commit('setState', {
-        isConfirmExit: true,
         isShowPinListModal: true,
       });
     },
@@ -359,7 +364,10 @@ export default {
         this.layers = layers.reverse();
       }
 
-      this.updateLatestCurrentShowMediaLayerIndex();
+      // 3番目以内くらいだったら最新にする
+      if (this.currentShowMediaLayerIndex >= this.layers.length - 3) {
+        this.updateLatestCurrentShowMediaLayerIndex();
+      }
     },
     onClickImage({floorId, contentId}) {
       this.openContentDetailModal({floorId, contentId});
@@ -411,27 +419,35 @@ export default {
       }
 
       // TODO シーン判別のようなものを追加
-      // TODO 長押しで開く
       const touch = evt.detail[0];
       const currentUser = this.$store.state.loginUsers.find(u => u.floorId === touch.floorId);
 
-      // ユーザー終了確認モーダル
-      if (
-        this.$store.getters.isShowUserOverlay &&
-        currentUser.isConfirmTalkEndModal
-      ) {
-        this.$store.commit('setState', {
-          isShowPinListModal: true,
-          isConfirmExit: true,
-        });
-
-        this.$store.commit('updateAllLoginUser', {
-          params: {
-            isConfirmTalkEndModal: false
-          }
-        });
-        return false;
+      // 最新へ戻る
+      const returnLatestButton = this.$refs.returnLatestButton;
+      if (returnLatestButton) {
+        if (this.isTouchObjectByElement(touch, returnLatestButton)) {
+          this.updateLatestCurrentShowMediaLayerIndex();
+          return false;
+        }
       }
+
+      // ユーザー終了確認モーダル
+      // if (
+      //   this.$store.getters.isShowUserOverlay &&
+      //   currentUser.isConfirmTalkEndModal
+      // ) {
+      //   this.$store.commit('setState', {
+      //     isShowPinListModal: true,
+      //     isConfirmExit: true,
+      //   });
+      //
+      //   this.$store.commit('updateAllLoginUser', {
+      //     params: {
+      //       isConfirmTalkEndModal: false
+      //     }
+      //   });
+      //   return false;
+      // }
 
       // ピンボタン
       const touchedPin = this.$refs.pinButtonOnList && this.$refs.pinButtonOnList.find(p => {
@@ -632,7 +648,12 @@ export default {
 
       // モーダル開いてしばらくは操作させない
       if (this.isContentDetailGuardTime()) {
-        return false;
+        return true;
+      }
+
+      // 終了確認モーダル
+      if (this.isShowUserOverlay) {
+        return true;
       }
 
       return false;

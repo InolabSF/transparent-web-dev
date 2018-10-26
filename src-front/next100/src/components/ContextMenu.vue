@@ -1,11 +1,11 @@
 <template>
   <div v-if="isLeaveConfirm" class="context-menu leave-table context-menu-wrapper" :style="status.style" :data-color="myColor">
-    <!--<p class="state-text sub">ARE YOU SURE?</p>-->
-    <!--<div class="btn leave"><a @click="onClickLeave"><img src="/next100/static/img/btn_leave-table01.svg" alt="LEAVE TABLE"></a></div>-->
-    <!--<div class="btn return"><a @click="isLeaveConfirm = false"><img src="/next100/static/img/btn_return01.svg" alt="RETURN"></a></div>-->
     <p class="state-text sub animated fadeInUp">ARE YOU SURE?</p>
-    <div class="btn leave animated zoomIn fast delay-1s"><a @click="onClickLeave"><img src="/next100/static/img/btn_leave-table01.svg" alt="LEAVE TABLE"></a></div>
-    <div class="btn return animated fadeInUp fast delay-2s"><a @click="isLeaveConfirm = false"><img src="/next100/static/img/btn_return01.svg" alt="RETURN"></a></div>
+    <div class="leave-img animated zoomIn fast delay-1s"><img src="/next100/static/img/leave-table01.svg" alt="LEAVE TABLE"></div>
+    <div class="controls">
+      <div class="btn return animated fadeInUp fast delay-2s"><a @click="isLeaveConfirm = false"><img src="/next100/static/img/btn_return01.svg" alt="戻る"></a></div>
+      <div class="btn leave animated fadeInUp fast delay-2s"><a @click="onClickLeave"><img src="/next100/static/img/btn_leave01.svg" alt="退席する"></a></div>
+    </div>
   </div>
   <div v-else class="context-menu context-menu-wrapper" :style="status.style" :data-color="myColor">
     <div class="btn-close"><a @click="onClickCloseButton"><img src="/next100/static/img/btn_close01.svg" alt="×"></a></div>
@@ -63,10 +63,6 @@ export default {
       required: true
     },
     onClickPinList: {
-      type: Function,
-      required: true
-    },
-    onClickExitMeeting: {
       type: Function,
       required: true
     },
