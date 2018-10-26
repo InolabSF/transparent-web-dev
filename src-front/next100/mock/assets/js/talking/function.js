@@ -84,12 +84,17 @@ jQuery(function($){
     });
     $('#talking #hue').addClass('is-end');
     $('#talking-start #hue').addClass('is-end');
+    $('#audio-visual').addClass('is-active');
     setTimeout(function(){ // 確認用delay
         $('#talking-start .user-box').addClass('is-active');
         $('#talking-start #grid-layer').addClass('is-move');
         setTimeout(function(){ // 確認用delay
+            if(timer)cancelAnimationFrame(timer);
+            $('#audio-visual').removeClass('is-active');
+        },4000);
+        setTimeout(function(){ // 確認用delay
             $('#talking-start .post').addClass('transit');
-        },2000);
+        },5000);
     },1000);
     
     // 効果音設定
@@ -154,5 +159,41 @@ jQuery(function($){
         e.preventDefault();
         tapPinSound();
     });
+    
+    // Recording Animation
+    var ctx, analyser, frequencies, getByteFrequencyDataAverage, audioVisual, draw, timer;
+
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    ctx = new AudioContext();
+
+    analyser = ctx.createAnalyser();
+    frequencies = new Uint8Array(analyser.frequencyBinCount);
+
+    getByteFrequencyDataAverage = function() {
+        analyser.getByteFrequencyData(frequencies);
+        return frequencies.reduce(function(previous, current) {
+            return previous + current;
+        }) / analyser.frequencyBinCount;
+    };
+
+    navigator.mediaDevices.getUserMedia({audio: true})
+        .then(function(stream) {
+            window.hackForMozzila = stream;
+            ctx.createMediaStreamSource(stream)
+              // AnalyserNodeに接続
+              .connect(analyser);
+        })
+        .catch(function(err) {
+            console.log(err.message);
+        });
+
+    // アニメーションする親要素
+    audioVisual = $('#audio-visual');
+    function draw() {
+        audioVisual.find('.recording-state').css({opacity: getByteFrequencyDataAverage() / 255 + 0.25});
+        audioVisual.find('.recording-state-wrapper').css({transform: 'scale('+(getByteFrequencyDataAverage() / 255 + 1)+')'});
+        timer = requestAnimationFrame(draw);
+    };
+    timer = requestAnimationFrame(draw);
     
 });
