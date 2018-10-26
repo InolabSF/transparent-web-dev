@@ -19,7 +19,7 @@
                   <div class="media-photo" :style="{ backgroundImage: `url(${pin.img_url})` }">
                     <img src="https://tse1.mm.bing.net/th?id=OIP.YKjBVc2Xt1k57Z91kGx5nQHaKw&amp;pid=Api" class="img">
                     <ul class="pin-list">
-                      <li data-color="green"></li>
+                      <!--<li data-color="green"></li>-->
                     </ul>
                   </div>
                 </li>

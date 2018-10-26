@@ -67,7 +67,7 @@ export default {
       this.$store.state.loginUsers.forEach(u => {
         const isPinned = !!u.pinnedContents.find(c => c.id === contentId);
         if (isPinned) {
-          const color = this.getColorMap()[u.floorId];
+          const color = this.getColorByName(u.name);
           colors.push(color);
         }
       });

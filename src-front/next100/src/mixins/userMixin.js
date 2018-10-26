@@ -1,5 +1,18 @@
 const USER_LIMIT = 4;
 import client from "@/core/ApiClient";
+import ShortId from 'shortid';
+ShortId.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+*');
+import _ from 'lodash';
+const COLORS = [
+  'green',
+  'red',
+  'yellow',
+  'blue',
+  'purple',
+  'cyan',
+  'orange',
+  'pink'
+];
 
 export default {
   methods: {
@@ -16,7 +29,7 @@ export default {
 
       const user = {
         floorId: floorId,
-        name: `guest100${floorId}`,
+        name: this.getName(),
         pinnedContents: [],
         isStartTalkModal: false,
         isConfirmTalkEndModal: false,
@@ -35,7 +48,25 @@ export default {
       this.$store.commit('removeLoginUser', floorId);
       this.syncLoginUserToLocalStorage();
     },
+    getName() {
+      const uuid = ShortId.generate();
+      const existColors = this.$store.state.loginUsers.map(u => this.getColorByName(u.name));
+      const enableColors = COLORS.filter(c => !existColors.includes(c));
+      const color = enableColors[_.random(enableColors.length - 1)]
+      const name = `${uuid}-${color}`;
+      return name;
+    },
+    getColorByName(name) {
+      const splitted = name.split('-');
+      if (splitted.length <= 1) {
+        return 'red';
+      } else {
+        return splitted[1];
+      }
+    },
     syncLoginUserToLocalStorage() {
+      // 使わなくなった
+      return false;
       localStorage.setItem('loginUsers', JSON.stringify(this.$store.state.loginUsers));
     },
     getStyleByFloorId(floorId) {

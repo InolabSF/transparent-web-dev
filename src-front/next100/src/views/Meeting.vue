@@ -32,7 +32,7 @@
                 <!--<div class="bg"></div>-->
                 <img ref="images" :src="content.img_url" class="img" :data-content-id="content.id">
                 <ul class="pin-list">
-                  <li v-for="(pin, k) in content.usersPinContents" :key="k" :data-color="getColorMap()[pin.user.floorId]"></li>
+                  <li v-for="(pin, k) in content.usersPinContents" :key="k" :data-color="getColorByName(pin.user.name)"></li>
                   <!--<li data-color="yellow"></li>-->
                 </ul>
                 <button class="btn-pin" ref="pinButtonOnList" :data-content-id="content.id"></button>

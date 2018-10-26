@@ -117,8 +117,7 @@ export default {
       });
     },
     userColor() {
-      const colorMap = this.getColorMap();
-      return colorMap[this.user.floorId];
+      return this.getColorByName(this.user.name);
     },
   }
 }
