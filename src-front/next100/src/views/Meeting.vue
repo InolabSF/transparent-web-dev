@@ -41,7 +41,11 @@
             <div class="item" :style="getImageStyle(layerIndex, layer.related_contents.length)">
               <div class="keyword-box" data-searchid="27093">
                 <!-- TODO 時間 -->
-                <div class="time-stamp">{{ moment(layer.created_at).format('H:m:s') }}</div>
+                <!--<div class="time-stamp">{{ moment(layer.created_at).format('H:m:s') }}</div>-->
+                <div class="number">
+                  <span class="numer">{{ layerIndex }}</span>
+                  <span class="vinculum">/</span>
+                  <span class="denom">{{ layers.length - 1 }}</span></div>
                 <div class="keyword-text">
                   <span>{{ layer.words.join(' + ') }}</span>
                 </div>
