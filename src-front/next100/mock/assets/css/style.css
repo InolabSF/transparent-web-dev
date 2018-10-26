@@ -1215,6 +1215,13 @@ body {
 .img-detail-box .media-photo .img {
 	max-height: 44.4375em;
 }
+.img-detail-box .detail-keyword {
+	color: #FFF;
+	font-size: 2em;
+	font-weight: 500;
+	letter-spacing: 0.05em;
+	margin: 0.25em auto;
+}
 .img-detail-box .detail-title {
 	color: #FFF;
 	font-size: 2.5em;
@@ -1223,11 +1230,12 @@ body {
 	margin: auto;
 }
 .img-detail-box .detail-desc {
-	color: #FFF;
-	font-size: 1.875em;
-	font-weight: 500;
+	color: #CCC;
+	font-size: 1em;
+    font-style: italic;
+	font-weight: 400;
 	letter-spacing: 0.05em;
-	margin: 0.25em auto;
+	margin: 1em auto 0;
 }
 .img-detail-box .btn.delete {
     color: #FFF;
