@@ -118,6 +118,39 @@ body {
 	position: absolute;
 	width: 100%;
 }
+.touch-state-box.guide-step-here {
+    font-size: 75%;
+    bottom: 7em;
+}
+.touch-state-box.guide-step-here .state-text > * {
+	animation: slowFlash 26s linear infinite;
+}
+.touch-state-box.guide-step-here .arrow {
+    display: inline-block;
+    margin: auto -0.25em;
+    position: relative;
+    top: 0.75em;
+}
+@keyframes slowFlash {
+	0% {
+		opacity: 1;
+	}
+	20% {
+		opacity: 1;
+	}
+	30% {
+		opacity: 0;
+	}
+	70% {
+		opacity: 0;
+	}
+	80% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 1;
+	}
+}
 
 /* Talk Welcome
 ======================================== */
