@@ -41,7 +41,7 @@
             <div class="media-container" v-masonry origin-left="false" transition-duration="1s" item-selector=".item">
               <div v-masonry-tile class="item" v-for="(content, j) in search.related_contents_all">
                 <div class="media-photo">
-                  <img :src="content.img_url" class="img">
+                  <img :src="content.img_url" class="img" @click="() => { onClickImage(content) }">
                   <ul class="pin-list" v-if="content.pins">
                     <li v-for="(pin, k) in content.pins" :key="k" :data-color="getColorMap()[k+1]"></li>
                   </ul>
@@ -75,6 +75,29 @@
     <footer id="footer">
       <p id="copyright"><small>© 2018 Panasonic Corporation</small></p>
     </footer>
+
+    <transition enter-active-class="animated fadeIn" enter-leave-class="animated fadeOut">
+      <div class="modal-mask" v-if="isShowModal">
+        <div class="modal-wrapper" @click.stop="onClickCloseModal">
+          <div class="modal-close">
+            <img src="/next100/static/img/btn_close01.svg">
+          </div>
+          <div class="modal-container">
+            <div class="modal-body">
+              <div>
+                <a :href="modalContent.url" target="_blank"><img :src="modalContent.img_url"></a>
+              </div>
+              <div class="modal-title">
+                <a :href="modalContent.url" target="_blank">{{ modalContent.title }}</a>
+              </div>
+              <div class="modal-description">
+                <a :href="modalContent.url" target="_blank">{{ modalContent.desc }}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -83,6 +106,7 @@ import Vue from 'vue';
 import client from "@/core/ApiClient";
 import moment from "moment";
 import { VueMasonryPlugin } from 'vue-masonry';
+import $ from 'jquery';
 
 Vue.use(VueMasonryPlugin);
 
@@ -96,6 +120,8 @@ export default {
       pinnedContents: [],
       searches: [],
       contentsLimitNum: 4,
+      isShowModal: false,
+      modalContent: null,
     };
   },
   mounted() {
@@ -198,13 +224,21 @@ export default {
   //   }
   // },
   methods: {
+    onClickImage(content) {
+      this.isShowModal = true;
+      this.modalContent = content;
+    },
+    onClickCloseModal() {
+      this.isShowModal = false;
+    },
     startScrollEvent() {
       window.addEventListener('scroll', (evt) => {
-        const bodyHeight = document.body.getBoundingClientRect().height;
-        const isBottom = document.documentElement.scrollTop >= bodyHeight - window.innerHeight - 500;
+        const bodyHeight = $('body').height();
+        const isBottom = $(window).scrollTop() >= bodyHeight - $(window).height() - 1000;
+
         const isMainTab = this.currentTabIndex === 0;
         if (isBottom && isMainTab) {
-          this.contentsLimitNum += 10;
+          this.contentsLimitNum += 4;
         }
       });
     },
@@ -240,3 +274,62 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.modal-mask {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .5);
+  display: table;
+  transition: opacity .3s ease;
+}
+
+.modal-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.modal-container {
+  width: 100%;
+  max-width: 640px;
+  margin: 0px auto;
+  padding: 20px 30px;
+  /*background-color: #fff;*/
+  color: #fff;
+  border-radius: 2px;
+  /*box-shadow: 0 2px 8px rgba(0, 0, 0, .33);*/
+  transition: all .3s ease;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.modal-close {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 20px;
+  height: 20px;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.modal-title {
+  margin-top: 1em;
+  font-weight: bold;
+  a {
+    color: #fff;
+  }
+}
+
+.modal-description {
+  margin-top: 1em;
+  a {
+    color: #fff;
+  }
+}
+</style>

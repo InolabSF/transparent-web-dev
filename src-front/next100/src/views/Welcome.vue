@@ -51,14 +51,15 @@ export default {
       const user = this.loginUsers.find(u => u.floorId === floorId);
       const isLoggedin = !!user;
 
-      if (isLoggedin && user.isStartTalkModal) {
-        this.startmeeting();
-        this.$store.commit('updateLoginUser', {
-          floorId,
-          params: {
-            isStartTalkModal: false,
-          }
-        });
+      if (false && isLoggedin && user.isStartTalkModal) {
+        // NOTE: モーダル内のボタンに移行
+        // this.startmeeting();
+        // this.$store.commit('updateLoginUser', {
+        //   floorId,
+        //   params: {
+        //     isStartTalkModal: false,
+        //   }
+        // });
       } else if (isLoggedin) {
         this.confirmStartMeeting(floorId);
       } else {
@@ -106,6 +107,9 @@ export default {
       'loginUsers',
       'isStartTalkModal'
     ])
+  },
+  beforeDestroy() {
+    window.removeEventListener('CUSTOM_TOUCH_START', this.onClickTable);
   }
 };
 </script>

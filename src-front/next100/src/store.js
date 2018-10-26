@@ -24,6 +24,8 @@ export default new Vuex.Store({
     isStartTalkModal: false,
     isSmallHue: false,
     isListeningMic: true,
+    isConfirmExit: false,
+    isShowPinListModal: false,
   },
   mutations: {
     setState(state, payload) {

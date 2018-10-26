@@ -167,12 +167,23 @@ body {
 	margin: 0.5em 2em 0 0;
 	width: 13.125em;
 }
+.touch-state-box .icon-touch img {
+	height: 13.125em;
+	width: 13.125em;
+}
+.controls {
+	margin: 1.5em auto 1.9375em;
+}
+.controls div.btn {
+    display: inline-block;
+    margin: 0 0.5em;
+}
 .btn.return {
 	margin: 1.5em auto 1.9375em;
 }
 .btn.return img {
 	height: 5.375em;
-	width: 25em;
+	width: 17.5em;
 }
 
 /* Quit Talk Confirm
@@ -519,7 +530,7 @@ body {
 #user-layer .user-box[data-color="orange"]::before {
 	background-color: #FF8C00;
 }
-.pin-list[data-color="orange"] li,
+.pin-list li[data-color="orange"],
 #user-layer .user-box[data-color="orange"] .user-avatar {
 	background: #FF8C00;
 	background: -moz-linear-gradient(-30deg, #FF8C00 0%, #FFF 100%);
@@ -623,11 +634,33 @@ body {
 #media-leyer .post .media-container .item {
 	position: absolute;
 }
+#media-leyer .recent-container,
+#media-leyer .recent-wrapper {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#media-leyer .recent-container {
+    height: 100vh;
+    width: 100%;
+}
+#media-leyer .recent-wrapper {
+    height: 25em;
+    position: relative;
+    width: 25em;
+}
+#media-leyer .recent .return {
+    margin: auto;
+}
 .keyword-box {
 	display: inline-block;
+    text-align: right;
 }
+.keyword-box .number,
 .keyword-box .time-stamp {
 	color: #FFF;
+    display: inline-block;
 	font-family: "Lato", "Noto Sans JP", "游ゴシック体", "Yu Gothic", YuGothic, "Hiragino Sans", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", "sans-serif";
 	font-size: 1.625em;
 	letter-spacing: 0.09em;
@@ -635,6 +668,7 @@ body {
 }
 .keyword-box .keyword-text {
 	position: relative;
+    text-align: left;
 }
 .keyword-box .keyword-text::before,
 .keyword-box .keyword-text::after {
@@ -1110,6 +1144,10 @@ body {
 	margin: 0 1.25em;
 	width: 12.125em;
 }
+.btn.circle img {
+	height: 12.125em;
+	width: 12.125em;
+}
 .img-detail-container {
     align-items: center;
     display: flex;
@@ -1223,56 +1261,56 @@ body {
     transform: rotate(-20deg);
     width: 38.25em;
 }
-.context-menu-wrapper[data-color="red"]::before {
+.context-menu[data-color="red"] .context-menu-wrapper::before {
 	background: #F00;
 	background: -moz-linear-gradient(-30deg, #F00 0%, #000 100%);
 	background: -webkit-linear-gradient(-30deg, #F00 0%,#000 100%);
 	background: linear-gradient(150deg, #F00 0%,#000 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#F00', endColorstr='#000',GradientType=1 );
 }
-.context-menu-wrapper[data-color="blue"]::before {
+.context-menu[data-color="blue"] .context-menu-wrapper::before {
 	background: #00F;
 	background: -moz-linear-gradient(-30deg, #00F 0%, #000 100%);
 	background: -webkit-linear-gradient(-30deg, #00F 0%,#000 100%);
 	background: linear-gradient(150deg, #00F 0%,#000 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00F', endColorstr='#000',GradientType=1 );
 }
-.context-menu-wrapper[data-color="green"]::before {
+.context-menu[data-color="green"] .context-menu-wrapper::before {
 	background: #0F0;
 	background: -moz-linear-gradient(-30deg, #0F0 0%, #000 100%);
 	background: -webkit-linear-gradient(-30deg, #0F0 0%,#000 100%);
 	background: linear-gradient(150deg, #0F0 0%,#000 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0F0', endColorstr='#000',GradientType=1 );
 }
-.context-menu-wrapper[data-color="yellow"]::before {
+.context-menu[data-color="yellow"] .context-menu-wrapper::before {
 	background: #FF0;
 	background: -moz-linear-gradient(-30deg, #FF0 0%, #000 100%);
 	background: -webkit-linear-gradient(-30deg, #FF0 0%,#000 100%);
 	background: linear-gradient(150deg, #FF0 0%,#000 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FF0', endColorstr='#000',GradientType=1 );
 }
-.context-menu-wrapper[data-color="orange"]::before {
+.context-menu[data-color="orange"] .context-menu-wrapper::before {
 	background: #FF8C00;
 	background: -moz-linear-gradient(-30deg, #FF8C00 0%, #000 100%);
 	background: -webkit-linear-gradient(-30deg, #FF8C00 0%,#000 100%);
 	background: linear-gradient(150deg, #FF8C00 0%,#000 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FF8C00', endColorstr='#000',GradientType=1 );
 }
-.context-menu-wrapper[data-color="pink"]::before {
+.context-menu[data-color="pink"] .context-menu-wrapper::before {
 	background: #FF1493;
 	background: -moz-linear-gradient(-30deg, #FF1493 0%, #000 100%);
 	background: -webkit-linear-gradient(-30deg, #FF1493 0%,#000 100%);
 	background: linear-gradient(150deg, #FF1493 0%,#000 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FF1493', endColorstr='#000',GradientType=1 );
 }
-.context-menu-wrapper[data-color="cyan"]::before {
+.context-menu[data-color="cyan"] .context-menu-wrapper::before {
 	background: #0FF;
 	background: -moz-linear-gradient(-30deg, #0FF 0%, #000 100%);
 	background: -webkit-linear-gradient(-30deg, #0FF 0%,#000 100%);
 	background: linear-gradient(150deg, #0FF 0%,#000 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0FF', endColorstr='#000',GradientType=1 );
 }
-.context-menu-wrapper[data-color="purple"]::before {
+.context-menu[data-color="purple"] .context-menu-wrapper::before {
 	background: #800080;
 	background: -moz-linear-gradient(-30deg, #800080 0%, #000 100%);
 	background: -webkit-linear-gradient(-30deg, #800080 0%,#000 100%);
@@ -1284,6 +1322,10 @@ body {
     position: absolute;
     right: 2.75em;
     top: 2.75em;
+    width: 2.375em;
+}
+.context-menu .btn-close img {
+    height: 2.375em;
     width: 2.375em;
 }
 .context-menu .qr-link-box {
@@ -1303,6 +1345,10 @@ body {
     border-radius: 100%;
     box-sizing: border-box;
     width: 6.25em;
+}
+.context-menu .menu-icon img {
+    height: 6em;
+    width: 6em;
 }
 .context-menu .menu-list li p {
     font-size: 1.5em;
@@ -1330,9 +1376,19 @@ body {
 	margin-bottom: 0.675em;
     margin-top: 1.7143em;
 }
-.context-menu .btn.leave {
-    margin: 0 auto 2em;
+.context-menu .leave-img {
+    margin: 0 auto;
     max-width: 43.9375em;
+}
+.context-menu .leave-img img {
+    width: 100%;
+}
+.btn.leave {
+	margin: 1.5em auto 1.9375em;
+}
+.btn.leave img {
+	height: 5.375em;
+	width: 17.5em;
 }
 
 /* Animation/Javascript

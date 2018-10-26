@@ -1,11 +1,11 @@
 <template>
   <div v-if="isLeaveConfirm" class="context-menu leave-table context-menu-wrapper" :style="status.style" :data-color="myColor">
-    <!--<p class="state-text sub">ARE YOU SURE?</p>-->
-    <!--<div class="btn leave"><a @click="onClickLeave"><img src="/next100/static/img/btn_leave-table01.svg" alt="LEAVE TABLE"></a></div>-->
-    <!--<div class="btn return"><a @click="isLeaveConfirm = false"><img src="/next100/static/img/btn_return01.svg" alt="RETURN"></a></div>-->
     <p class="state-text sub animated fadeInUp">ARE YOU SURE?</p>
-    <div class="btn leave animated zoomIn fast delay-1s"><a @click="onClickLeave"><img src="/next100/static/img/btn_leave-table01.svg" alt="LEAVE TABLE"></a></div>
-    <div class="btn return animated fadeInUp fast delay-2s"><a @click="isLeaveConfirm = false"><img src="/next100/static/img/btn_return01.svg" alt="RETURN"></a></div>
+    <div class="leave-img animated zoomIn fast delay-1s"><img src="/next100/static/img/leave-table01.svg" alt="LEAVE TABLE"></div>
+    <div class="controls">
+      <div class="btn return animated fadeInUp fast delay-2s"><a @click="onClickLeaveCancel"><img src="/next100/static/img/btn_return01.svg" alt="戻る"></a></div>
+      <div class="btn leave animated fadeInUp fast delay-2s"><a @click="onClickLeave"><img src="/next100/static/img/btn_leave01.svg" alt="退席する"></a></div>
+    </div>
   </div>
   <div v-else class="context-menu context-menu-wrapper" :style="status.style" :data-color="myColor">
     <div class="btn-close"><a @click="onClickCloseButton"><img src="/next100/static/img/btn_close01.svg" alt="×"></a></div>
@@ -36,7 +36,7 @@
         </a>
       </li>
       <li class="leave">
-        <a @click="isLeaveConfirm = true">
+        <a @click="onClickLeaveConfirm">
           <figure class="menu-icon"><img src="/next100/static/img/btn_icon_leave01.svg" alt=""></figure>
           <p>退席する</p>
         </a>
@@ -66,10 +66,6 @@ export default {
       type: Function,
       required: true
     },
-    onClickExitMeeting: {
-      type: Function,
-      required: true
-    },
     onClickCloseButton: {
       type: Function,
       required: true
@@ -84,12 +80,14 @@ export default {
     onClickToggleMic() {
       const isActive = window.isActive;
       if (isActive) {
+        createjs.Sound.play('tap_cancel');
         // alert('会話ログの収集を止めます');
         this.$store.commit('setState', {
           isListeningMic: false,
         });
         killMic();
       } else {
+        createjs.Sound.play('tap');
         // alert('会話ログの収集を再開します');
         this.$store.commit('setState', {
           isListeningMic: true,
@@ -121,6 +119,14 @@ export default {
         }
       });
     },
+    onClickLeaveConfirm() {
+      createjs.Sound.play('tap_cancel');
+      this.isLeaveConfirm = true;
+    },
+    onClickLeaveCancel() {
+      createjs.Sound.play('tap');
+      this.isLeaveConfirm = true;
+    }
   },
   computed: {
     myColor() {
