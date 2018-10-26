@@ -386,12 +386,15 @@ export default {
       this.contentDetailOpenTime = new Date().getTime();
     },
     closeContentDetailModal() {
+      this.isShowContentDetailModal = false;
+    },
+    isContentDetailGuardTime() {
       const waitTime = 1000;
       const time = new Date().getTime() - this.contentDetailOpenTime;
       if (time <= waitTime) {
-        return false;
+        return true;
       }
-      this.isShowContentDetailModal = false;
+      return false;
     },
     onTouchStartTable(evt) {
       const touch = evt.detail[0];
@@ -403,13 +406,7 @@ export default {
       });
     },
     onTouchEndTable(evt) {
-      // 詳細モーダル開いているときは反応しないように
-      if (this.isShowContentDetailModal) {
-        return false;
-      }
-
-      // ピン一覧モーダル開いているときは反応しないように
-      if (this.isShowPinListModal) {
+      if (this.isGuardTouchEvent()) {
         return false;
       }
 
@@ -611,18 +608,18 @@ export default {
       hammer.on('pinchin', _.debounce(this.onPinchIn, DEBOUNCE_SECOND));
     },
     onPinchOut() {
-      if (this.isGuradTouchEvent()) {
+      if (this.isGuardTouchEvent()) {
         return false;
       }
       this.decrementCurrentShowMediaLayerIndex();
     },
     onPinchIn() {
-      if (this.isGuradTouchEvent()) {
+      if (this.isGuardTouchEvent()) {
         return false;
       }
       this.incrementCurrentShowMediaLayerIndex();
     },
-    isGuradTouchEvent() {
+    isGuardTouchEvent() {
       // 詳細モーダル開いているときは反応しないように
       if (this.isShowContentDetailModal) {
         return true;
@@ -631,6 +628,11 @@ export default {
       // ピン一覧モーダル開いているときは反応しないように
       if (this.isShowPinListModal) {
         return true;
+      }
+
+      // モーダル開いてしばらくは操作させない
+      if (this.isContentDetailGuardTime()) {
+        return false;
       }
 
       return false;

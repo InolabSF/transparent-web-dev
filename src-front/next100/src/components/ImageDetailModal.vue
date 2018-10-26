@@ -98,7 +98,10 @@ export default {
       this.onClose();
     },
     onClickCloseArea() {
-      this.onClose();
+      // NOTE 裏のモーダルが開くのを防ぐ
+      setTimeout(() => {
+        this.onClose();
+      }, 0);
     },
     startListenCustomTouchStart() {
       window.addEventListener('CUSTOM_TOUCH_START', this.onTouchArea);
