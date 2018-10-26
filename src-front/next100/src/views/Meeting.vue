@@ -76,13 +76,12 @@
       :key="i"
       :status="status"
       :ref="status.refName"
-      :onClickPinList="() => { isShowPinListModal = true }"
-      :onClickExitMeeting="() => { isShowPinListModal = true; isConfirmExit = true; }"
+      :onClickPinList="onClickShowPinListModal"
+      :onClickExitMeeting="onClickConfirmExit"
       :onClickCloseButton="() => { closeContextMenu(status.floorId) }"
     ></context-menu>
     <pin-list
       v-if="isShowPinListModal"
-      :onClose="() => { this.isShowPinListModal = false }"
       :isConfirmExit="isConfirmExit"
     ></pin-list>
   </div>
@@ -103,6 +102,7 @@
 </style>
 
 <script>
+import { mapState } from 'vuex';
 import client from "@/core/ApiClient";
 import _ from "lodash";
 import moment from "moment";
@@ -179,9 +179,7 @@ export default {
       currentShowMediaLayerIndex: 0,
       currentShowMediaPoiner: 0,
       fetchTranscriptsInterval: null,
-      isConfirmExit: false,
       layers: [],
-      isShowPinListModal: false,
       isShowContentDetailModal: false,
       currentContentDetailModalFloor: 1,
       currentDetailModalContent: null,
@@ -193,6 +191,10 @@ export default {
     }
   },
   computed: {
+    ...mapState([
+      'isConfirmExit',
+      'isShowPinListModal',
+    ]),
     minLayerIndex() {
       return this.currentShowMediaLayerIndex - this.maxLayerNum;
     },
@@ -243,6 +245,18 @@ export default {
   //   }
   // },
   methods: {
+    onClickShowPinListModal() {
+      this.$store.commit('setState', {
+        isConfirmExit: false,
+        isShowPinListModal: true,
+      });
+    },
+    onClickConfirmExit() {
+      this.$store.commit('setState', {
+        isConfirmExit: true,
+        isShowPinListModal: true,
+      });
+    },
     async fetchAllUsersPinStatus() {
       const key = this.$route.query.key;
       const url = `/next100/wall/${key}/pinned`;
@@ -409,8 +423,11 @@ export default {
         this.$store.getters.isShowUserOverlay &&
         currentUser.isConfirmTalkEndModal
       ) {
-        this.isShowPinListModal = true;
-        this.isConfirmExit = true;
+        this.$store.commit('setState', {
+          isShowPinListModal: true,
+          isConfirmExit: true,
+        });
+
         this.$store.commit('updateAllLoginUser', {
           params: {
             isConfirmTalkEndModal: false

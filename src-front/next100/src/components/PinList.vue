@@ -56,16 +56,6 @@ export default {
   mixins: [
     wallMixin
   ],
-  props: {
-    onClose: {
-      type: Function,
-      required: true
-    },
-    isConfirmExit: {
-      type: Boolean,
-      required: true
-    }
-  },
   methods: {
     onExit() {
       location.href = "/next100";
@@ -79,10 +69,18 @@ export default {
       };
 
       return directionMap;
+    },
+    onClose() {
+      this.$store.commit('setState', {
+        isShowPinListModal: false
+      });
     }
   },
   computed: {
-    ...mapState(['loginUsers'])
+    ...mapState([
+      'loginUsers',
+      'isConfirmExit'
+    ])
   }
 }
 </script>
