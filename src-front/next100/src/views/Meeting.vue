@@ -261,6 +261,7 @@ export default {
       this.updateLatestCurrentShowMediaLayerIndex();
     },
     onClickShowPinListModal() {
+      createjs.Sound.play('tap');
       this.$store.commit('setState', {
         isConfirmExit: false,
         isShowPinListModal: true,
@@ -381,6 +382,8 @@ export default {
         return;
       }
 
+      createjs.Sound.play('tap');
+
       // ID識別で向きを変える
       this.currentContentDetailModalFloor = floorId;
 
@@ -398,6 +401,7 @@ export default {
       this.contentDetailOpenTime = new Date().getTime();
     },
     closeContentDetailModal() {
+      createjs.Sound.play('tap_cancel');
       this.isShowContentDetailModal = false;
     },
     isContentDetailGuardTime() {
@@ -479,8 +483,6 @@ export default {
         return false;
       }
 
-      createjs.Sound.play('tap');
-
       // 既に開いているコンテキストメニューをガード
       const myContextMenu = this.$refs[`context-menu-${touch.floorId}`];
       if (myContextMenu && myContextMenu[0] && myContextMenu[0].$el && this.isTouchObjectByElement(touch, myContextMenu[0].$el)) {
@@ -559,6 +561,7 @@ export default {
       return !!this.contextMenuStatuses.find(d => d.floorId === floorId);
     },
     openContextMenu(touch) {
+      createjs.Sound.play('tap');
       const isExist = this.contextMenuStatuses.find(d => d.floorId === touch.floorId);
       if (isExist) {
         console.log('is exist context menu floor id: ' + touch.floorId);
@@ -581,6 +584,7 @@ export default {
       this.contextMenuStatuses.push(status);
     },
     closeContextMenu(floorId) {
+      createjs.Sound.play('tap_cancel');
       this.contextMenuStatuses = this.contextMenuStatuses.filter(s => s.floorId !== floorId);
     },
     getStyleByContextMenuPosition() {

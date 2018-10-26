@@ -58,6 +58,7 @@ export default {
   ],
   methods: {
     onExit() {
+      createjs.Sound.play('tap');
       location.href = "/next100";
     },
     getDirectionMap() {
@@ -71,6 +72,7 @@ export default {
       return directionMap;
     },
     onClose() {
+      createjs.Sound.play('tap_cancel');
       this.$store.commit('setState', {
         isShowPinListModal: false
       });

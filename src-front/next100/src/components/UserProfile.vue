@@ -84,6 +84,7 @@ export default {
       return directionMap[this.user.floorId];
     },
     onClickReturnForStart() {
+      createjs.Sound.play('tap_cancel');
       this.$store.commit('updateAllLoginUser', {
         params: {
           isStartTalkModal: false
@@ -94,6 +95,7 @@ export default {
       });
     },
     onClickReturnForQuit() {
+      createjs.Sound.play('tap_cancel');
       this.$store.commit('updateLoginUser', {
         floorId: this.user.floorId,
         params: {
@@ -102,9 +104,11 @@ export default {
       });
     },
     onClickStart() {
+      createjs.Sound.play('tap');
       this.$_wallMixin_startMeeting();
     },
     onClickQuit() {
+      createjs.Sound.play('tap');
       this.$store.commit('updateAllLoginUser', {
         params: {
           isConfirmTalkEndModal: false
