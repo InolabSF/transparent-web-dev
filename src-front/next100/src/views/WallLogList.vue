@@ -83,6 +83,7 @@ import Vue from 'vue';
 import client from "@/core/ApiClient";
 import moment from "moment";
 import { VueMasonryPlugin } from 'vue-masonry';
+import $ from 'jquery';
 
 Vue.use(VueMasonryPlugin);
 
@@ -200,11 +201,12 @@ export default {
   methods: {
     startScrollEvent() {
       window.addEventListener('scroll', (evt) => {
-        const bodyHeight = document.body.getBoundingClientRect().height;
-        const isBottom = document.documentElement.scrollTop >= bodyHeight - window.innerHeight - 500;
+        const bodyHeight = $('body').height();
+        const isBottom = $(window).scrollTop() >= bodyHeight - $(window).height() - 1000;
+
         const isMainTab = this.currentTabIndex === 0;
         if (isBottom && isMainTab) {
-          this.contentsLimitNum += 10;
+          this.contentsLimitNum += 4;
         }
       });
     },
