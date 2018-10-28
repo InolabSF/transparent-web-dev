@@ -140,14 +140,6 @@ export default {
 
       return map[floorId];
     },
-  },
-  created() {
-    document.body.addEventListener('CUSTOM_TOUCH_START', d => {
-      debugger;
-    });
-    // window.addEventListener('click', () => {
-    //   alert("window click");
-    // });
   }
 }
 </script>

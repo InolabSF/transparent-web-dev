@@ -3,14 +3,20 @@ import Vuex from "vuex";
 
 Vue.use(Vuex);
 
-const defaultLoginUsers = [];
-// const loginIUsersStringFromLS = localStorage.getItem('loginUsers');
-// const loginUsersFromLS = loginIUsersStringFromLS ? JSON.parse(loginIUsersStringFromLS) : [];
-// const res = !!loginIUsersStringFromLS && confirm(`前回のログイン状態を復元しますか？\n${loginUsersFromLS.map(u => `電極${u.floorId}: ${u.name}`).join('\n')}`);
-// const defaultLoginUsers = res ? loginUsersFromLS : [];
-// if (!res) {
-//   localStorage.removeItem('loginUsers');
-// }
+// NOTE: 会議画面だけログイン情報を維持
+const isMeetingPage = location.pathname.indexOf('meeting') !== -1;
+let defaultLoginUsers;
+
+if (isMeetingPage) {
+  const loginIUsersStringFromLS = localStorage.getItem('loginUsers');
+  const loginUsersFromLS = loginIUsersStringFromLS ? JSON.parse(loginIUsersStringFromLS) : [];
+  // const res = !!loginIUsersStringFromLS && confirm(`前回のログイン状態を復元しますか？\n${loginUsersFromLS.map(u => `電極${u.floorId}: ${u.name}`).join('\n')}`);
+  // defaultLoginUsers = res ? loginUsersFromLS : [];
+  defaultLoginUsers = loginUsersFromLS;
+  // if (!res) {
+  //   localStorage.removeItem('loginUsers');
+  // }
+}
 
 export default new Vuex.Store({
   state: {
@@ -42,7 +48,7 @@ export default new Vuex.Store({
     updateLoginUser(state, {floorId, params}) {
       const user = state.loginUsers.find(d => {
         return d.floorId === floorId;
-      });
+      }) || {};
 
       // 参照わたし？
       Object.assign(user, params);
