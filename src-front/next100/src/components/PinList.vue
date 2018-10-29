@@ -40,7 +40,7 @@
         </div>
       </div>
       <div class="control-box">
-        <div class="btn circle"><a @click="onClose"><img src="/next100/static/img/btn_circle_return01.svg" alt="RETURN"></a></div>
+        <div class="btn circle" @click="onClose"><img src="/next100/static/img/btn_circle_return01.svg" alt="RETURN"></div>
         <div class="btn circle" v-if="isConfirmExit"><a @click="onExit"><img src="/next100/static/img/btn_circle_quit01.svg" alt="QUIT"></a></div>
       </div>
     </div>
