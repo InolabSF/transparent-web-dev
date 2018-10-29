@@ -8,7 +8,7 @@
     </div>
   </div>
   <div v-else class="context-menu context-menu-wrapper" :style="status.style" :data-color="myColor">
-    <div class="btn-close"><a @click="onClickCloseButton"><img src="/next100/static/img/btn_close01.svg" alt="×"></a></div>
+    <div class="btn-close" @click="onClickCloseButton"><img src="/next100/static/img/btn_close01.svg" alt="×"></div>
     <div class="qr-link-box">
       <figure class="qr-img">
         <!--<img src="/next100/static/img/QR_Code.jpg" alt="QR Code">-->
