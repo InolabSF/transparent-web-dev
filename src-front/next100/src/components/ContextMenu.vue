@@ -125,7 +125,8 @@ export default {
     },
     onClickLeaveCancel() {
       createjs.Sound.play('tap');
-      this.isLeaveConfirm = true;
+      this.isLeaveConfirm = false;
+      this.onClickCloseButton();
     }
   },
   computed: {
