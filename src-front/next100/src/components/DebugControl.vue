@@ -1,5 +1,5 @@
 <template>
-  <div class="debug-control" @click="test">
+  <div class="debug-control" @touchstart="test">
     <label class="block">
       固定フロアID:
       <select v-model="floorId" @change="onChangeFloorId">

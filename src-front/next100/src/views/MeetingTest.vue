@@ -12,7 +12,7 @@
     <div class="control">
       translateZ: <input type="number" value="0" @input="onInputTranslateZ">px<br>
       perspective: <input type="number" value="100" @input="onInputPerspective">px<br>
-      <button @click="onClickAddLayer">add layer</button><br>
+      <button @touchstart="onClickAddLayer">add layer</button><br>
       -<br>
     </div>
   </div>

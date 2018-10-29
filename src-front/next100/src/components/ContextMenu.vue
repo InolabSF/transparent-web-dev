@@ -3,12 +3,12 @@
     <p class="state-text sub animated fadeInUp">ARE YOU SURE?</p>
     <div class="leave-img animated zoomIn fast delay-1s"><img src="/next100/static/img/leave-table01.svg" alt="LEAVE TABLE"></div>
     <div class="controls">
-      <div class="btn return animated fadeInUp fast delay-2s"><a @click="onClickLeaveCancel"><img src="/next100/static/img/btn_return01.svg" alt="戻る"></a></div>
-      <div class="btn leave animated fadeInUp fast delay-2s"><a @click="onClickLeave"><img src="/next100/static/img/btn_leave01.svg" alt="退席する"></a></div>
+      <div class="btn return animated fadeInUp fast delay-2s"><a @touchstart="onClickLeaveCancel"><img src="/next100/static/img/btn_return01.svg" alt="戻る"></a></div>
+      <div class="btn leave animated fadeInUp fast delay-2s"><a @touchstart="onClickLeave"><img src="/next100/static/img/btn_leave01.svg" alt="退席する"></a></div>
     </div>
   </div>
   <div v-else class="context-menu context-menu-wrapper" :style="status.style" :data-color="myColor">
-    <div class="btn-close" @click="onClickCloseButton"><img src="/next100/static/img/btn_close01.svg" alt="×"></div>
+    <div class="btn-close" @touchstart="onClickCloseButton"><img src="/next100/static/img/btn_close01.svg" alt="×"></div>
     <div class="qr-link-box">
       <figure class="qr-img">
         <!--<img src="/next100/static/img/QR_Code.jpg" alt="QR Code">-->
@@ -18,25 +18,25 @@
     </div>
     <ul class="menu-list">
       <li class="quit">
-        <a @click="onClickQuitConfirm">
+        <a @touchstart="onClickQuitConfirm">
           <figure class="menu-icon"><img src="/next100/static/img/btn_icon_quit01.svg" alt=""></figure>
           <p>終了する</p>
         </a>
       </li>
       <li class="offreco">
-        <a @click="onClickToggleMic">
+        <a @touchstart="onClickToggleMic">
           <figure class="menu-icon"><img src="/next100/static/img/btn_icon_offreco01.svg" alt=""></figure>
           <p>オフレコ</p>
         </a>
       </li>
       <li class="pins">
-        <a @click="onClickPinList">
+        <a @touchstart="onClickPinList">
           <figure class="menu-icon"><img src="/next100/static/img/btn_icon_pins01.svg" alt=""></figure>
           <p>ピン一覧</p>
         </a>
       </li>
       <li class="leave">
-        <a @click="onClickLeaveConfirm">
+        <a @touchstart="onClickLeaveConfirm">
           <figure class="menu-icon"><img src="/next100/static/img/btn_icon_leave01.svg" alt=""></figure>
           <p>退席する</p>
         </a>

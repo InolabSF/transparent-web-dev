@@ -9,8 +9,8 @@
           <p class="state-text animated fadeInUp">START!</p>
           <figure class="icon-touch animated zoomIn fast delay-1s"><img src="/next100/static/img/icon-touch01.svg" alt="TOUCH"></figure>
           <div class="controls">
-            <div class="btn return animated fadeInUp fast delay-2s"><a @click="onClickReturnForStart"><img src="/next100/static/img/btn_return01.svg" alt="戻る"></a></div>
-            <div class="btn return animated fadeInUp fast delay-2s"><a @click="onClickStart"><img src="/next100/static/img/btn_start01.svg" alt="始める"></a></div>
+            <div class="btn return animated fadeInUp fast delay-2s"><a @touchstart="onClickReturnForStart"><img src="/next100/static/img/btn_return01.svg" alt="戻る"></a></div>
+            <div class="btn return animated fadeInUp fast delay-2s"><a @touchstart="onClickStart"><img src="/next100/static/img/btn_start01.svg" alt="始める"></a></div>
           </div>
         </template>
         <template v-else-if="user.isConfirmTalkEndModal">
@@ -22,8 +22,8 @@
           <p class="state-text animated fadeInUp delay-1s">QUIT TALK</p>
           <figure class="icon-touch animated zoomIn fast delay-1s"><img src="/next100/static/img/icon-touch01.svg" alt="TOUCH"></figure>
           <div class="controls">
-            <div class="btn return animated fadeInUp fast delay-2s"><a @click="onClickReturnForQuit"><img src="/next100/static/img/btn_return01.svg" alt="戻る"></a></div>
-            <div class="btn return animated fadeInUp fast delay-2s"><a @click="onClickQuit"><img src="/next100/static/img/btn_quit01.svg" alt="終了する"></a></div>
+            <div class="btn return animated fadeInUp fast delay-2s"><a @touchstart="onClickReturnForQuit"><img src="/next100/static/img/btn_return01.svg" alt="戻る"></a></div>
+            <div class="btn return animated fadeInUp fast delay-2s"><a @touchstart="onClickQuit"><img src="/next100/static/img/btn_quit01.svg" alt="終了する"></a></div>
           </div>
         </template>
         <template v-else-if="isWelcome">

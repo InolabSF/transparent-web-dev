@@ -11,7 +11,7 @@
         <input type="radio" name="selectedMode" value="developer" v-model="selectedMode"> 開発者専用モード
       </label>
       <div>
-        <button type="submit" @click="onClickSelectMode">OK</button>
+        <button type="submit" @touchstart="onClickSelectMode">OK</button>
       </div>
       <div>
         <small><router-link to="/test-index">モックindex</router-link></small>
