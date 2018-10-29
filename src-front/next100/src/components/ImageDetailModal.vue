@@ -26,7 +26,7 @@
             </div>
           </div>
           <div class="btn return">
-            <a @click="onClose"><img src="/next100/static/img/btn_return01.svg" alt="RETURN" ref="returnButton"></a>
+            <img src="/next100/static/img/btn_return01.svg" alt="RETURN" ref="returnButton">
           </div>
         </div>
       </div>
