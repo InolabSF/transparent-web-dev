@@ -56,7 +56,7 @@
       </transition-group>
       <div class="recent-container" v-if="currentShowMediaLayerIndex < layers.length">
         <div class="recent-wrapper" ref="returnLatestButton">
-          <div class="btn circle"><a><img src="/next100/static/img/btn_circle_return02.svg" alt="RETURN"></a></div>
+          <div class="btn circle"><img src="/next100/static/img/btn_circle_return02.svg" alt="RETURN"></div>
         </div>
       </div>
     </div>
@@ -830,6 +830,18 @@ export default {
 
 .recording-state-container{
   opacity: 0.7 !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.recent-container {
+  pointer-events: none;
+}
+
+.recent-wrapper {
+  z-index: 90;
 }
 
 .blink-animation {
