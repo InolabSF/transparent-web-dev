@@ -43,6 +43,11 @@ export default new Router({
       component: () => import("./views/test/TestHit"),
     },
     {
+      path: "/test-button-hit",
+      name: "test-button-hit",
+      component: () => import("./views/test/TestButtonHit"),
+    },
+    {
       path: "/test-transcripts/:wallId",
       name: "test-transcripts",
       component: () => import("./views/test/TestTranscripts"),
