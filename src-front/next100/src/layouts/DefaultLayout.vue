@@ -7,7 +7,7 @@
         <slot></slot>
         <div id="hue" :class="{ 'is-small': isSmallHue }"></div>
         <user-layer v-if="$route.name !== 'opening'"></user-layer>
-        <step-here-text v-if="isShowStepHereText"></step-here-text>
+        <!--<step-here-text v-if="isShowStepHereText"></step-here-text>-->
       </div>
     </div>
   </div>
