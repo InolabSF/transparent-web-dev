@@ -19,17 +19,18 @@
 <script>
 import api from "@/core/ApiClient";
 import moment from "moment";
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 import userMixin from "@/mixins/userMixin";
 import customTouchEventDriver from "@/mixins/customTouchEventDriver";
 import UserLayer from "@/components/UserLayer";
+import wallMixin from "@/mixins/wallMixin";
 
 export default {
   name: "welcome",
   components: {
     UserLayer
   },
-  mixins: [userMixin, customTouchEventDriver],
+  mixins: [userMixin, customTouchEventDriver, wallMixin],
   data() {
     return {
       isShowConfirmOverlay: false,
@@ -42,9 +43,9 @@ export default {
     onClickTable(evt) {
       const floorId = evt.detail[0].floorId;
 
-      // NOTE: 外野アラート
+      // 外野アラート
       if (floorId === 0) {
-        alert('テーブルサイドに立ってタップしてください');
+        this.$_wallMixin_showOutsideClickAlert();
         return false;
       }
 
@@ -80,7 +81,9 @@ export default {
       });
     },
     confirmStartMeeting(floorId) {
-      createjs.Sound.play('hue');
+      if (!this.isShowUserOverlay) {
+        createjs.Sound.play('hue');
+      }
       this.$store.commit('setState', { isSmallHue: true });
       this.$store.commit('updateLoginUser', {
         floorId,
@@ -106,7 +109,10 @@ export default {
     ...mapState([
       'loginUsers',
       'isStartTalkModal'
-    ])
+    ]),
+    ...mapGetters([
+      'isShowUserOverlay'
+    ]),
   },
   beforeDestroy() {
     window.removeEventListener('CUSTOM_TOUCH_START', this.onClickTable);

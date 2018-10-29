@@ -474,6 +474,11 @@ export default {
       const touch = evt.detail[0];
       const currentUser = this.$store.state.loginUsers.find(u => u.floorId === touch.floorId);
 
+      // 外野は除外
+      if (touch.floorId === 0) {
+        return false;
+      }
+
       // 最新へ戻る
       const returnLatestButton = this.$refs.returnLatestButton;
       if (returnLatestButton) {

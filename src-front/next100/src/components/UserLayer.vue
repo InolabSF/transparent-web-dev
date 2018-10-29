@@ -24,7 +24,9 @@ export default {
   methods: {
   },
   computed: {
-    ...mapState(['loginUsers']),
+    ...mapState([
+      'loginUsers'
+    ]),
     ...mapGetters([
       'isShowUserOverlay'
     ]),

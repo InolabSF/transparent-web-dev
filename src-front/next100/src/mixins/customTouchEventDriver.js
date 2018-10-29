@@ -124,9 +124,10 @@ export default {
       });
 
       // 操作者なしアクセスはイベントを発火させない floorId: 0
-      filteredData = filteredData.filter(d => {
-        return d.floorId !== 0;
-      });
+      // 外野判定のため外す
+      // filteredData = filteredData.filter(d => {
+      //   return d.floorId !== 0;
+      // });
 
       return filteredData;
     },

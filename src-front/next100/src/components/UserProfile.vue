@@ -104,7 +104,7 @@ export default {
       });
     },
     onClickStart() {
-      createjs.Sound.play('tap');
+      // createjs.Sound.play('tap');
       this.$_wallMixin_startMeeting();
     },
     onClickQuit() {
