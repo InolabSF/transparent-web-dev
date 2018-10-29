@@ -452,16 +452,42 @@ export default {
       }
       return false;
     },
-    onTouchStartTable(evt) {
-      const touch = evt.detail[0];
-      this.$store.commit('updateLoginUser', {
-        floorId: touch.floorId,
-        params: {
-          lastCustomTouchStartTime: new Date().getTime()
-        }
-      });
-    },
     onTouchEndTable(evt) {
+      if (this.isGuardTouchEvent()) {
+        return false;
+      }
+
+      const touch = evt.detail[0];
+      const currentUser = this.$store.state.loginUsers.find(u => u.floorId === touch.floorId);
+
+      // 以下長押し判定のみでガード
+      const timeDiff = new Date().getTime() - currentUser.lastCustomTouchStartTime;
+      const isLongTouch = 300 <= timeDiff && timeDiff <= 2000;
+      // if (!isLongTouch) {
+      //   return false;
+      // };
+
+      // NOTE: refsは配列で返ってくる
+      const existContextMenu = this.$refs[`context-menu-${touch.floorId}`];
+
+      if (
+        // 未開の場合
+        existContextMenu &&
+        existContextMenu.length > 0 &&
+        !this.isTouchObjectByElement(touch, existContextMenu[0].$el) &&
+        this.isExistContextMenuByFloorId(touch.floorId)
+      ) {
+        this.closeContextMenu(touch.floorId);
+        // } else if (
+        //   !this.isExistContextMenuByFloorId(touch.floorId)
+        // ) {
+        //   this.openContextMenu(touch);
+      } else if (isLongTouch) {
+        // NOTE: ここまでに他のタッチ動作はガードしている前提なのでいける（詳細モーダル・ログイン）
+        this.openContextMenu(touch);
+      }
+    },
+    onTouchStartTable(evt) {
       if (this.isGuardTouchEvent()) {
         return false;
       }
@@ -474,6 +500,13 @@ export default {
       if (touch.floorId === 0) {
         return false;
       }
+
+      this.$store.commit('updateLoginUser', {
+        floorId: touch.floorId,
+        params: {
+          lastCustomTouchStartTime: new Date().getTime()
+        }
+      });
 
       // 最新へ戻る
       const returnLatestButton = this.$refs.returnLatestButton;
@@ -572,34 +605,6 @@ export default {
         const contentId = Number(latestTouchedImage.getAttribute('data-content-id'));
         this.onClickImage({floorId, contentId});
         return false;
-      }
-
-
-      // 以下長押し判定のみでガード
-      const timeDiff = new Date().getTime() - currentUser.lastCustomTouchStartTime;
-      const isLongTouch = 300 <= timeDiff && timeDiff <= 2000;
-      // if (!isLongTouch) {
-      //   return false;
-      // };
-
-      // NOTE: refsは配列で返ってくる
-      const existContextMenu = this.$refs[`context-menu-${touch.floorId}`];
-
-      if (
-        // 未開の場合
-        existContextMenu &&
-        existContextMenu.length > 0 &&
-        !this.isTouchObjectByElement(touch, existContextMenu[0].$el) &&
-        this.isExistContextMenuByFloorId(touch.floorId)
-      ) {
-        this.closeContextMenu(touch.floorId);
-      // } else if (
-      //   !this.isExistContextMenuByFloorId(touch.floorId)
-      // ) {
-      //   this.openContextMenu(touch);
-      } else if (isLongTouch) {
-        // NOTE: ここまでに他のタッチ動作はガードしている前提なのでいける（詳細モーダル・ログイン）
-        this.openContextMenu(touch);
       }
     },
     isExistContextMenuByFloorId(floorId) {
