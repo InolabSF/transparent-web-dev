@@ -118,6 +118,39 @@ body {
 	position: absolute;
 	width: 100%;
 }
+.touch-state-box.guide-step-here {
+    font-size: 75%;
+    bottom: 7em;
+}
+.touch-state-box.guide-step-here .state-text > * {
+	animation: slowFlash 26s linear infinite;
+}
+.touch-state-box.guide-step-here .arrow {
+    display: inline-block;
+    margin: auto -0.25em;
+    position: relative;
+    top: 0.75em;
+}
+@keyframes slowFlash {
+	0% {
+		opacity: 1;
+	}
+	20% {
+		opacity: 1;
+	}
+	30% {
+		opacity: 0;
+	}
+	70% {
+		opacity: 0;
+	}
+	80% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 1;
+	}
+}
 
 /* Talk Welcome
 ======================================== */
@@ -530,7 +563,7 @@ body {
 #user-layer .user-box[data-color="orange"]::before {
 	background-color: #FF8C00;
 }
-.pin-list li[data-color="orange"],
+.pin-list[data-color="orange"] li,
 #user-layer .user-box[data-color="orange"] .user-avatar {
 	background: #FF8C00;
 	background: -moz-linear-gradient(-30deg, #FF8C00 0%, #FFF 100%);
@@ -889,6 +922,34 @@ body {
 	margin-top: 6.335%;
 	width: 30%;
 }
+.recording-state-container {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: center;
+    opacity: 0;
+    -webkit-transition: opacity 1s;
+    transition: opacity 1s;
+    width: 100%;
+}
+.recording-state-container.is-active {
+    opacity: 1;
+}
+.recording-state-wrapper {
+    border: 0.25em solid rgba(110,0,0,1);
+    border-radius: 100%;
+    height: 12.125em;
+    position: relative;
+    width: 12.125em;
+}
+.recording-state {
+    background-color: rgba(110,0,0,1);
+    border-radius: 100%;
+    margin: 5%;
+    height: 90%;
+    width: 90%;
+}
 .overlay {
 	background-color: rgba(0,0,0,0.82);
 	height: 100%;
@@ -1182,6 +1243,13 @@ body {
 .img-detail-box .media-photo .img {
 	max-height: 44.4375em;
 }
+.img-detail-box .detail-keyword {
+	color: #FFF;
+	font-size: 2em;
+	font-weight: 500;
+	letter-spacing: 0.05em;
+	margin: 0.25em auto;
+}
 .img-detail-box .detail-title {
 	color: #FFF;
 	font-size: 2.5em;
@@ -1190,11 +1258,12 @@ body {
 	margin: auto;
 }
 .img-detail-box .detail-desc {
-	color: #FFF;
-	font-size: 1.875em;
-	font-weight: 500;
+	color: #CCC;
+	font-size: 1em;
+    font-style: italic;
+	font-weight: 400;
 	letter-spacing: 0.05em;
-	margin: 0.25em auto;
+	margin: 1em auto 0;
 }
 .img-detail-box .btn.delete {
     color: #FFF;

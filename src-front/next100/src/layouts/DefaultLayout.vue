@@ -7,6 +7,7 @@
         <slot></slot>
         <div id="hue" :class="{ 'is-small': isSmallHue }"></div>
         <user-layer v-if="$route.name !== 'opening'"></user-layer>
+        <step-here-text v-if="isShowStepHereText"></step-here-text>
       </div>
     </div>
   </div>
@@ -17,12 +18,15 @@ import customTouchEventDriver from "@/mixins/customTouchEventDriver";
 import { mapState } from "vuex";
 import qs from "query-string";
 import UserLayer from "@/components/UserLayer";
+import StepHereText from "@/components/StepHereText";
+
 
 export default {
   name: "DefaultLayout",
   mixins: [customTouchEventDriver],
   components: {
-    UserLayer
+    UserLayer,
+    StepHereText
   },
   created() {
     this.initCustomTouchMode();
@@ -31,6 +35,7 @@ export default {
   computed: {
     ...mapState([
       'isSmallHue',
+      'isShowStepHereText',
     ]),
   },
   methods: {
@@ -67,7 +72,7 @@ export default {
         window.addEventListener('keydown', evt => {
           const { currentFloorId } = this.$store.state.debugParams;
           if (evt.code === 'ArrowLeft') {
-            const afterCurrentFloorId = currentFloorId - 1 >= 1 ? currentFloorId - 1 : 1;
+            const afterCurrentFloorId = currentFloorId - 1 >= 0 ? currentFloorId - 1 : 0;
             this.$store.commit('setDebugParams', { currentFloorId: afterCurrentFloorId });
           } else if (evt.code === 'ArrowRight') {
             const afterCurrentFloorId = currentFloorId + 1 <= 4 ? currentFloorId + 1 : 4;
