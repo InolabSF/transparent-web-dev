@@ -563,7 +563,7 @@ body {
 #user-layer .user-box[data-color="orange"]::before {
 	background-color: #FF8C00;
 }
-.pin-list[data-color="orange"] li,
+.pin-list li[data-color="orange"],
 #user-layer .user-box[data-color="orange"] .user-avatar {
 	background: #FF8C00;
 	background: -moz-linear-gradient(-30deg, #FF8C00 0%, #FFF 100%);
