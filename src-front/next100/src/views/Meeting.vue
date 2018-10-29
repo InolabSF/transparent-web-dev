@@ -292,7 +292,6 @@ export default {
       }, CHECK_REMAIN_HEARING_POINTER_INTERVAL);
     },
     onClickReturnLatestLayer() {
-      alert("戻る！！！");
       this.updateLatestCurrentShowMediaLayerIndex();
     },
     onClickShowPinListModal() {
@@ -380,11 +379,11 @@ export default {
         related_content_last_index
       } = res.data;
 
-      const isSizeUp = related_contents && (related_contents.length > this.lastRelatedContents.length);
-
-      if (!isSizeUp) {
-        return;
-      }
+      // const isSizeUp = related_contents && (related_contents.length > this.lastRelatedContents.length);
+      //
+      // if (!isSizeUp) {
+      //   return;
+      // }
 
       this.lastRelatedContents = related_contents || [];
       this.lastSearches = searches || [];
@@ -400,7 +399,7 @@ export default {
         return l.related_contents && l.related_contents.length > 0;
       });
 
-      // layers = layers.slice(0, 10);
+      const isLayerSizeUp = layers.length > this.layers.length;
 
       if (this.layers[0] && this.layers[0].id === layers[0].id) {
         return false;
@@ -408,10 +407,16 @@ export default {
         this.layers = layers.reverse();
       }
 
-      // 3番目以内くらいだったら最新にする
-      if (this.currentShowMediaLayerIndex >= this.layers.length - 3) {
-        this.updateLatestCurrentShowMediaLayerIndex();
+      if (isLayerSizeUp) {
+        setTimeout(() => {
+          this.updateLatestCurrentShowMediaLayerIndex();
+        }, 100);
       }
+
+      // 3番目以内くらいだったら最新にする
+      // if (this.currentShowMediaLayerIndex >= this.layers.length - 3) {
+      //   this.updateLatestCurrentShowMediaLayerIndex();
+      // }
     },
     onClickImage({floorId, contentId}) {
       console.log('open modal by custom touch start');
