@@ -13,7 +13,7 @@
       params: {{ debugParams }} <br>
       translateZ: <input type="number" v-model.number="translateZ" @input="onInputTranslateZ">px<br>
       perspective: <input type="number" value="100" @input="onInputPerspective">px<br>
-      <button @click="onClickAddLayer">add layer</button><br>
+      <button @touchstart="onClickAddLayer">add layer</button><br>
     </div>
   </div>
 </template>

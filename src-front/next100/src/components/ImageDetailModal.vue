@@ -1,5 +1,5 @@
 <template>
-  <!--<div class="overlay" v-if="isShow" @click.prevent.stop="onClickCloseArea">-->
+  <!--<div class="overlay" v-if="isShow" @touchstart.prevent.stop="onClickCloseArea">-->
   <transition
     enter-active-class="animated fadeIn faster"
     enter-leave-class="animated fadeOut faster"
@@ -22,7 +22,7 @@
             <div class="right-col">
               <h3 class="detail-title">{{ content.title }}</h3>
               <p class="detail-desc">{{ content.desc }}</p>
-              <!--<div class="btn delete"><a @click="onClickDelete"><img src="/next100/static/img/btn_close01.svg" alt=""> <span>DELETE<br>IMAGE</span></a></div>-->
+              <!--<div class="btn delete"><a @touchstart="onClickDelete"><img src="/next100/static/img/btn_close01.svg" alt=""> <span>DELETE<br>IMAGE</span></a></div>-->
             </div>
           </div>
           <div class="btn return">

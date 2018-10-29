@@ -2,14 +2,14 @@
   <div class="button-container">
     <div class="title">aタグ あり</div>
     <div class="button-wrapper">
-      <div class="btn return animated fadeInUp fast delay-2s"><a @click="onClick"><img src="/next100/static/img/btn_return01.svg" alt="戻る"></a></div>
-      <div class="btn leave animated fadeInUp fast delay-2s"><a @click="onClick"><img src="/next100/static/img/btn_leave01.svg" alt="退席する"></a></div>
+      <div class="btn return animated fadeInUp fast delay-2s"><a @touchstart="onClick"><img src="/next100/static/img/btn_return01.svg" alt="戻る"></a></div>
+      <div class="btn leave animated fadeInUp fast delay-2s"><a @touchstart="onClick"><img src="/next100/static/img/btn_leave01.svg" alt="退席する"></a></div>
     </div>
 
     <div class="title">aタグ なし</div>
     <div class="button-wrapper">
-      <div class="btn return animated fadeInUp fast delay-2s" @click="onClick"><img src="/next100/static/img/btn_return01.svg" alt="戻る"></div>
-      <div class="btn leave animated fadeInUp fast delay-2s" @click="onClick"><img src="/next100/static/img/btn_leave01.svg" alt="退席する"></div>
+      <div class="btn return animated fadeInUp fast delay-2s" @touchstart="onClick"><img src="/next100/static/img/btn_return01.svg" alt="戻る"></div>
+      <div class="btn leave animated fadeInUp fast delay-2s" @touchstart="onClick"><img src="/next100/static/img/btn_leave01.svg" alt="退席する"></div>
     </div>
 
     <div class="title">aタグ なし touchstart</div>

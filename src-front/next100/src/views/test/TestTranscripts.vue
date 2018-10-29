@@ -9,7 +9,7 @@
         <img
           v-for="(content, contentIndex) in layer.related_contents"
           :key="content.id"
-          @click="onClickImage(content)"
+          @touchstart="onClickImage(content)"
           :src="content.img_url"
           class="image"
         />
