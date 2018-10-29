@@ -617,11 +617,28 @@ export default {
         return false;
       }
 
+      let adjustedX = touch.x;
+      let adjustedY = touch.y;
+      const contextMenuWidth = 704;
+      const contextMenuHeight = 704;
+
+      if (adjustedX > window.innerWidth - contextMenuWidth) {
+        adjustedX = window.innerWidth - contextMenuWidth; // 1/2にする？
+      } else if (adjustedX < contextMenuWidth) {
+        adjustedX = 0; //
+      }
+
+      if (adjustedY > window.innerHeight - contextMenuHeight) {
+        adjustedY = window.innerHeight - contextMenuHeight; // 1/2にする？
+      } else if (adjustedY < contextMenuHeight) {
+        adjustedY = 0; //
+      }
+
       const d = this.getTransformDegByFloorId(touch.floorId);
       const style = {
         position: 'absolute',
-        left: `${touch.x}px`,
-        top: `${touch.y}px`,
+        left: `${adjustedX}px`,
+        top: `${adjustedY}px`,
         transform: `rotate(${d}deg)`,
       };
       const refName = `context-menu-${touch.floorId}`;
