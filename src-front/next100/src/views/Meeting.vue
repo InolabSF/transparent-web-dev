@@ -56,7 +56,7 @@
       </transition-group>
       <div class="recent-container" v-if="currentShowMediaLayerIndex < layers.length">
         <div class="recent-wrapper" ref="returnLatestButton">
-          <div class="btn circle"><a><img src="/next100/static/img/btn_circle_return02.svg" alt="RETURN"></a></div>
+          <div class="btn circle"><img src="/next100/static/img/btn_circle_return02.svg" alt="RETURN"></div>
         </div>
       </div>
     </div>
@@ -419,6 +419,7 @@ export default {
       }
     },
     onClickImage({floorId, contentId}) {
+      console.log('open modal by custom touch start');
       this.openContentDetailModal({floorId, contentId});
     },
     openContentDetailModal({floorId, contentId}) {
@@ -617,11 +618,28 @@ export default {
         return false;
       }
 
+      let adjustedX = touch.x;
+      let adjustedY = touch.y;
+      const contextMenuWidth = 704;
+      const contextMenuHeight = 704;
+
+      if (adjustedX > window.innerWidth - contextMenuWidth) {
+        adjustedX = window.innerWidth - contextMenuWidth; // 1/2にする？
+      } else if (adjustedX < contextMenuWidth) {
+        adjustedX = 0; //
+      }
+
+      if (adjustedY > window.innerHeight - contextMenuHeight) {
+        adjustedY = window.innerHeight - contextMenuHeight; // 1/2にする？
+      } else if (adjustedY < contextMenuHeight) {
+        adjustedY = 0; //
+      }
+
       const d = this.getTransformDegByFloorId(touch.floorId);
       const style = {
         position: 'absolute',
-        left: `${touch.x}px`,
-        top: `${touch.y}px`,
+        left: `${adjustedX}px`,
+        top: `${adjustedY}px`,
         transform: `rotate(${d}deg)`,
       };
       const refName = `context-menu-${touch.floorId}`;
@@ -830,6 +848,18 @@ export default {
 
 .recording-state-container{
   opacity: 0.7 !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.recent-container {
+  pointer-events: none;
+}
+
+.recent-wrapper {
+  z-index: 90;
 }
 
 .blink-animation {

@@ -99,9 +99,11 @@ export default {
     },
     onClickCloseArea() {
       // NOTE 裏のモーダルが開くのを防ぐ
+      // NOTE 100msで調整してみてダメなら秒数を増やす
       setTimeout(() => {
+        console.log('close modal by custom touch start');
         this.onClose();
-      }, 0);
+      }, 100);
     },
     startListenCustomTouchStart() {
       window.addEventListener('CUSTOM_TOUCH_START', this.onTouchArea);
