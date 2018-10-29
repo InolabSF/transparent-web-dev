@@ -39,14 +39,12 @@ export default {
       if (this.$store.state.loginUsers.length < USER_LIMIT) {
         createjs.Sound.play('login');
         this.$store.commit('addLoginUser', user);
-        this.syncLoginUserToLocalStorage();
       } else {
         throw "参加人数は4名まで";
       }
     },
     logout(floorId) {
       this.$store.commit('removeLoginUser', floorId);
-      this.syncLoginUserToLocalStorage();
     },
     getName() {
       const uuid = ShortId.generate();
@@ -63,11 +61,6 @@ export default {
       } else {
         return splitted[1];
       }
-    },
-    syncLoginUserToLocalStorage() {
-      // 使わなくなった
-      return false;
-      localStorage.setItem('loginUsers', JSON.stringify(this.$store.state.loginUsers));
     },
     getStyleByFloorId(floorId) {
       const styleMap = {

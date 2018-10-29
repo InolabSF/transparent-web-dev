@@ -9,6 +9,15 @@
           <!--<div class="user-name">{{ name }}</div>-->
         <!--</div>-->
       <!--</div>-->
+      <div class="sns-button-list">
+        <!--<div class="fb-like" data-href="http://syncer.jp" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false"></div>-->
+        <div class="sns-button">
+          <div class="fb-share-button" data-layout="button" data-size="small" data-mobile-iframe="true"></div>
+        </div>
+        <div class="sns-button">
+          <a class="twitter-share-button" href="https://twitter.com/share" data-dnt="true">Tweet</a>
+        </div>
+      </div>
     </header>
     <div id="main">
       <div class="tab-menu">
@@ -127,6 +136,7 @@ export default {
   mounted() {
     this.fetchAll();
     this.startScrollEvent();
+    this.reloadSNSButton();
   },
   created() {
     this.addStyle();
@@ -224,6 +234,12 @@ export default {
   //   }
   // },
   methods: {
+    reloadSNSButton() {
+      setTimeout(() => {
+        FB.XFBML.parse();
+        twttr.widgets.load();
+      });
+    },
     onClickImage(content) {
       this.isShowModal = true;
       this.modalContent = content;
@@ -276,6 +292,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.sns-button-list {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.sns-button {
+  display: flex;
+  align-items: baseline;
+  &:first-child {
+    margin-left: 0;
+  }
+  margin-left: 14px;
+}
+
 .modal-mask {
   position: fixed;
   z-index: 9998;

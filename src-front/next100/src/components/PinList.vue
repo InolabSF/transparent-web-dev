@@ -9,10 +9,10 @@
       >
         <div class="pin-img-list-container">
           <div class="pin-img-list-wrapper">
-            <div class="pin-img-list-slide">
+            <div class="pin-img-list-slide" v-for="(chunkedPinnedContents, chunkIndex) in chunk(user.pinnedContents, chunkNum)" :key="chunkIndex">
               <ul class="pin-img-list">
                 <li
-                  v-for="(pin, i) in user.pinnedContents"
+                  v-for="(pin, i) in chunkedPinnedContents"
                   :key="i"
                   class="item"
                 >
@@ -26,6 +26,10 @@
               </ul>
             </div>
           </div>
+        </div>
+        <div v-if="user.pinnedContents.length > chunkNum" class="pin-img-list-arrow">
+          <div class="pin-img-list-arrow-next"></div>
+          <div class="pin-img-list-arrow-prev"></div>
         </div>
         <div class="qr-link-box">
           <!--<figure class="qr-img"><img src="/next100/staticimg/QR_Code.jpg" alt="QR Code"></figure>-->
@@ -44,12 +48,19 @@
 </template>
 
 <script>
+import _ from 'lodash';
 import { mapState } from "vuex";
 import wallMixin from '@/mixins/wallMixin';
 import QrcodeVue from 'qrcode.vue';
 
 export default {
   name: "PinList",
+  props: {
+    chunkNum: {
+      type: Number,
+      default: 10
+    }
+  },
   components: {
     QrcodeVue
   },
@@ -57,6 +68,9 @@ export default {
     wallMixin
   ],
   methods: {
+    chunk(array, size) {
+      return _.chunk(array, size);
+    },
     onExit() {
       createjs.Sound.play('tap');
       location.href = "/next100";

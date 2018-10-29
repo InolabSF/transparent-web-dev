@@ -275,7 +275,11 @@ export default {
 
       const updateUsers = this.$store.state.loginUsers.map(u => {
         const myPinnedContents = contents.filter(c => {
-          return c.pins.filter(p => p.eventuser_id === u.name).length > 0;
+          if (c.pins) {
+            return c.pins.filter(p => p.eventuser_id === u.name).length > 0;
+          } else {
+            return false;
+          }
         });
         u.pinnedContents = myPinnedContents;
         return u;

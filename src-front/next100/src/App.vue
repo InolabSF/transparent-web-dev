@@ -13,6 +13,7 @@ import DebugControl from "@/components/DebugControl";
 import { mapState } from "vuex";
 import DefaultLayout from "@/layouts/DefaultLayout";
 import MobileLayout from "@/layouts/MobileLayout";
+import stringify from 'json-stringify-safe';
 
 export default {
   name: "App",
@@ -33,8 +34,19 @@ export default {
     window.addEventListener("contextmenu", (e) => {
       e.preventDefault();
     }, false);
+
+    this.startSyncLoginUsers();
   },
   methods: {
+    startSyncLoginUsers() {
+      this.$store.watch(
+        state => state.loginUsers,
+        loginUsers => {
+          console.log('loginUsers Synced:', loginUsers);
+          localStorage.setItem('loginUsers', stringify(this.$store.state.loginUsers));
+        }
+      );
+    },
     showSettingModal () {
       this.$modal.show('hello-world');
     },
