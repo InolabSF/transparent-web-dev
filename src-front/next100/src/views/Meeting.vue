@@ -72,6 +72,18 @@
       <div class="send-area"></div>
       <div class="send-area"></div>
     </div>
+
+    <transition
+      enter-active-class="animated fadeIn"
+      leave-active-class="animated fadeOut"
+    >
+      <div v-if="isHearing" class="recording-state-container blink-animation">
+      <!--<div v-if="layers.length === 0" class="recording-state-container blink-animation">-->
+        <div class="recording-state-wrapper">
+          <div class="recording-state"></div>
+        </div>
+      </div>
+    </transition>
     <image-detail-modal
       :isShow="isShowContentDetailModal"
       :onClose="closeContentDetailModal"
@@ -144,6 +156,9 @@ export default {
       default: 10
     }
   },
+  mounted() {
+    this.startHearingStatus();
+  },
   async created() {
     createjs.Sound.play('grid');
     const opts = {
@@ -196,6 +211,8 @@ export default {
       cachedLayerStyles: [],
       lastRelatedContents: [],
       lastSearches: [],
+      isHearing: false,
+      lastHearingStartTime: new Date().getTime()
     }
   },
   computed: {
@@ -256,6 +273,29 @@ export default {
   //   }
   // },
   methods: {
+    startHearingStatus() {
+      const REMAIN_HEARING_POINTER_INTERVAL = 10000;
+      const CHECK_REMAIN_HEARING_POINTER_INTERVAL = 3000;
+      window.addEventListener('TRANSPARENT_RECORDING_PROGRESS', () => {
+        this.isHearing = true;
+        this.lastHearingStartTime = new Date().getTime();
+      });
+      window.addEventListener('TRANSPARENT_RECORDING_STOP', () => {
+        this.isHearing = false;
+        this.lastHearingStartTime = new Date().getTime() - REMAIN_HEARING_POINTER_INTERVAL;
+      });
+      setInterval(() => {
+        const currentTime = new Date().getTime();
+        if (currentTime >= this.lastHearingStartTime + REMAIN_HEARING_POINTER_INTERVAL) {
+          this.isHearing = false;
+        }
+      }, CHECK_REMAIN_HEARING_POINTER_INTERVAL);
+
+      if (this.layers.length === 0) {
+        this.isHearing = true;
+        this.lastHearingStartTime = new Date().getTime();
+      }
+    },
     onClickReturnLatestLayer() {
       alert("戻る！！！");
       this.updateLatestCurrentShowMediaLayerIndex();
@@ -433,6 +473,11 @@ export default {
       // TODO シーン判別のようなものを追加
       const touch = evt.detail[0];
       const currentUser = this.$store.state.loginUsers.find(u => u.floorId === touch.floorId);
+
+      // 外野は除外
+      if (touch.floorId === 0) {
+        return false;
+      }
 
       // 最新へ戻る
       const returnLatestButton = this.$refs.returnLatestButton;
@@ -782,6 +827,28 @@ export default {
 .media-send-leyer {
   pointer-events: none;
 }
+
+.recording-state-container{
+  opacity: 0.7 !important;
+}
+
+.blink-animation {
+  animation: anim-blink 4s infinite;
+}
+
+/* アニメーション */
+@keyframes anim-blink{
+  50%{
+    opacity: 0.7;
+  }
+  50%{
+    opacity: 0.3;
+  }
+  100%{
+    opacity: 0.7;
+  }
+}
+
 /*.wrapper {*/
   /*position: absolute;*/
   /*top: 0;*/

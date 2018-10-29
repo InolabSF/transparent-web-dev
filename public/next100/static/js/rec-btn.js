@@ -137,7 +137,9 @@ function postTranscript(text) {
     .catch((e) => {
       throw e;
     })
-  ;
+    .finally(() => {
+      window.dispatchEvent(new CustomEvent('TRANSPARENT_RECORDING_STOP'));
+    });
 
   // var xmlHttp = new XMLHttpRequest();
   //
@@ -172,6 +174,9 @@ function UpdateRecognizedPhrase(json) {
   console.log(json)
 
   if(json.RecognitionStatus == "Success"){
+    // NOTE: next100アプリ側でハンドリング
+    window.dispatchEvent(new CustomEvent('TRANSPARENT_RECORDING_PROGRESS'));
+
     result = json.DisplayText;
     TRANSCRIPTS.setRecordingText(result);
 

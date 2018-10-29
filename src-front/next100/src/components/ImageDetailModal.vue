@@ -111,6 +111,12 @@ export default {
     },
     onTouchArea(evt) {
       const touch = evt.detail[0];
+
+      // 外野は除外
+      if (touch.floorId === 0) {
+        return false;
+      }
+
       if (this.isTouchObjectByElement(touch, this.$refs.pinButton)) {
         this.onTouchPinButton(touch);
       } else if (false && this.isTouchObjectByElement(this.$refs.returnButton)) {

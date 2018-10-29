@@ -32,6 +32,7 @@ export default new Vuex.Store({
     isListeningMic: true,
     isConfirmExit: false,
     isShowPinListModal: false,
+    isShowStepHereText: false,
   },
   mutations: {
     setState(state, payload) {
@@ -97,6 +98,11 @@ export default new Vuex.Store({
       if (state.loginUsers.find(u => u.isConfirmTalkEndModal)) {
         return true;
       }
+
+      if (state.loginUsers.find(u => u.isStartTalkModal)) {
+        return true;
+      }
+
       return false;
     }
   }

@@ -28,6 +28,13 @@ export default {
         version: "next100"
       };
       return api.post("/walls", params);
+    },
+    $_wallMixin_showOutsideClickAlert() {
+      createjs.Sound.play('tap_cancel');
+      this.$store.commit('setState', { isShowStepHereText: true });
+      setTimeout(() => {
+        this.$store.commit('setState', { isShowStepHereText: false });
+      }, 2000);
     }
   }
 }
