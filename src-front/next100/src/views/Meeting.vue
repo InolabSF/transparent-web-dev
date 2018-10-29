@@ -419,6 +419,7 @@ export default {
       }
     },
     onClickImage({floorId, contentId}) {
+      console.log('open modal by custom touch start');
       this.openContentDetailModal({floorId, contentId});
     },
     openContentDetailModal({floorId, contentId}) {
