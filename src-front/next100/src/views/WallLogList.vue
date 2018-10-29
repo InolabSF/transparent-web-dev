@@ -51,9 +51,9 @@
               <div v-masonry-tile class="item" v-for="(content, j) in search.related_contents_all">
                 <div class="media-photo">
                   <img :src="content.img_url" class="img" @click="() => { onClickImage(content) }">
-                  <ul class="pin-list" v-if="content.pins">
-                    <li v-for="(pin, k) in content.pins" :key="k" :data-color="getColorMap()[k+1]"></li>
-                  </ul>
+                  <!--<ul class="pin-list" v-if="content.pins">-->
+                    <!--<li v-for="(pin, k) in content.pins" :key="k" :data-color="getColorMap()[k+1]"></li>-->
+                  <!--</ul>-->
                 </div>
               </div>
             </div>
@@ -71,9 +71,9 @@
               <div class="item" v-for="(content, j) in search.related_contents_mypinned">
                 <div class="media-photo">
                   <img :src="content.img_url" class="img">
-                  <ul class="pin-list" v-if="content.pins">
-                    <li v-for="(pin, k) in content.pins" :key="k" :data-color="getColorMap()[k+1]"></li>
-                  </ul>
+                  <!--<ul class="pin-list" v-if="content.pins">-->
+                    <!--<li v-for="(pin, k) in content.pins" :key="k" :data-color="getColorMap()[k+1]"></li>-->
+                  <!--</ul>-->
                 </div>
               </div>
             </div>
