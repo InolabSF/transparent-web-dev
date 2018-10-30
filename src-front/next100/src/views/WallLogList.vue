@@ -12,7 +12,8 @@
       <div class="sns-button-list">
         <!--<div class="fb-like" data-href="http://syncer.jp" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false"></div>-->
         <div class="sns-button">
-          <div class="fb-share-button" data-layout="button" data-size="small" data-mobile-iframe="true"></div>
+          <!--<div class="fb-share-button" data-layout="button" data-size="small" data-mobile-iframe="true"></div>-->
+          <a :href="fbShareLink" class="walllog-fb-share-button"></a>
         </div>
         <div class="sns-button">
           <a class="twitter-share-button" href="https://twitter.com/share" data-dnt="true">Tweet</a>
@@ -143,6 +144,10 @@ export default {
     this.initMasonly();
   },
   computed: {
+    fbShareLink() {
+      const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(location.href)}`;
+      return url;
+    },
     talkTitle() {
       if (!this.allContents.length) {
         return '';
@@ -362,5 +367,14 @@ export default {
   a {
     color: #fff;
   }
+}
+
+.walllog-fb-share-button {
+  width: 76px;
+  height: 20px;
+  background: url("/next100/static/img/fb_share_button.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
 }
 </style>
