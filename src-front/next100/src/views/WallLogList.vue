@@ -25,14 +25,14 @@
         <div
           :class="{ 'tab-menu-btn': true,  'menu-active': currentTabIndex === 0 }"
         >
-          <a @touchstart="currentTabIndex = 0">
+          <a @click="currentTabIndex = 0">
             <p class="menu-title">全てのアイテム</p>
           </a>
         </div>
         <div
           :class="{ 'tab-menu-btn': true,  'menu-active': currentTabIndex === 1 }"
         >
-          <a @touchstart="currentTabIndex = 1">
+          <a @click="currentTabIndex = 1">
             <p class="menu-title">あなたのピン</p>
           </a>
         </div>
@@ -51,7 +51,7 @@
             <div class="media-container" v-masonry origin-left="false" transition-duration="1s" item-selector=".item">
               <div v-masonry-tile class="item" v-for="(content, j) in search.related_contents_all">
                 <div class="media-photo">
-                  <img :src="content.img_url" class="img" @touchstart="() => { onClickImage(content) }">
+                  <img :src="content.img_url" class="img" @click="() => { onClickImage(content) }">
                   <!--<ul class="pin-list" v-if="content.pins">-->
                     <!--<li v-for="(pin, k) in content.pins" :key="k" :data-color="getColorMap()[k+1]"></li>-->
                   <!--</ul>-->
@@ -71,7 +71,7 @@
             <div class="media-container">
               <div class="item" v-for="(content, j) in search.related_contents_mypinned">
                 <div class="media-photo">
-                  <img :src="content.img_url" class="img"  @touchstart="() => { onClickImage(content) }">
+                  <img :src="content.img_url" class="img"  @click="() => { onClickImage(content) }">
                   <!--<ul class="pin-list" v-if="content.pins">-->
                     <!--<li v-for="(pin, k) in content.pins" :key="k" :data-color="getColorMap()[k+1]"></li>-->
                   <!--</ul>-->
@@ -88,7 +88,7 @@
 
     <transition enter-active-class="animated fadeIn" enter-leave-class="animated fadeOut">
       <div class="modal-mask" v-if="isShowModal">
-        <div class="modal-wrapper" @touchstart.stop="onClickCloseModal">
+        <div class="modal-wrapper" @click.stop="onClickCloseModal">
           <div class="modal-close">
             <img src="/next100/static/img/btn_close01.svg">
           </div>
