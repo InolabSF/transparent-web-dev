@@ -147,6 +147,7 @@ def get_all_searches(wall_id)
     search_last_index = 0
     search_first_index = 0
     related_content_last_index = 0
+    related_contents = []
   end
 
   return search_list, search_last_index, search_first_index, related_contents, related_content_last_index
