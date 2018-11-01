@@ -12,9 +12,10 @@ export default {
       if (this.$store.state.isRequestedStartCreateWall) {
         return false;
       }
-      this.$store.commit('setState', {
-        isRequestedStartCreateWall: true
-      });
+      this.$store.commit('setState', { isRequestedStartCreateWall: true });
+      setTimeout(() => {
+        this.$store.commit('setState', { isRequestedStartCreateWall: false });
+      }, 3000);
       const res = await this.$_wallMixin_createWall();
       // window.removeEventListener('CUSTOM_TOUCH_START', removeHandler);
       const wall = res.data;
