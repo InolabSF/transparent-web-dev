@@ -8,6 +8,13 @@ export default {
       return url;
     },
     async $_wallMixin_startMeeting() {
+      // NOTE 2連打入らないように制御
+      if (this.$store.state.isRequestedStartCreateWall) {
+        return false;
+      }
+      this.$store.commit('setState', {
+        isRequestedStartCreateWall: true
+      });
       const res = await this.$_wallMixin_createWall();
       // window.removeEventListener('CUSTOM_TOUCH_START', removeHandler);
       const wall = res.data;

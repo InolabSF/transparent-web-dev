@@ -33,6 +33,7 @@ export default new Vuex.Store({
     isConfirmExit: false,
     isShowPinListModal: false,
     isShowStepHereText: false,
+    isRequestedStartCreateWall: false,
   },
   mutations: {
     setState(state, payload) {
