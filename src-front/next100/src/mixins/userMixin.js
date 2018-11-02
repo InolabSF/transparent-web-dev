@@ -17,6 +17,11 @@ const COLORS = [
 export default {
   methods: {
     login(floorId) {
+      // 外野は除外
+      if (floorId === 0) {
+        return false;
+      }
+
       // TODO ID識別
       // TODO 名前連番
       // const floorId = this.$store.state.loginUsers.length + 1;
